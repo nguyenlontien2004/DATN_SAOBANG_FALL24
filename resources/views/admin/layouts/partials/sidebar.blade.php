@@ -48,7 +48,7 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
                         <i class="fas fa-layer-group"></i>
-                        <p>Base</p>
+                        <p>Danh sách thể loại</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="base">
@@ -104,19 +104,19 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">
                         <i class="fas fa-th-list"></i>
-                        <p>Sidebar Layouts</p>
+                        <p>Diễn viên & Đạo diễn</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="sidebarLayouts">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ asset('kaiadmin-lite-1.2.0/sidebar-style-2.html')}}">
-                                    <span class="sub-item">Sidebar Style 2</span>
+                                    <span class="sub-item">Quản lý diễn viên</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ asset('kaiadmin-lite-1.2.0/icon-menu.html')}}">
-                                    <span class="sub-item">Icon Menu</span>
+                                    <span class="sub-item">Quản lý Đạo diễn</span>
                                 </a>
                             </li>
                         </ul>
@@ -125,14 +125,29 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#forms">
                         <i class="fas fa-pen-square"></i>
-                        <p>Forms</p>
+                        <p>Quản lý phim</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="forms">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
-                                    <span class="sub-item">Basic Form</span>
+                                    <span class="sub-item">Quản lý phim</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                    <span class="sub-item">Quản lý rạp chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                    <span class="sub-item">Quản lý phòng chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                    <span class="sub-item">Quản lý suất chiếu</span>
                                 </a>
                             </li>
                         </ul>
@@ -141,7 +156,7 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#tables">
                         <i class="fas fa-table"></i>
-                        <p>Tables</p>
+                        <p>Quản lý nhân viên</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="tables">
@@ -162,7 +177,7 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">
                         <i class="fas fa-map-marker-alt"></i>
-                        <p>Maps</p>
+                        <p>Banner quảng cáo</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="maps">
@@ -183,7 +198,7 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#charts">
                         <i class="far fa-chart-bar"></i>
-                        <p>Charts</p>
+                        <p>Bài viết tin tức</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="charts">
@@ -204,7 +219,7 @@
                 <li class="nav-item">
                     <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html')}}">
                         <i class="fas fa-desktop"></i>
-                        <p>Widgets</p>
+                        <p>Chương trình khuyến mãi</p>
                         <span class="badge badge-success">4</span>
                     </a>
                 </li>
