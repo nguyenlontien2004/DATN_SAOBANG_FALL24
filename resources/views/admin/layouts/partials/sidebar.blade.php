@@ -175,6 +175,27 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#food">
+                        <i class="fas fa-table"></i>
+                        <p>Quản lý đồ ăn</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="food">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
+                                    <span class="sub-item">Basic Table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
+                                    <span class="sub-item">Datatables</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">
                         <i class="fas fa-map-marker-alt"></i>
                         <p>Banner quảng cáo</p>
