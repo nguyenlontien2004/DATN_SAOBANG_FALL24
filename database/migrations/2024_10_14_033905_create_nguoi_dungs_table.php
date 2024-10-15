@@ -23,7 +23,6 @@ return new class extends Migration
             $table->date('nam_sinh');
             $table->date('ngay_dang_ky');
             $table->integer('gold')->default(0);
-            $table->string('vai_tro');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });
