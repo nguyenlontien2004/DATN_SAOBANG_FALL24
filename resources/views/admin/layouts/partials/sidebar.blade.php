@@ -141,7 +141,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('admin.phongChieu')}}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>

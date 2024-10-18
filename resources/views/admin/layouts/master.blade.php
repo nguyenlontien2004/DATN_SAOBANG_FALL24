@@ -5,5 +5,6 @@
 <body>
     @yield('noidung') 
     @include('admin.layouts.partials.footer')
+    @yield('jsCreateSeat')
 </body>
 </html>

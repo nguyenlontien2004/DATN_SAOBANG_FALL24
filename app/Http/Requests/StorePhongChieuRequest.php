@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class StorePhongChieuRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StorePhongChieuRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,24 @@ class StorePhongChieuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'rap_id' => 'required',
+            'ten_phong_chieu' => 'required',
         ];
+    }
+    public function withValidator(Validator $validator)
+    {
+        $validator->after(function ($validator) {
+            if (!$this->failedRap()) {
+                $validator->errors()->add('rap_id', 'Trường rạp là bắt buộc!');
+            }
+        });
+    }
+    public function failedRap()
+    {
+        $rap = $this->input('rap_id');
+        if ($rap == 0) {
+            return false;
+        }
+        return true;
     }
 }
