@@ -9,6 +9,10 @@
             z-index: 10000;
         }
 
+        .empty {
+            background-color: transparent;
+        }
+
         .more-seat {
             padding-top: 10px;
         }
@@ -33,7 +37,7 @@
             animation: rotation 1s linear infinite;
             top: 25%;
             left: 35%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
         }
 
         @keyframes rotation {
@@ -63,7 +67,8 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="../index.html" class="logo">
-                        <img src="../assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" />
+                        <img src="{{ assert('kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg') }}"
+                            alt="navbar brand" class="navbar-brand" />
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -125,7 +130,8 @@
                                         <div class="notif-center">
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/jm_denis.jpg" alt="Img Profile" />
+                                                    <img src="{{ assert('kaiadmin-lite-1.2.0/assets/img/jm_denis.jpg') }}"
+                                                        alt="Img Profile" />
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jimmy Denis</span>
@@ -135,7 +141,8 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/chadengle.jpg" alt="Img Profile" />
+                                                    <img src="{{ assert('kaiadmin-lite-1.2.0/assets/img/chadengle.jpg') }}"
+                                                        alt="Img Profile" />
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Chad</span>
@@ -145,7 +152,8 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/mlane.jpg" alt="Img Profile" />
+                                                    <img src="{{ assert('kaiadmin-lite-1.2.0/assets/img/mlane.jpg') }}"
+                                                        alt="Img Profile" />
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jhon Doe</span>
@@ -157,7 +165,8 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/talha.jpg" alt="Img Profile" />
+                                                    <img src="{{ assert('kaiadmin-lite-1.2.0/assets/img/talha.jpg') }}"
+                                                        alt="Img Profile" />
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Talha</span>
@@ -212,7 +221,7 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/profile2.jpg" alt="Img Profile" />
+                                                    <img src="" alt="Img Profile" />
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="block">
@@ -310,7 +319,7 @@
                             <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                                    <img src="" alt="..." class="avatar-img rounded-circle" />
                                 </div>
                                 <span class="profile-username">
                                     <span class="op-7">Hi,</span>
@@ -322,8 +331,7 @@
                                     <li>
                                         <div class="user-box">
                                             <div class="avatar-lg">
-                                                <img src="../assets/img/profile.jpg" alt="image profile"
-                                                    class="avatar-img rounded" />
+                                                <img src="" alt="image profile" class="avatar-img rounded" />
                                             </div>
                                             <div class="u-text">
                                                 <h4>Hizrian</h4>
@@ -464,104 +472,9 @@
                                                 </div>
                                             </div>
                                             <div class="seats-map">
-                                                <div class="row-wrapper">
-                                                    <ul class="seat-row">
-                                                        <li class="regularchair">A1</li>
-                                                        <li class="regularchair">A2</li>
-                                                        <li class="regularchair">A3</li>
-                                                        <li class="regularchair">A4</li>
-                                                        <li class="regularchair">A5</li>
-                                                        <li class="regularchair">A6</li>
-                                                        <li class="regularchair">A7</li>
-                                                        <li class="regularchair">A8</li>
-                                                        <li class="regularchair">A9</li>
-                                                        <li class="regularchair">A10</li>
-                                                        <li class="regularchair">A11</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="regularchair">A1</li>
-                                                        <li class="regularchair">A2</li>
-                                                        <li class="regularchair">A3</li>
-                                                        <li class="regularchair">A4</li>
-                                                        <li class="regularchair">A5</li>
-                                                        <li class="regularchair">A6</li>
-                                                        <li class="regularchair">A7</li>
-                                                        <li class="regularchair">A8</li>
-                                                        <li class="regularchair">A9</li>
-                                                        <li class="regularchair">A10</li>
-                                                        <li class="regularchair">A11</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="regularchair">A1</li>
-                                                        <li class="regularchair">A2</li>
-                                                        <li class="regularchair">A3</li>
-                                                        <li class="regularchair">A4</li>
-                                                        <li class="regularchair">A5</li>
-                                                        <li class="regularchair">A6</li>
-                                                        <li class="regularchair">A7</li>
-                                                        <li class="regularchair">A8</li>
-                                                        <li class="regularchair">A9</li>
-                                                        <li class="regularchair">A10</li>
-                                                        <li class="regularchair">A11</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="seatVip">A1</li>
-                                                        <li class="seatVip">A2</li>
-                                                        <li class="seatVip">A3</li>
-                                                        <li class="seatVip">A4</li>
-                                                        <li class="seatVip">A5</li>
-                                                        <li class="seatVip">A6</li>
-                                                        <li class="seatVip">A7</li>
-                                                        <li class="seatVip">A8</li>
-                                                        <li class="seatVip">A9</li>
-                                                        <li class="seatVip">A10</li>
-                                                        <li class="chooseSeat">A11</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="seatVip">A1</li>
-                                                        <li class="seatVip">A2</li>
-                                                        <li class="seatVip">A3</li>
-                                                        <li class="seatVip">A4</li>
-                                                        <li class="seatVip">A5</li>
-                                                        <li class="seatVip">A6</li>
-                                                        <li class="seatVip">A7</li>
-                                                        <li class="seatVip">A8</li>
-                                                        <li class="seatVip">A9</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="seatVip">A1</li>
-                                                        <li class="seatVip">A2</li>
-                                                        <li class="seatVip">A3</li>
-                                                        <li class="seatVip">A4</li>
-                                                        <li class="seatVip">A5</li>
-                                                        <li class="seatVip">A6</li>
-                                                        <li class="seatVip">A7</li>
+                                                <div class="row-wrapper list-row-seats">
 
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <li class="seatVip">A1</li>
-                                                        <li class="seatVip">A2</li>
-                                                        <li class="seatVip">A3</li>
-                                                        <li class="seatVip">A4</li>
-                                                        <li class="seatVip">A5</li>
-                                                        <li class="seatVip">A6</li>
-                                                        <li class="seatVip">A7</li>
-                                                        <li class="seatVip">A8</li>
-                                                    </ul>
-                                                    <ul class="seat-row">
-                                                        <div class="seat-group-parent doubSeat">
-                                                            <li class="seat-group">A1</li>
-                                                            <li class="seat-group">A2</li>
-                                                        </div>
-                                                        <div class="seat-group-parent doubSeat">
-                                                            <li class="seat-group">A1</li>
-                                                            <li class="seat-group">A2</li>
-                                                        </div>
-                                                        <div class="seat-group-parent doubSeat">
-                                                            <li class="seat-group">A1</li>
-                                                            <li class="seat-group">A2</li>
-                                                        </div>
-                                                    </ul>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -570,11 +483,18 @@
                             </div>
                             <div class="col-lg-4 col-12 order-sm-last">
                                 <div class="container-ticket-information bg-white">
-                                    <div class="content-ticket-information w-full">
-                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                            class="btn btn-primary">Thêm ghế</button>
-                                        <button class="btn btn-danger">Xoá ghế</button>
-                                        <button class="btn btn-secondary">Sửa ghế</button>
+                                    <div class="content-ticket-information d-flex w-full flex-wrap">
+                                        <div class="ms-3">
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                class="btn btn-primary ">Thêm ghế</button>
+                                        </div>
+                                        <div class="position-relative ms-3">
+                                            <button class="btn btn-danger btn-remoreSeat">Xoá ghế</button>
+                                            <div class="position-absolute loading">
+                                                <div class="icon-loading"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ms-3"><button class="btn btn-secondary">Sửa ghế</button></div>
                                     </div>
                                 </div>
                             </div>

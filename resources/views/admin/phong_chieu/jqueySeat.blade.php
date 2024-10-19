@@ -4,6 +4,7 @@
         let seatIndex = 0
         let seatsRow = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
         let seatsTemp = [];
+        let dataSeatRemove = []
         $('.js-example-basic-seats-0').select2({
             placeholder: "Mời chọn hàng ghế",
             data: seatsRow
@@ -154,6 +155,126 @@
         //     })
         // }
 
+        $('.list-row-seats').on('click', '.seat', function () {
+            if ($(this).hasClass('takenSeat')) return
+            let typeSeat = $(this).attr('data-type');
+            if (typeSeat == 'thuong') {
+                $(this).toggleClass('regularchair chooseSeat')
+                checkExitsIdSeat($(this).attr('id'))
+            } else if (typeSeat == 'vip') {
+                $(this).toggleClass('seatVip chooseSeat')
+                checkExitsIdSeat($(this).attr('id'))
+            } else {
+                $(this).toggleClass('doubSeat chooseSeat')
+                $(this).find('li').each((_,e)=>{
+                    checkExitsIdSeat($(e).attr('id'))
+                })
+            }
+        })
+        function checkExitsIdSeat(id) {
+            if (!dataSeatRemove.some(item => item == id)) {
+                dataSeatRemove.push(id)
+            } else {
+                dataSeatRemove = dataSeatRemove.filter(item => item !== id)
+            }
+        }
+        $('.btn-remoreSeat').on('click',function(){
+            if(dataSeatRemove.length <= 0){
+                $.notify({
+                        icon: 'icon-bell',
+                        message: 'Bạn chưa chọn ghế cần xoá?',
+                    }, {
+                        type: 'danger',
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        time: 1000,
+                    });
+                return
+            }
+            $('.loading').show()
+            $.ajax({
+                url:"{{ route('admin.deleteGhengoi') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify(dataSeatRemove),
+                success:function(data){     
+                    if(data.status === 200){
+                        $.notify({
+                            icon: 'icon-bell',
+                            title: 'Xoá thành công',
+                            message: '',
+                        }, {
+                            type: 'success',
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            },
+                            time: 1000,
+                        });
+                    }
+                    dataSeatRemove = []
+                    $('.loading').hide()
+                },
+                error:function(error){
+                    console.log('lỗi',error);
+                    dataSeatRemove = []
+                    $('.loading').hide()
+                }
+            })
+            showSeat()
+        })
+
+        // hiển thị danh sách ghế
+        showSeat()
+        async function showSeat() {
+            await $.ajax({
+                url: "{{ route('admin.showSeats', $phongChieu->id) }}",
+                method: 'get',
+                success: function (data) {
+                    if (data.status == 200) {
+                        let html = ''
+                        $.each(data.data, function (row, seats) {
+                            let seatRow = `<ul class="seat-row">`;
+                            let i = 0;
+                            if (seats.length <= 0) {
+                                seatRow += `<li class="empty"></li>`;
+                            }
+                            while (i < seats.length) {
+                                let seat = seats[i];
+                                // Kiểm tra nếu là ghế đôi
+                                if (seat.isDoubleChair !== null && i + 1 < seats.length) {
+                                    let nextSeat = seats[i + 1];  // Lấy ghế tiếp theo
+                                    let idSeat = seats[i + 1];  // Lấy id ghế tiếp theo
+                                    // Ghép ghế đôi vào trong cùng một 
+                                    seatRow += `<div class="seat-group-parent doubSeat seat" data-type="${seat.the_loai}">
+                                           <li id="${seat.id}" class="seat-group">${row}${seat.so_hieu_ghe}</li>
+                                           <li id="${idSeat.id}" class="seat-group">${row}${nextSeat.so_hieu_ghe}</li>
+                                       </div>`;
+                                    i += 2; // Bỏ qua ghế tiếp theo vì đã ghép
+                                } else {
+                                    // Ghế đơn
+                                    seatRow += `<li id="${seat.id}" data-type="${seat.the_loai}" class="${seat.the_loai == 'thuong' ? 'regularchair' : 'seatVip'} seat ${seat.trang_thai != true ? 'takenSeat' : ''}">${row}${seat.so_hieu_ghe}</li>`;
+                                    i++; // Xử lý ghế đơn tiếp theo
+                                }
+                            }
+                            seatRow += `</ul>`;
+                            html += seatRow
+                        });
+                        $('.row-wrapper.list-row-seats').html(html);
+                    }
+                },
+                error: function (error) {
+                    console.log('lỗi:', error);
+                }
+            })
+        }
+
+
+        // thêm hàng ghế
         $('#form-create-seats').on('submit', function (e) {
             e.preventDefault()
             let seatData = [];
@@ -197,7 +318,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: JSON.stringify(seatData),
-                success: function (data) {                    
+                success: function (data) {
                     $('.loading').hide()
                     if (data.status == 200) {
                         $('.btn-close').click()
@@ -213,6 +334,7 @@
                             },
                             time: 1000,
                         });
+                        showSeat()
                     }
                 },
                 error: function (error) {
@@ -232,6 +354,5 @@
                 }
             })
         })
-
     })
 </script>

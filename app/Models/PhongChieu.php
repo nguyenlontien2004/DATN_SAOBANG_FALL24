@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PhongChieu extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'ten_phong_chieu',
         'rap_id',
@@ -21,5 +21,9 @@ class PhongChieu extends Model
     public function rap()
     {
         return $this->belongsTo(Rap::class);
+    }
+    public function ghe_ngoi()
+    {
+        return $this->hasMany(GheNgoi::class, 'phong_chieu_id');
     }
 }

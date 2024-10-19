@@ -3,19 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\GheNgoi;
+use App\Models\PhongChieu;
 use App\Http\Requests\StoreGheNgoiRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateGheNgoiRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\SeatsRowResource;
 
 class GheNgoiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $ghePhongChieu = PhongChieu::query()
+            ->select(['id'])
+            ->with([
+                'ghe_ngoi' => function ($query) {
+                    $query->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
+                        ->orderBy('hang_ghe', )
+                        ->orderBy('so_hieu_ghe');
+                }
+            ])
+            ->find($id);
+
+        return response()->json([
+            'status' => 200,
+            'msg' => 'success',
+            'data' => new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'))
+        ]);
     }
 
     /**
@@ -31,24 +48,24 @@ class GheNgoiController extends Controller
      */
     public function store(Request $request, $id)
     {
-       try {
-        DB::beginTransaction();
-        $data = json_decode($request->getContent(), true);
-        foreach ($data as $value) {
-            $this->switchCacheTypeSeat($id, $value);
+        try {
+            DB::beginTransaction();
+            $data = json_decode($request->getContent(), true);
+            foreach ($data as $value) {
+                $this->switchCacheTypeSeat($id, $value);
+            }
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'msg' => 'Adding rows of seats successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 404,
+                'msg' => 'More rows of faulty seats'
+            ], 404);
         }
-        DB::commit();
-        return response()->json([
-            'status' => 200,
-            'msg' => 'Adding rows of seats successfully'
-        ],200);
-       } catch (\Throwable $th) {
-        DB::rollBack();
-        return response()->json([
-            'status' => 404,
-            'msg' => 'More rows of faulty seats'
-        ],404);
-       }
 
     }
     public function switchCacheTypeSeat($id, $value)
@@ -67,7 +84,7 @@ class GheNgoiController extends Controller
                 return response()->json([
                     'status' => 404,
                     'msg' => 'Chair style is not specified'
-                ],404);
+                ], 404);
         }
     }
     public function creatSeatRowOften($id, $row, $totalSeat)
@@ -150,25 +167,27 @@ class GheNgoiController extends Controller
             }
 
             $totalNUmber = $maximunQuantity ? $checkTotal : $totalSeat;
-            for ($i = 0; $i < $totalNUmber; $i++) {
-                if ($count == 0) {
-                    $firstSeat = (object) [
-                        'row' => $value,
-                        'numerical' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 : $i + 1,
-                        'isDoubleChair' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 . $largestSeatNumber['so_hieu_ghe'] + $i + 1 + 1 : $i + 1 . $i + 1 + 1,
-                    ];
-                }
-                $count++;
-                if ($count == 2) {
-                    $seatPairs[] = [
-                        $firstSeat,
+            if ($largestSeatNumber == null || $largestSeatNumber['so_hieu_ghe'] != 12) {
+                for ($i = 0; $i < $totalNUmber; $i++) {
+                    if ($count == 0) {
                         $firstSeat = (object) [
                             'row' => $value,
                             'numerical' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 : $i + 1,
-                            'isDoubleChair' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 - 1 . $largestSeatNumber['so_hieu_ghe'] + $i + 1 : $i + 1 - 1 . $i + 1,
-                        ]
-                    ];
-                    $count = 0;
+                            'isDoubleChair' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 . $largestSeatNumber['so_hieu_ghe'] + $i + 1 + 1 : $i + 1 . $i + 1 + 1,
+                        ];
+                    }
+                    $count++;
+                    if ($count == 2) {
+                        $seatPairs[] = [
+                            $firstSeat,
+                            $firstSeat = (object) [
+                                'row' => $value,
+                                'numerical' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 : $i + 1,
+                                'isDoubleChair' => $largestSeatNumber && $largestSeatNumber !== null ? $largestSeatNumber['so_hieu_ghe'] + $i + 1 - 1 . $largestSeatNumber['so_hieu_ghe'] + $i + 1 : $i + 1 - 1 . $i + 1,
+                            ]
+                        ];
+                        $count = 0;
+                    }
                 }
             }
             $maximunQuantity = false;
@@ -213,6 +232,25 @@ class GheNgoiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function delete(Request $request)
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+            DB::beginTransaction();
+           GheNgoi::query()->whereIn('id', $data)->delete();
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'msg' => 'Deleted successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+           DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'msg' => 'error'
+            ], 500);
+        }
+    }
     public function destroy(GheNgoi $gheNgoi)
     {
         //

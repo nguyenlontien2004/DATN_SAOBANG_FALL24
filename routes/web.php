@@ -31,7 +31,9 @@ Route::prefix('admin')->group(function () {
     Route::get('danh-sach-phong-chieu-an',          [PhongChieuController::class, 'listSoftDelete'])->name('admin.listSoftDeletehongChieu');
     Route::get('phong-chieu/quan-ly-ghe/{id}',      [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
     // route thêm ghế cho phòng chiếu
+    Route::get('get/ghe/phong-chieu/{id}',          [GheNgoiController::class, 'index'])->name('admin.showSeats');
     Route::post('post/them-ghe/phong-chieu/{id}',   [GheNgoiController::class, 'store'])->name('admin.storeGhe');
+    Route::post('delete/ghe/phong-chieu/',          [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
 
     //end route phòng chiếu
 });
