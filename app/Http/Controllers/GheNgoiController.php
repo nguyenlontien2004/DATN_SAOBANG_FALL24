@@ -34,6 +34,26 @@ class GheNgoiController extends Controller
             'data' => new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'))
         ]);
     }
+    public function getTypeSeat($id, $type)
+    {
+        $phongChieu = PhongChieu::query()->with([
+            'ghe_ngoi' => function ($query) use ($type) {
+                $query->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
+                    ->where('the_loai', $type)
+                    ->where('trang_thai', true)
+                    ->orderBy('hang_ghe')
+                    ->orderBy('so_hieu_ghe');
+            }
+        ])->find($id);
+
+        $loaighe = $phongChieu->ghe_ngoi->groupBy('hang_ghe');
+        return response()->json([
+            'status' => 200,
+            'msg' => 'success',
+            'data' => $loaighe
+        ]);
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -224,9 +244,54 @@ class GheNgoiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGheNgoiRequest $request, GheNgoi $gheNgoi)
+    public function update(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $idSeat = $request->seat['idSeat'];
+            $idSttRow = $request->seat['sttRow'];
+            if ($request->type == GheNgoi::TYPE_SEAT_OFTEN || $request->type == GheNgoi::TYPE_SEAT_VIP) {
+                $this->updataTypeOftenAndVip($idSeat, $request->type);
+            } else {
+                $this->updataTypeDoble($idSeat, $request->type, $idSttRow);
+            }
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'msg' => 'successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'msg' => 'Error updating seats: ' . $e->getMessage()
+            ], 500);
+        }
+
+    }
+    public function updataTypeOftenAndVip($listSeat, $typeSeat)
+    {
+        foreach ($listSeat as $row => $idS) {
+            GheNgoi::query()->whereIn('id', $idS)->update([
+                'the_loai' => $typeSeat,
+                'isDoubleChair' => null
+            ]);
+        }
+    }
+    public function updataTypeDoble($listSeat, $typeSeat, $idSttRow)
+    {
+        foreach ($listSeat as $row => $idS) {
+            for ($i = 0; $i < count($idS); $i++) {
+                if (isset($idS[$i + 1])) {
+                    GheNgoi::query()->whereIn('id', [$idS[$i], $idS[$i + 1]])->update([
+                        'the_loai' => $typeSeat,
+                        'isDoubleChair' => $idSttRow[$row][$i] . $idSttRow[$row][$i + 1]
+                    ]);
+                }
+                $i++;
+            }
+        }
     }
 
     /**
@@ -237,14 +302,14 @@ class GheNgoiController extends Controller
         try {
             $data = json_decode($request->getContent(), true);
             DB::beginTransaction();
-           GheNgoi::query()->whereIn('id', $data)->delete();
+            GheNgoi::query()->whereIn('id', $data)->delete();
             DB::commit();
             return response()->json([
                 'status' => 200,
                 'msg' => 'Deleted successfully'
             ], 200);
         } catch (\Throwable $th) {
-           DB::rollBack();
+            DB::rollBack();
             return response()->json([
                 'status' => 500,
                 'msg' => 'error'

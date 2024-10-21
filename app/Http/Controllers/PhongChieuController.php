@@ -6,6 +6,7 @@ use App\Models\PhongChieu;
 use App\Http\Requests\StorePhongChieuRequest;
 use App\Http\Requests\UpdatePhongChieuRequest;
 use App\Models\Rap;
+use App\Models\GheNgoi;
 
 class PhongChieuController extends Controller
 {
@@ -58,7 +59,8 @@ class PhongChieuController extends Controller
     public function quanLyGhecuaphong($id)
     {
         $phongChieu = PhongChieu::query()->find($id);
-        return view(self::PATH_VIEW . 'quanlyGhe',compact(['phongChieu']));
+
+        return view(self::PATH_VIEW . 'quanlyGhe', compact(['phongChieu']));
     }
 
     /**

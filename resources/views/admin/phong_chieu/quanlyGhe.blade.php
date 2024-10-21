@@ -9,6 +9,14 @@
             z-index: 10000;
         }
 
+        .takenSeat {
+            z-index: 100;
+        }
+
+        .seat-group-parent {
+            margin-bottom: 3px;
+        }
+
         .empty {
             background-color: transparent;
         }
@@ -425,6 +433,45 @@
         </div>
         <!-- end modal create seat -->
 
+        <!-- start modal edit seat -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Sửa ghế</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="seat-selection">
+                            <div class="seats-wrapper-parent">
+                                <div class="seats-wrapper-row">
+                                    <div class="row-wrapper list-type-seat">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-flex mt-2 flex-column">
+                                <label for="exampleFormControlSelect1" class="mb-1" style="width:100%;">Loại ghế</label>
+                                <select class="form-select typeSeatedit ">
+                                    <option value="0" selected>Chọn loại ghế cần chỉnh</option>
+                                    <option value="thuong">Ghế Thường</option>
+                                    <option value="vip">Ghế Vip</option>
+                                    <option value="doi">Ghế Đôi</option>
+                                </select>
+                            </div>
+                            <small class="warning text-danger" ></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-submitEditSeat">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal edit seat -->
+
         <div class="container">
             <div class="page-inner">
                 <div class="page-header">
@@ -474,7 +521,6 @@
                                             <div class="seats-map">
                                                 <div class="row-wrapper list-row-seats">
 
-
                                                 </div>
                                             </div>
                                         </div>
@@ -483,18 +529,31 @@
                             </div>
                             <div class="col-lg-4 col-12 order-sm-last">
                                 <div class="container-ticket-information bg-white">
-                                    <div class="content-ticket-information d-flex w-full flex-wrap">
-                                        <div class="ms-3">
+                                    <div class="content-ticket-information d-flex w-full flex-wrap ">
+                                        <div class="ms-2 mt-1">
                                             <button data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                 class="btn btn-primary ">Thêm ghế</button>
                                         </div>
-                                        <div class="position-relative ms-3">
-                                            <button class="btn btn-danger btn-remoreSeat">Xoá ghế</button>
+                                        <div class="position-relative ms-2 mt-1">
+                                            <button class="btn btn-danger btn-remoreSeat">Ẩn ghế</button>
                                             <div class="position-absolute loading">
                                                 <div class="icon-loading"></div>
                                             </div>
                                         </div>
-                                        <div class="ms-3"><button class="btn btn-secondary">Sửa ghế</button></div>
+                                        <div class="ms-2 mt-1 btn-group">
+                                            <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                Sửa ghế
+                                            </button>
+                                            <ul class="dropdown-menu" id="editTypeSeat" aria-labelledby="btnGroupDrop1">
+                                                <li data-type="thuong"><a class="dropdown-item"
+                                                        style="cursor:pointer">Ghế Thường</a></li>
+                                                <li data-type="vip"><a class="dropdown-item" style="cursor:pointer">Ghế
+                                                        Vip</a></li>
+                                                <li data-type="doi"><a class="dropdown-item" style="cursor:pointer">Ghế
+                                                        Đôi</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
