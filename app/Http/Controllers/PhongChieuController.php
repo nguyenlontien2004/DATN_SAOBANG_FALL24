@@ -83,10 +83,16 @@ class PhongChieuController extends Controller
         $phongChieu->update($data);
         return back()->with('success', 'Đã thêm một phòng chiếu vào hệ thống rạp');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
+    public function restore($id){
+        $restore = PhongChieu::query()->onlyTrashed()->find($id);
+        $restore->deleted_at = null;
+        $restore->save();
+        return back();
+    }
     public function delete($id)
     {
         PhongChieu::query()->find($id)->delete();

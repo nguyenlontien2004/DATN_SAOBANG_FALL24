@@ -344,7 +344,7 @@
                                                     <tr>
                                                         <td>{{ $item->ten_phong_chieu }}</td>
                                                         <td>{{ $item->rap->ten_rap }}</td>
-                                                        <td>{{ $item->trang_thai ? 'Chưa diễn ra' : 'Đang diễn ra' }}</td>
+                                                        <td>{{ !$item->trang_thai ? 'Tạm ngừng hoạt động' : 'Đang hoạt động' }}</td>
                                                         <td>
                                                             <div class="form-button-action d-flex justify-content-center">
                                                                 <button type="button"

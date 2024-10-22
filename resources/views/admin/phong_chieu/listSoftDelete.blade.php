@@ -323,7 +323,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-center">
                                 <h4 class="card-title">Danh sách phòng chiếu ẩn</h4>
-                                
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -338,24 +338,31 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($list as $item)
-                                                    <tr>
-                                                        <td>{{ $item->ten_phong_chieu }}</td>
-                                                        <td>{{ $item->rap->ten_rap }}</td>
-                                                        <td>{{ $item->trang_thai ? 'Chưa diễn ra' : 'Đang diễn ra' }}</td>
-                                                        <td>
-                                                            <div class="form-button-action d-flex justify-content-center">
-                                                                <button type="button" class="btn btn-link btn-danger btn-lg"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    title="Xoá">
-                                                                    <a onclick="return confirm('Bạn có chắc muốn xoá phòng này ra khỏi rạp {{ $item->rap->ten_rap }} vĩnh viễn không!')"
-                                                                        href="#" class="text-danger">
-                                                                        <i class="fa fa-times"></i></a>
+                                                <tr>
+                                                    <td>{{ $item->ten_phong_chieu }}</td>
+                                                    <td>{{ $item->rap->ten_rap }}</td>
+                                                    <td>{{ $item->trang_thai ? 'Chưa diễn ra' : 'Đang diễn ra' }}</td>
+                                                    <td>
+                                                        <div class="form-button-action d-flex justify-content-center">
+                                                            <button type="button"
+                                                                class="btn btn-link btn-primary btn-lg p-0"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Khôi phục">
+                                                                <a href="{{ route('admin.restorePhongchieu',$item->id) }}"> <i
+                                                                        class="fa fa-edit"></i></a>
+                                                            </button>
+                                                            <button type="button" class="btn btn-link btn-danger btn-lg"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Xoá">
+                                                                <a onclick="return confirm('Bạn có chắc muốn xoá phòng này ra khỏi rạp {{ $item->rap->ten_rap }} vĩnh viễn không!')"
+                                                                    href="#" class="text-danger">
+                                                                    <i class="fa fa-times"></i></a>
 
-                                                                </button>
-                                                            </div>
+                                                            </button>
+                                                        </div>
 
-                                                        </td>
-                                                    </tr>
+                                                    </td>
+                                                </tr>
                                             @endforeach
 
                                         </tbody>

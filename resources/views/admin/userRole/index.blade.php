@@ -303,10 +303,10 @@
 
         <div class="container">
             <div class="page-inner">
-                <div class="page-header mb-1">
-                    <ul class="breadcrumbs mb-3">
+                <div class="page-header">
+                    <ul class="breadcrumbs">
                         <li class="nav-home">
-                            <a href="{{ route('admin.phongChieu') }}">
+                            <a href="#">
                                 <i class="icon-home"></i>
                             </a>
                         </li>
@@ -314,85 +314,67 @@
                             <i class="icon-arrow-right"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Sửa phòng chiếu</a>
+                            <a href="#">Danh sách vai trò người dùng</a>
                         </li>
                     </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ route('admin.updataphongChieu', $data->id) }}" method="post">
-                            @csrf
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Sửa phòng chiếu</div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="email2">Tên phòng chiếu</label>
-                                                <input type="text" name="ten_phong_chieu"
-                                                    value="{{ $data->ten_phong_chieu }}" required class="form-control"
-                                                    id="email2" />
-                                                @error('ten_phong_chieu')
-                                                    <small id="emailHelp2"
-                                                        class="form-text text-muted text-danger">{{ $message  }}</small>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Thuộc hệ thống rạp</label>
-                                                <select class="form-select" name="rap_id" required
-                                                    id="exampleFormControlSelect1">
-                                                    <option value="0">Mời chọn hệ thống rạp</option>
-                                                    @foreach ($list_rap as $item)
-                                                        <option value="{{ $item->id }}" @if ($item->id == $data->rap_id)
-                                                        selected @endif>{{ $item->ten_rap }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('rap_id')
-                                                    <small id="emailHelp2"
-                                                        class="form-text text-muted text-danger">{{ $message  }}</small>
-                                                @enderror
-
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" value="1" type="radio" name="trang_thai"
-                                                    id="trang_thai1" @if ($data->trang_thai == true)
-                                                    checked
-                                                    @endif >
-                                                <label class="form-check-label" for="trang_thai1">
-                                                    Phòng chiếu đang hoạt động
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" value="0" type="radio" name="trang_thai"
-                                                    id="trang_thai2" @if ($data->trang_thai == false)
-                                                    checked
-                                                    @endif >
-                                                <label class="form-check-label" for="trang_thai2">
-                                                    Phòng chiếu đã tạm ngừng hoạt động
-                                                </label>
-                                            </div>
-                                            @if (session()->has('success'))
-                                                <div class="alert alert-success" role="alert">
-                                                    {{ session()->get('success') }}
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-action">
-                                    <button class="btn btn-success">Submit</button>
-                                    <button class="btn btn-danger">Cancel</button>
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h4 class="card-title">Danh sách vai trò người dùng</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="basic-datatables" class="display table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Ảnh</th>
+                                                <th>Người dùng</th>
+                                                <th>Email</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Vai trò</th>
+                                                <th>Điều chỉnh vai trò</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($roleAndUser as $item)
+                                                <tr>
+                                                    <td>#{{ $loop->index + 1 }}</td>
+                                                    <td><img width="45px" height="45px"
+                                                            src="https://i.pinimg.com/1200x/bc/43/98/bc439871417621836a0eeea768d60944.jpg"
+                                                            alt=""></td>
+                                                    <td>{{ $item->user->ho_ten }}</td>
+                                                    <td>{{  $item->user->email }}</td>
+                                                    <td>{{  $item->user->so_dien_thoai }}</td>
+                                                    <td>{{ $item->role->ten_vai_tro }}</td>
+                                                    <td>
+                                                    <div class="form-button-action d-flex justify-content-center">
+                                                            <button type="button"
+                                                                class="btn btn-link btn-primary btn-lg p-0"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Cập nhât vai trò">
+                                                                <a href="{{ route('admin.roleAndUser.edit',$item->nguoi_dung_id) }}"> <i class="fa fa-edit"></i></a>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
+    });
+</script>
 @endsection
