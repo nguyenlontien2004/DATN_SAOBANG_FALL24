@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GheNgoi extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     const TYPE_SEAT_OFTEN = 'thuong';
     const TYPE_SEAT_VIP = 'vip';
     const TYPE_SEAT_DOUBLE = 'doi';
@@ -23,4 +23,8 @@ class GheNgoi extends Model
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
+    public function screeningRoom()
+    {
+        return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
+    }
 }

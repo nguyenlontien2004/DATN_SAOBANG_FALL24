@@ -6,6 +6,7 @@ use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
+use App\Http\Controllers\VeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,5 +57,8 @@ Route::prefix('admin')->group(function () {
     Route::get('danh-sach-vai-tro-nguoi-dung/',            [VaiTroVaNguoiDungController::class, 'index'])->name('admin.roleAndUser.index');
     Route::get('cap-nhat-vai-tro-nguoi-dung/{id}',         [VaiTroVaNguoiDungController::class, 'edit'])->name('admin.roleAndUser.edit');
     Route::post('post/cap-nhat-vai-tro-nguoi-dung/{id}',   [VaiTroVaNguoiDungController::class, 'update'])->name('admin.roleAndUser.update');
+    // route vé 
+    Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
+    Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
     
 });

@@ -26,4 +26,8 @@ class PhongChieu extends Model
     {
         return $this->hasMany(GheNgoi::class, 'phong_chieu_id');
     }
+    public function cinema()
+    {
+        return $this->belongsTo(Rap::class, 'rap_id');
+    }
 }

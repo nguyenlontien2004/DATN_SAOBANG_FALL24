@@ -217,6 +217,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a  href="{{ route('admin.ticket.index') }}">
+                        <i class="fas fa-table"></i>
+                        <p>Quản lý vé</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">
                         <i class="fas fa-map-marker-alt"></i>
                         <p>Banner quảng cáo</p>
