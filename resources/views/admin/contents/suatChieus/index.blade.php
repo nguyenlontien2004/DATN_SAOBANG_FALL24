@@ -2,38 +2,33 @@
 @section('noidung')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <div class="card-title">Danh sách Diễn Viên</div>
-            <a href="{{ route('dienVien.create') }}" class="btn btn-primary">Thêm mới Diễn Viên</a>
+            <div class="card-title">Danh sách Suất Chiếu</div>
+            <a href="{{ route('suatChieu.create') }}" class="btn btn-primary">Thêm mới Suất Chiếu</a>
         </div>
+
         <div class="card-body">
             <table class="table table-head-bg-success">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Tên Diễn Viên</th>
-                        <th scope="col">Anh Diễn Viên</th>
-                        <th scope="col">Năm sinh</th>
-                        <th scope="col">Quốc tịch</th>
-                        <th scope="col">Gioi Tính</th>
-                        <th scope="col">Tiểu Sử</th>
+                        <th scope="col">Tên Suất Chiếu</th>
+                        <th scope="col">Thời Gian Bắt Đầu</th>
+                        <th scope="col">Phòng Chiếu</th>
+                        <th scope="col">Phim</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($dienViens as $index => $dienVien)
+                    @foreach ($suatChieus as $index => $suatChieu)
                         <tr>
-                            <td>{{ $dienVien->id }}</td>
-                            <td>{{ $dienVien->ten_dien_vien }}</td>
-                            <td><img src="{{ Storage::url($dienVien->anh_dien_vien) }}" alt="Product Image" width="100px"
-                                    height="auto">
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse($dienVien->nam_sinh)->format('Y-m-d') }}</td>
-                            <td>{{ $dienVien->quoc_tich }}</td>
-                            <td>{{ $dienVien->gioi_tinh }}</td>
-                            <td>{{ $dienVien->tieu_su }}</td>
+                            <td>{{ $suatChieu->id }}</td>
+                            <td>Suất Chiếu {{ $suatChieu->gio_bat_dau }}</td>
+                            <td>{{ $suatChieu->gio_bat_dau }}</td>
+                            <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
+                            <td>{{ $suatChieu->phim->ten_phim }}</td> 
                             <td class="text-center">
-                                @if ($dienVien->trang_thai == 1)
+                                @if ($suatChieu->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
                                 @else
                                     <span class="text-danger">x Không hoạt động</span>
@@ -41,7 +36,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
-                                    <form method="POST" action="{{ route('dienVien.destroy', $dienVien->id) }}"
+                                    <form method="POST" action="{{ route('suatChieu.destroy', $suatChieu->id) }}"
                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                         @csrf
                                         @method('DELETE')
@@ -53,7 +48,7 @@
                                             </svg>
                                         </button>
                                     </form>
-                                    <a class="btn btn-warning" href="{{ route('dienVien.edit', $dienVien->id) }}">
+                                    <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path

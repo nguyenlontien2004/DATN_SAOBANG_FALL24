@@ -12,7 +12,7 @@ class DaoDienController extends Controller
 {
     public function index()
     {
-        $daoDiens = DaoDien::all();
+        $daoDiens = DaoDien::orderBy('id', 'desc')->get();
         return view('admin.contents.daoDiens.index', compact('daoDiens'));
     }
     public function create()
@@ -28,7 +28,7 @@ class DaoDienController extends Controller
             'quoc_tich' => 'required|string|max:255',
             'gioi_tinh' => 'required|string',
             'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string', // Thêm validation cho tieu_su
+            'tieu_su' => 'nullable|string',
         ]);
 
         $path = $request->file('anh_dao_dien')->store('dao_dien', 'public');
@@ -78,10 +78,8 @@ class DaoDienController extends Controller
     }
     public function destroy(DaoDien $daoDien)
     {
-        if ($daoDien->anh_dao_dien) {
-            Storage::disk('public')->delete($daoDien->anh_dao_dien);
-        }
-        $daoDien->delete();
+        $daoDien->trang_thai = 0;
+        $daoDien->save();
         return redirect()->route('daoDien.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
     }
 }

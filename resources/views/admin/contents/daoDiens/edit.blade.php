@@ -26,6 +26,8 @@
                 <div class="mb-3">
                     <label for="anh_dao_dien" class="form-label">Ảnh Đạo diễn</label>
                     <input type="file" class="form-control" id="anh_dao_dien" name="anh_dao_dien" accept="image/*">
+                    <img src="{{ Storage::url($daoDien->anh_dao_dien) }}" alt="Product Image" width="100px"
+                                    height="auto">
                     <small class="form-text text-muted">Để trống nếu không muốn thay đổi ảnh.</small>
                 </div>
 
@@ -34,7 +36,7 @@
                     <input type="date" class="form-control" id="nam_sinh" name="nam_sinh" value="{{ old('nam_sinh', $daoDien->nam_sinh) }}" required>
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="quoc_tich" class="form-label">Quốc tịch</label>
                     <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" value="{{ old('quoc_tich', $daoDien->quoc_tich) }}" required>
                 </div>
@@ -46,6 +48,20 @@
                         <option value="Nữ" {{ $daoDien->gioi_tinh == 'Nữ' ? 'selected' : '' }}>Nữ</option>
                         <option value="Khác" {{ $daoDien->gioi_tinh == 'Khác' ? 'selected' : '' }}>Khác</option>
                     </select>
+                </div> --}}
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="quoc_tich" class="form-label">Quốc tịch</label>
+                        <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" value="{{ old('quoc_tich', $daoDien->quoc_tich) }}" required>
+                    </div>
+                    <div class="col">
+                        <label for="gioi_tinh" class="form-label">Giới Tính</label>
+                        <select class="form-select" id="gioi_tinh" name="gioi_tinh" required>
+                            <option value="Nam" {{ $daoDien->gioi_tinh == 'Nam' ? 'selected' : '' }}>Nam</option>
+                            <option value="Nữ" {{ $daoDien->gioi_tinh == 'Nữ' ? 'selected' : '' }}>Nữ</option>
+                            <option value="Khác" {{ $daoDien->gioi_tinh == 'Khác' ? 'selected' : '' }}>Khác</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="tieu_su" class="form-label">Tiểu Sử</label>

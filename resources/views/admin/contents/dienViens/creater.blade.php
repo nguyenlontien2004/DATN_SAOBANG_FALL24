@@ -12,7 +12,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+            @endif
         </div>
         <div class="card-body">
             <form action="{{ route('dienVien.store') }}" method="POST" enctype="multipart/form-data">
@@ -32,25 +32,27 @@
                     <input type="date" class="form-control" id="nam_sinh" name="nam_sinh" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="quoc_tich" class="form-label">Quốc tịch</label>
-                    <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" required>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="quoc_tich" class="form-label">Quốc tịch</label>
+                        <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" required>
+                    </div>
+                    <div class="col">
+                        <label for="gioi_tinh" class="form-label">Giới Tính</label>
+                        <select class="form-select" id="gioi_tinh" name="gioi_tinh" required>
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                    </div>
                 </div>
-                
 
-                <div class="mb-3">
-                    <label for="gioi_tinh" class="form-label">Giới Tính</label>
-                    <select class="form-select" id="gioi_tinh" name="gioi_tinh" required>
-                        <option value="">Chọn giới tính</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
-                    </select>
-                </div>
                 <div class="mb-3">
                     <label for="tieu_su" class="form-label">Tiểu Sử</label>
                     <textarea type="text" class="form-control" id="tieu_su" name="tieu_su" required></textarea>
                 </div>
+
                 <div class="mb-3">
                     <label for="trang_thai" class="form-label">Trạng Thái</label>
                     <select class="form-select" id="trang_thai" name="trang_thai" required>

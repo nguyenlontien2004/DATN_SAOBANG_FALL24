@@ -24,7 +24,7 @@
                 <tbody>
                     @foreach ($daoDiens as $index => $daoDien)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $daoDien->id }}</td>
                             <td>{{ $daoDien->ten_dao_dien }}</td>
                             <td><img src="{{ Storage::url($daoDien->anh_dao_dien) }}" alt="Product Image" width="100px"
                                     height="auto">

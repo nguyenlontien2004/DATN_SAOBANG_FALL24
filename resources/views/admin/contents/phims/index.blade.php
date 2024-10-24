@@ -1,39 +1,59 @@
 @extends('admin.layouts.master')
+
 @section('noidung')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <div class="card-title">Danh sách Diễn Viên</div>
-            <a href="{{ route('dienVien.create') }}" class="btn btn-primary">Thêm mới Diễn Viên</a>
+            <div class="card-title">Danh sách Phim</div>
+            <a href="{{ route('phim.create') }}" class="btn btn-primary">Thêm mới Phim</a>
         </div>
+
         <div class="card-body">
             <table class="table table-head-bg-success">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Tên Diễn Viên</th>
-                        <th scope="col">Anh Diễn Viên</th>
-                        <th scope="col">Năm sinh</th>
-                        <th scope="col">Quốc tịch</th>
-                        <th scope="col">Gioi Tính</th>
-                        <th scope="col">Tiểu Sử</th>
+                        <th scope="col">Tên Phim</th>
+                        <th scope="col">Đạo Diễn</th>
+                        <th scope="col">Diễn Viên</th>
+                        <th scope="col">Thể Loại</th>
+                        <th scope="col">Mô Tả</th>
+                        <th scope="col">Thời Lượng</th>
+                        <th scope="col">Lượt Xem</th>
+                        <th scope="col">Ngày Khởi Chiếu</th>
+                        <th scope="col">Ngày Kết Thúc</th>
+                        <th scope="col">Trailer</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($dienViens as $index => $dienVien)
+                    @foreach ($phims as $index => $phim)
                         <tr>
-                            <td>{{ $dienVien->id }}</td>
-                            <td>{{ $dienVien->ten_dien_vien }}</td>
-                            <td><img src="{{ Storage::url($dienVien->anh_dien_vien) }}" alt="Product Image" width="100px"
-                                    height="auto">
+                            <td>{{ $phim->id }}</td>
+                            <td>{{ $phim->ten_phim }}</td>
+                            <td>
+                                @foreach ($phim->daoDiens as $daoDien)
+                                    {{ $daoDien->ten_dao_dien }}@if (!$loop->last), @endif
+                                @endforeach
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($dienVien->nam_sinh)->format('Y-m-d') }}</td>
-                            <td>{{ $dienVien->quoc_tich }}</td>
-                            <td>{{ $dienVien->gioi_tinh }}</td>
-                            <td>{{ $dienVien->tieu_su }}</td>
+                            <td>
+                                @foreach ($phim->dienViens as $dienVien)
+                                    {{ $dienVien->ten_dien_vien }}@if (!$loop->last), @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach ($phim->theLoaiPhims as $theLoaiPhim)
+                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last), @endif
+                                @endforeach
+                            </td>
+                            <td>{{ $phim->mo_ta }}</td>
+                            <td>{{ $phim->thoi_luong }}</td>
+                            <td>{{ $phim->luot_xem_phim }}</td>
+                            <td>{{ \Carbon\Carbon::parse($phim->ngay_khoi_chieu)->format('Y-m-d') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($phim->ngay_ket_thuc)->format('Y-m-d') }}</td>
+                            <td><a href="{{ $phim->trailer }}" target="_blank">Xem Trailer</a></td>
                             <td class="text-center">
-                                @if ($dienVien->trang_thai == 1)
+                                @if ($phim->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
                                 @else
                                     <span class="text-danger">x Không hoạt động</span>
@@ -41,7 +61,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
-                                    <form method="POST" action="{{ route('dienVien.destroy', $dienVien->id) }}"
+                                    <form method="POST" action="{{ route('phim.destroy', $phim->id) }}"
                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                         @csrf
                                         @method('DELETE')
@@ -53,7 +73,7 @@
                                             </svg>
                                         </button>
                                     </form>
-                                    <a class="btn btn-warning" href="{{ route('dienVien.edit', $dienVien->id) }}">
+                                    <a class="btn btn-warning" href="{{ route('phim.edit', $phim->id) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path
@@ -67,6 +87,7 @@
                         </tr>
                     @endforeach
                 </tbody>
+                
             </table>
         </div>
     </div>

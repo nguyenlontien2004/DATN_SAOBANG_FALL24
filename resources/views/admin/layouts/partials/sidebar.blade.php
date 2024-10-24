@@ -54,48 +54,13 @@
                     <div class="collapse" id="base">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/avatars.html')}}">
-                                    <span class="sub-item">Avatars</span>
+                                <a href="{{ route('theLoaiPhim.index') }}">
+                                    <span class="sub-item">Danh Sách Thể Loại</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/buttons.html')}}">
-                                    <span class="sub-item">Buttons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/gridsystem.html')}}">
-                                    <span class="sub-item">Grid System</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/panels.html')}}">
-                                    <span class="sub-item">Panels</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/notifications.html')}}">
-                                    <span class="sub-item">Notifications</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/sweetalert.html')}}">
-                                    <span class="sub-item">Sweet Alert</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/font-awesome-icons.html')}}">
-                                    <span class="sub-item">Font Awesome Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/simple-line-icons.html')}}">
-                                    <span class="sub-item">Simple Line Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/typography.html')}}">
-                                    <span class="sub-item">Typography</span>
+                                <a href="{{ route('theLoaiPhim.create') }}">
+                                    <span class="sub-item">Thêm Mới Thể Loại</span>
                                 </a>
                             </li>
                         </ul>
@@ -110,12 +75,12 @@
                     <div class="collapse" id="sidebarLayouts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/sidebar-style-2.html')}}">
+                                <a href="{{ route('dienVien.index') }}" >
                                     <span class="sub-item">Quản lý diễn viên</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/icon-menu.html')}}">
+                                <a href="{{ route('daoDien.index') }}" >
                                     <span class="sub-item">Quản lý Đạo diễn</span>
                                 </a>
                             </li>
@@ -131,12 +96,12 @@
                     <div class="collapse" id="forms">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('phim.index') }}" >
                                     <span class="sub-item">Quản lý phim</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('rap.index') }}" >
                                     <span class="sub-item">Quản lý rạp chiếu</span>
                                 </a>
                             </li>
@@ -146,7 +111,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('suatChieu.index') }}">
                                     <span class="sub-item">Quản lý suất chiếu</span>
                                 </a>
                             </li>
