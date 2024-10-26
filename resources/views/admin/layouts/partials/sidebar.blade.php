@@ -183,13 +183,13 @@
                     <div class="collapse" id="food">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
-                                    <span class="sub-item">Basic Table</span>
+                                <a href="{{ route('admin.doans.index')}}">
+                                    <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
-                                    <span class="sub-item">Datatables</span>
+                                <a href="">
+                                    <span class="sub-item">Món ăn theo vé</span>
                                 </a>
                             </li>
                         </ul>

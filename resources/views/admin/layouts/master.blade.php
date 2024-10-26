@@ -3,7 +3,14 @@
 @include('admin.layouts.partials.head')
 
 <body>
-    @yield('noidung') 
-    @include('admin.layouts.partials.footer')
+    <div class="wrapper">
+        @include('admin.layouts.partials.sidebar')
+        <div class="main-panel">
+
+            @yield('noidung')
+            @include('admin.layouts.partials.footer')
+        </div>
+    </div>
 </body>
+
 </html>
