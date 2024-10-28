@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\VaiTroController;
@@ -23,7 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'dashboard']);
+    // route auth admin
+    Route::get('/login',                                   [AuthController::class,'login']);
+    Route::post('post/login',                              [AuthController::class,'postLogin'])->name('login');
+    
+    Route::get('/',                                        [DashboardController::class, 'dashboard']);
     //start route phòng chiếu 
     Route::get('danh-sach-phong-chieu',                    [PhongChieuController::class, 'index'])->name('admin.phongChieu');
     Route::get('them-phong-chieu',                         [PhongChieuController::class, 'create'])->name('admin.themphongChieu');

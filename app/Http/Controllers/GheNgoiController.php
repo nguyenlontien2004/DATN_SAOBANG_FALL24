@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateGheNgoiRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\SeatsRowResource;
+use Carbon\Carbon;
 
 class GheNgoiController extends Controller
 {
@@ -22,12 +23,31 @@ class GheNgoiController extends Controller
             ->with([
                 'ghe_ngoi' => function ($query) {
                     $query->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
-                        ->orderBy('hang_ghe', )
+                        ->withCount([
+                            'chitietve as isBooked' => function ($query) {
+                                $query->whereHas('ticket', function ($q) {
+                                    $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
+                                    $q->whereHas('showtime', function ($st) use ($currentTime) {
+                                        $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime);
+                                    });
+                                });
+                            }
+                        ])
+                        // ->with([
+                        //     'chitietve' => function ($q) {
+                        //         $q->with([
+                        //             'ticket' => function ($q) {
+                        //                 $q->with('showtime');
+                        //             }
+                        //         ]);
+                        //     }
+                        // ])
+                        ->orderBy('hang_ghe')
                         ->orderBy('so_hieu_ghe');
                 }
             ])
             ->find($id);
-
+        //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray(), Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s'));
         return response()->json([
             'status' => 200,
             'msg' => 'success',
@@ -36,17 +56,23 @@ class GheNgoiController extends Controller
     }
     public function getTypeSeat($id, $type)
     {
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
         $phongChieu = PhongChieu::query()->with([
-            'ghe_ngoi' => function ($query) use ($type) {
+            'ghe_ngoi' => function ($query) use ($type, $currentTime) {
                 $query->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
+                    ->whereDoesntHave('chitietve', function ($q) use ($currentTime) {
+                        $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
+                            ->join('suat_chieus', 'ves.suat_chieu_id', '=', 'suat_chieus.id')
+                            ->whereRaw('TIME(suat_chieus.gio_ket_thuc) >= ?', [$currentTime]);
+                    })
                     ->where('the_loai', $type)
-                    ->where('trang_thai', true)
                     ->orderBy('hang_ghe')
                     ->orderBy('so_hieu_ghe');
             }
         ])->find($id);
 
         $loaighe = $phongChieu->ghe_ngoi->groupBy('hang_ghe');
+        //dd($loaighe->toArray());
         return response()->json([
             'status' => 200,
             'msg' => 'success',
