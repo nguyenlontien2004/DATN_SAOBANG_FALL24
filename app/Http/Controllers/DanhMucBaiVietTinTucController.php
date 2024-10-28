@@ -13,7 +13,8 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function index()
     {
-        //
+        $danhmuc = DanhMucBaiVietTinTuc::withTrashed()->get();
+        return view('admin.contents.danhmucbaiviet.list', compact('danhmuc'));
     }
 
     /**
@@ -21,7 +22,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.contents.danhmucbaiviet.add');
     }
 
     /**
@@ -29,7 +30,10 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function store(StoreDanhMucBaiVietTinTucRequest $request)
     {
-        //
+        $danhmuc = $request->all();
+        DanhMucBaiVietTinTuc::create($danhmuc);
+        return redirect()->route('danh-muc-bai-viet-tin-tuc.index')
+            ->with('success', 'Thêm danh mục thành công');
     }
 
     /**
@@ -37,7 +41,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function show(DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        //
+        return view('admin.contents.danhmucbaiviet.show', compact('danhMucBaiVietTinTuc'));
     }
 
     /**
@@ -45,7 +49,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function edit(DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        //
+        return view('admin.contents.danhmucbaiviet.edit', compact('danhMucBaiVietTinTuc'));
     }
 
     /**
@@ -53,7 +57,10 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function update(UpdateDanhMucBaiVietTinTucRequest $request, DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        //
+        $danhMucBaiVietTinTuc->update($request->all());
+
+        return redirect()->route('danh-muc-bai-viet-tin-tuc.index')
+            ->with('success', 'Cập nhật danh mục thành công');
     }
 
     /**
@@ -61,6 +68,24 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function destroy(DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        //
+        $danhMucBaiVietTinTuc->delete();
+        return redirect()->route('danh-muc-bai-viet-tin-tuc.index')
+            ->with('success', 'Ẩn danh mục thành công');
+    }
+
+    public function restore($id)
+    {
+        $danhMucBaiVietTinTuc = DanhMucBaiVietTinTuc::onlyTrashed()->findOrFail($id);
+        $danhMucBaiVietTinTuc->restore();
+        return redirect()->route('danh-muc-bai-viet-tin-tuc.index')
+            ->with('success', 'Khôi phục danh mục thành công');
+    }
+
+    public function forceDelete($id)
+    {
+        $danhMucBaiVietTinTuc = DanhMucBaiVietTinTuc::onlyTrashed()->findOrFail($id);
+        $danhMucBaiVietTinTuc->forceDelete();
+        return redirect()->route('danh-muc-bai-viet-tin-tuc.index')
+            ->with('success', 'Xóa danh mục thành công');
     }
 }

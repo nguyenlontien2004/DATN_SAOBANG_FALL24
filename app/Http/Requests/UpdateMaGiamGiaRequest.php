@@ -11,7 +11,7 @@ class UpdateMaGiamGiaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,16 @@ class UpdateMaGiamGiaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'ten_ma_giam_gia' => 'required|string|max:255',
+            'ma_giam_gia' => 'required|string|max:50',
+            'so_luong' => 'required|integer|min:0',
+            'mo_ta' => 'nullable|string',
+            'ngay_bat_dau' => 'required|date',
+            'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
+            'gia_tri_giam' => 'required|numeric|min:0|max:100',
         ];
     }
 }
