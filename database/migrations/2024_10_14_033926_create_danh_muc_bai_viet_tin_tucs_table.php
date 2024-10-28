@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('danh_muc_bai_viet_tin_tucs', function (Blueprint $table) {
             $table->id();
             $table->string('ten_danh_muc');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

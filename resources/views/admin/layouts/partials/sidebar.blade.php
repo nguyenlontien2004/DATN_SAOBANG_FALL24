@@ -3,8 +3,9 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img src="{{asset('kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand" height="20" />
-    </a>
+                <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg') }}" alt="navbar brand"
+                    class="navbar-brand" height="20" />
+            </a>
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -106,7 +107,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('admin.phongChieu')}}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>
@@ -127,13 +128,34 @@
                     <div class="collapse" id="tables">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html') }}">
                                     <span class="sub-item">Basic Table</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
+                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html') }}">
                                     <span class="sub-item">Datatables</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#role">
+                        <i class="fas fa-table"></i>
+                        <p>Người dùng & vai trò</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="role">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('admin.role.index')}}">
+                                    <span class="sub-item">Vai trò</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.roleAndUser.index')}}">
+                                    <span class="sub-item">Phân quyền</span>
                                 </a>
                             </li>
                         </ul>
@@ -148,38 +170,24 @@
                     <div class="collapse" id="food">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
-                                    <span class="sub-item">Basic Table</span>
+                                <a href="{{ route('admin.doans.index')}}">
+                                    <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
-                                    <span class="sub-item">Datatables</span>
+                                <a href="">
+                                    <span class="sub-item">Món ăn theo vé</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#maps">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Banner quảng cáo</p>
-                        <span class="caret"></span>
+                    <a  href="{{ route('admin.ticket.index') }}">
+                        <i class="fas fa-table"></i>
+                        <p>Quản lý vé</p>
                     </a>
-                    <div class="collapse" id="maps">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/maps/googlemaps.html')}}">
-                                    <span class="sub-item">Google Maps</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/maps/jsvectormap.html')}}">
-                                    <span class="sub-item">Jsvectormap</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#charts">
@@ -190,20 +198,83 @@
                     <div class="collapse" id="charts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/charts/charts.html')}}">
-                                    <span class="sub-item">Chart Js</span>
+                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách danh mục bài viết tin tức</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="charts/sparkline.html')}}">
-                                    <span class="sub-item">Sparkline</span>
+                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.create') }}">
+                                    <span class="sub-item">Thêm danh mục bài viết tin tức</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách bài viết tin tức</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('bai-viet-tin-tuc.create') }}">
+                                    <span class="sub-item">Thêm bài viết tin tức</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html')}}">
+                    <a data-bs-toggle="collapse" href="#banner">
+                        <i class="far fa-chart-bar"></i>
+
+                        <p>Banner quảng cáo</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="banner">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('banner-quang-cao.index') }}">
+                                    <span class="sub-item">Danh sách vị trí banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('banner-quang-cao.create') }}">
+                                    <span class="sub-item">Thêm vị trí banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('anh-banner-quang-cao.index') }}">
+                                    <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('anh-banner-quang-cao.create') }}">
+                                    <span class="sub-item">Thêm ảnh banner quảng cáo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#km">
+                        <i class="far fa-chart-bar"></i>
+                        <p>Chương trình khuyến mãi</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="km">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('ma_giam_gia.index') }}">
+                                    <span class="sub-item">Danh sách mã giảm giá</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ma_giam_gia.create') }}">
+                                    <span class="sub-item">Thêm mã giảm giá</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html') }}">
                         <i class="fas fa-desktop"></i>
                         <p>Chương trình khuyến mãi</p>
                         <span class="badge badge-success">4</span>

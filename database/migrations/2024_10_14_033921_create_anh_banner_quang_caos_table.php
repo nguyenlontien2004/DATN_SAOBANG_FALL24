@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(BannerQuangCao::class)->constrained()->cascadeOnDelete();
             $table->string('hinh_anh');
             $table->integer('thu_tu')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

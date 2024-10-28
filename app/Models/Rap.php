@@ -13,4 +13,8 @@ class Rap extends Model
         'dia_diem',
         'trang_thai',
     ];
+  
+    protected $casts = [
+        'trang_thai' => 'boolean',
+    ];
 }

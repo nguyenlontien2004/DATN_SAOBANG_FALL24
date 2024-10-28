@@ -4,17 +4,12 @@
 
 <body>
     <div class="wrapper">
-        <!-- Sidebar -->
-        @include('admin.layouts.partials.sidebar') <!-- Include phần sidebar -->
-        <!-- End Sidebar -->
+        @include('admin.layouts.partials.sidebar')
+        <div class="main-panel">
 
-        <div class="main-panel p-5">
-            <!-- Nội dung chính của trang -->
-            @yield('noidung') <!-- Đây là nơi nội dung chính của mỗi trang sẽ được hiển thị -->
-
-            <!-- Footer -->
-            @include('admin.layouts.partials.footer') <!-- Include phần footer -->
-            <!-- End Footer -->
+            @yield('noidung')
+            @include('admin.layouts.partials.footer')
+                @yield('jsCreateSeat')
         </div>
     </div>
 </body>
