@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\VeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::prefix('admin')->group(function () {
-    // route auth admin
-    Route::get('/login',                                   [AuthController::class,'login']);
-    Route::post('post/login',                              [AuthController::class,'postLogin'])->name('login');
-    
-    Route::get('/',                                        [DashboardController::class, 'dashboard']);
+    Route::get('/', [DashboardController::class, 'dashboard']);
     //start route phòng chiếu 
     Route::get('danh-sach-phong-chieu',                    [PhongChieuController::class, 'index'])->name('admin.phongChieu');
     Route::get('them-phong-chieu',                         [PhongChieuController::class, 'create'])->name('admin.themphongChieu');
@@ -65,5 +61,5 @@ Route::prefix('admin')->group(function () {
     // route vé 
     Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
     Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
-    
 });
+

@@ -8,14 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Ve extends Model
 {
     use HasFactory;
+
+//    public function discountCode()
     protected $fillable = [
         'nguoi_dung_id',
-        'ngay_thanh_toan',
         'suat_chieu_id',
         'ma_giam_gia_id',
-        'ngay_thanh_toan',
-        'trang_thai',
+        'do_an_id',
+        'ngay_dat',
+        'tong_tien',
+            'ngay_thanh_toan',
+        'phuong_thuc_thanh_toan',
+        'trang_thai'
     ];
+
     public function user()
     {
         return $this->belongsTo(NguoiDung::class, 'nguoi_dung_id');
@@ -28,7 +34,8 @@ class Ve extends Model
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
     }
-    public function discountCode()
+  
+    public function maGiamGia()
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
     }
