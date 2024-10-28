@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('admin.layouts.partials.head')
+@include('admin.layouts.partials.head') <!-- Include phần head -->
 
 <body>
-
     <div class="wrapper">
         @include('admin.layouts.partials.sidebar')
         <div class="main-panel">
@@ -13,7 +12,6 @@
                 @yield('jsCreateSeat')
         </div>
     </div>
-
 </body>
 
 </html>

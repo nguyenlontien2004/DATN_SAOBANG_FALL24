@@ -3,64 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\TheLoaiPhim;
-use App\Http\Requests\StoreTheLoaiPhimRequest;
-use App\Http\Requests\UpdateTheLoaiPhimRequest;
+use Illuminate\Http\Request;
 
 class TheLoaiPhimController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.contents.theLoaiPhims.creater');
     }
+    public function store(Request $request)
+{
+    $request->validate([
+        'ten_the_loai' => 'required|string|max:255',
+        'trang_thai' => 'required|boolean',
+    ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreTheLoaiPhimRequest $request)
-    {
-        //
-    }
+    TheLoaiPhim::create([
+        'ten_the_loai' => $request->ten_the_loai,
+        'trang_thai' => $request->trang_thai,
+    ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TheLoaiPhim $theLoaiPhim)
-    {
-        //
-    }
+    return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(TheLoaiPhim $theLoaiPhim)
     {
-        //
+        return view('admin.contents.theLoaiPhims.edit',compact('theLoaiPhim'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTheLoaiPhimRequest $request, TheLoaiPhim $theLoaiPhim)
+    public function update(Request $request, TheLoaiPhim $theLoaiPhim)
     {
-        //
+        $request->validate([
+            'ten_the_loai' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
+        $theLoaiPhim->update([
+            'ten_the_loai' => $request->ten_the_loai,
+            'trang_thai' => $request->trang_thai,
+        ]);
+    
+        return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được cập nhật thành công!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(TheLoaiPhim $theLoaiPhim)
     {
-        //
+        $theLoaiPhim->trang_thai = 0;
+        $theLoaiPhim->save(); 
+        return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được xóa thành công!');
     }
+    
 }

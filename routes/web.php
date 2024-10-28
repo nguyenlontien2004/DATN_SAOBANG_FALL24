@@ -35,6 +35,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'dashboard']);
+
     Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
     Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
     Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
@@ -99,5 +102,14 @@ Route::get('/', function () {
     // route vé 
     Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
     Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
+  
+  // Route::resources('phims');
+Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
+Route::resource('phim', App\Http\Controllers\PhimController::class);
+Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+
+Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
+Route::resource('rap', App\Http\Controllers\RapController::class);
+Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
 
