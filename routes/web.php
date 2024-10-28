@@ -11,6 +11,8 @@ use App\Models\AnhBannerQuangCao;
 use App\Models\BaiVietTinTuc;
 use App\Models\BannerQuangCao;
 use App\Models\DanhMucBaiVietTinTuc;
+use App\Http\Controllers\DoAnController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ use App\Models\DanhMucBaiVietTinTuc;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'dashboard']);
     Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -47,4 +50,13 @@ Route::prefix('admin')->group(function () {
     Route::resource('ma_giam_gia', MaGiamGiaController::class);
     Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
     Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
+  
+              Route::get('/', [DoAnController::class, 'index'])->name('index');
+            Route::get('/create', [DoAnController::class, 'create'])->name('create');
+            Route::post('/store', [DoAnController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [DoAnController::class, 'show'])->name('show');
+            Route::get('{id}/edit', [DoAnController::class, 'edit'])->name('edit');
+            Route::put('{id}/update', [DoAnController::class, 'update'])->name('update');
+            Route::delete('{id}/destroy', [DoAnController::class, 'destroy'])->name('destroy');
 });
+
