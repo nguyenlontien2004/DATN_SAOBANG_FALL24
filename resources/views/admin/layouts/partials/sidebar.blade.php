@@ -142,7 +142,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html') }}">
+                                <a href="{{ route('admin.phongChieu')}}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>
@@ -176,6 +176,27 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#role">
+                        <i class="fas fa-table"></i>
+                        <p>Người dùng & vai trò</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="role">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('admin.role.index')}}">
+                                    <span class="sub-item">Vai trò</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.roleAndUser.index')}}">
+                                    <span class="sub-item">Phân quyền</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">
                         <i class="fas fa-table"></i>
                         <p>Quản lý đồ ăn</p>
@@ -197,6 +218,12 @@
                     </div>
                 </li>
 
+                <li class="nav-item">
+                    <a  href="{{ route('admin.ticket.index') }}">
+                        <i class="fas fa-table"></i>
+                        <p>Quản lý vé</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#charts">
                         <i class="far fa-chart-bar"></i>
@@ -231,6 +258,7 @@
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#banner">
                         <i class="far fa-chart-bar"></i>
+
                         <p>Banner quảng cáo</p>
                         <span class="caret"></span>
                     </a>
