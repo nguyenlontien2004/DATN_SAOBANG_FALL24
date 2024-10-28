@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('ma_giam_gias', function (Blueprint $table) {
             $table->id();
             $table->string('ten_ma_giam_gia')->unique();
+            $table->string('ma_giam_gia');
             $table->integer('so_luong');
             $table->text('mo_ta')->nullable();
             $table->date('ngay_bat_dau');
             $table->date('ngay_ket_thuc');
             $table->integer('gia_tri_giam');
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AI Hỏi Đáp Tiếng Việt</title>
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .chat-container {
+                width: 400px;
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .chat-header {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            .chat-box {
+                height: 300px;
+                overflow-y: scroll;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            .input-box {
+                display: flex;
+            }
+            .input-box input {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .input-box button {
+                padding: 10px;
+                margin-left: 5px;
+                background: #007bff;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="chat-container">
+            <div class="chat-header">AI Hỏi Đáp Tiếng Việt</div>
+            <div class="chat-box" id="chat-box">
+                <p>
+                    Xin chào! Tôi là AI hỗ trợ học tiếng Việt. Bạn cần hỏi gì?
+                </p>
+            </div>
+            <div class="input-box">
+                <input
+                    type="text"
+                    id="user-input"
+                    placeholder="Nhập câu hỏi của bạn..."
+                />
+                <button onclick="sendMessage()">Gửi</button>
+            </div>
+        </div>
+
+        <script>
+            function sendMessage() {
+                const userInput = document.getElementById("user-input").value;
+                const chatBox = document.getElementById("chat-box");
+                if (userInput.trim() !== "") {
+                    const userMessage = document.createElement("p");
+                    userMessage.textContent = `Bạn: ${userInput}`;
+                    chatBox.appendChild(userMessage);
+                    document.getElementById("user-input").value = "";
+                    // Add AI response
+                    const aiMessage = document.createElement("p");
+                    aiMessage.textContent = `AI: Đây là câu trả lời cho câu hỏi của bạn.`;
+                    chatBox.appendChild(aiMessage);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            }
+        </script>
+    </body>
+</html>
