@@ -13,7 +13,8 @@ class BannerQuangCaoController extends Controller
      */
     public function index()
     {
-        //
+        $banner = BannerQuangCao::withTrashed()->get();
+        return view('admin.contents.bannerquangcao.list', compact('banner'));
     }
 
     /**
@@ -21,7 +22,7 @@ class BannerQuangCaoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.contents.bannerquangcao.add');
     }
 
     /**
@@ -29,7 +30,10 @@ class BannerQuangCaoController extends Controller
      */
     public function store(StoreBannerQuangCaoRequest $request)
     {
-        //
+        $danhmuc = $request->all();
+        BannerQuangCao::create($danhmuc);
+        return redirect()->route('banner-quang-cao.index')
+            ->with('success', 'Thêm danh mục thành công');
     }
 
     /**
@@ -37,7 +41,7 @@ class BannerQuangCaoController extends Controller
      */
     public function show(BannerQuangCao $bannerQuangCao)
     {
-        //
+        return view('admin.contents.bannerquangcao.show', compact('bannerQuangCao'));
     }
 
     /**
@@ -45,7 +49,7 @@ class BannerQuangCaoController extends Controller
      */
     public function edit(BannerQuangCao $bannerQuangCao)
     {
-        //
+        return view('admin.contents.bannerquangcao.edit', compact('bannerQuangCao'));
     }
 
     /**
@@ -53,7 +57,11 @@ class BannerQuangCaoController extends Controller
      */
     public function update(UpdateBannerQuangCaoRequest $request, BannerQuangCao $bannerQuangCao)
     {
-        //
+
+        $bannerQuangCao->update($request->all());
+
+        return redirect()->route('banner-quang-cao.index')
+            ->with('success', 'Cập nhật danh mục thành công');
     }
 
     /**
@@ -61,6 +69,28 @@ class BannerQuangCaoController extends Controller
      */
     public function destroy(BannerQuangCao $bannerQuangCao)
     {
-        //
+        $bannerQuangCao->delete();
+        return redirect()->route('banner-quang-cao.index')
+            ->with('success', 'Ẩn danh mục thành công');
+    }
+
+    public function restore($id)
+    {
+        $bannerQuangCao = BannerQuangCao::onlyTrashed()->findOrFail($id);
+
+        $bannerQuangCao->restore();
+
+        return redirect()->route('banner-quang-cao.index')
+            ->with('success', 'Khôi phục danh mục thành công');
+    }
+
+    public function forceDelete($id)
+    {
+        $bannerQuangCao = BannerQuangCao::onlyTrashed()->findOrFail($id);
+
+        $bannerQuangCao->forceDelete();
+
+        return redirect()->route('banner-quang-cao.index')
+            ->with('success', 'Xóa danh mục thành công');
     }
 }
