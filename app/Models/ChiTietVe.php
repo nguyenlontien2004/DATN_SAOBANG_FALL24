@@ -22,4 +22,7 @@ class ChiTietVe extends Model
     {
         return $this->belongsToMany(DoAn::class, 'do_an_va_chi_tiet_ves','chi_tiet_ve_id','do_an_id');
     }
+    public function ticket(){
+        return $this->belongsTo(Ve::class,'ve_id');
+    }
 }
