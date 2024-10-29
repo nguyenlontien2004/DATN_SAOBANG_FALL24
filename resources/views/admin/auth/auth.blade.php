@@ -131,10 +131,10 @@
             <span>Đăng nhập bằng facebook</span>
           </a>
         </div>
-        <div class="login-account">
+        <!-- <div class="login-account">
           <span class="msg">Bạn chưa có tài khoản ?</span>
           <a href="#" id="show-signup" class="link">Đăng ký</a>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- Đăng ký tài khoản -->

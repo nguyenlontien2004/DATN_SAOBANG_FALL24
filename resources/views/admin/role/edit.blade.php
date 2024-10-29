@@ -7,7 +7,7 @@
         <!-- End Sidebar -->
 
         <!-- nội dung -->
-        <div class="main-panel">
+        <div>
             <div class="main-header">
                 <div class="main-header-logo">
                     <!-- Logo Header -->
@@ -303,7 +303,7 @@
                 <!-- End Navbar -->
             </div>
 
-            <div class="container">
+            <div class="container" style="padding-top: 75px;">
                 <div class="page-inner">
                     <div class="page-header mb-1">
                         <ul class="breadcrumbs mb-3">

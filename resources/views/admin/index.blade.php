@@ -6,7 +6,7 @@
         @include('admin.layouts.partials.sidebar')
         <!-- End Sidebar -->
 
-        <div class="main-panel">
+        <div>
             <div class="main-header">
                 <div class="main-header-logo">
                     <!-- Logo Header -->

@@ -14,7 +14,7 @@ class MaGiamGia extends Model
 
     protected $fillable = [
         'ten_ma_giam_gia',
-        'ma_giam_gia',
+        // 'ma_giam_gia',
         'so_luong',
         'mo_ta',
         'ngay_bat_dau',
