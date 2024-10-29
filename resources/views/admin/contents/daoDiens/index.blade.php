@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-head-bg-success">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -27,8 +27,13 @@
                         <tr>
                             <td>{{ $daoDien->id }}</td>
                             <td>{{ $daoDien->ten_dao_dien }}</td>
-                            <td><img src="{{ Storage::url($daoDien->anh_dao_dien) }}" alt="Product Image" width="100px"
-                                    height="auto">
+                            <td>
+                                @if ($daoDien->anh_dao_dien)
+                                    <img src="{{ asset('storage/' . $daoDien->anh_dao_dien) }}" alt="Ảnh banner"
+                                        width="100">
+                                @else
+                                    Không có ảnh
+                                @endif
                             </td>
                             <td>{{ \Carbon\Carbon::parse($daoDien->nam_sinh)->format('Y-m-d') }}</td>
                             <td>{{ $daoDien->quoc_tich }}</td>

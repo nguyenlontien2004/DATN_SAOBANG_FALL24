@@ -11,6 +11,7 @@ use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
+use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\VeController;
@@ -54,10 +55,15 @@ Route::prefix('admin')->group(function () {
   Route::post('admin/anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
   Route::delete('admin/anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
 
-  
+  // Mã giảm giá
   Route::resource('ma_giam_gia', MaGiamGiaController::class);
   Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
   Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
+
+  // Người dùng
+  Route::resource('nguoi-dung', NguoiDungController::class);
+  Route::post('admin/nguoi-dung/{id}/restore', [NguoiDungController::class, 'restore'])->name('nguoi-dung.restore');
+  Route::delete('admin/nguoi-dung/{id}/force-delete', [NguoiDungController::class, 'forceDelete'])->name('nguoi-dung.forceDelete');
 
   // Đồ ăn
   Route::get('/danh-sach-do-an', [DoAnController::class, 'index'])->name('do-an.index');

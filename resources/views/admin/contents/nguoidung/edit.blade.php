@@ -19,14 +19,14 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Thông tin admin</a>
+                    <a href="#">Bài viết tin tức</a>
                 </li>
             </ul>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Thông tin admin</h4>
+                <h4 class="card-title">Sửa bài viết tin tức</h4>
             </div>
             <div class="card-body">
                 <form action="{{ route('bai-viet-tin-tuc.update', $baiVietTinTuc->id) }}" method="POST">

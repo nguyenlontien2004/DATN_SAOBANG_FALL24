@@ -18,8 +18,8 @@ class SuatChieuController extends Controller
     }
     public function create()
     {
-        $phongChieus = PhongChieu::where('trang_thai', 1)->get(); 
-        $phims = Phim::where('trang_thai', 1)->get(); 
+        $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+        $phims = Phim::where('trang_thai', 1)->get();
 
         return view('admin.contents.suatChieus.creater', compact('phongChieus', 'phims'));
     }
@@ -29,11 +29,13 @@ class SuatChieuController extends Controller
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required',
+            'gio_ket_thuc' => 'required',
             'trang_thai' => 'required|boolean',
         ]);
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
+            'gio_ket_thuc' => $request->gio_ket_thuc,
             'gio_bat_dau' => $request->gio_bat_dau,
             'trang_thai' => $request->trang_thai,
         ]);
@@ -42,16 +44,17 @@ class SuatChieuController extends Controller
     }
     public function edit(SuatChieu $suatChieu)
     {
-        $phongChieus = PhongChieu::where('trang_thai', 1)->get(); 
-        $phims = Phim::where('trang_thai', 1)->get(); 
+        $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+        $phims = Phim::where('trang_thai', 1)->get();
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
-    
+
     public function update(Request $request, SuatChieu $suatChieu)
     {
         $request->validate([
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'phim_id' => 'required|exists:phims,id',
+            'gio_ket_thuc' => 'required',
             'gio_bat_dau' => 'required',
             'trang_thai' => 'required|boolean',
         ]);
@@ -59,6 +62,7 @@ class SuatChieuController extends Controller
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
             'gio_bat_dau' => $request->gio_bat_dau,
+            'gio_ket_thuc' => $request->gio_ket_thuc,
             'trang_thai' => $request->trang_thai,
         ]);
         return redirect()->route('suatChieu.index')->with('success', 'Cập nhật suất chiếu thành công!');
