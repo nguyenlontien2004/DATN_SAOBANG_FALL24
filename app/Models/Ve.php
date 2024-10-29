@@ -9,7 +9,7 @@ class Ve extends Model
 {
     use HasFactory;
 
-    //    public function discountCode()
+        //    public function discountCode()
     protected $fillable = [
         'nguoi_dung_id',
         'suat_chieu_id',

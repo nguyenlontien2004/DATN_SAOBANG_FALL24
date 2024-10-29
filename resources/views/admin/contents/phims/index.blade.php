@@ -1,6 +1,6 @@
-@extends('admin.layouts.master')
+@extends('admin.index')
 
-@section('noidung')
+@section('content')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Phim</div>
@@ -33,17 +33,23 @@
                             <td>{{ $phim->ten_phim }}</td>
                             <td>
                                 @foreach ($phim->daoDiens as $daoDien)
-                                    {{ $daoDien->ten_dao_dien }}@if (!$loop->last), @endif
+                                    {{ $daoDien->ten_dao_dien }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
                                 @foreach ($phim->dienViens as $dienVien)
-                                    {{ $dienVien->ten_dien_vien }}@if (!$loop->last), @endif
+                                    {{ $dienVien->ten_dien_vien }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>
                                 @foreach ($phim->theLoaiPhims as $theLoaiPhim)
-                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last), @endif
+                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @endforeach
                             </td>
                             <td>{{ $phim->mo_ta }}</td>
@@ -87,7 +93,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-                
+
             </table>
         </div>
     </div>

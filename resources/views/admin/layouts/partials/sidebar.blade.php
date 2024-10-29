@@ -3,8 +3,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg') }}" alt="navbar brand"
-                    class="navbar-brand" height="20" />
+                <span class="text-">Sao Băng</span>
             </a>
             </a>
             <div class="nav-toggle">
@@ -76,12 +75,12 @@
                     <div class="collapse" id="sidebarLayouts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('dienVien.index') }}" >
+                                <a href="{{ route('dienVien.index') }}">
                                     <span class="sub-item">Quản lý diễn viên</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('daoDien.index') }}" >
+                                <a href="{{ route('daoDien.index') }}">
                                     <span class="sub-item">Quản lý Đạo diễn</span>
                                 </a>
                             </li>
@@ -97,17 +96,17 @@
                     <div class="collapse" id="forms">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('phim.index') }}" >
+                                <a href="{{ route('phim.index') }}">
                                     <span class="sub-item">Quản lý phim</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('rap.index') }}" >
+                                <a href="{{ route('rap.index') }}">
                                     <span class="sub-item">Quản lý rạp chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.phongChieu')}}">
+                                <a href="{{ route('admin.phongChieu') }}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>
@@ -149,12 +148,12 @@
                     <div class="collapse" id="role">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('admin.role.index')}}">
+                                <a href="{{ route('admin.role.index') }}">
                                     <span class="sub-item">Vai trò</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.roleAndUser.index')}}">
+                                <a href="{{ route('admin.roleAndUser.index') }}">
                                     <span class="sub-item">Phân quyền</span>
                                 </a>
                             </li>
@@ -170,7 +169,7 @@
                     <div class="collapse" id="food">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('admin.doans.index')}}">
+                                <a href="{{ route('do-an.index') }}">
                                     <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
@@ -184,7 +183,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a  href="{{ route('admin.ticket.index') }}">
+                    <a href="{{ route('admin.ticket.index') }}">
                         <i class="fas fa-table"></i>
                         <p>Quản lý vé</p>
                     </a>
