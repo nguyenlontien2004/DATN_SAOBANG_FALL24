@@ -1,5 +1,6 @@
-@extends('admin.layouts.master')
-@section('noidung')
+@extends('admin.index')
+
+@section('content')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Suất Chiếu</div>
@@ -26,7 +27,7 @@
                             <td>Suất Chiếu {{ $suatChieu->gio_bat_dau }}</td>
                             <td>{{ $suatChieu->gio_bat_dau }}</td>
                             <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
-                            <td>{{ $suatChieu->phim->ten_phim }}</td> 
+                            <td>{{ $suatChieu->phim->ten_phim }}</td>
                             <td class="text-center">
                                 @if ($suatChieu->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
