@@ -26,8 +26,6 @@ class StoreDoAnRequest extends FormRequest
             'gia' => 'required|numeric|min:0',
             'hinh_anh' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'mo_ta' => 'nullable|string',
-            'luot_mua' => 'nullable|integer|min:0',
-            'trang_thai' => 'required|boolean',
         ];
     }
 

@@ -1,6 +1,7 @@
-@extends('admin.layouts.master')
-@section('noidung')
-    <div class="card container mt-5">
+@extends('admin.index')
+
+@section('content')
+    <div class="card mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Đạo diễn</div>
             <a href="{{ route('daoDien.create') }}" class="btn btn-primary">Thêm mới Đạo diễn</a>

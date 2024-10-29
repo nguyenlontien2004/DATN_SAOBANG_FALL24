@@ -13,7 +13,7 @@ class DoAnController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $title = "Danh sách món ăn";
         $listDoAn = DoAn::query()->orderByDesc('id')->paginate(5);
         return view('admin.doans.index', compact('title', 'listDoAn'));
@@ -36,7 +36,7 @@ class DoAnController extends Controller
         if ($request->isMethod('POST')) {
             // Lấy tất cả các tham số ngoại trừ _token
             $params = $request->except('_token');
-        
+
             // Kiểm tra xem có hình ảnh được tải lên hay không
             if ($request->hasFile('hinh_anh')) {
                 // Lưu trữ file hình ảnh vào thư mục 'uploads/doans' trong storage và trả về đường dẫn
@@ -44,17 +44,16 @@ class DoAnController extends Controller
             } else {
                 $filepath = null;
             }
-        
+
             // Gán đường dẫn của hình ảnh vào mảng tham số
             $params['hinh_anh'] = $filepath;
-        
+
             // Tạo bản ghi mới cho bảng 'DoAn' (tên bảng được giả định)
             DoAn::create($params);
-        
+
             // Chuyển hướng về trang danh sách với thông báo thành công
-            return redirect()->route('admin.doans.index')->with('success', 'Thêm dữ liệu thành công');
+            return redirect()->route('do-an.index')->with('success', 'Thêm dữ liệu thành công');
         }
-        
     }
 
     /**
@@ -83,9 +82,9 @@ class DoAnController extends Controller
     {
         if ($request->isMethod('PUT')) {
             $params = $request->except('_token', '_method');
-        
+
             $doAn = DoAn::findOrFail($id);
-        
+
             if ($request->hasFile('hinh_anh')) {
                 // Xóa ảnh cũ nếu có
                 if ($doAn->hinh_anh && Storage::disk('public')->exists($doAn->hinh_anh)) {
@@ -97,16 +96,15 @@ class DoAnController extends Controller
                 // Giữ lại đường dẫn ảnh cũ nếu không có ảnh mới được tải lên
                 $filepath = $doAn->hinh_anh;
             }
-            
+
             // Cập nhật đường dẫn hình ảnh vào $params
             $params['hinh_anh'] = $filepath;
-        
+
             // Cập nhật thông tin sản phẩm
             $doAn->update($params);
-        
-            return redirect()->route('admin.doans.index')->with('success', 'Cập nhật dữ liệu thành công');
+
+            return redirect()->route('do-an.index')->with('success', 'Cập nhật dữ liệu thành công');
         }
-        
     }
 
     /**
@@ -114,19 +112,17 @@ class DoAnController extends Controller
      */
     public function destroy(string $id)
     {
-        
-            $doAn = DoAn::findOrFail($id);
-            
-            // Xóa sản phẩm
-            $doAn->delete();
-        
-            // Kiểm tra và xóa hình ảnh nếu tồn tại
-            if ($doAn->hinh_anh && Storage::disk('public')->exists($doAn->hinh_anh)) {
-                Storage::disk('public')->delete($doAn->hinh_anh);
-            }
-        
-            return redirect()->route('admin.doans.index')->with('success', 'Xóa dữ liệu thành công');
-        }
-        
 
+        $doAn = DoAn::findOrFail($id);
+
+        // Xóa sản phẩm
+        $doAn->delete();
+
+        // Kiểm tra và xóa hình ảnh nếu tồn tại
+        if ($doAn->hinh_anh && Storage::disk('public')->exists($doAn->hinh_anh)) {
+            Storage::disk('public')->delete($doAn->hinh_anh);
+        }
+
+        return redirect()->route('do-an.index')->with('success', 'Xóa dữ liệu thành công');
+    }
 }

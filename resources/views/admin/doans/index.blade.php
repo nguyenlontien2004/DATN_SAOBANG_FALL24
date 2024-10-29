@@ -1,9 +1,9 @@
-@extends('admin.layouts.master')
+@extends('admin.index')
 
 @section('title')
     {{ $title }}
 @endsection
-@section('noidung')
+@section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="content">
@@ -19,7 +19,7 @@
                             <div class="card-header d-flex justify-content-between">
                                 <h5 class="card-title align-content-center mb-0">{{ $title }}</h5>
 
-                                <a href="{{ route('admin.doans.create') }}" class="btn btn-success"><i
+                                <a href="{{ route('do-an.create') }}" class="btn btn-success"><i
                                         data-feather="plus-square"></i>Thêm món
                                     ăn</a>
                             </div><!-- end card header -->
@@ -60,9 +60,9 @@
                                                         {{ $item->trang_thai == true ? 'Hiển thị' : 'Ẩn' }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('admin.doans.edit', $item->id) }}">Sửa</a>
+                                                        <a href="{{ route('do-an.edit', $item->id) }}">Sửa</a>
 
-                                                        <form action="{{ route('admin.doans.destroy', $item->id) }}"
+                                                        <form action="{{ route('do-an.destroy', $item->id) }}"
                                                             method="post" class="d-inline"
                                                             onsubmit="return confirm('Bạn có chắc chắn không?')">
                                                             @csrf
