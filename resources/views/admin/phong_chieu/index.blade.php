@@ -6,7 +6,6 @@
     <!-- End Sidebar -->
 
     <!-- nội dung -->
-    <div class="main-panel">
         <div class="main-header">
             <div class="main-header-logo">
                 <!-- Logo Header -->
@@ -301,7 +300,7 @@
             <!-- End Navbar -->
         </div>
 
-        <div class="container">
+        <div class="container" style="padding-top: 75px;">
             <div class="page-inner">
                 <div class="page-header">
                     <ul class="breadcrumbs">
@@ -396,7 +395,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 <script>
     $(document).ready(function () {

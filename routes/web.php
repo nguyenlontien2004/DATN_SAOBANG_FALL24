@@ -63,13 +63,13 @@ Route::prefix('admin')->group(function () {
     Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
     Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
   
-              Route::get('/', [DoAnController::class, 'index'])->name('index');
-            Route::get('/create', [DoAnController::class, 'create'])->name('create');
-            Route::post('/store', [DoAnController::class, 'store'])->name('store');
-            Route::get('/show/{id}', [DoAnController::class, 'show'])->name('show');
-            Route::get('{id}/edit', [DoAnController::class, 'edit'])->name('edit');
-            Route::put('{id}/update', [DoAnController::class, 'update'])->name('update');
-            Route::delete('{id}/destroy', [DoAnController::class, 'destroy'])->name('destroy');
+              Route::get('/do-an', [DoAnController::class, 'index'])->name('admin.doans.index');
+            Route::get('/create', [DoAnController::class, 'create'])->name('admin.doans.create');
+            Route::post('/store', [DoAnController::class, 'store'])->name('admin.doans.store');
+            Route::get('/show/{id}', [DoAnController::class, 'show'])->name('admin.doans.show');
+            Route::get('{id}/edit', [DoAnController::class, 'edit'])->name('admin.doans.edit');
+            Route::put('{id}/update', [DoAnController::class, 'update'])->name('admin.doans.update');
+            Route::delete('{id}/destroy', [DoAnController::class, 'destroy'])->name('admin.doans.destroy');
 
     //start route phòng chiếu 
     Route::get('danh-sach-phong-chieu',                    [PhongChieuController::class, 'index'])->name('admin.phongChieu');

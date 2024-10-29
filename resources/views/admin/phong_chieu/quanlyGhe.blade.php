@@ -69,7 +69,7 @@
         }
     </style>
     <!-- nội dung -->
-    <div class="main-panel">
+    <div>
         <div class="main-header">
             <div class="main-header-logo">
                 <!-- Logo Header -->
@@ -472,7 +472,7 @@
         </div>
         <!-- end modal edit seat -->
 
-        <div class="container">
+        <div class="container" style="padding-top: 75px;">
             <div class="page-inner">
                 <div class="page-header">
                     <ul class="breadcrumbs">
