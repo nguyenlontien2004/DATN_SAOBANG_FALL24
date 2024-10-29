@@ -3,64 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rap;
-use App\Http\Requests\StoreRapRequest;
-use App\Http\Requests\UpdateRapRequest;
+use Illuminate\Http\Request;
 
 class RapController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-    }
+        $raps = Rap::orderBy('id', 'desc')->get(); 
+        return view('admin.contents.raps.index', compact('raps')); 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    }
     public function create()
     {
-        //
+        return view('admin.contents.raps.creater');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRapRequest $request)
+    public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'ten_rap' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
+        Rap::create([
+            'ten_rap' => $request->ten_rap,
+            'dia_diem' => $request->dia_diem,
+            'trang_thai' => $request->trang_thai,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Rap $rap)
-    {
-        //
+        return redirect()->route('rap.index')->with('success', 'Rạp đã được tạo thành công.');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Rap $rap)
     {
-        //
+        return view('admin.contents.raps.edit', compact('rap'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRapRequest $request, Rap $rap)
+    public function update(Request $request, Rap $rap)
     {
-        //
+        $request->validate([
+            'ten_rap' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
+        $rap->update([
+            'ten_rap' => $request->ten_rap,
+            'dia_diem' => $request->dia_diem,
+            'trang_thai' => $request->trang_thai,
+        ]);
+    
+        return redirect()->route('rap.index')->with('success', 'Rạp đã được cập nhật thành công.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Rap $rap)
     {
-        //
+        $rap->trang_thai = 0;
+        $rap->save();
+        return redirect()->route('rap.index')->with('success', 'Rạp đã được xóa thành công.');
     }
 }

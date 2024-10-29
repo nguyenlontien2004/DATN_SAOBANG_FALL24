@@ -1,6 +1,6 @@
-@extends('admin.index')
+@extends('admin.layouts.master')
 
-@section('content')
+@section('noidung')
     <div class="page-inner">
         <div class="page-header">
             <h3 class="fw-bold mb-3">Tables</h3>
