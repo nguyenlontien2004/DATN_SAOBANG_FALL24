@@ -20,14 +20,14 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Danh sách banner quảng cáo</a>
+                    <a href="#">Basic Tables</a>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Danh sách banner quảng cáo</div>
+                    <div class="card-title">Danh sách bài viết</div>
                     <div class="thongbao text-center">
                         @if (session('success'))
                             <span class="text text-success font-weight-bold"
@@ -40,30 +40,44 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Vị trí</th>
-                                <th scope="col">Mô tả</th>
+                                <th scope="col">Tiêu đề</th>
+                                <th scope="col">Tóm tắt</th>
+                                <th scope="col">Hình ảnh</th>
+                                <th scope="col">Lượt xem</th>
+                                <th scope="col">Danh Mục</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($banner as $index => $bn)
+                            @foreach ($baiviet as $index => $bv)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $bn->vi_tri }}</td>
-                                    <td>{{ $bn->mo_ta }}</td>
+                                    <td>{{ $bv->tieu_de }}</td>
+                                    <td>{{ $bv->tom_tat }}</td>
                                     <td>
-                                        @if ($bn->deleted_at)
+                                        @if ($bv->hinh_anh)
+                                            <img src="{{ asset('storage/' . $bv->hinh_anh) }}" alt="Hình ảnh" width="50"
+                                                height="50">
+                                        @else
+                                            Không có
+                                        @endif
+                                    </td>
+                                    <td>{{ $bv->luot_xem }}</td>
+                                    <td>{{ $bv->danhMuc->ten_danh_muc ?? 'Không có danh mục' }}</td>
+
+                                    <td>
+                                        @if ($bv->deleted_at)
                                             Không hoạt động
                                         @else
                                             Hoạt động
                                         @endif
                                     </td>
                                     <td class="text-center align-middle">
-                                        @if ($bn->trashed())
+                                        @if ($bv->trashed())
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 {{-- Nút khôi phục --}}
-                                                <form action="{{ route('banner-quang-cao.restore', $bn->id) }}"
+                                                <form action="{{ route('bai-viet-tin-tuc.restore', $bv->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success btn-sm me-1"
@@ -71,7 +85,7 @@
                                                         Phục</button>
                                                 </form>
                                                 {{-- Nút xóa vĩnh viễn --}}
-                                                <form action="{{ route('banner-quang-cao.forDelete', $bn->id) }}"
+                                                <form action="{{ route('bai-viet-tin-tuc.forDelete', $bv->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -81,27 +95,31 @@
                                             </div>
                                         @else
                                             <div class="btn-group" role="group" aria-label="Hành động">
+                                                <!-- Nút show -->
+                                                <a href="{{ route('bai-viet-tin-tuc.show', $bv->id) }}"
+                                                    class="btn btn-info btn-sm me-1">Show</a>
                                                 <!-- Nút chỉnh sửa -->
-                                                <a href="{{ route('banner-quang-cao.edit', $bn->id) }}"
+                                                <a href="{{ route('bai-viet-tin-tuc.edit', $bv->id) }}"
                                                     class="btn btn-warning btn-sm me-1">Edit</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
-                                                <form action="{{ route('banner-quang-cao.destroy', $bn->id) }}"
+                                                <form action="{{ route('bai-viet-tin-tuc.destroy', $bv->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Bạn có muốn ẩn chứ?')">Ẩn</button>
+                                                        onclick="return confirm('Bạn có chắc chắn ẩn bài viết tin tức?')">Ẩn</button>
                                                 </form>
                                             </div>
                                         @endif
 
                                     </td>
+
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
+                {{ $baiviet->links() }}
             </div>
         </div>
     </div>

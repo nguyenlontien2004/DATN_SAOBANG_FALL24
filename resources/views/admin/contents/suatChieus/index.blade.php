@@ -8,12 +8,13 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-head-bg-success">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tên Suất Chiếu</th>
                         <th scope="col">Thời Gian Bắt Đầu</th>
+                        <th scope="col">Thời Gian Kết Thúc</th>
                         <th scope="col">Phòng Chiếu</th>
                         <th scope="col">Phim</th>
                         <th scope="col">Trạng Thái</th>
@@ -26,6 +27,7 @@
                             <td>{{ $suatChieu->id }}</td>
                             <td>Suất Chiếu {{ $suatChieu->gio_bat_dau }}</td>
                             <td>{{ $suatChieu->gio_bat_dau }}</td>
+                            <td>{{ $suatChieu->gio_ket_thuc }}</td>
                             <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
                             <td>{{ $suatChieu->phim->ten_phim }}</td>
                             <td class="text-center">

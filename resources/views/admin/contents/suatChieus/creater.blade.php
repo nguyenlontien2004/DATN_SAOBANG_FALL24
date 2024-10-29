@@ -45,6 +45,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
+                        <input type="number" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="trang_thai" class="form-label">Trạng Thái</label>
                         <select class="form-select" id="trang_thai" name="trang_thai" required>
                             <option value="1">Hoạt động</option>

@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-head-bg-success">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -37,7 +37,7 @@
                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
+                                        <button type="submit" class="btn btn-danger me-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-trash2" viewBox="0 0 16 16">
                                                 <path

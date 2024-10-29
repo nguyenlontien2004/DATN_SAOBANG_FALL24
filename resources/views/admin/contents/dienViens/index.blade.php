@@ -7,7 +7,7 @@
             <a href="{{ route('dienVien.create') }}" class="btn btn-primary">Thêm mới Diễn Viên</a>
         </div>
         <div class="card-body">
-            <table class="table table-head-bg-success">
+            <table class="table ">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -26,8 +26,13 @@
                         <tr>
                             <td>{{ $dienVien->id }}</td>
                             <td>{{ $dienVien->ten_dien_vien }}</td>
-                            <td><img src="{{ Storage::url($dienVien->anh_dien_vien) }}" alt="Product Image" width="100px"
-                                    height="auto">
+                            <td>
+                                @if ($dienVien->anh_dien_vien)
+                                    <img src="{{ asset('storage/' . $dienVien->anh_dien_vien) }}" alt="Ảnh banner"
+                                        width="100">
+                                @else
+                                    Không có ảnh
+                                @endif
                             </td>
                             <td>{{ \Carbon\Carbon::parse($dienVien->nam_sinh)->format('Y-m-d') }}</td>
                             <td>{{ $dienVien->quoc_tich }}</td>
