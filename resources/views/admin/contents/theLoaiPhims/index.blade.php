@@ -1,5 +1,6 @@
-@extends('admin.layouts.master')
-@section('noidung')
+@extends('admin.index')
+
+@section('content')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Thể loại</div>
