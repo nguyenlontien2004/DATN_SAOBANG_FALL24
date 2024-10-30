@@ -16,12 +16,12 @@
                         <th scope="col">Đạo Diễn</th>
                         <th scope="col">Diễn Viên</th>
                         <th scope="col">Thể Loại</th>
-                        <th scope="col">Mô Tả</th>
+                        {{-- <th scope="col">Mô Tả</th> --}}
                         <th scope="col">Thời Lượng</th>
                         <th scope="col">Lượt Xem</th>
                         <th scope="col">Ngày Khởi Chiếu</th>
                         <th scope="col">Ngày Kết Thúc</th>
-                        <th scope="col">Trailer</th>
+                        {{-- <th scope="col">Trailer</th> --}}
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
@@ -52,12 +52,12 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td>{{ $phim->mo_ta }}</td>
+                            {{-- <td>{{ $phim->mo_ta }}</td> --}}
                             <td>{{ $phim->thoi_luong }}</td>
                             <td>{{ $phim->luot_xem_phim }}</td>
                             <td>{{ \Carbon\Carbon::parse($phim->ngay_khoi_chieu)->format('Y-m-d') }}</td>
                             <td>{{ \Carbon\Carbon::parse($phim->ngay_ket_thuc)->format('Y-m-d') }}</td>
-                            <td><a href="{{ $phim->trailer }}" target="_blank">Xem Trailer</a></td>
+                            {{-- <td><a href="{{ $phim->trailer }}" target="_blank">Xem Trailer</a></td> --}}
                             <td class="text-center">
                                 @if ($phim->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
@@ -95,6 +95,7 @@
                 </tbody>
 
             </table>
+            
         </div>
     </div>
 @endsection

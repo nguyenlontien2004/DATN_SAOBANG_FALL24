@@ -6,6 +6,7 @@ use App\Models\NguoiDung;
 use App\Http\Requests\StoreNguoiDungRequest;
 use App\Http\Requests\UpdateNguoiDungRequest;
 use App\Models\VaiTro;
+use Illuminate\Support\Facades\Storage;
 
 class NguoiDungController extends Controller
 {
@@ -15,8 +16,8 @@ class NguoiDungController extends Controller
     public function index()
     {
         $nguoidung = NguoiDung::withTrashed()
-            ->with('vaitro')->paginate(10);
-        return view('admin.contents.baiviettintuc.list', compact('nguoidung'));
+            ->with('vaiTros')->paginate(10);
+        return view('admin.contents.nguoidung.list', compact('nguoidung'));
     }
 
     /**
@@ -34,15 +35,32 @@ class NguoiDungController extends Controller
      */
     public function store(StoreNguoiDungRequest $request)
     {
-        //
+        $nguoidung = $request->all();
+
+        if ($request->hasFile('hinh_anh')) {
+            $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
+        } else {
+            $hinhanh = null;
+        }
+
+        $nguoidung['hinh_anh'] = $hinhanh;
+
+        NguoiDung::create($nguoidung);
+
+        return redirect()->route('nguoi-dung.index')
+            ->with('success', 'Thêm người dùng thành công');
     }
+
+
 
     /**
      * Display the specified resource.
      */
     public function show(NguoiDung $nguoiDung)
     {
-        //
+        $vaitro = VaiTro::all();
+
+        return  view('admin.contents.nguoidung.show', compact('nguoiDung', 'vaitro'));
     }
 
     /**
@@ -50,7 +68,9 @@ class NguoiDungController extends Controller
      */
     public function edit(NguoiDung $nguoiDung)
     {
-        //
+        $vaitro = VaiTro::all();
+
+        return  view('admin.contents.nguoidung.edit', compact('nguoiDung', 'vaitro'));
     }
 
     /**
@@ -58,7 +78,24 @@ class NguoiDungController extends Controller
      */
     public function update(UpdateNguoiDungRequest $request, NguoiDung $nguoiDung)
     {
-        //
+        $nguoidung = $request->all();
+
+        if ($request->hasFile('hinh_anh')) {
+            if ($nguoiDung->hinhanh) {
+                Storage::disk('public')->delete($nguoiDung);
+            }
+
+            $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
+        } else {
+            $hinhanh = $nguoiDung->hinhanh;
+        }
+
+        $nguoidung['hinh_anh'] = $hinhanh;
+
+        $nguoiDung->update($nguoidung);
+
+        return redirect()->route('nguoi-dung.index')
+            ->with('success', 'Sửa người dùng thành công');
     }
 
     /**
@@ -66,6 +103,33 @@ class NguoiDungController extends Controller
      */
     public function destroy(NguoiDung $nguoiDung)
     {
-        //
+        $nguoiDung->delete();
+
+        return redirect()->route('nguoi-dung.index')
+            ->with('success', 'Ẩn người dùng thành công');
+    }
+
+    public function restore($id)
+    {
+        $nguoiDung = NguoiDung::onlyTrashed()->findOrFail($id);
+
+        $nguoiDung->restore();
+
+        return redirect()->route('nguoi-dung.index')
+            ->with('success', 'Khôi phục người dùng thành công');
+    }
+
+    public function forceDelete($id)
+    {
+        $nguoiDung = NguoiDung::onlyTrashed()->findOrFail($id);
+
+        if ($nguoiDung->hinh_anh) {
+            Storage::disk('public')->delete($nguoiDung->hinh_anh);
+        }
+
+        $nguoiDung->forceDelete();
+
+        return redirect()->route('nguoi-dung.index')
+            ->with('success', 'Xóa người dùng thành công');
     }
 }

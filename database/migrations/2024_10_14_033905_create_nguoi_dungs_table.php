@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('anh_dai_dien')->nullable();
             $table->string('mat_khau');
             $table->string('gioi_tinh');
+            $table->string('hinh_anh')->nullable();
             $table->text('dia_chi')->nullable();
             $table->date('nam_sinh');
-            $table->date('ngay_dang_ky');
             $table->integer('gold')->default(0);
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
