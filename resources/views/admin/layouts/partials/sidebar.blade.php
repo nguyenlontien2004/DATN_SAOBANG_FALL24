@@ -1,19 +1,25 @@
 <div class="sidebar" data-background-color="dark">
+    <!-- Sidebar Logo -->
     <div class="sidebar-logo">
         <!-- Logo Header -->
-        <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-                <span class="text-">Sao Băng</span>
+        <div class="logo-header" data-background-color="light"
+            style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center;">
+                <img src="https://files.oaiusercontent.com/file-fzKrGiSjtFvjVxuESDMgtKKD?se=2024-10-30T04%3A57%3A16Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D54b5a2cd-b6e4-4fc4-9f8b-ef36090d88d8.webp&sig=IVUSPVuT5il78/tPX228UeRwLXuStxnPHMfeQOItmlo%3D"
+                    alt="Sao Băng Logo" style="max-height: 50px;">
             </a>
-            </a>
-            <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
+
+            <!-- Toggle Buttons -->
+            <div class="nav-toggle" style="display: flex; align-items: center;">
+                <button class="btn btn-toggle toggle-sidebar" style="margin-right: 5px;">
                     <i class="gg-menu-right"></i>
                 </button>
                 <button class="btn btn-toggle sidenav-toggler">
                     <i class="gg-menu-left"></i>
                 </button>
             </div>
+
+            <!-- Topbar Toggler -->
             <button class="topbar-toggler more">
                 <i class="gg-more-vertical-alt"></i>
             </button>
