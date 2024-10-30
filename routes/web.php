@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AuthController;
 
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\BaiVietTinTucController;
@@ -33,7 +34,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-  Route::get('/', [DashboardController::class, 'dashboard']);
+    // route auth admin
+    Route::get('/login',                                   [AuthController::class,'login']);
+    Route::post('post/login',                              [AuthController::class,'postLogin'])->name('login');
+    
+    Route::get('/',                                        [DashboardController::class, 'dashboard']);
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);

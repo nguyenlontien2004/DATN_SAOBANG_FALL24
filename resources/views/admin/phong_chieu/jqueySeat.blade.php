@@ -268,7 +268,7 @@
                                        </div>`
                                     i++
                                 } else {
-                                    seatRow += `<li id="${seat.id}" data-stt="${seat.so_hieu_ghe}" data-type="${seat.the_loai}" style="width:25px;height:25px" data-type="${seat.the_loai}" class="m-2 d-flex justify-content-center align-items-center editSeat rounded ${seat.the_loai == 'thuong' ? 'regularchair' : 'seatVip'} seat ${seat.trang_thai != true ? 'takenSeat' : ''}">${row + seat.so_hieu_ghe}</li>`;
+                                    seatRow += `<li id="${seat.id}" data-stt="${seat.so_hieu_ghe}" data-type="${seat.the_loai}" style="width:25px;height:25px" data-type="${seat.the_loai}" class="m-2 d-flex justify-content-center align-items-center editSeat rounded ${seat.the_loai == 'thuong' ? 'regularchair' : 'seatVip'} seat">${row + seat.so_hieu_ghe}</li>`;
                                 }
                             }
                             seatRow += `</ul>`;
@@ -276,9 +276,9 @@
                         });
                         $('.list-type-seat').html(html)
                         $('#staticBackdrop').modal('show')
+                        $('.warning').html('')
                         $('.typeSeatedit').val(0)
                         $('.typeSeatedit').find('option').each((_, e) => {
-                            console.log(e);
                             if ($(e).val() == type) {
                                 $(e).hide()
                             }
@@ -321,7 +321,6 @@
                     PushAndRemoveRow($(e).attr('id'), dataRow, $(e).attr('data-stt'))
                 })
             }
-            console.log(selectedSeats);
         })
         function PushAndRemoveRow(id, row, stt) {
             if (!selectedSeats['idSeat'][row] && !selectedSeats['sttRow'][row]) {
@@ -461,16 +460,16 @@
                                 // Kiểm tra nếu là ghế đôi
                                 if (seat.isDoubleChair !== null && i + 1 < seats.length) {
                                     let nextSeat = seats[i + 1];  // Lấy ghế tiếp theo
-                                    let idSeat = seats[i + 1];  // Lấy id ghế tiếp theo
+                                    // let idSeat = seats[i + 1];  // Lấy id ghế tiếp theo
                                     // Ghép ghế đôi vào trong cùng một 
-                                    seatRow += `<div class="seat-group-parent doubSeat seat" data-type="${seat.the_loai}">
+                                    seatRow += `<div class="seat-group-parent ${seat.isBooked >= 1 && nextSeat.isBooked >= 1  ? 'takenSeat' : ''} doubSeat seat" data-type="${seat.the_loai}">
                                            <li id="${seat.id}" class="seat-group">${row}${seat.so_hieu_ghe}</li>
-                                           <li id="${idSeat.id}" class="seat-group">${row}${nextSeat.so_hieu_ghe}</li>
+                                           <li id="${nextSeat.id}" class="seat-group">${row}${nextSeat.so_hieu_ghe}</li>
                                        </div>`;
                                     i += 2; // Bỏ qua ghế tiếp theo vì đã ghép
                                 } else {
                                     // Ghế đơn
-                                    seatRow += `<li id="${seat.id}" data-type="${seat.the_loai}" class="${seat.the_loai == 'thuong' ? 'regularchair' : 'seatVip'} seat ${seat.trang_thai != true ? 'takenSeat' : ''}">${row}${seat.so_hieu_ghe}</li>`;
+                                    seatRow += `<li id="${seat.id}" data-type="${seat.the_loai}" class="${seat.the_loai == 'thuong' ? 'regularchair' : 'seatVip'} seat ${seat.isBooked >= 1 ? 'takenSeat' : ''}">${row}${seat.so_hieu_ghe}</li>`;
                                     i++; // Xử lý ghế đơn tiếp theo
                                 }
                             }
@@ -532,9 +531,7 @@
                 },
                 data: JSON.stringify(seatData),
                 success: function (data) {
-                    $('.loading').hide()
                     if (data.status == 200) {
-                        $('.btn-close').click()
                         $.notify({
                             icon: 'icon-bell',
                             title: 'Thành công',
@@ -566,6 +563,8 @@
                     console.log('lỗi:' + error);
                 }
             })
+            $('.loading').hide()
+            $('.btn-close').click()
         })
     })
 </script>

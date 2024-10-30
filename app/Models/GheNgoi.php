@@ -27,4 +27,8 @@ class GheNgoi extends Model
     {
         return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
     }
+    public function chitietve()
+    {
+        return $this->hasMany(ChiTietVe::class, 'ghe_ngoi_id');
+    }
 }
