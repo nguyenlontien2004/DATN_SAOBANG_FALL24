@@ -531,9 +531,7 @@
                 },
                 data: JSON.stringify(seatData),
                 success: function (data) {
-                    $('.loading').hide()
                     if (data.status == 200) {
-                        $('.btn-close').click()
                         $.notify({
                             icon: 'icon-bell',
                             title: 'Thành công',
@@ -565,6 +563,8 @@
                     console.log('lỗi:' + error);
                 }
             })
+            $('.loading').hide()
+            $('.btn-close').click()
         })
     })
 </script>

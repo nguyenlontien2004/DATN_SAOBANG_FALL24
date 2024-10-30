@@ -21,7 +21,8 @@ class Phim extends Model
     public function daoDiens()
     {
         return $this->belongsToMany(DaoDien::class, 'phim_va_dao_diens', 'phim_id', 'dao_dien_id');
-    }public function dienViens()
+    }
+    public function dienViens()
     {
         return $this->belongsToMany(DienVien::class, 'phim_va_dien_viens', 'phim_id', 'dien_vien_id');
     }
@@ -33,4 +34,6 @@ class Phim extends Model
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
     }
+
+  
 }

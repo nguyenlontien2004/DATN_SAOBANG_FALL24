@@ -3,21 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class NguoiDung extends Authenticatable
+class NguoiDung extends Model
 {
-    use HasFactory;
-    protected $table = 'nguoi_dungs';
+    use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
-        'anh_dai_dien',
+        'hinh_anh',
         'mat_khau',
+        'gioi_tinh',
         'dia_chi',
         'nam_sinh',
         'ngay_dang_ky',
+        'huy_ve',
+        'gold',
+        'trang_thai'
     ];
     public function role()
     {

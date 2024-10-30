@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-head-bg-success">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NguoiDung;
 use App\Http\Requests\StoreNguoiDungRequest;
 use App\Http\Requests\UpdateNguoiDungRequest;
+use App\Models\VaiTro;
 
 class NguoiDungController extends Controller
 {
@@ -13,7 +14,9 @@ class NguoiDungController extends Controller
      */
     public function index()
     {
-        //
+        $nguoidung = NguoiDung::withTrashed()
+            ->with('vaitro')->paginate(10);
+        return view('admin.contents.baiviettintuc.list', compact('nguoidung'));
     }
 
     /**
@@ -21,7 +24,9 @@ class NguoiDungController extends Controller
      */
     public function create()
     {
-        //
+        $vaitro = VaiTro::all();
+
+        return view('admin.contents.nguoidung.add', compact('vaitro'));
     }
 
     /**

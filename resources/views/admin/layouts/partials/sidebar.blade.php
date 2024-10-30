@@ -119,21 +119,21 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#tables">
+                    <a data-bs-toggle="collapse" href="#ngdung">
                         <i class="fas fa-table"></i>
-                        <p>Quản lý nhân viên</p>
+                        <p>Quản lý người dùng</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="tables">
+                    <div class="collapse" id="ngdung">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html') }}">
-                                    <span class="sub-item">Basic Table</span>
+                                <a href="{{ route('nguoi-dung.index') }}">
+                                    <span class="sub-item">Danh sách người dùng</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html') }}">
-                                    <span class="sub-item">Datatables</span>
+                                <a href="{{ route('nguoi-dung.create') }}">
+                                    <span class="sub-item">Thêm người dùng</span>
                                 </a>
                             </li>
                         </ul>

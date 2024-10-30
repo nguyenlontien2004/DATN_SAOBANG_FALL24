@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($login->exists()) {
             $infoLogin = $login->first();
             if ($infoLogin->checkAdmin()) {
-                //session(['auth'=>$infoLogin]);
+                session(['auth'=>$infoLogin]);
                 return redirect('admin/');
             }
             return abort(403, 'Bạn không có thẩm quyền vào trang này');

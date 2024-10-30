@@ -30,6 +30,7 @@ class Ve extends Model
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
     }
+    
     public function showtime()
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
