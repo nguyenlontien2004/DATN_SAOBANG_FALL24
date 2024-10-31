@@ -16,7 +16,6 @@ class NguoiDung extends Model
         'so_dien_thoai',
         'hinh_anh',
         'mat_khau',
-        'hinh_anh',
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
@@ -27,6 +26,7 @@ class NguoiDung extends Model
     {
         return $this->belongsTo(VaiTro::class, 'id');
     }
+
     public function checkAdmin()
     {
         if ($this->role->id == 1) {
@@ -34,11 +34,9 @@ class NguoiDung extends Model
         }
         return false;
     }
-}
 
-    public function vaiTros()
+    public function vaiTros() // Chuyển phương thức này vào bên trong lớp
     {
         return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'vai_tro_id', 'nguoi_dung_id');
     }
 }
-
