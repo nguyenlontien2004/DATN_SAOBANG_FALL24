@@ -11,7 +11,7 @@ class UpdateRapRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,21 @@ class UpdateRapRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'ten_rap' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ten_rap.required' => 'Tên rạp là bắt buộc.',
+            'dia_diem.required' => 'Địa điểm là bắt buộc.',
+            'trang_thai.required' => 'Trạng thái là bắt buộc.',
         ];
     }
 }

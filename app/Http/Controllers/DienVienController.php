@@ -20,18 +20,8 @@ class DienVienController extends Controller
     {
         return view('admin.contents.dienViens.creater');
     }
-    public function store(Request $request)
+    public function store(StoreDienVienRequest $request)
     {
-        $request->validate([
-            'ten_dien_vien' => 'required|string|max:255',
-            'anh_dien_vien' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nam_sinh' => 'required|date',
-            'quoc_tich' => 'required|string|max:255',
-            'gioi_tinh' => 'required|string',
-            'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string',
-        ]);
-
         $path = $request->file('anh_dien_vien')->store('dien_vien', 'public');
 
         DienVien::create([
@@ -43,23 +33,15 @@ class DienVienController extends Controller
             'trang_thai' => $request->trang_thai,
             'tieu_su' => $request->tieu_su,
         ]);
+
         return redirect()->route('dienVien.index')->with('success', 'Thêm mới Diễn viên thành công!');
     }
     public function edit(DienVien $dienVien)
     {
         return view('admin.contents.dienViens.edit', compact('dienVien'));
     }
-    public function update(Request $request, DienVien $dienVien)
+    public function update(UpdateDienVienRequest $request, DienVien $dienVien)
     {
-        $request->validate([
-            'ten_dien_vien' => 'required|string|max:255',
-            'anh_dien_vien' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nam_sinh' => 'required|date',
-            'quoc_tich' => 'required|string|max:255',
-            'gioi_tinh' => 'required|string',
-            'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string',
-        ]);
 
         if ($request->hasFile('anh_dien_vien')) {
             $path = $request->file('anh_dien_vien')->store('dien_vien', 'public');

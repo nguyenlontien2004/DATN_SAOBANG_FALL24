@@ -51,7 +51,7 @@
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
                         <i class="fas fa-layer-group"></i>
                         <p>Danh sách thể loại</p>
@@ -71,6 +71,12 @@
                             </li>
                         </ul>
                     </div>
+                </li> --}}
+                <li class="nav-item">
+                    <a href="{{ route('theLoaiPhim.index') }}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Danh sách thể loại</p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">

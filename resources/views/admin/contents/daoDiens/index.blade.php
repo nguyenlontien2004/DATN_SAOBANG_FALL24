@@ -1,14 +1,13 @@
 @extends('admin.index')
 
 @section('content')
-    <div class="card mt-5">
+    <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <div class="card-title">Danh sách Đạo diễn</div>
-            <a href="{{ route('daoDien.create') }}" class="btn btn-primary">Thêm mới Đạo diễn</a>
+            <div class="card-title">Danh sách Đạo Diễn</div>
+            <a href="{{  route('daoDien.create') }}" class="btn btn-primary">Thêm mới Diễn Viên</a>
         </div>
-
         <div class="card-body">
-            <table class="table">
+            <table class="table ">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

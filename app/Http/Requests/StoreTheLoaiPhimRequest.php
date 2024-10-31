@@ -11,7 +11,7 @@ class StoreTheLoaiPhimRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,20 @@ class StoreTheLoaiPhimRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+
+    public function rules()
     {
         return [
-            //
+            'ten_the_loai' => 'required|string|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ten_the_loai.required' => 'Tên thể loại là bắt buộc.',
+            'ten_the_loai.string' => 'Tên thể loại phải là một chuỗi.',
+            'ten_the_loai.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
         ];
     }
 }

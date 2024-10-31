@@ -19,18 +19,8 @@ class DaoDienController extends Controller
     {
         return view('admin.contents.daoDiens.creater');
     }
-    public function store(Request $request)
+    public function store(StoreDaoDienRequest $request)
     {
-        $request->validate([
-            'ten_dao_dien' => 'required|string|max:255',
-            'anh_dao_dien' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nam_sinh' => 'required|date',
-            'quoc_tich' => 'required|string|max:255',
-            'gioi_tinh' => 'required|string',
-            'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string',
-        ]);
-
         $path = $request->file('anh_dao_dien')->store('dao_dien', 'public');
 
         DaoDien::create([
@@ -40,7 +30,7 @@ class DaoDienController extends Controller
             'quoc_tich' => $request->quoc_tich,
             'gioi_tinh' => $request->gioi_tinh,
             'trang_thai' => $request->trang_thai,
-            'tieu_su' => $request->tieu_su, // Lưu trường tieu_su
+            'tieu_su' => $request->tieu_su,
         ]);
 
         return redirect()->route('daoDien.index')->with('success', 'Thêm mới Đạo diễn thành công!');
