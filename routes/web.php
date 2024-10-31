@@ -30,7 +30,7 @@ use App\Http\Controllers\VeController;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+  return view('user.trangchu');
 });
 
 Route::prefix('admin')->group(function () {
