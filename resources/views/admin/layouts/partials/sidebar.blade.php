@@ -146,25 +146,10 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#role">
+                    <a  href="{{ route('admin.role.index') }}">
                         <i class="fas fa-table"></i>
-                        <p>Người dùng & vai trò</p>
-                        <span class="caret"></span>
+                        <p>Vai trò</p>
                     </a>
-                    <div class="collapse" id="role">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('admin.role.index') }}">
-                                    <span class="sub-item">Vai trò</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.roleAndUser.index') }}">
-                                    <span class="sub-item">Phân quyền</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">

@@ -30,30 +30,30 @@
                         </p>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <div class="d-flex my-3 col-5">
+                <div class="row">
+                    <div class="d-flex my-3 col-md-12 col-sm-12 col-xl-5">
                         <img width="200px" style="filter: drop-shadow(2px 4px 6px black);"
                             src="https://cdn.moveek.com/storage/media/cache/short/665dc87501b36651649752.jpg"
                             alt="">
                         <div class="ms-4">
-                            <h3 class="mb-2">{{ $dataTicket->showtime->movie->ten_phim }}</h3>
+                            <h3 class="mb-2">{{ $dataTicket->suatChieu->phim->ten_phim }}</h3>
                             <p class="mb-2">Phòng chiếu:
-                                <strong>{{ $dataTicket->showtime->screeningRoom->ten_phong_chieu }}</strong>
+                                <strong>{{ $dataTicket->suatChieu->phongChieu->ten_phong_chieu }}</strong>
                             </p>
                             <p class="mb-2">Rạp:
-                                <strong>{{ $dataTicket->showtime->screeningRoom->cinema->ten_rap }}</strong>
+                                <strong>{{ $dataTicket->suatChieu->phongChieu->cinema->ten_rap }}</strong>
                             </p>
                             <p class="mb-2">Ghế:
                                 <strong>
-                                    @foreach ($dataTicket->detailTicket as $seat)
+                                    @foreach ($dataTicket->chiTietVe as $seat)
                                         {{ $seat->seat->hang_ghe . $seat->seat->so_hieu_ghe }}
                                     @endforeach
                                 </strong>
                                 - Loại:
                                 <strong>
-                                    @if ($dataTicket->detailTicket[0]->seat->the_loai == 'thuong')
+                                    @if ($dataTicket->chiTietVe[0]->seat->the_loai == 'thuong')
                                         Thường
-                                    @elseif($dataTicket->detailTicket[0]->seat->the_loai == 'vip')
+                                    @elseif($dataTicket->chiTietVe[0]->seat->the_loai == 'vip')
                                         Vip
                                     @else
                                         Đôi
@@ -75,12 +75,12 @@
                             <p class="mb-1">Mã giảm giá:
                                 {{ $dataTicket->discountCode == null ? 'Không áp dụng' : $dataTicket->discountCode->ten_ma_giam_gia }}
                             </p>
-                            <p class="mb-1">Phương thức thanh toán:Online</p>
+                            <p class="mb-1">Phương thức thanh toán: <strong>{{ $dataTicket->phuong_thuc_thanh_toan }}</strong></p>
                             <h4>Tổng đơn hàng: {{ number_format($dataTicket->tong_tien, 0, ',', '.') }}đ</h4>
                         </div>
                     </div>
                     @if (count($food) > 0)
-                        <div class="flex-1 col-7 mt-3">
+                        <div class="flex-1 col-md-12 mt-3 col-sm-12 col-xl-7">
                             <h3>Đồ ăn</h3>
                             <table class="table table-striped">
                                 <thead>
@@ -97,7 +97,7 @@
                                             <td style="width:38%;">
                                                 <div class="d-flex">
                                                     <img width="55px"
-                                                        src="https://iguov8nhvyobj.vcdn.cloud/media/concession/web/6644731d5a8f5_1715761949.png"
+                                                        src={{ \Storage::url($item->food->hinh_anh) }}
                                                         alt="">
                                                     <div class="ms-1" style="width:65%;">
                                                         {{ $item->food->ten_do_an }}

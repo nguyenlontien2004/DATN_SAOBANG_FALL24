@@ -115,6 +115,7 @@ Route::prefix('admin')->group(function () {
   // route vé 
   Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
   Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('tao-ve-gia-lap/',                          [VeController::class, 'create'])->name('admin.ticket.create');
 
   // Route::resources('phims');
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);

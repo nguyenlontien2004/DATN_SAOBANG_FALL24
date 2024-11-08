@@ -9,7 +9,7 @@ class Ve extends Model
 {
     use HasFactory;
 
-        //    public function discountCode()
+    //    public function discountCode()
     protected $fillable = [
         'nguoi_dung_id',
         'suat_chieu_id',
@@ -26,12 +26,11 @@ class Ve extends Model
     {
         return $this->belongsTo(NguoiDung::class, 'nguoi_dung_id');
     }
-    public function detailTicket()
+    public function chiTietVe()
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
     }
-    
-    public function showtime()
+    public function suatChieu()
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
     }
@@ -39,8 +38,8 @@ class Ve extends Model
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
     }
-    public function discountCode()
+    public function anhPhim()
     {
-        return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
+        return $this->belongsTo(AnhPhim::class, 'id');
     }
 }

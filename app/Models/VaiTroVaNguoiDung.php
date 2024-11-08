@@ -11,7 +11,7 @@ class VaiTroVaNguoiDung extends Model
     protected $fillable = [
         'nguoi_dung_id',
         'vai_tro_id',
-    ];
+    ];  
     public function user(){
         return $this->belongsTo(NguoiDung::class,'nguoi_dung_id');
     }
