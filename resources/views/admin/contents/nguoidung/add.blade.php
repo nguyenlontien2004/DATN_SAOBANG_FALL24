@@ -83,11 +83,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mat_khau">Mật khẩu</label>
-                        <input type="text" name="mat_khau" value="{{ old('mat_khau') }}" class="form-control"
-                            id="mat_khau" placeholder="Nhập mật khẩu" required />
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" name="password" value="{{ old('password') }}" class="form-control"
+                            id="password" placeholder="Nhập mật khẩu" required />
 
-                        @error('mat_khau')
+                        @error('password')
                             <div class="text text-danger">
                                 {{ $message }}
                             </div>
@@ -139,15 +139,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="vai_tro_id">Vai trò</label>
-                        <select name="vai_tro_id[]" class="form-control" id="vai_tro_id" multiple required>
-                            <option value="">-- Chọn vai trò --</option>
-                            @foreach ($vaitro as $vt)
-                                <option value="{{ $vt->id }}">{{ $vt->ten_vai_tro }}</option>
+                        <label for="vai_tros">Vai trò</label>
+                        <select name="vai_tros[]" class="form-control" id="vai_tros" multiple required>
+                            @foreach ($vaitro as $id => $ten_vai_tro)
+                                <option value="{{ $id }}">{{ $ten_vai_tro }}</option>
                             @endforeach
                         </select>
 
-                        @error('vai_tro_id')
+                        @error('vaitros')
                             <div class="text text-danger">
                                 {{ $message }}
                             </div>
@@ -156,8 +155,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
+                        <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>

@@ -14,19 +14,40 @@
         </div>
         <div class="content">
             <h1>Đổi mật khẩu</h1>
-            <div class="form-group">
-                <label for="old-password">Mật khẩu cũ</label>
-                <input type="password" id="old-password" placeholder="Nhập mật khẩu cũ" />
-            </div>
-            <div class="form-group">
-                <label for="new-password">Mật khẩu mới</label>
-                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" />
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">Xác minh</label>
-                <input type="password" id="confirm-password" placeholder="Xác minh mật khẩu mới" />
-            </div>
-            <button class="btn123">Đổi mật khẩu</button>
+            <form action="{{ route('doimatkhau') }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="old-password">Mật khẩu cũ</label>
+                    <input type="password" id="old-password" name="mat_khau_cu" value="{{ old('mat_khau_cu') }}"
+                        placeholder="Nhập mật khẩu cũ" />
+                    @error('mat_khau_cu')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Mật khẩu mới</label>
+                    <input type="password" id="new-password" name="mat_khau_moi" value="{{ old('mat_khau_moi') }}"
+                        placeholder="Nhập mật khẩu mới" />
+                    @error('mat_khau_moi')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Xác minh mật khẩu mới</label>
+                    <input type="password" id="confirm-password" name="mat_khau_moi_confimation"
+                        value="{{ old('mat_khau_cu') }}" placeholder="Xác minh mật khẩu mới" />
+                    @error('mat_khau_moi_confimation')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <button class="btn123">Đổi mật khẩu</button>
+            </form>
         </div>
     </div>
 @endsection

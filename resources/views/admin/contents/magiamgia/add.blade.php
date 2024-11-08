@@ -72,8 +72,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
+                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>

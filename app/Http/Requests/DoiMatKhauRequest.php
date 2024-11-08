@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthAdminRequest extends FormRequest
+class DoiMatKhauRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,18 @@ class AuthAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required']
+            'mat_khau_cu' => 'required',
+            'mat_khau_moi' => 'required|min:8|confirmed'
         ];
     }
-    public function messages(): array
+
+    public function messages()
     {
         return [
-            'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
+            'mat_khau_cu.required' => 'Vui lòng nhập mật khẩu cũ.',
+            'mat_khau_moi.required' => 'Vui lòng nhập mật khẩu mới.',
+            'mat_khau_moi.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+            'mat_khau_moi.confirmed' => 'Xác minh mật khẩu mới không khớp.'
         ];
     }
 }
