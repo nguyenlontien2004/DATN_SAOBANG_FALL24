@@ -19,47 +19,47 @@ class StoreNguoiDungRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'vai_tro_id' => 'required|exists:vai_tros,id',
-            'ho_ten' => 'required|string|max:255',
-            'email' => 'required|email|unique:nguoi_dungs,email',
-            'so_dien_thoai' => 'required|unique:nguoi_dungs,so_dien_thoai',
-            // |regex:/^([0-9]{10,11})$/|
-            'hinh_anh' => 'nullable|image|mimes:jpg,jpeg,png,gif',
-            'mat_khau' => 'required|string|min:8',
-            'gioi_tinh' => 'required|in:Nam,Nữ,Khác',
-            'dia_chi' => 'required|string|max:255',
-            'nam_sinh' => 'required|date|before:today',
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     // return [
+    //     //     'vai_tro_id' => 'required|exists:vai_tros,id',
+    //     //     'ho_ten' => 'required|string|max:255',
+    //     //     'email' => 'required|email|unique:nguoi_dungs,email',
+    //     //     'so_dien_thoai' => 'required|unique:nguoi_dungs,so_dien_thoai',
+    //     //     // |regex:/^([0-9]{10,11})$/|
+    //     //     'hinh_anh' => 'nullable|image|mimes:jpg,jpeg,png,gif',
+    //     //     'mat_khau' => 'required|string|min:8',
+    //     //     'gioi_tinh' => 'required|in:Nam,Nữ,Khác',
+    //     //     'dia_chi' => 'required|string|max:255',
+    //     //     'nam_sinh' => 'required|date|before:today',
+    //     // ];
+    // }
 
-    public function messages()
-    {
-        return [
-            'vai_tro_id.required' => 'Vui lòng chọn vai trò.',
-            'vai_tro_id.exists' => 'Vai trò không tồn tại.',
-            'ho_ten.required' => 'Vui lòng nhập họ tên.',
-            'ho_ten.max' => 'Họ tên không được vượt quá 255 ký tự.',
-            'email.required' => 'Vui lòng nhập email.',
-            'email.email' => 'Email không đúng định dạng.',
-            'email.unique' => 'Email này đã được sử dụng.',
-            'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại.',
-            'so_dien_thoai.regex' => 'Số điện thoại không hợp lệ.',
-            'so_dien_thoai.unique' => 'Số điện thoại này đã được sử dụng.',
-            'hinh_anh.image' => 'Tệp tải lên phải là hình ảnh.',
-            'hinh_anh.mimes' => 'Hình ảnh phải có định dạng jpg, jpeg, png hoặc gif.',
-            'hinh_anh.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
-            'mat_khau.required' => 'Vui lòng nhập mật khẩu.',
-            'mat_khau.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
-            'gioi_tinh.required' => 'Vui lòng chọn giới tính.',
-            'gioi_tinh.in' => 'Giới tính không hợp lệ.',
-            'dia_chi.required' => 'Vui lòng nhập địa chỉ.',
-            'dia_chi.max' => 'Địa chỉ không được vượt quá 255 ký tự.',
-            'nam_sinh.required' => 'Vui lòng nhập năm sinh.',
-            'nam_sinh.date' => 'Năm sinh phải là ngày hợp lệ.',
-            'nam_sinh.before' => 'Năm sinh phải trước ngày hiện tại.',
-        ];
-    }
+    // public function messages()
+    // {
+    //     return [
+    //         'vai_tro_id.required' => 'Vui lòng chọn vai trò.',
+    //         'vai_tro_id.exists' => 'Vai trò không tồn tại.',
+    //         'ho_ten.required' => 'Vui lòng nhập họ tên.',
+    //         'ho_ten.max' => 'Họ tên không được vượt quá 255 ký tự.',
+    //         'email.required' => 'Vui lòng nhập email.',
+    //         'email.email' => 'Email không đúng định dạng.',
+    //         'email.unique' => 'Email này đã được sử dụng.',
+    //         'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại.',
+    //         'so_dien_thoai.regex' => 'Số điện thoại không hợp lệ.',
+    //         'so_dien_thoai.unique' => 'Số điện thoại này đã được sử dụng.',
+    //         'hinh_anh.image' => 'Tệp tải lên phải là hình ảnh.',
+    //         'hinh_anh.mimes' => 'Hình ảnh phải có định dạng jpg, jpeg, png hoặc gif.',
+    //         'hinh_anh.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+    //         'mat_khau.required' => 'Vui lòng nhập mật khẩu.',
+    //         'mat_khau.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+    //         'gioi_tinh.required' => 'Vui lòng chọn giới tính.',
+    //         'gioi_tinh.in' => 'Giới tính không hợp lệ.',
+    //         'dia_chi.required' => 'Vui lòng nhập địa chỉ.',
+    //         'dia_chi.max' => 'Địa chỉ không được vượt quá 255 ký tự.',
+    //         'nam_sinh.required' => 'Vui lòng nhập năm sinh.',
+    //         'nam_sinh.date' => 'Năm sinh phải là ngày hợp lệ.',
+    //         'nam_sinh.before' => 'Năm sinh phải trước ngày hiện tại.',
+    //     ];
+    // }
 }

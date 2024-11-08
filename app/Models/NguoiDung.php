@@ -2,31 +2,37 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class NguoiDung extends Model
+class NguoiDung extends Authenticatable
 {
     use HasFactory, SoftDeletes;
+
+    const TYPE_ADMIN = 'admin';
+
+    const TYPE_MEMBER = 'member';
 
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
         'hinh_anh',
-        'mat_khau',
+        'password',
         'hinh_anh',
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
         'trang_thai'
     ];
-  
+
     public function role()
     {
-        return $this->belongsTo(VaiTro::class, 'id');
+        return $this->belongsTo(VaiTro::class, 'id', 'ten_vai_tro');
     }
+
     public function checkAdmin()
     {
         if ($this->role->id == 1) {
@@ -34,11 +40,19 @@ class NguoiDung extends Model
         }
         return false;
     }
-}
 
     public function vaiTros()
     {
-        return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'vai_tro_id', 'nguoi_dung_id');
+        return $this->belongsToMany(VaiTro::class);
+    }
+
+    public function admin()
+    {
+        return $this->ten_vai_tro == self::TYPE_ADMIN;
+    }
+
+    public function member()
+    {
+        return $this->ten_vai_tro == self::TYPE_MEMBER;
     }
 }
-
