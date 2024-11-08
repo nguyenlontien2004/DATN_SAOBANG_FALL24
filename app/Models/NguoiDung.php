@@ -41,7 +41,7 @@ class NguoiDung extends Authenticatable
         return false;
     }
 
-    public function vaiTros()
+    public function vaiTros() // Chuyển phương thức này vào bên trong lớp
     {
         return $this->belongsToMany(VaiTro::class);
     }
