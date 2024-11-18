@@ -2,6 +2,7 @@
 @section('title')
     {{ $title }}
 @endsection
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @section('content')
     <div class="container mt-5">
         <div class="row">
@@ -180,56 +181,119 @@
 
         </div>
 
-        <!-- Bình luận người xem -->
+        <!-- Đánh giá-->
+        @auth
+            <br>
+            <h3>Danh sách đánh giá:</h3><br>
+            @foreach ($danhSachDanhGia as $item)
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"><strong>TE</strong></h5>
+                        <small>{{ $item->created_at->format('d/m/Y') }}</small>
+                    </div>
+                    <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
+                    <div class="d-flex">
+                        Điểm đánh giá:
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa fa-star {{ $i <= $item->diem_danh_gia ? 'text-warning' : 'text-muted' }}"></i>
+                        @endfor
+                    </div>
+                    <br>
+                </div>
+            @endforeach
+            <div class="mt-4">
+                <p class="text-muted">
+                    <a href="#" onclick="showReviewTab(); return false;">
+                        <h2><strong>Viết bài đánh giá</strong></h2>
+                    </a>
+                </p>
+            </div>
+            <!-- Form đánh giá ẩn -->
+            <div id="reviewTab" style="display: none; margin-top: 20px;">
+                <h4>Đánh giá của bạn</h4>
+                <form action="{{ route('danhgia.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
+                    <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Nội dung:</label>
+                        <textarea name="noi_dung" id="content" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Điểm đánh giá:</label>
+                        <div id="stars">
+                            <span class="fa fa-star" data-value="1" onclick="setRating(1)"></span>
+                            <span class="fa fa-star" data-value="2" onclick="setRating(2)"></span>
+                            <span class="fa fa-star" data-value="3" onclick="setRating(3)"></span>
+                            <span class="fa fa-star" data-value="4" onclick="setRating(4)"></span>
+                            <span class="fa fa-star" data-value="5" onclick="setRating(5)"></span>
+                        </div>
+                        <input type="hidden" name="diem_danh_gia" id="rating" value="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+            </div>
+            <br>
+        @else
+            <!-- Thông báo khi chưa đăng nhập -->
+            <div class="mt-4">
+                <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
+                </p>
+            </div>
+        @endauth
         <div class="container my-5">
-            <h3>Bình luận người xem</h3>
 
-            <!-- Bình luận 1 -->
-            <div class="d-flex mb-4">
-                <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
-                <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
-                    <h6 class="mb-1" style="font-weight: bold;">User Name <span class="text-muted"
-                            style="font-size: 12px;">1 giờ trước</span></h6>
-                    <p class="mb-1" style="font-size: 14px; color: #333;">Mình đi xem 1m do tò mò vì phần trailer khá
-                        cuốn...</p>
-                    <div style="font-size: 12px; color: #65676b;">
-                        <a href="#" class="text-decoration-none me-3">Thích</a>
-                        <a href="#" class="text-decoration-none me-3">Trả lời</a>
+
+
+            <!-- Bình luận người xem -->
+            <br>
+            <h3>Bình luận người xem</h3><br>
+            @foreach ($chiTietPhim->binhLuans as $item)
+                <div class="d-flex mb-4">
+                    <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+                    <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
+                        <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span
+                                class="text-muted"
+                                style="font-size: 12px;">{{ $item->created_at->timezone('Asia/Ho_Chi_Minh') }}</span></h6>
+                        <p class="mb-1" style="font-size: 14px; color: #333;">{{ $item->noi_dung }}</p>
+                        <div style="font-size: 12px; color: #65676b;">
+                            <a href="#" class="text-decoration-none me-3">Thích</a>
+                            <a href="#" class="text-decoration-none me-3">Trả lời</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Bình luận 2 -->
-            <div class="d-flex mb-4">
-                <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
-                <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
-                    <h6 class="mb-1" style="font-weight: bold;">User Name <span class="text-muted"
-                            style="font-size: 12px;">1 giờ trước</span></h6>
-                    <p class="mb-1" style="font-size: 14px; color: #333;">Mình đi xem 1m do tò mò vì phần trailer khá
-                        cuốn...</p>
-                    <div style="font-size: 12px; color: #65676b;">
-                        <a href="#" class="text-decoration-none me-3">Thích</a>
-                        <a href="#" class="text-decoration-none me-3">Trả lời</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+
 
             <div class="container my-5">
                 <!-- Nội dung bình luận -->
                 @auth
-                    <div class="d-flex mt-4">
-                        <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
-                        <div class="flex-grow-1" style="max-width: 500px;">
-                            <textarea class="form-control" placeholder="Viết bình luận của bạn..." rows="1"
-                                style="border-radius: 20px; resize: none; overflow: hidden; width: 100%;" oninput="autoResize(this)"></textarea>
-                            <div class="mt-2 d-flex justify-content-end">
-                                <button class="btn btn-primary btn-sm" style="border-radius: 20px;">Đăng</button>
+                    <form action="{{ route('binhluan.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
+                        <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
+                        <div class="d-flex mt-4">
+                            <img src="user.png" alt="User" class="rounded-circle me-3"
+                                style="width: 40px; height: 40px;" />
+                            <div class="flex-grow-1" style="max-width: 500px;">
+                                <textarea class="form-control" name="noi_dung" placeholder="Viết bình luận của bạn..." rows="1"
+                                    style="border-radius: 20px; resize: none; overflow: hidden; width: 100%;" oninput="autoResize(this)"></textarea>
+                                @error('noi_dung')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <div class="mt-2 d-flex justify-content-end">
+                                    <button class="btn btn-primary btn-sm" style="border-radius: 20px;">Đăng</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 @else
                     <!-- Thông báo khi chưa đăng nhập -->
                     <div class="mt-4">
-                        <p class="text-muted">Bạn cần <a href="{{ route('login') }}"><strong>đăng nhập</strong></a> để bình luận.</p>
+                        <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để
+                            bình luận.</p>
                     </div>
                 @endauth
             </div>

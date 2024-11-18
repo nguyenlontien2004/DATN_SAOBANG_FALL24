@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Phim;
-use App\Models\PhimVaTheLoai;
-use App\Models\TheLoaiPhim;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Phim;
+use App\Models\DanhGia;
+use App\Models\TheLoaiPhim;
+use App\Models\BinhLuanPhim;
+use Illuminate\Http\Request;
+use App\Models\PhimVaTheLoai;
 use PhpParser\Node\Expr\FuncCall;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SanPhamController extends Controller
 {
@@ -25,10 +28,16 @@ class SanPhamController extends Controller
     {
         $title = "Chi tiết phim";
         $chiTietPhim = Phim::findOrFail($id);
+        $danhSachDanhGia = DanhGia::query()->get();
+        // $dsBL = BinhLuanPhim::query()->get();
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
-        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu'));
+            $userId = null;
+            if(Auth::check()){
+                $userId = Auth::user()->id;
+            }
+        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia'));
     }
     public function TimKiemPhim(Request $request)
     {

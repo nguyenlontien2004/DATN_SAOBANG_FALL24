@@ -2,26 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
-class NguoiDung extends Model
+class NguoiDung extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
         'hinh_anh',
-        'mat_khau',
+        'password',
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
-        'trang_thai'
+        'trang_thai',
     ];
-  
+    protected $hidden = ['password', 'remember_token'];
+
     public function role()
     {
         return $this->belongsTo(VaiTro::class, 'id');
@@ -35,8 +37,14 @@ class NguoiDung extends Model
         return false;
     }
 
-    public function vaiTros() // Chuyển phương thức này vào bên trong lớp
+    public function vaiTros()
     {
-        return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'vai_tro_id', 'nguoi_dung_id');
+        return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'nguoi_dung_id', 'vai_tro_id'); 
+        // Sửa lại thứ tự cột nếu cần: 'nguoi_dung_id' -> 'vai_tro_id'
+    }
+
+    public function danhGias()
+    {
+        return $this->hasMany(DanhGia::class);
     }
 }

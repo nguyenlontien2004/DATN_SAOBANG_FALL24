@@ -35,6 +35,12 @@ class Phim extends Model
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
     }
+    public function binhLuans(){
+        return $this->hasMany(BinhLuanPhim::class, 'phim_id');
+    }
+    public function danhGias(){
+        return $this->hasMany(BinhLuanPhim::class, 'phim_id');
+    }
 
   
 }

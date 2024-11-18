@@ -76,5 +76,27 @@ document.getElementById("showtimesToggle").onclick = function() {
         showtimesDiv.style.display = "none";  // Ẩn lịch chiếu
     }
 };
+//Tab ẩn đánh giá
+    function showReviewTab() {
+        document.getElementById('reviewTab').style.display = 'block';
+    }
+//Chọn điểm đánh giá
+function setRating(rating) {
+    // Cập nhật giá trị của input rating
+    document.getElementById('rating').value = rating;
+    
+    // Cập nhật màu sắc của các ngôi sao
+    let stars = document.querySelectorAll('#stars span');
+    stars.forEach(star => {
+        if (parseInt(star.getAttribute('data-value')) <= rating) {
+            star.classList.add('text-warning');  // Màu vàng (được chọn)
+            star.classList.remove('text-muted'); // Bỏ màu xám (chưa chọn)
+        } else {
+            star.classList.add('text-muted');   // Màu xám (chưa chọn)
+            star.classList.remove('text-warning');
+        }
+    });
+}
+
   
   
