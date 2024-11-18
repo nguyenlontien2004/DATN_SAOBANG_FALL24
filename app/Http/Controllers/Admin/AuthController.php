@@ -21,25 +21,20 @@ class AuthController extends Controller
             ->with('role:id,ten_vai_tro')
             ->where([
                 ['email', '=', $request->email],
-                ['mat_khau', '=', $request->mat_khau]
+                ['password', '=', $request->password]
             ]);
+        //dd($login->get()->toArray());
 
         if ($login->exists()) {
             $infoLogin = $login->first();
             if ($infoLogin->checkAdmin()) {
-                session(['auth'=>$infoLogin]);
+                session(['auth' => $infoLogin]);
                 return redirect('admin/');
             }
             return abort(403, 'Bạn không có thẩm quyền vào trang này');
         }
         return back()->with('error', 'Email hoặc mật khẩu không hợp lệ!');
     }
-    public function loginGoogle()
-    {
-
-    }
-    public function loginFacebook()
-    {
-
-    }
+    public function loginGoogle() {}
+    public function loginFacebook() {}
 }

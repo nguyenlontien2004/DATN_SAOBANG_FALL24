@@ -3,7 +3,6 @@
 @section('content')
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Tables</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="#">
@@ -26,15 +25,18 @@
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header">
+
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách mã giảm giá</div>
-                    <div class="thongbao text-center">
-                        @if (session('success'))
-                            <span class="text text-success font-weight-bold"
-                                style="font-size: 1.2rem;">{{ session('success') }}</span>
-                        @endif
-                    </div>
+                    <a href="{{ route('ma_giam_gia.create') }}" class="btn btn-primary">Thêm mã giảm giá</a>
                 </div>
+                <div class="thongbao text-center">
+                    @if (session('success'))
+                        <span class="alert alert-success font-weight-bold"
+                            style="font-size: 1.2rem;">{{ session('success') }}</span>
+                    @endif
+                </div>
+
                 <div class="card-body">
                     <table class="table mt-3">
                         <thead>
@@ -88,11 +90,11 @@
                                             @else
                                                 {{-- Nút show --}}
                                                 <a href="{{ route('ma_giam_gia.show', ['ma_giam_gium' => $mgg->id]) }}"
-                                                    class="btn btn-info btn-sm me-1">Show</a>
+                                                    class="btn btn-info btn-sm me-1">Chi tiết</a>
 
                                                 <!-- Nút Chỉnh sửa -->
                                                 <a href="{{ route('ma_giam_gia.edit', ['ma_giam_gium' => $mgg->id]) }}"
-                                                    class="btn btn-warning btn-sm me-1">Edit</a>
+                                                    class="btn btn-warning btn-sm me-1">Sửa</a>
 
                                                 <!-- Nút Ẩn (Xóa mềm) -->
                                                 <form
