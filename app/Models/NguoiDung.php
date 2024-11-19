@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class NguoiDung extends Authenticatable
 {
@@ -30,6 +30,8 @@ class NguoiDung extends Authenticatable
         'gold',
         'trang_thai'
     ];
+    protected $hidden = ['password', 'remember_token'];
+
     public function role()
     {
         return $this->belongsTo(VaiTro::class, 'id', 'ten_vai_tro');
@@ -43,7 +45,7 @@ class NguoiDung extends Authenticatable
         return false;
     }
 
-    public function vaiTros() // Chuyển phương thức này vào bên trong lớp
+    public function vaiTros()
     {
         return $this->belongsToMany(VaiTro::class);
     }

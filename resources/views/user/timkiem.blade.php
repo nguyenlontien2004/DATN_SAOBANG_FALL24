@@ -40,40 +40,75 @@
                 src="https://storage.googleapis.com/a1aa/image/yyDVCIcr3oqJLBUI7Jy23AirAE7VCS2vaOpJSgEyT2fW6yxJA.jpg"
                 width="400" />
         </section>
-        <!-- phim đang chiếu -->
-        <section class="mt-12">
-            <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
-                Phim đang chiếu
-            </h2>
-            <div class="grid grid-cols-5 gap-4">
-                @foreach ($phimDangChieu as $item)
-                    <div class="bg-secondary text-white rounded-lg">
-                        <div class="film-card position-relative">
-                            <!-- Hình ảnh của video -->
-                            <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
-                                src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
-                                onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
-                                style="cursor: pointer;" />
-                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge"> 
-                                <h3 class="text-lg font-bold film-title">
-                                    {{ $item->ten_phim }}
-                                </h3>
-                            </a>
-                            <p class="film-genre">
-                                @foreach ($item->theLoaiPhims as $theLoaiPhim)
-                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
-                                        ,
-                                    @endif
-                                @endforeach
-                            </p>
-                            <p class="text-yellow-500">
-                                <i class="fas fa-star"></i> 6.3
-                            </p>
+        <!-- Kết quả tìm kiếm -->
+        @if ($ketqua1->isNotEmpty() || $ketqua2->isNotEmpty())
+            <section class="mt-12">
+                <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
+                    Kết quả tìm kiếm
+                </h2>
+                <div class="grid grid-cols-5 gap-4">
+                    @foreach ($ketqua1 as $item)
+                        <div class="bg-secondary text-white rounded-lg">
+                            <div class="film-card position-relative">
+                                <!-- Hình ảnh của video -->
+                                <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
+                                    src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
+                                    onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
+                                    style="cursor: pointer;" />
+                                <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
+                                    <h3 class="text-lg font-bold film-title">
+                                        {{ $item->ten_phim }}
+                                    </h3>
+                                </a>
+                                <p class="film-genre">
+                                    @foreach ($item->theLoaiPhims as $theLoaiPhim)
+                                        {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
+                                            ,
+                                        @endif
+                                    @endforeach
+                                </p>
+                                <p class="text-yellow-500">
+                                    <i class="fas fa-star"></i> 6.3
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-        </section>
+                    @endforeach
+
+                    {{-- Danh sách phim tìm kiếm theo thể loại --}}
+                    @foreach ($ketqua2 as $item)
+                        @foreach ($item->phims as $tenPhim)
+                            <div class="bg-secondary text-white rounded-lg">
+                                <div class="film-card position-relative">
+                                    <!-- Hình ảnh của video -->
+                                    <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
+                                        src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
+                                        onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
+                                        style="cursor: pointer;" />
+
+                                    <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
+                                        <h3 class="text-lg font-bold film-title">
+                                            {{ $tenPhim->ten_phim }}
+                                        </h3>
+                                    </a>
+
+                                    <p class="film-genre">
+                                        {{ $item->ten_the_loai }}
+                                    </p>
+
+                                    <p class="text-yellow-500">
+                                        <i class="fas fa-star"></i> 6.3
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforeach
+                </div>
+            </section>
+        @else
+            <h2 class="text-2xl font-bold text-center text-gray-400 mb-8">
+                <br>Kết quả tìm kiếm không phù hợp
+            </h2>
+        @endif
         <!-- Modal để hiển thị video -->
         <div id="videoModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
