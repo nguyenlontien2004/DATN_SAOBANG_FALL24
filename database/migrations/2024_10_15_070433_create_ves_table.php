@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(SuatChieu::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(MaGiamGia::class)->nullable()->constrained()->cascadeOnDelete();
             $table->date('ngay_thanh_toan');
+            $table->date('ngay-ve-mo')->nullable();
             $table->integer('tong_tien');
             $table->string('phuong_thuc_thanh_toan')->nullable();
             $table->boolean('trang_thai')->default(true);

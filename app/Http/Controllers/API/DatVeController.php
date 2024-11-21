@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\SuatChieu;
+use App\Models\Rap;
+use App\Models\Phim;
+use App\Events\RealtimeSeat;
+
+class DatVeController extends Controller
+{
+    public function laySuatChieuTheoNgay($id, $date)
+    {
+        $formattedDate = \Carbon\Carbon::createFromFormat('d-m-Y', $date . '-' . date('Y'))->format('Y-m-d');
+        $rapvaSuatchieu = Rap::query()
+            ->select(['id', 'ten_rap', 'dia_diem'])
+            ->with([
+                'suatChieu' => function ($query) use ($formattedDate, $id) {
+                    $query->select('suat_chieus.id', 'suat_chieus.phong_chieu_id', DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
+                        ->whereHas('phim', function ($query) use ($formattedDate) {
+                            $query->whereDate('ngay_ket_thuc', '>=', $formattedDate);
+                        })
+                        ->where('phim_id', $id)->orderBy('gio_bat_dau');
+                }
+            ])->get();
+        $rapvaSuatchieu = $this->checkSuatchieucuangayhientai($rapvaSuatchieu, $formattedDate);
+        return response()->json([
+            'status' => 200,
+            'msg' => 'success',
+            'data' => $rapvaSuatchieu
+        ], 200);
+    }
+    public function checkSuatchieucuangayhientai($rapvaSuatchieu, $getDateUrl)
+    {
+        $array = [];
+        $date = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $currentTime = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
+        foreach ($rapvaSuatchieu as $value) {
+            $arraySc = [];
+            foreach ($value->suatChieu as $val) {
+                $arraySc[] = [
+                    'id' => $val->id,
+                    'phong_chieu_id' => $val->phong_chieu_id,
+                    'gio_bat_dau' => $val->gio_bat_dau,
+                    'gio_ket_thuc' => $val->gio_ket_thuc,
+                    'suat_chieu_trong_ngay' => $date == $getDateUrl && $val->gio_ket_thuc < $currentTime ? true : false
+                ];
+            }
+            $array[] = [
+                'id' => $value->id,
+                'ten_rap' => $value->ten_rap,
+                'dia_diem' => $value->dia_diem,
+                'suatChieu' => $arraySc,
+            ];
+        }
+        return $array;
+    }
+    public function idghe(Request $request, $id, $ngay)
+    {
+        $dataSeat = $request->data;
+        $idRemove = $request->idRemove;
+        broadcast(new RealtimeSeat($id, $ngay, $dataSeat, $idRemove))->toOthers();
+        return response()->json([
+            'msg' => 'success'
+        ]);
+    }
+    public function chuyenquatrangthanhtoan(Request $request, $id, $ngay)
+    {
+        session(['thong-tin-dat'=>$request->all()]);
+        // session()->forget('thong-tin-ve');
+        return response()->json([
+            'message' => 'Data saved!',
+            'status'=>200,
+            'redirect_url' => asset('thanh-toan/' . $id . '/' . $ngay),
+        ],200);
+    }
+}

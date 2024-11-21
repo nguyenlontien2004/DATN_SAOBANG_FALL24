@@ -138,3 +138,31 @@ Route::prefix('admin')->group(function () {
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
+// Đăng ký
+Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
+Route::post('dang-ky', [AuthenController::class, 'dangKy']);
+
+// Đăng nhập
+Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('formDangNhap');
+Route::post('dang-nhap', [AuthenController::class, 'dangNhap'])->name('dangNhap');
+
+// Đăng xuất
+Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
+
+// Member
+// Route::prefix('thanh-vien')->group(function () {
+//   Route::get('trang-chu', [MemberController::class, 'trangChu'])
+//     ->name('trangchu.member');
+//   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
+//   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau']);
+// });
+
+//Route người dùng
+Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
+Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
+Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+Route::resource('binhluan', BinhLuanPhimController::class);
+Route::resource('danhgia', DanhGiaController::class);

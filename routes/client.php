@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\DatVeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('dat-ve/{id}/{date}',            [DatVeController::class, 'datve']);
+Route::get('thanh-toan/{id}/{date}',        [DatVeController::class, 'thanhToan']);

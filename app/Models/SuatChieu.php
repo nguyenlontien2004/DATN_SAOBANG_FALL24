@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class SuatChieu extends Model
 {
     use HasFactory;
@@ -25,5 +25,8 @@ class SuatChieu extends Model
     public function phim()
     {
         return $this->belongsTo(Phim::class, 'phim_id');
+    }
+    public function rap(){
+        return $this->hasOneThrough(Rap::class,PhongChieu::class,'id','id','phong_chieu_id');
     }
 }

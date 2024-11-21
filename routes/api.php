@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\API\DatVeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('suat-chieu/phim/{id}/{date}',                     [DatVeController::class,'laySuatChieuTheoNgay']);
+Route::post('ghe/suat-chieu/{id}/{ngay}',                     [DatVeController::class,'idghe']);
+Route::middleware('web')->post('post/thanh-toan/{id}/{ngay}',                    [DatVeController::class,'chuyenquatrangthanhtoan']);
