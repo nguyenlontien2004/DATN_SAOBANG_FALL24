@@ -43,4 +43,8 @@ class Ve extends Model
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
     }
+    public function suatChieu()
+{
+    return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
+}
 }

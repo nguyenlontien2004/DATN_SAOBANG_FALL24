@@ -39,7 +39,7 @@ class Phim extends Model
         return $this->hasMany(BinhLuanPhim::class, 'phim_id');
     }
     public function danhGias(){
-        return $this->hasMany(BinhLuanPhim::class, 'phim_id');
+        return $this->hasMany(DanhGia::class);
     }
 
   

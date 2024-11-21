@@ -185,12 +185,13 @@
         @auth
             <br>
             <h3>Danh sách đánh giá:</h3><br>
-            @foreach ($danhSachDanhGia as $item)
-                <div class="list-group-item">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1"><strong>TE</strong></h5>
-                        <small>{{ $item->created_at->format('d/m/Y') }}</small>
+            @foreach ($chiTietPhim->danhGias as $item)
+            <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content">
+                        <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
+                        <br><small>{{ $item->created_at->format('d/m/Y') }}</small>
                     </div>
+                    
                     <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
                     <div class="d-flex">
                         Điểm đánh giá:
@@ -200,7 +201,7 @@
                     </div>
                     <br>
                 </div>
-            @endforeach
+                @endforeach
             <div class="mt-4">
                 <p class="text-muted">
                     <a href="#" onclick="showReviewTab(); return false;">
@@ -237,14 +238,11 @@
         @else
             <!-- Thông báo khi chưa đăng nhập -->
             <div class="mt-4">
-                <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
+                <p class="text-muted">Bạn cần <a href="{{ route('formDangNhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
                 </p>
             </div>
         @endauth
         <div class="container my-5">
-
-
-
             <!-- Bình luận người xem -->
             <br>
             <h3>Bình luận người xem</h3><br>
@@ -292,7 +290,7 @@
                 @else
                     <!-- Thông báo khi chưa đăng nhập -->
                     <div class="mt-4">
-                        <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để
+                        <p class="text-muted">Bạn cần <a href="{{ route('formDangNhap') }}"><strong>đăng nhập</strong></a> để
                             bình luận.</p>
                     </div>
                 @endauth

@@ -43,8 +43,4 @@ class NguoiDung extends Authenticatable
         // Sửa lại thứ tự cột nếu cần: 'nguoi_dung_id' -> 'vai_tro_id'
     }
 
-    public function danhGias()
-    {
-        return $this->hasMany(DanhGia::class);
-    }
 }

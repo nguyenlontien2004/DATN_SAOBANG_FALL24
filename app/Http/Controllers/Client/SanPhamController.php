@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PhimVaTheLoai;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
+use App\Models\Ve;
 use Illuminate\Support\Facades\Auth;
 
 class SanPhamController extends Controller
@@ -28,8 +29,8 @@ class SanPhamController extends Controller
     {
         $title = "Chi tiết phim";
         $chiTietPhim = Phim::findOrFail($id);
-        $danhSachDanhGia = DanhGia::query()->get();
-        // $dsBL = BinhLuanPhim::query()->get();
+        $chiTietPhim->increment('luot_xem_phim');
+        $danhGiaPhim = DanhGia::findOrFail($id);
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
@@ -37,7 +38,15 @@ class SanPhamController extends Controller
             if(Auth::check()){
                 $userId = Auth::user()->id;
             }
-        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia'));
+            // if (Auth::check()) {
+            //     $daMuaVe = Ve::query()
+            //         ->where('nguoi_dung_id', Auth::id())
+            //         ->whereHas('suatChieu', function ($query) use ($id) {
+            //             $query->where('phim_id', $id);
+            //         })
+            //         ->exists();
+            // }
+        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhGiaPhim'));
     }
     public function TimKiemPhim(Request $request)
     {
