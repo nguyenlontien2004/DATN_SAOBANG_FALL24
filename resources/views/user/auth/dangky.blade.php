@@ -24,11 +24,6 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="ho_ten">Năm sinh:</label>
-                                    <input type="date" name="nam_sinh" id="ho_ten" class="form-control">
-                                </div>                             
-
-                                <div class="form-group mb-3">
                                     <label for="email">Email:</label>
                                     <input type="email" name="email" id="email" class="form-control"
                                         placeholder="Email...">

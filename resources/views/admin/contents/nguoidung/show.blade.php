@@ -45,6 +45,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <p>{{ $nguoiDung->password }}</p>
+                </div>
+
+                <div class="form-group">
                     <label for="gioi_tinh">Giới tính:</label>
                     <p>{{ $nguoiDung->gioi_tinh }}</p>
                 </div>
@@ -61,14 +66,14 @@
 
                 <div class="form-group">
                     <label for="hinh_anh">Hình ảnh:</label>
-                    <img src="{{ asset('storage/' . $nguoiDung->hinh_anh) }}" width="100" alt="Hình ảnh người dùng">
+                    <img src="{{ asset('storage/' . $nguoiDung->hinh_anh) }}" width="300" alt="Hình ảnh người dùng">
                 </div>
 
                 <div class="form-group">
                     <label for="vai_tro">Vai trò:</label>
                     @if ($nguoiDung->vaiTros->isNotEmpty())
                         @foreach ($nguoiDung->vaiTros as $vt)
-                            {{ $vt->ten_vai_tro }}
+                            <span class="badge badge-info"> {{ $vt->ten_vai_tro }}</span>
                         @endforeach
                     @else
                         Không có vai trò
@@ -76,7 +81,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Quay lại</a>
             </div>
         </div>
     </div>

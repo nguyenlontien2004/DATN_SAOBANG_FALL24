@@ -36,18 +36,30 @@
                     <div class="form-group">
                         <label for="vi_tri">Vị trí</label>
                         <input type="vi_tri" name="vi_tri" class="form-control" id="vi_tri"
-                            value="{{ $bannerQuangCao->vi_tri }}" required />
+                            value="{{ old('vi_tri', $bannerQuangCao->vi_tri) }}" />
+
+                        @error('vi_tri')
+                            <div class="text text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="mo_ta">Mô tả</label>
                         <input type="mo_ta" name="mo_ta" class="form-control" id="mo_ta"
-                            value="{{ $bannerQuangCao->mo_ta }}" required />
+                            value="{{ old('mo_ta', $bannerQuangCao->mo_ta) }}" />
+
+                        @error('mo_ta')
+                            <div class="text text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('banner-quang-cao.index') }}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        <a href="{{ route('banner-quang-cao.index') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>
