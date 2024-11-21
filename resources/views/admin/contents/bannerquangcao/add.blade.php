@@ -33,13 +33,26 @@
                     @csrf
                     <div class="form-group">
                         <label for="vi_tri">Vị trí</label>
-                        <input type="vi_tri" name="vi_tri" class="form-control" id="vi_tri" placeholder="Nhập vị trí"
-                            required />
+                        <input type="vi_tri" name="vi_tri" class="form-control" id="vi_tri" value="{{ old('vi_tri') }}"
+                            placeholder="Nhập vị trí" />
+
+                        @error('vi_tri')
+                            <div class="text text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="mo_ta">Mô tả</label>
-                        <input type="mo_ta" name="mo_ta" class="form-control" id="mo_ta" placeholder="Nhập vị trí"
-                            required />
+                        <input type="mo_ta" name="mo_ta" class="form-control" id="mo_ta"
+                            value="{{ old('mo_ta') }} " placeholder="Nhập vị trí" />
+
+                        @error('mo_ta')
+                            <div class="text text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="card-footer">

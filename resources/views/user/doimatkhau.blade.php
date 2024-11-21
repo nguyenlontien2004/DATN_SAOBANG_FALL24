@@ -2,19 +2,33 @@
 
 @section('content')
     <div class="container5999">
+
+        @php
+            $user = Auth::user();
+        @endphp
+
         <div class="sidebar6669">
-            <img alt="Ảnh đại diện người dùng"
-                src="https://storage.googleapis.com/a1aa/image/u9y6E0sefgilO0ViSNJkVoITvkptQM6YskJidpWdJi4iLFlTA.jpg" />
-            <div class="username">Tên người dùng</div>
+            <div class="form-group mb-3 d-flex justify-content-center align-items-center">
+                <img alt="Ảnh đại diện người dùng" src="{{ asset('storage/' . $user->anh_dai_dien) }}"
+                    style="border-radius: 50%; height: 100px; width: 100px; object-fit: cover" />
+            </div>
+            <div class="username">{{ $user->ho_ten }}</div>
             <hr />
-            <a href="#">Thông tin cá nhân</a>
-            <a href="#">Đổi mật khẩu</a>
+            <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
+            <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
             <a href="#">Lịch sử đặt vé</a>
-            <a href="#">Cập nhật thông tin cá nhân</a>
+            <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
         </div>
+
         <div class="content">
             <h1>Đổi mật khẩu</h1>
-            <form action="{{ route('doimatkhau') }}" method="post">
+            <div class="thongbao text-center">
+                @if (session('success'))
+                    <span class="alert alert-success font-weight-bold"
+                        style="font-size: 1.2rem;">{{ session('success') }}</span>
+                @endif
+            </div>
+            <form action="{{ route('capnhatmk') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="old-password">Mật khẩu cũ</label>
@@ -38,9 +52,9 @@
                 </div>
                 <div class="form-group">
                     <label for="confirm-password">Xác minh mật khẩu mới</label>
-                    <input type="password" id="confirm-password" name="mat_khau_moi_confimation"
-                        value="{{ old('mat_khau_cu') }}" placeholder="Xác minh mật khẩu mới" />
-                    @error('mat_khau_moi_confimation')
+                    <input type="password" id="confirm-password" name="mat_khau_moi_confirmation"
+                        value="{{ old('mat_khau_moi_confirmation') }}" placeholder="Xác minh mật khẩu mới" />
+                    @error('mat_khau_moi_confirmation')
                         <div class="text text-danger">
                             {{ $message }}
                         </div>
@@ -49,5 +63,6 @@
                 <button class="btn123">Đổi mật khẩu</button>
             </form>
         </div>
+
     </div>
 @endsection
