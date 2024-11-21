@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class NguoiDung extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     const TYPE_ADMIN = 'admin';
 
@@ -21,12 +21,19 @@ class NguoiDung extends Authenticatable
         'so_dien_thoai',
         'hinh_anh',
         'password',
+<<<<<<< HEAD
+=======
         'hinh_anh',
+>>>>>>> developer
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
-        'trang_thai'
+        'trang_thai',
     ];
+<<<<<<< HEAD
+    protected $hidden = ['password', 'remember_token'];
+=======
+>>>>>>> developer
 
     public function role()
     {
@@ -41,8 +48,17 @@ class NguoiDung extends Authenticatable
         return false;
     }
 
-    public function vaiTros() // Chuyển phương thức này vào bên trong lớp
+    public function vaiTros()
     {
+<<<<<<< HEAD
+        return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'nguoi_dung_id', 'vai_tro_id'); 
+        // Sửa lại thứ tự cột nếu cần: 'nguoi_dung_id' -> 'vai_tro_id'
+    }
+
+    public function danhGias()
+    {
+        return $this->hasMany(DanhGia::class);
+=======
         return $this->belongsToMany(VaiTro::class);
     }
 
@@ -54,5 +70,6 @@ class NguoiDung extends Authenticatable
     public function member()
     {
         return $this->ten_vai_tro == self::TYPE_MEMBER;
+>>>>>>> developer
     }
 }

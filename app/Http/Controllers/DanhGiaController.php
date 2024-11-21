@@ -13,7 +13,8 @@ class DanhGiaController extends Controller
      */
     public function index()
     {
-        //
+        // $danhSachDanhGia = DanhGia::query()->get();
+        // return view('user.chitietphim', compact('danhSachDanhGia'));
     }
 
     /**
@@ -29,7 +30,12 @@ class DanhGiaController extends Controller
      */
     public function store(StoreDanhGiaRequest $request)
     {
-        //
+        if($request->isMethod('POST')){
+            $params = $request->except('_token');
+            // dd($params);
+            DanhGia::query()->create($params);
+        }
+        return redirect()->back();
     }
 
     /**

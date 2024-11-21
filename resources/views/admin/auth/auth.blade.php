@@ -46,6 +46,10 @@
         border: 1px solid #e7dede;
         color: white;
     }
+
+    .mr {
+        margin-left: 12px;
+    }
 </style>
 
 <body class="login"
@@ -57,6 +61,7 @@
             style="display: block;background: rgba(0, 0, 0, 0.7);color:white;border:none;">
             <h3 class="fs-1 fw-bolder">Đăng nhập</h3>
             <div class="login-form">
+
                 <form action="{{ route('login.admin') }}" method="post">
                     @csrf
                     <div class="form-sub">
@@ -69,9 +74,11 @@
                             @enderror
                         </div>
                         <div class="mb-3" style="position:relative;">
+
                             <input id="password" name="password" value="{{ old('password') }}" type="password"
                                 class="inputAuth inputPasLogin" placeholder="Password" style="padding-right: 40px;"
                                 required>
+
                             <div class="show-password show-passwordLogin d-flex align-items-center">
                                 <i class="icon-eye iconEyeLogin" style="display: none"></i>
                                 <svg class="iconEyeOffLogin" xmlns="http://www.w3.org/2000/svg" width="22"
@@ -86,6 +93,7 @@
                                     <path d="m2 2 20 20" />
                                 </svg>
                             </div>
+
                             @error('password')
                                 <small id="emailHelp2" class="form-text text-muted text-danger">{{ $message }}</small>
                             @enderror
@@ -101,6 +109,9 @@
                         <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                     </div>
                 </form>
+                {{-- <a href="#" class="mr">
+                    Đăng ký
+                </a> --}}
 
                 <div class="form-action pt-2">
                     <a href="#" style="color: white;">HOẶC</a>
@@ -138,9 +149,10 @@
                     </a>
                 </div>
                 <!-- <div class="login-account">
-                    <span class="msg">Bạn chưa có tài khoản ?</span>
-                  <a href="#" id="show-signup" class="link">Đăng ký</a>
-                    </div> -->
+          <span class="msg">Bạn chưa có tài khoản ?</span>
+          <a href="#" id="show-signup" class="link">Đăng ký</a>
+        </div> -->
+
             </div>
         </div>
         <!-- Đăng ký tài khoản -->

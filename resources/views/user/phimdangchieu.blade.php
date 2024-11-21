@@ -26,10 +26,13 @@
         font-size: 1.1rem; /* Tăng kích thước chữ tiêu đề một chút */
     }
 </style>
+@section('title')
+    {{ $title }}
+@endsection
 @section('content')
     <div class="container">
         <br>
-        <h1 class="mb-4 fs-1"><strong>Danh sách phim</strong></h1>
+        <h1 class="mb-4 fs-1"><strong>Danh sách phim đang chiếu</strong></h1>
 
         <!-- Filter Button -->
         <div class="d-flex justify-content-end mt-5">
@@ -50,7 +53,7 @@
         <!-- Movies Grid -->
 
         <div class="d-flex flex-wrap justify-content-between">
-            @foreach ($danhSachPhim as $item)
+            @foreach ($phimDangChieu as $item)
                 <div class="col-md-3 mb-3"> <!-- Sử dụng col-md-3 để chia thành 4 cột -->
                     <div class="bg-secondary text-white rounded-lg h-100 d-flex flex-column" style="max-width: 300px;">
                         <div class="film-card position-relative flex-grow-1">
@@ -100,7 +103,7 @@
 
 
 
-        <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }}
+        {{-- <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }} --}}
         <br>
     </div>
 @endsection

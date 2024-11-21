@@ -1,31 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AnhBannerQuangCaoController;
+
+use App\Http\Controllers\VeController;
+use App\Http\Controllers\RapController;
+use App\Http\Controllers\DoAnController;
+use App\Http\Controllers\PhimController;
 use App\Http\Controllers\AuthenController;
-use App\Http\Controllers\BaiVietTinTucController;
-use App\Http\Controllers\BannerQuangCaoController;
-use App\Http\Controllers\DanhMucBaiVietTinTucController;
+use App\Http\Controllers\VaiTroController;
+use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DaoDienController;
+use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
-use App\Http\Controllers\DoAnController;
-use App\Http\Controllers\PhongChieuController;
-use App\Http\Controllers\GheNgoiController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NguoiDungController;
-use App\Http\Controllers\PasswordResetController;
-use App\Http\Controllers\PhimController;
-use App\Http\Controllers\RapController;
 use App\Http\Controllers\SuatChieuController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\TheLoaiPhimController;
-use App\Http\Controllers\VaiTroController;
+use App\Http\Controllers\BinhLuanPhimController;
+use App\Http\Controllers\BaiVietTinTucController;
+use App\Http\Controllers\BannerQuangCaoController;
+use App\Http\Controllers\Client\SanPhamController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AnhBannerQuangCaoController;
+use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\VeController;
-
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,7 @@ use App\Http\Controllers\VeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
   return view('welcome');
@@ -101,6 +105,7 @@ Route::prefix('admin')->group(function () {
   Route::get('phong-chieu/quan-ly-ghe/{id}', [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
 
   // route thêm ghế cho phòng chiếu
+
   Route::get('get/ghe/phong-chieu/{id}', [GheNgoiController::class, 'index'])->name('admin.showSeats');
   Route::post('post/them-ghe/phong-chieu/{id}', [GheNgoiController::class, 'store'])->name('admin.storeGhe');
   Route::post('delete/ghe/phong-chieu/', [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
@@ -165,3 +170,13 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
   Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
 });
+
+//Route người dùng
+Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
+Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
+Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+Route::resource('binhluan', BinhLuanPhimController::class);
+Route::resource('danhgia', DanhGiaController::class);
