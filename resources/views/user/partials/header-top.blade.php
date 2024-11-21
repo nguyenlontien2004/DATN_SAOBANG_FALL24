@@ -13,6 +13,8 @@
                         @csrf
                         <button type="submit">Đăng xuất</button>
                     </form>
+                    <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
+                    <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
                 </div>
             @else
                 <ul class="menu d-flex align-items-center mb-0 ms-3">

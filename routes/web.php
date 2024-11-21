@@ -17,6 +17,7 @@ use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\RapController;
 use App\Http\Controllers\SuatChieuController;
@@ -148,10 +149,19 @@ Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
 // Đăng xuất
 Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
-// Member
+// Thành viên
 Route::prefix('thanh-vien')->group(function () {
   Route::get('trang-chu', [MemberController::class, 'trangChu'])
     ->name('trangchu.member');
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
-  Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau']);
+  Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
+
+  Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
+  Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
+  Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
+
+  Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
+  Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
+  Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
+  Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
 });
