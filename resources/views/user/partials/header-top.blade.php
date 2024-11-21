@@ -58,6 +58,7 @@
                     </ul>
                 </div>
             </nav>
+
             <div class="d-flex align-items-center mt-3">
                 <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
                     <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
@@ -71,6 +72,8 @@
                             @csrf
                             <button class="btn btn-secondary btn-custom" type="submit">Đăng xuất</button>
                         </form>
+                        <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
+                        <a href="{{ route('trangchu.member') }}"> Trangchủ</a>
                     </div>
                 @else
                     <ul class="menu d-flex align-items-center mb-0 ms-3">
@@ -78,7 +81,7 @@
                             <a class="btn btn-secondary btn-custom" href="{{ route('dangky') }}">Đăng Ký</a>
                         </li>
                         <li class="xam ms-2">
-                            <a class="btn btn-secondary btn-custom" href="{{ route('formDangNhap') }}">Đăng Nhập</a>
+                            <a class="btn btn-secondary btn-custom" href="{{ route('dangnhap') }}">Đăng Nhập</a>
                         </li>
                     </ul>
                 @endif

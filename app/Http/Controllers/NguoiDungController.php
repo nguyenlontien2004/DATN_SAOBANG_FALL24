@@ -6,6 +6,7 @@ use App\Models\NguoiDung;
 use App\Http\Requests\StoreNguoiDungRequest;
 use App\Http\Requests\UpdateNguoiDungRequest;
 use App\Models\VaiTro;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class NguoiDungController extends Controller
@@ -25,8 +26,8 @@ class NguoiDungController extends Controller
      */
     public function create()
     {
-        $vaitro = VaiTro::all();
-
+        $vaitro = VaiTro::pluck('ten_vai_tro', 'id')->all();
+        // dd($vaitro);
         return view('admin.contents.nguoidung.add', compact('vaitro'));
     }
 
@@ -35,22 +36,35 @@ class NguoiDungController extends Controller
      */
     public function store(StoreNguoiDungRequest $request)
     {
-        $nguoidung = $request->all();
+        try {
+            DB::transaction(function () use ($request) {
+                // dd($request->all());
+                $nguoidung = $request->only(['ho_ten', 'email', 'so_dien_thoai', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
 
-        if ($request->hasFile('hinh_anh')) {
-            $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
-        } else {
-            $hinhanh = null;
+                if ($request->hasFile('hinh_anh')) {
+                    $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
+                } else {
+                    $hinhanh = null;
+                }
+                $nguoidung['hinh_anh'] = $hinhanh;
+                $nguoidung['password'] = bcrypt($request->input('password'));
+                // dd($nguoidung);
+
+                $nguoiDung = NguoiDung::create($nguoidung);
+
+                // dd($nguoiDung);
+
+                $nguoiDung->vaiTros()->attach($request->vai_tros);
+                // dd("Gán vai trò thành công");
+            });
+
+            return redirect()->route('nguoi-dung.index')->with('success', 'Thêm người dùng thành công');
+        } catch (\Throwable $th) {
+            // // Xem lỗi chi tiết
+            // dd($th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
-
-        $nguoidung['hinh_anh'] = $hinhanh;
-
-        NguoiDung::create($nguoidung);
-
-        return redirect()->route('nguoi-dung.index')
-            ->with('success', 'Thêm người dùng thành công');
     }
-
 
 
     /**
@@ -68,9 +82,12 @@ class NguoiDungController extends Controller
      */
     public function edit(NguoiDung $nguoiDung)
     {
-        $vaitro = VaiTro::all();
+        $nguoiDung->load('vaiTros');
+        $nguoidungvt = $nguoiDung->vaiTros->pluck('id')->all();
+        $vaitro = VaiTro::pluck('ten_vai_tro', 'id');
 
-        return  view('admin.contents.nguoidung.edit', compact('nguoiDung', 'vaitro'));
+
+        return  view('admin.contents.nguoidung.edit', compact('nguoiDung', 'vaitro', 'nguoidungvt'));
     }
 
     /**
@@ -78,24 +95,30 @@ class NguoiDungController extends Controller
      */
     public function update(UpdateNguoiDungRequest $request, NguoiDung $nguoiDung)
     {
-        $nguoidung = $request->all();
+        // dd($request->all());
+        try {
+            DB::transaction(function () use ($request, $nguoiDung) {
 
-        if ($request->hasFile('hinh_anh')) {
-            if ($nguoiDung->hinhanh) {
-                Storage::disk('public')->delete($nguoiDung);
-            }
+                $nguoidung = $request->only(['ho_ten', 'email', 'so_dien_thoai', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
 
-            $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
-        } else {
-            $hinhanh = $nguoiDung->hinhanh;
+                if ($request->hasFile('hinh_anh')) {
+                    $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
+                } else {
+                    $hinhanh = $nguoiDung->hinh_anh;
+                }
+
+                $nguoidung['hinh_anh'] = $hinhanh;
+
+                $nguoiDung->update($nguoidung);
+
+                $nguoiDung->vaiTros()->sync($request->vai_tros);
+            });
+
+            return redirect()->route('nguoi-dung.index')
+                ->with('success', 'Sửa người dùng thành công');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
         }
-
-        $nguoidung['hinh_anh'] = $hinhanh;
-
-        $nguoiDung->update($nguoidung);
-
-        return redirect()->route('nguoi-dung.index')
-            ->with('success', 'Sửa người dùng thành công');
     }
 
     /**

@@ -28,6 +28,9 @@
             <div class="card-header">
                 <h4 class="card-title">Thông tin admin</h4>
             </div>
+            @php
+                $nguoiDung = Auth::user();
+            @endphp
             <div class="card-body">
                 <div class="form-group">
                     <label for="ho_ten">Họ tên:</label>
@@ -74,7 +77,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Quay lại</a>
             </div>
         </div>
     </div>

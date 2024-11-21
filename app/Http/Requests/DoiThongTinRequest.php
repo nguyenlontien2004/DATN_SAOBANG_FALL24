@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthAdminRequest extends FormRequest
+class DoiThongTinRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,14 +22,7 @@ class AuthAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required']
-        ];
-    }
-    public function messages(): array
-    {
-        return [
-            'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
+            //
         ];
     }
 }
