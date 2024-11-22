@@ -187,11 +187,10 @@
             <h3>Danh sách đánh giá:</h3><br>
             @foreach ($chiTietPhim->danhGias as $item)
             <div class="list-group-item">
-                    <div class="d-flex w-100 justify-content">
-                        <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
-                        <br><small>{{ $item->created_at->format('d/m/Y') }}</small>
-                    </div>
-                    
+                <div class="d-flex w-100 mb-2">
+                    <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
+                    <small class="ml-2">{{ $item->created_at->format('d/m/Y') }}</small>
+                </div>                  
                     <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
                     <div class="d-flex">
                         Điểm đánh giá:
@@ -238,7 +237,7 @@
         @else
             <!-- Thông báo khi chưa đăng nhập -->
             <div class="mt-4">
-                <p class="text-muted">Bạn cần <a href="{{ route('formDangNhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
+                <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
                 </p>
             </div>
         @endauth
@@ -248,7 +247,7 @@
             <h3>Bình luận người xem</h3><br>
             @foreach ($chiTietPhim->binhLuans as $item)
                 <div class="d-flex mb-4">
-                    <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+                    <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
                     <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
                         <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span
                                 class="text-muted"
@@ -290,7 +289,7 @@
                 @else
                     <!-- Thông báo khi chưa đăng nhập -->
                     <div class="mt-4">
-                        <p class="text-muted">Bạn cần <a href="{{ route('formDangNhap') }}"><strong>đăng nhập</strong></a> để
+                        <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để
                             bình luận.</p>
                     </div>
                 @endauth

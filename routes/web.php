@@ -156,27 +156,30 @@ Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat'
 
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
-  Route::get('trang-chu', [MemberController::class, 'trangChu'])
-    ->name('trangchu.member');
+  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
+  //   ->name('trangchu.member');
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
+  //Lịch sử đặt vé
+  Route::get('lich-su-dat-ve}', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
+  Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
+
 
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
   Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
   Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
+  //Route người dùng
+  Route::get('trang-chu', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
+  Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+  Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+  Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
+  Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+  Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+  Route::resource('binhluan', BinhLuanPhimController::class);
+  Route::resource('danhgia', DanhGiaController::class);
 });
-
-//Route người dùng
-Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
-Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
-Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
-Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
-Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
-Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
-Route::resource('binhluan', BinhLuanPhimController::class);
-Route::resource('danhgia', DanhGiaController::class);
