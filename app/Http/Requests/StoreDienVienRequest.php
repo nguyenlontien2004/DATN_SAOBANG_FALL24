@@ -23,7 +23,7 @@ class StoreDienVienRequest extends FormRequest
     {
 
         return [
-            'ten_dien_vien' => 'required|string|max:255',
+            'ten_dien_vien' => 'required|string|max:255|unique:dien_viens,ten_dien_vien',
             'anh_dien_vien' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nam_sinh' => 'required|date',
             'quoc_tich' => 'required|string|max:255',
@@ -35,6 +35,8 @@ class StoreDienVienRequest extends FormRequest
     public function messages()
     {
         return [
+
+            'ten_dien_vien.unique' => ' tên diễn viên đã tồn tại',
             'ten_dien_vien.required' => 'Bắt buộc nhập Tên diễn viên .',
             'ten_dien_vien.string' => 'Tên diễn viên phải là một chuỗi.',
             'ten_dien_vien.max' => 'Tên diễn viên không được vượt quá 255 ký tự.',

@@ -23,7 +23,7 @@ class StoreTheLoaiPhimRequest extends FormRequest
     public function rules()
     {
         return [
-            'ten_the_loai' => 'required|string|max:255',
+            'ten_the_loai' => 'required|string|max:255|unique:the_loai_phims,ten_the_loai',
         ];
     }
 
@@ -33,6 +33,7 @@ class StoreTheLoaiPhimRequest extends FormRequest
             'ten_the_loai.required' => 'Tên thể loại là bắt buộc.',
             'ten_the_loai.string' => 'Tên thể loại phải là một chuỗi.',
             'ten_the_loai.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
+            'ten_the_loai.unique'=>'tên thể loại đã tồn tại.'
         ];
     }
 }

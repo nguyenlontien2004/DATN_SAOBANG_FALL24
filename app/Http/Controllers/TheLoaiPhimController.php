@@ -23,7 +23,6 @@ class TheLoaiPhimController extends Controller
 {
     TheLoaiPhim::create([
         'ten_the_loai' => $request->ten_the_loai,
-        'trang_thai' => $request->trang_thai,
     ]);
 
     return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');

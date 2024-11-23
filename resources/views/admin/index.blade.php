@@ -35,14 +35,15 @@
                     <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button type="submit" class="btn btn-search pe-1">
+                                <button type="button" class="btn btn-search pe-1" onclick="search()">
                                     <i class="fa fa-search search-icon"></i>
                                 </button>
                             </div>
-                            <input type="text" placeholder="Search ..." class="form-control" />
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm ..." class="form-control" oninput="search()" />
                         </div>
                     </nav>
-
+                    <div id="searchResults" style="position: absolute; left: 100px; padding: 5px; width: 100px; border: 1px solid #ccc; display: none;">        
+                    </div>
                     <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                         <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"

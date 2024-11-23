@@ -23,8 +23,8 @@ class UpdateDienVienRequest extends FormRequest
     {
 
         return [
-            'ten_dien_vien' => 'required|string|max:255',
-            'anh_dien_vien' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ten_dien_vien' => 'required|string|max:255|unique:dien_viens,ten_dien_vien,' . $this->route('dienVien')->id,
+            'anh_dien_vien' => 'image|mimes:jpeg,png,jpg,gif',
             'nam_sinh' => 'required|date',
             'quoc_tich' => 'required|string|max:255',
             'gioi_tinh' => 'required|string',
@@ -36,22 +36,27 @@ class UpdateDienVienRequest extends FormRequest
     public function messages()
     {
         return [
-            'ten_dien_vien.required' => 'Bắt buộc nhập tên diễn viên .',
+            'ten_dien_vien.required' => 'Bắt buộc nhập tên diễn viên.',
+            'ten_dien_vien.unique' => 'Tên diễn viên đã tồn tại.',
             'ten_dien_vien.string' => 'Tên diễn viên phải là một chuỗi.',
             'ten_dien_vien.max' => 'Tên diễn viên không được vượt quá 255 ký tự.',
+            
             'anh_dien_vien.image' => 'Tập tin phải là một hình ảnh.',
             'anh_dien_vien.mimes' => 'Ảnh diễn viên phải có định dạng: jpeg, png, jpg, gif.',
-            'anh_dien_vien.max' => 'Ảnh diễn viên không được vượt quá 2MB.',
-            'nam_sinh.required' => 'Năm sinh .',
+
+            'nam_sinh.required' => 'Bắt buộc nhập năm sinh.',
             'nam_sinh.date' => 'Năm sinh không hợp lệ.',
-            'quoc_tich.required' => 'Quốc tịch .',
+
+            'quoc_tich.required' => 'Bắt buộc nhập quốc tịch.',
             'quoc_tich.string' => 'Quốc tịch phải là một chuỗi.',
             'quoc_tich.max' => 'Quốc tịch không được vượt quá 255 ký tự.',
-            'gioi_tinh.required' => 'Bắt buộc chọn Giới tính .',
+
+            'gioi_tinh.required' => 'Bắt buộc chọn giới tính.',
             'gioi_tinh.string' => 'Giới tính phải là một chuỗi.',
-            'trang_thai.required' => ' Bắt buộc nhập Trạng thái .',
+
+            'trang_thai.required' => 'Bắt buộc nhập trạng thái.',
             'trang_thai.boolean' => 'Trạng thái không hợp lệ.',
-            'tieu_su.required'=>'bắt buộc nhập tiểu sử.',
+
             'tieu_su.string' => 'Tiểu sử phải là một chuỗi.',
         ];
     }

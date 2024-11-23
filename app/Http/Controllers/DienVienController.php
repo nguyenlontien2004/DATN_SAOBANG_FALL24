@@ -23,14 +23,12 @@ class DienVienController extends Controller
     public function store(StoreDienVienRequest $request)
     {
         $path = $request->file('anh_dien_vien')->store('dien_vien', 'public');
-
         DienVien::create([
             'ten_dien_vien' => $request->ten_dien_vien,
             'anh_dien_vien' => $path,
             'nam_sinh' => $request->nam_sinh,
             'quoc_tich' => $request->quoc_tich,
             'gioi_tinh' => $request->gioi_tinh,
-            'trang_thai' => $request->trang_thai,
             'tieu_su' => $request->tieu_su,
         ]);
 
@@ -47,13 +45,14 @@ class DienVienController extends Controller
             $path = $request->file('anh_dien_vien')->store('dien_vien', 'public');
             $dienVien->anh_dien_vien = $path;
         }
-        $dienVien->ten_dien_vien = $request->ten_dien_vien;
-        $dienVien->nam_sinh = $request->nam_sinh;
-        $dienVien->quoc_tich = $request->quoc_tich;
-        $dienVien->gioi_tinh = $request->gioi_tinh;
-        $dienVien->trang_thai = $request->trang_thai;
-        $dienVien->tieu_su = $request->tieu_su;
-        $dienVien->save();
+        $dienVien->update([
+            'ten_dien_vien' => $request->ten_dien_vien,
+            'nam_sinh' => $request->nam_sinh,
+            'quoc_tich' => $request->quoc_tich,
+            'gioi_tinh' => $request->gioi_tinh,
+            'trang_thai' => $request->trang_thai,
+            'tieu_su' => $request->tieu_su,
+        ]);
 
         return redirect()->route('dienVien.index')->with('success', 'Cập nhật Diễn Viên thành công!');
     }

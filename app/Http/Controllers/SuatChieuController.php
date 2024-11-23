@@ -12,12 +12,23 @@ use App\Http\Requests\UpdateSuatChieuRequest;
 
 class SuatChieuController extends Controller
 {
-    public function index()
-    {
-
-        $suatChieus = SuatChieu::with(['phongChieu', 'phim'])->orderBy('id', 'desc')->get();
-        return view('admin.contents.suatChieus.index', compact('suatChieus'));
+    public function index(Request $request)
+{
+    $query = SuatChieu::with(['phongChieu', 'phim']);
+    if ($request->filled('phim_id')) {
+        $query->where('phim_id', $request->phim_id);
     }
+    if ($request->filled('phong_chieu_id')) {
+        $query->where('phong_chieu_id', $request->phong_chieu_id);
+    }
+
+    $suatChieus = $query->orderBy('id', 'desc')->get();
+
+    $phims = Phim::where('trang_thai', 1)->get();
+    $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+    return view('admin.contents.suatChieus.index', compact('suatChieus', 'phims', 'phongChieus'));
+}
+
     public function create()
     {
         $phongChieus = PhongChieu::where('trang_thai', 1)->get();

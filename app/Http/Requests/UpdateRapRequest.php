@@ -22,7 +22,7 @@ class UpdateRapRequest extends FormRequest
     public function rules()
     {
         return [
-            'ten_rap' => 'required|string|max:255',
+            'ten_rap' => 'required|string|max:255|unique:raps,ten_rap,' . $this->route('rap')->id,
             'dia_diem' => 'required|string|max:255',
             'trang_thai' => 'required|boolean',
         ];
@@ -32,6 +32,7 @@ class UpdateRapRequest extends FormRequest
     {
         return [
             'ten_rap.required' => 'Tên rạp là bắt buộc.',
+            'ten_rap.unique'=>'tên rạp đã tồn tại',
             'dia_diem.required' => 'Địa điểm là bắt buộc.',
             'trang_thai.required' => 'Trạng thái là bắt buộc.',
         ];

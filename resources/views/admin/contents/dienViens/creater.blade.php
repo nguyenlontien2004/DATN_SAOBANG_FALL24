@@ -11,7 +11,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="ten_dien_vien" class="form-label">Tên Diễn Viên</label>
-                        <input type="text" class="form-control" id="ten_dien_vien" name="ten_dien_vien" >
+                        <input type="text" class="form-control" id="ten_dien_vien" name="ten_dien_vien" value="{{old('ten_dien_vien')}}" >
                         @error('ten_dien_vien')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -19,7 +19,7 @@
 
                     <div class="mb-3">
                         <label for="anh_dien_vien" class="form-label">Ảnh Diễn Viên</label>
-                        <input type="file" class="form-control" id="anh_dien_vien" name="anh_dien_vien" accept="image/*"
+                        <input type="file" class="form-control" id="anh_dien_vien" name="anh_dien_vien" accept="image/*" value="{{old('anh_dien_vien')}}"
                             >
                         @error('anh_dien_vien')
                             <div class="text-danger">{{ $message }}</div>
@@ -28,7 +28,7 @@
 
                     <div class="mb-3">
                         <label for="nam_sinh" class="form-label">Năm sinh</label>
-                        <input type="date" class="form-control" id="nam_sinh" name="nam_sinh" >
+                        <input type="date" class="form-control" id="nam_sinh" name="nam_sinh" value="{{old('nam_sinh')}}">
                         @error('nam_sinh')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -37,7 +37,7 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="quoc_tich" class="form-label">Quốc tịch</label>
-                            <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" >
+                            <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" value="{{old('quoc_tich')}}"">
                             @error('quoc_tich')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

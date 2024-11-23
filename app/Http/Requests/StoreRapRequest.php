@@ -22,7 +22,7 @@ class StoreRapRequest extends FormRequest
     public function rules()
     {
         return [
-            'ten_rap' => 'required|string|max:255',
+            'ten_rap' => 'required|string|max:255|unique:raps,ten_rap',
             'dia_diem' => 'required|string|max:255',
         ];
     }
@@ -31,6 +31,7 @@ class StoreRapRequest extends FormRequest
     {
         return [
             'ten_rap.required' => 'Tên rạp là bắt buộc.',
+            'ten_rap.unique' => 'Tên rạp đã tồn tại.',
             'dia_diem.required' => 'Địa điểm là bắt buộc.',
         ];
     }

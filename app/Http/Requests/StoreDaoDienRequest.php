@@ -22,7 +22,7 @@ class StoreDaoDienRequest extends FormRequest
     public function rules()
     {
         return [
-            'ten_dao_dien' => 'required|string|max:255',
+            'ten_dao_dien' => 'required|string|max:255|unique:dao_diens,ten_dao_dien',
             'anh_dao_dien' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nam_sinh' => 'required|date',
             'quoc_tich' => 'required|string|max:255',
@@ -34,6 +34,7 @@ class StoreDaoDienRequest extends FormRequest
     public function messages()
     {
         return [
+            'ten_dao_dien.unique' => ' tên đạo diễn đã tồn tại',
             'ten_dao_dien.required' => 'Bắt buộc nhập Tên đạo diễn .',
             'ten_dao_dien.string' => 'Tên đạo diễn phải là một chuỗi.',
             'ten_dao_dien.max' => 'Tên đạo diễn không được vượt quá 255 ký tự.',

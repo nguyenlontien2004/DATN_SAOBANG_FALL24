@@ -13,6 +13,7 @@ use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\VeController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\VeController;
 Route::get('/', function () {
   return view('welcome');
 });
+Route::get('/search', [SearchController::class, 'search']);
 
 Route::prefix('admin')->group(function () {
     // route auth admin
