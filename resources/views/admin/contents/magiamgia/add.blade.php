@@ -98,6 +98,22 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        {{-- 
+                        <div class="col-md-6">
+                            <label for="gia_tri_giam">Chọn Phim</label>
+                            <select name="phim[]" id="phim" class="form-control" multiple>
+                                @foreach ($phim as $p)
+                                    <option value="{{ $p->id }}">{{ $p->ten_phim }}</option>
+                                @endforeach
+                            </select> --}}
+                        {{-- <div class="mt-3 p-2">
+                                {{ $phim->links() }}
+                            </div> --}}
+                        {{-- @error('phim')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div> --}}
+
                     </div>
 
                     <div class="card-footer">
@@ -108,6 +124,13 @@
             </div>
         </div>
 
-
     </div>
+    {{-- <script>
+        $(document).ready(function() {
+            $('#phim').select2({
+                placeholder: "Tìm kiếm và chọn phim",
+                allowClear: true,
+            });
+        });
+    </script> --}}
 @endsection

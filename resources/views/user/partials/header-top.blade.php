@@ -42,7 +42,7 @@
 
                         <!-- Top phim Link -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Top phim</a>
+                            <a class="nav-link" href="{{ route('tintuc.hienthi') }}">Tin tức</a>
                         </li>
                         <!-- Blog phim Dropdown -->
                         <li class="nav-item dropdown">
@@ -86,7 +86,7 @@
                     </ul>
                 @endif
             </div>
-            
+
         </div>
     </div>
 
