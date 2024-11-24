@@ -32,17 +32,36 @@
                 <li class="nav-item active">
                     <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                         <i class="fas fa-chart-bar"></i>
-                        <p>Dashboard</p>
+                        <p>Thống kê</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="../demo1/index.html">
-                                    <span class="sub-item">Dashboard 1</span>
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </li>
                 <li class="nav-section">

@@ -19,21 +19,15 @@ class NguoiDung extends Authenticatable
         'ho_ten',
         'email',
         'so_dien_thoai',
-        'hinh_anh',
         'password',
-<<<<<<< HEAD
-=======
         'hinh_anh',
->>>>>>> developer
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
-        'trang_thai',
+        'trang_thai'
     ];
-<<<<<<< HEAD
-    protected $hidden = ['password', 'remember_token'];
-=======
->>>>>>> developer
+
+    // protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
@@ -50,26 +44,21 @@ class NguoiDung extends Authenticatable
 
     public function vaiTros()
     {
-<<<<<<< HEAD
-        return $this->belongsToMany(VaiTro::class, 'vai_tro_va_nguoi_dungs', 'nguoi_dung_id', 'vai_tro_id'); 
-        // Sửa lại thứ tự cột nếu cần: 'nguoi_dung_id' -> 'vai_tro_id'
+        return $this->belongsToMany(VaiTro::class);
     }
 
     public function danhGias()
     {
         return $this->hasMany(DanhGia::class);
-=======
-        return $this->belongsToMany(VaiTro::class);
     }
 
     public function admin()
     {
-        return $this->ten_vai_tro == self::TYPE_ADMIN;
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_ADMIN)->exists();
     }
 
     public function member()
     {
-        return $this->ten_vai_tro == self::TYPE_MEMBER;
->>>>>>> developer
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
     }
 }

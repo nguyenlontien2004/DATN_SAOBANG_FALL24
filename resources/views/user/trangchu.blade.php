@@ -1,7 +1,9 @@
 @extends('layout.user')
-@section('title')
+
+{{-- @section('title')
     {{ $title }}
-@endsection
+@endsection --}}
+
 @section('content')
     <main class="container mx-auto px-4 py-8">
         <!-- banner -->
@@ -54,7 +56,7 @@
                                 src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
                                 onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
                                 style="cursor: pointer;" />
-                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge"> 
+                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
                                 <h3 class="text-lg font-bold film-title">
                                     {{ $item->ten_phim }}
                                 </h3>

@@ -156,7 +156,7 @@
             </div>
         </div>
         <!-- Đăng ký tài khoản -->
-        <div class="container container-signup animated fadeIn"
+        {{-- <div class="container container-signup animated fadeIn"
             style="display: none;background: rgba(0, 0, 0, 0.7);color:white;border:none;">
             <h3 class="fs-1 fw-bolder">Đăng ký</h3>
             <div class="login-form">
@@ -190,7 +190,7 @@
                     <a href="#" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 
