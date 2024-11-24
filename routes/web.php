@@ -29,6 +29,8 @@ use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\MemberMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +54,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -163,22 +165,27 @@ Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat'
 Route::prefix('thanh-vien')->group(function () {
   // Route::get('trang-chu', [MemberController::class, 'trangChu'])
   //   ->name('trangchu.member');
+
+  // Đổi mật khẩu
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
+  // Xem và cập nhập thông tin cá nhân
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
 
+  // Đặt lại mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
   Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
   Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
 
+  // Tin tức
   Route::get('tin-tuc', [BaiVietTinTucController::class, 'hienThi'])->name('tintuc.hienthi');
   Route::get('tin-tuc/{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
 
-  Route::get('trang-chu', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
+  Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member')->middleware(['auth', MemberMiddleware::class]);
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
