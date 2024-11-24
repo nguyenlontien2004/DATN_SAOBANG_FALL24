@@ -58,7 +58,7 @@ $(document).ready(function () {
 
     function postData() {
         $.ajax({
-            url: `http://127.0.0.1:8000/api/ghe/suat-chieu/${id}/${ngay}`,
+            url: `${urlaApiGhe}/${id}/${ngay}`,
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -115,7 +115,7 @@ $(document).ready(function () {
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            data: JSON.stringify({ 'hangghe': dataHang, 'doan': dataFood, 'tong': tonggia }),
+            data: JSON.stringify({ 'idSuatChieu':id,'ngayvemo':ngay,'hangghe': dataHang, 'doan': dataFood, 'tong': tonggia }),
             success: function (data) {
                 if(data.status == 200){
                     window.location.replace(data.redirect_url)

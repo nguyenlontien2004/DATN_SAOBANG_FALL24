@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('.loading-suat').show()
     $('.container-booth').html('')
     $.ajax({
-      url: `http://127.0.0.1:8000/api/suat-chieu/phim/${idMovie}/${currDate}`,
+      url: `${urlApi}/${idMovie}/${currDate}`,
       method: 'get',
       success: function (data) {
         if (data.status == 200) {

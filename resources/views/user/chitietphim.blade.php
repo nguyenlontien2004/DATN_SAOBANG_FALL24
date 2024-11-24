@@ -313,6 +313,9 @@
 <script>
     let currDate = "{{ Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') }}"
     const idMovie = "{{ $chiTietPhim->id }}"
+    const urlApi = "{{ asset('api/suat-chieu/phim') }}"
+    console.log(urlApi);
+    
     //$('asa').
 
 </script>

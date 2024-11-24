@@ -58,20 +58,23 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-column">
-                                                    <span class="d-flex">Ghế: <strong>
-                                                            @foreach ($item->chiTietVe as $seat)
-                                                                {{ $seat->seat->hang_ghe . $seat->seat->so_hieu_ghe }}
+                                                    <span class="d-flex text-left">Ghế: <strong>
+                                                        @php
+                                                        $ghe = $item->chiTietVe->pluck('seat')->groupBy('the_loai');
+                                                        @endphp
+                                                            @foreach ($ghe as $key=>$value)
+                                                            @for ($i = 0; $i < count($value); $i++)
+                                                                @if ($key == 'doi')
+                                                                    <span class="dataghechon" id="{{ $value[$i]['id'] . '-' . $value[$i + 1]['id'] }}" data-type="{{ $value[$i]['the_loai'] }}">{{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe . $value[$i + 1]->hang_ghe . $value[$i + 1]->so_hieu_ghe}}{{ isset($value[$i + 2]) ? "," : "" }}</span>
+                                                                    @php $i++ @endphp
+                                                                @else
+                                                                   <span class="dataghechon" id="{{ $value[$i]['id'] }}" data-type="{{ $value[$i]['the_loai'] }}"> {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe }}{{ isset($value[$i + 1]) ? "," : "" }}</span>
+                                                                @endif
+                                                            @endfor
                                                             @endforeach
-                                                        </strong></span>
-                                                    <span><strong>
-                                                            @if ($item->chiTietVe[0]->seat->the_loai == 'thuong')
-                                                                Thường
-                                                            @elseif($item->chiTietVe[0]->seat->the_loai == 'vip')
-                                                                Vip
-                                                            @else
-                                                                Đôi
-                                                            @endif
-                                                        </strong></span>
+                                                        </strong>
+                                                    </span>
+                                                   
                                                 </div>
                                             </td>
                                             <td>{{ $item->phuong_thuc_thanh_toan }}</td>

@@ -10,6 +10,7 @@ use App\Models\NguoiDung;
 use App\Models\SuatChieu;
 use App\Models\MaGiamGia;
 use App\Models\DoAn;
+use Illuminate\Support\Facades\DB;
 
 class VeController extends Controller
 {
@@ -73,12 +74,12 @@ class VeController extends Controller
     public function detail($id)
     {
         $dataTicket = Ve::query()
-            ->select(['id', 'nguoi_dung_id', 'ngay_thanh_toan', 'suat_chieu_id', 'ma_giam_gia_id', 'phuong_thuc_thanh_toan', 'tong_tien', 'trang_thai'])
+            ->select(['id', 'nguoi_dung_id','ngay_ve_mo','ma_code_ve','qr_code', 'ngay_thanh_toan', 'suat_chieu_id', 'ma_giam_gia_id', 'phuong_thuc_thanh_toan', 'tong_tien', 'trang_thai'])
             ->with([
                 'anhPhim',
                 'maGiamGia',
                 'suatChieu' => function ($query) {
-                    $query->select(['id', 'phong_chieu_id', 'phim_id', 'gio_bat_dau'])->with([
+                    $query->select(['id', 'phong_chieu_id', 'phim_id',DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"),DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc")])->with([
                         'phongChieu' => function ($query) {
                             $query->select(['id', 'rap_id', 'ten_phong_chieu'])->with('cinema');
                         },

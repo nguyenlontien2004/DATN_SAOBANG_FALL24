@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('suat-chieu/phim/{id}/{date}',                     [DatVeController::class,'laySuatChieuTheoNgay']);
 Route::post('ghe/suat-chieu/{id}/{ngay}',                     [DatVeController::class,'idghe']);
+Route::post('ma-giam-gia',                                    [DatVeController::class,'magiamgia']);
 Route::middleware('web')->post('post/thanh-toan/{id}/{ngay}',                    [DatVeController::class,'chuyenquatrangthanhtoan']);

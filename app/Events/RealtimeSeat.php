@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log; 
 
 class RealtimeSeat implements ShouldBroadcast
 {
@@ -22,6 +22,7 @@ class RealtimeSeat implements ShouldBroadcast
     public $ngay;
     public $dataSeat;
     public $idRemove;
+    public $connection = 'sync'; // Xử lý đồng bộ, không qua queue
     public function __construct($id, $ngay,$dataSeat,$idRemove)
     {
         $this->id = $id;

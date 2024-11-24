@@ -31,12 +31,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="d-flex my-3 col-md-12 col-sm-12 col-xl-5">
+                    <div class="d-flex my-3 col-md-12 col-sm-12 col-xl-7">
                         <img width="200px" style="filter: drop-shadow(2px 4px 6px black);"
                             src="https://cdn.moveek.com/storage/media/cache/short/665dc87501b36651649752.jpg"
                             alt="">
                         <div class="ms-4">
                             <h3 class="mb-2">{{ $dataTicket->suatChieu->phim->ten_phim }}</h3>
+                            <p class="mb-2">Ngày vé mở  <strong>{{ $dataTicket->ngay_ve_mo }}</strong> <span class="ms-1 mr-1" >-</span>
+                                    <strong>{{ $dataTicket->suatChieu->gio_bat_dau."~".$dataTicket->suatChieu->gio_ket_thuc }}</strong>
+                            </p>
+                            <p class="mb-2">Mã code vé:
+                                <strong>{{ $dataTicket->ma_code_ve }}</strong>
+                            </p>
                             <p class="mb-2">Phòng chiếu:
                                 <strong>{{ $dataTicket->suatChieu->phongChieu->ten_phong_chieu }}</strong>
                             </p>
@@ -73,14 +79,19 @@
                                 @endif
                             </p>
                             <p class="mb-1">Mã giảm giá:
-                                {{ $dataTicket->discountCode == null ? 'Không áp dụng' : $dataTicket->discountCode->ten_ma_giam_gia }}
+                                {{ $dataTicket->maGiamGia == null ? 'Không áp dụng' : $dataTicket->maGiamGia->ten_ma_giam_gia.' - '.$dataTicket->maGiamGia->gia_tri_giam.'%' }}
                             </p>
                             <p class="mb-1">Phương thức thanh toán: <strong>{{ $dataTicket->phuong_thuc_thanh_toan }}</strong></p>
                             <h4>Tổng đơn hàng: {{ number_format($dataTicket->tong_tien, 0, ',', '.') }}đ</h4>
                         </div>
                     </div>
-                    @if (count($food) > 0)
-                        <div class="flex-1 col-md-12 mt-3 col-sm-12 col-xl-7">
+                    <div class="flex-1 col-md-12 mt-3 col-sm-12 col-xl-5">
+                        <img src="{{ \Storage::url($dataTicket->qr_code) }}" alt="">
+                    </div>
+                </div>
+                <div class="row" >
+                @if (count($food) > 0)
+                        <div class="flex-1 col-md-12 mt-3 col-sm-12 col-xl-12">
                             <h3>Đồ ăn</h3>
                             <table class="table table-striped">
                                 <thead>

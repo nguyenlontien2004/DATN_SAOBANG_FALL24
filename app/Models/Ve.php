@@ -12,6 +12,9 @@ class Ve extends Model
     //    public function discountCode()
     protected $fillable = [
         'nguoi_dung_id',
+        'ma_code_ve',
+        'qr_code',
+        'ngay_ve_mo',
         'suat_chieu_id',
         'ma_giam_gia_id',
         'do_an_id',

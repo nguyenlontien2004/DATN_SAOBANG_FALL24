@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\SuatChieu;
 use App\Models\Rap;
 use App\Models\Phim;
+use App\Models\MaGiamGia;
 use App\Events\RealtimeSeat;
 
 class DatVeController extends Controller
@@ -69,12 +70,30 @@ class DatVeController extends Controller
     }
     public function chuyenquatrangthanhtoan(Request $request, $id, $ngay)
     {
-        session(['thong-tin-dat'=>$request->all()]);
+        session(['thong-tin-dat' => $request->all()]);
         // session()->forget('thong-tin-ve');
         return response()->json([
             'message' => 'Data saved!',
-            'status'=>200,
+            'status' => 200,
             'redirect_url' => asset('thanh-toan/' . $id . '/' . $ngay),
-        ],200);
+        ], 200);
+    }
+    public function magiamgia(Request $request)
+    {
+        $magiamgia = MaGiamGia::query()->select('id', 'gia_tri_giam', 'so_luong')
+            ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
+            ->where('so_luong', '>', 0)
+            ->where('ma_giam_gia', $request->macode);
+        if ($magiamgia->exists()) {
+            $code = $magiamgia->first();
+            return response()->json([
+                'data' => $code,
+                'msg' => 'Áp dụng thành công mã'
+            ]);
+        } else {
+            return response()->json([
+                'msg' => 'Mã không tồn tại hoặc đã hết hạn!'
+            ]);
+        }
     }
 }

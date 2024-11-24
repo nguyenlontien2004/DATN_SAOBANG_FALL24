@@ -269,7 +269,8 @@
     const id = "{{ $id }}"
     const ngay = "{{ $date }}"
     const gia = "{{ $suatchieu->phim->gia }}"
-    const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
+   const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
+   const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
     //$('asa').
 </script>
 @vite('resources/js/reatimeGhe.js')
