@@ -6,6 +6,7 @@ use App\Models\BaiVietTinTuc;
 use App\Http\Requests\StoreBaiVietTinTucRequest;
 use App\Http\Requests\UpdateBaiVietTinTucRequest;
 use App\Models\DanhMucBaiVietTinTuc;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -126,20 +127,41 @@ class BaiVietTinTucController extends Controller
             ->with('success', 'Xóa bài viết thành công');
     }
 
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/uploads', $filename);
+            $url = Storage::url($path);
+
+            return response()->json([
+                'uploaded' => true,
+                'url' => $url,
+            ]);
+        }
+
+        return response()->json([
+            'uploaded' => false,
+            'error' => [
+                'message' => 'Không thể tải lên hình ảnh!',
+            ],
+        ]);
+    }
+
     public function hienThi()
     {
         $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(1);
-        return view('user.tintuc', compact('baiviet'));
+        return view('user.tintuc.tintuc', compact('baiviet'));
     }
 
     public function showTinTuc($id)
     {
         // $danhmuc = DanhMucBaiVietTinTuc::all();
+        $tt = BaiVietTinTuc::findOrFail($id);
 
-        BaiVietTinTuc::where('id', $id)->increment('luot_xem');
+        $tt->increment('luot_xem');
 
-        $tintuc = BaiVietTinTuc::findOrFail($id);
-
-        return view('user.chitiettintuc', compact('tintuc'));
+        return view('user.tintuc.chitiettintuc', compact('tt'));
     }
 }

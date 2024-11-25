@@ -58,6 +58,7 @@ Route::prefix('admin')->group(function () {
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
+  Route::post('admin/upload-image', [BaiVietTinTucController::class, 'uploadImage'])->name('bai-viet-tin-tuc.upload-image');
   Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
   Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
 
@@ -150,19 +151,20 @@ Route::prefix('admin')->group(function () {
   Route::resource('suatChieu', SuatChieuController::class);
 });
 
-// Đăng ký
-Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
-Route::post('dang-ky', [AuthenController::class, 'dangKy']);
-
-// Đăng nhập
-Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('dangnhap');
-Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
-
-// Đăng xuất
-Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
-
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
+
+  // Đăng ký
+  Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
+  Route::post('dang-ky', [AuthenController::class, 'dangKy']);
+
+  // Đăng nhập
+  Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('dangnhap');
+  Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
+
+  // Đăng xuất
+  Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
+
   // Route::get('trang-chu', [MemberController::class, 'trangChu'])
   //   ->name('trangchu.member');
 
