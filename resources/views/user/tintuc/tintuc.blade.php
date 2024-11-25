@@ -11,8 +11,9 @@
             <a href="{{ route('tintuc.show', $bv->id) }}">
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100">
-                        <img src="{{ asset('storage/' . $bv->hinh_anh) }}" class="card-img-top" style="height:180; width:300"
-                            alt="Phim cổ trang Trung Quốc" />
+                        <img src="{{ asset('storage/' . $bv->hinh_anh) }}" class="card-img-top"
+                            style="height:180px; width:380px; object-fit:cover;" alt="Phim cổ trang Trung Quốc" />
+
                         <div class="card-body">
                             <h5 class="card-title">
                                 {{ $bv->tieu_de }}
@@ -23,7 +24,7 @@
                             <!-- Ngày đăng và lượt xem -->
                             <div class="news-info">
                                 <span>Ngày đăng: {{ $bv->ngay_dang }}</span>
-                                <span><i class="bi bi-eye"></i> {{ $bv->luot_xem }}</span>
+                                <span>Lượt xem<i class="bi bi-eye"></i> {{ $bv->luot_xem }}</span>
                             </div>
                         </div>
                     </div>
