@@ -4,20 +4,19 @@
     <div class="row">
         <!-- Tin tức content -->
         <div class="col-md-8">
-            @foreach ($tintuc as $tt)
-                <h2>{{ $tt->tieu_de }}</h2>
-                <p class="text-muted">Lượt xem: {{ $tt->luot_xem }}</p>
-                <hr />
+
+            <h2>{{ $tt->tieu_de }}</h2>
+            <p class="text-muted">Lượt xem: {{ $tt->luot_xem }}</p>
+            <hr />
+            <p>
+                <strong>Tóm tắt tin tức:</strong> {{ $tt->tom_tat }}
+            </p>
+            <div class="content">
                 <p>
-                    <strong>Tóm tắt tin tức:</strong> {{ $tt->tom_tat }}
+                    {!! $tt->noi_dung !!}
                 </p>
-                <div class="content">
-                    <p>
-                        {{ $tt->noi_dung }}
-                    </p>
-                </div>
-                {{ $tt->hinh_anh }}
-            @endforeach
+            </div>
+
         </div>
 
         <!-- Sidebar Tin tức liên quan -->
