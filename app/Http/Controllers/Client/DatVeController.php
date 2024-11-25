@@ -65,6 +65,7 @@ class DatVeController extends Controller
     public function thanhToan($id, $date)
     {
         //dd(session('thong-tin-dat'));
+        $idsuauChieu = $id;
         $tong = session('thong-tin-dat')['tong'];
         $listIdGhe = array_column(session('thong-tin-dat')['hangghe'], 'id');
 
@@ -99,7 +100,7 @@ class DatVeController extends Controller
         //     return $value['idFood'] == 3;
         // });
         // dd(reset($a));
-        return view('user.thanhtoan', compact(['id', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+        return view('user.thanhtoan', compact(['id','idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
     public function checkViOnline(Request $request)
@@ -593,6 +594,6 @@ class DatVeController extends Controller
     }
     public function testMail()
     {
-        $this->guiThongtinVeMail(20);
+        $this->guiThongtinVeMail(57);
     }
 }

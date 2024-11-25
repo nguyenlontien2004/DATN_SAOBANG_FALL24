@@ -2,10 +2,10 @@ $(document).ready(function () {
     let dataidRemove = [];
     let countdownTime = 5 * 60; // 5 phút
     //{ 'data': dataSeatRemove, 'idRemove': dataidRemove }
-    $.each($('.dataghechon'), function () {
+    $.each($('.dataghechon'), function () {     
         dataidRemove.push({ 'idCheck': $(this).attr('id'), 'type': $(this).attr('data-type') });
     })
-
+    
     const timer = setInterval(() => {
         const minutes = Math.floor(countdownTime / 60);
         const seconds = countdownTime % 60;
@@ -33,7 +33,7 @@ $(document).ready(function () {
             },
             data: { 'data': [], 'idRemove': dataidRemove },
             success: function (data) {
-               
+
             },
             error: function (error) {
                 console.log(error);

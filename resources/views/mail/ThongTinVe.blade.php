@@ -53,12 +53,12 @@
     }
 
     .mt-4 {
-        margin-top: 1.5rem !important;
+        margin-top: 1.5rem;
     }
 
     .mt-4,
     .my-4 {
-        margin-top: 1.5rem !important;
+        margin-top: 1.5rem;
     }
 
     img,
@@ -97,7 +97,7 @@
 
     .ml-4,
     .mx-4 {
-        margin-left: 1.5rem !important;
+        margin-left: 1.5rem
     }
 
     .shadow-lg {
@@ -123,43 +123,66 @@
         .media {
             flex-wrap: wrap;
         }
-        .media img{
+
+        .media img {
             display: flex;
             justify-content: center;
         }
-        .image-anh-phim{
+
+        .image-anh-phim {
             display: flex;
             justify-content: center;
             text-align: center;
+        }
+        .content{
+            margin-left: 0px;
         }
     }
 </style>
 
 <body>
     <div class="qr-info-container mt-5 mb-5">
-        <div class="ttv flex mt-6 center">
-            <div class="text-center">
+        <div style="display: flex;align-items:center;justify-content:start;margin-left:5px;width:100%;">
+           @if ($ve['phuong_thuc_thanh_toan'] == 'MoMo')
+           <img width="40px" src="https://cdn.moveek.com/bundles/ornweb/img/momo-icon.png"
+           alt="">
+           @elseif($ve['phuong_thuc_thanh_toan'] == 'VNPAY')
+           <img width="40px" src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg"
+           alt="">
+           @else
+           <img width="40px" src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png"
+           alt="">
+           @endif
+            <div
+                style="width:auto;display:flex;align-items:center;justify-content:start;flex-direction: column;">
+                <p style="margin-bottom: 5px;margin-top: 0px;margin-left: 10px;">{{ $ve['ngay_ve_mo'] }} <span style="padding-left: 2px;padding-right: 2px;" >/</span> {{ $ve['suat_chieu']['gio_bat_dau'] . "~" . $ve['suat_chieu']['gio_ket_thuc'] }}
+                </p>
+                <strong style="margin-top:-5.5px;">Thanh toán qua {{ $ve['phuong_thuc_thanh_toan'] }}</strong>
+            </div>
+        </div>
+        <div class="ttv flex mt-6 center mt-4 ">
+            <div class="text-center" style="width: 100%;">
                 <!-- qr-code p-8  -->
                 <div class="flex flex-col items-center justify-center">
                     <p class="text-lg font-bold">QR CODE</p>
-                    <img width="220px" src="{{ $urlCode }}" alt="QR Code"
-                        class="mt-4 rounded-md" />
+                    <img width="220px" src="{{ $urlCode }}" alt="QR Code" class="rounded-md" />
                 </div>
-                <p class="mt-4 text-sm">
+                <p class="mt-4 text-sm" style="margin-top: 5px;margin-bottom: 5px;">
                     Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn
                 </p>
             </div>
             <div class="divider mx-4"></div>
             <!-- Dấu gạch ngăn cách theo chiều dọc -->
             <div class="flex media" style="padding-left:25px;">
-                <div class="flex-shrink-0 image-anh-phim" style="margin-top:25px;">
+                <div class="flex-shrink-0 image-anh-phim" style="margin-top:15px;">
                     <img class="rounded-lg shadow-lg"
                         src="https://cinema.momocdn.net/img/57605275586959326-Mai_600x800.png" alt="Poster Phim"
                         width="150" />
                 </div>
-                <div class="ml-4">
+                <div class="ml-4 content">
                     <div class="dong mb-2">
-                        <p class="text-lg font-bold flex-grow">Phim: {{ $ve['suat_chieu']['phim']['ten_phim'] }}</p>
+                        <p class="text-lg font-bold flex-grow">Quý khác đã mua vé xem phim:
+                            {{ $ve['suat_chieu']['phim']['ten_phim'] }}</p>
 
                     </div>
                     <p class="ms-5 flex-none">Ngày vé {{ $ve['ngay_ve_mo'] }} -
@@ -167,9 +190,10 @@
                     </p>
                     <p class="mt-4">Mã vé: <strong>{{ $ve['ma_code_ve'] }}</strong></p>
                     <p style="margin-top: 5px;">Rạp: <strong>{{ $ve['suat_chieu']['rap']['ten_rap'] }}</strong></p>
-                    <p class="mt-1">Phòng chiếu: <strong>{{ $ve['suat_chieu']['phong_chieu']['ten_phong_chieu'] }}</strong></p>
+                    <p class="mt-1">Phòng chiếu:
+                        <strong>{{ $ve['suat_chieu']['phong_chieu']['ten_phong_chieu'] }}</strong></p>
                     <div class="mt-1">
-                        <p class="d-flex">Ghế:
+                        <p class="d-flex">Số ghế:
                             @foreach ($ghe as $key => $value)
                                 <strong>
                                     @for ($i = 0; $i < count($value); $i++) @if ($key == 'doi')

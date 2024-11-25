@@ -317,7 +317,7 @@
                                         </svg>
                                         <img width="30px"
                                             src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png" alt="">
-                                        <p class="ms-3" style="font-size: 14px;font-weight:500;">Ví ZaloPay</p>
+                                        <p class="ms-3" style="font-size: 14px;font-weight:500;">ZaloPay(Thẻ tín dụng)</p>
                                     </div>
                                 </div>
                             </div>
@@ -370,11 +370,11 @@
     </div>
 </div>
 <script>
- const id = "{{ $id }}"
+ const id = "{{ $idsuauChieu }}"
  const ngay = "{{ $date }}"
  const urlApiMaGiamGia = "{{ asset('/api/ma-giam-gia') }}"
  const tongGia = "{{ $tong }}"
- const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
+ const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}" 
 </script>
 <!-- @vite('resources/js/reatimeGhe.js') -->
 <script src="{{ asset('js/thanhtoan.js') }}"></script>
