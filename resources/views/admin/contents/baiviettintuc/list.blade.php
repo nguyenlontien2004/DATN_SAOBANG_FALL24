@@ -20,21 +20,20 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Danh sách bài viết tin tức</a>
+                    <a href="#">Basic Tables</a>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="card-title">Danh sách bài viết tin tức</div>
-                    <a href="{{ route('bai-viet-tin-tuc.create') }}" class="btn btn-primary">Thêm bài viết tin tức</a>
-                </div>
-                <div class="thongbao text-center">
-                    @if (session('success'))
-                        <span class="alert alert-success font-weight-bold"
-                            style="font-size: 1.2rem;">{{ session('success') }}</span>
-                    @endif
+                <div class="card-header">
+                    <div class="card-title">Danh sách bài viết</div>
+                    <div class="thongbao text-center">
+                        @if (session('success'))
+                            <span class="text text-success font-weight-bold"
+                                style="font-size: 1.2rem;">{{ session('success') }}</span>
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <table class="table mt-3">
@@ -98,10 +97,10 @@
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 <!-- Nút show -->
                                                 <a href="{{ route('bai-viet-tin-tuc.show', $bv->id) }}"
-                                                    class="btn btn-info btn-sm me-1">Chi tiết</a>
+                                                    class="btn btn-info btn-sm me-1">Show</a>
                                                 <!-- Nút chỉnh sửa -->
                                                 <a href="{{ route('bai-viet-tin-tuc.edit', $bv->id) }}"
-                                                    class="btn btn-warning btn-sm me-1">Sửa</a>
+                                                    class="btn btn-warning btn-sm me-1">Edit</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
                                                 <form action="{{ route('bai-viet-tin-tuc.destroy', $bv->id) }}"
                                                     method="POST" class="d-inline">

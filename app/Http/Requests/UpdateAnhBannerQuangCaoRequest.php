@@ -21,23 +21,8 @@ class UpdateAnhBannerQuangCaoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id =  $this->route('anh_banner_quang_cao')->id;
-
         return [
-            'hinh_anh' => 'required|image|mimes:jpg,jpeg,png,gif|unique:anh_banner_quang_caos,hinh_anh' . $id,
-            'thu_tu' => 'required|integer|min:1'
-        ];
-    }
-
-    public function message()
-    {
-        return [
-            'hinh_anh.required' => 'Vui lòng chọn một hình ảnh.',
-            'hinh_anh.image' => 'File phải là hình ảnh.',
-            'hinh_anh.mimes' => 'Ảnh chỉ được có định dạng: jpg, jpeg, png, hoặc gif.',
-            'thu_tu.required' => 'Trường thứ tự là bắt buộc.',
-            'thu_tu.integer' => 'Trường thứ tự phải là số nguyên.',
-            'thu_tu.min' => 'Thứ tự phải lớn hơn hoặc bằng 1.',
+            //
         ];
     }
 }

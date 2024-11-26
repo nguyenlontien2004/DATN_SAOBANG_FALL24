@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePhimRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePhimRequest;
-use App\Models\MaGiamGia;
 
 class PhimController extends Controller
 {
@@ -111,12 +110,6 @@ class PhimController extends Controller
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được cập nhật thành công.');
     }
-
-
-    // public function maGiamGia()
-    // {
-    //     return $this->hasMany(MaGiamGia::class);
-    // }
 
     public function destroy(Phim $phim)
     {

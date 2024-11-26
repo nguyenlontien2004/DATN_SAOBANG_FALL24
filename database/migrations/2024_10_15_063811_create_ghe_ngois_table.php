@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('ghe_ngois', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(PhongChieu::class)->constrained()->cascadeOnDelete();
-            $table->enum('the_loai', ['thuong', 'vip', 'doi'])->nullable();
+            $table->enum('loai_ghe', ['thuong', 'vip', 'doi'])->nullable();
             $table->integer('isDoubleChair')->nullable();
             $table->string('hang_ghe');
             $table->integer('so_hieu_ghe');

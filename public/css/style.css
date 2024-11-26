@@ -779,6 +779,7 @@ p.add_p1 {
     height: 300px;
     width: 1px;
     left: 50%;
+    top: 0;
     background-color: #e7e8e9;
 }
 
@@ -825,9 +826,9 @@ p.add_p1 {
 
 .container5999 {
     display: flex;
-    /* padding: 20px;
+    padding: 20px;
     max-width: 1200px;
-    margin: auto; */
+    margin: auto;
 }
 .sidebar6669,
 .content {
@@ -837,7 +838,7 @@ p.add_p1 {
     padding: 20px;
 }
 .sidebar6669 {
-    width: 350px;
+    width: 250px;
     margin-right: 20px;
     text-align: center;
 }
@@ -1023,13 +1024,23 @@ h5 {
     border: 1px solid #000000; /* Viền đen khi hover */
 }
 /* Danh sách vé */
-
+.container5999 {
+    display: flex;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
 .sidebar6669,
 .content {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 20px;
+}
+.sidebar6669 {
+    width: 250px;
+    margin-right: 20px;
+    text-align: center;
 }
 .sidebar6669 img {
     width: 100px;
@@ -1120,71 +1131,4 @@ h5 {
 }
 .rounded-lg {
     border-radius: 0.5rem; /* Bo góc */
-}
-
-/* tin  tức */
-.news-content {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: "Arial", sans-serif;
-    line-height: 1.6;
-}
-
-.news-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.view-count {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 15px 0;
-}
-
-.summary {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.content p {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 15px;
-    text-align: justify;
-}
-
-.content {
-    margin-top: 20px;
-}
-
-.content img {
-    max-width: 100%;
-    height: auto;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.content strong {
-    color: #333;
-}
-
-.content a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.content a:hover {
-    text-decoration: underline;
 }

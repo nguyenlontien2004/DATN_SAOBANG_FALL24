@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Phim extends Model
 {
     use HasFactory;
@@ -37,11 +36,5 @@ class Phim extends Model
     public function suatChieus()
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
-    }
-    public function binhLuans(){
-        return $this->hasMany(BinhLuanPhim::class, 'phim_id');
-    }
-    public function danhGias(){
-        return $this->hasMany(DanhGia::class);
     }
 }

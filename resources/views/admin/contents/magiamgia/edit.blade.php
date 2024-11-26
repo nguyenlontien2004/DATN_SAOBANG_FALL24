@@ -102,8 +102,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
-                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Quay lại</a>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>

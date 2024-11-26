@@ -29,12 +29,7 @@ class BinhLuanPhimController extends Controller
      */
     public function store(StoreBinhLuanPhimRequest $request)
     {
-        if($request->isMethod('POST')){
-            $params = $request->except('_token');
-            // dd($params);
-            BinhLuanPhim::query()->create($params);
-        }
-        return redirect()->back();
+        //
     }
 
     /**

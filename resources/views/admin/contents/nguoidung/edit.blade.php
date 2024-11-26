@@ -114,23 +114,25 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="vai_tros">Vai trò</label>
-                        <select name="vai_tros[]" class="form-control" id="vai_tros" multiple required>
-                            @foreach ($vaitro as $id => $ten_vai_tro)
-                                <option @selected(in_array($id, old('vai_tros', $nguoidungvt))) value="{{ $id }}">
-                                    {{ $ten_vai_tro }}
+                        <label for="vai_tro_id">Vai trò</label>
+                        <select name="vai_tro_id" class="form-control" id="vai_tro_id" required>
+                            <option value="">-- Chọn vai trò --</option>
+                            @foreach ($vaitro as $vt)
+                                <option value="{{ $vt->id }}"
+                                    {{ old('vai_tro_id', $nguoiDung->vai_tro_id) == $vt->id ? 'selected' : '' }}>
+                                    {{ $vt->ten_vai_tro }}
                                 </option>
                             @endforeach
                         </select>
 
-                        @error('vai_tros')
+                        @error('vai_tro_id')
                             <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success">Cập nhật</button>
-                        <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Quay lại</a>
+                        <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>

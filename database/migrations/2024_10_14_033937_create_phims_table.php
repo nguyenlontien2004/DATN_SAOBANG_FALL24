@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('ngay_khoi_chieu');
             $table->date('ngay_ket_thuc')->nullable();
             $table->string('trailer')->nullable();
-            $table->integer('gia')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });
