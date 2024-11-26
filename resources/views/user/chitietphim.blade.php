@@ -154,9 +154,9 @@
                     </div>
                 </div>
             </div>
-
-        <!-- Phần phim đang chiếu bên phải -->
-        <div class="col-md-4">
+        </div>
+            <!-- Phần phim đang chiếu bên phải -->
+            <div class="col-md-4">
             <div class="border p-3 bg-light rounded">
                 <h5 class="text-dark fw-bold mb-3">Phim đang chiếu</h5>
                 <ul class="list-unstyled">
@@ -193,8 +193,6 @@
             
                 </div>
             </div>
-
-        </div>
 
     </div>
 
@@ -308,7 +306,7 @@
             @else
                 <!-- Thông báo khi chưa đăng nhập -->
                 <div class="mt-4">
-                    <p class="text-muted">Bạn cần <a href="{{ route('dangNhap') }}"><strong>đăng nhập</strong></a> để
+                    <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để
                         bình luận.</p>
                 </div>
             @endauth

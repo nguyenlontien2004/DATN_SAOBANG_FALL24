@@ -42,7 +42,7 @@ class AuthenController extends Controller
     public function formDangNhap()
     {
 
-        return view('user.dangnhap');
+        return view('user.auth.dangnhap');
     }
 
     public function dangNhap()
@@ -80,6 +80,6 @@ class AuthenController extends Controller
 
         request()->session()->regenerateToken();
 
-        return redirect()->route('/');
+        return redirect()->route('thanh-vien/');
     }
 }

@@ -53,7 +53,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');//->middleware(['auth', AdminMiddleware::class])
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
