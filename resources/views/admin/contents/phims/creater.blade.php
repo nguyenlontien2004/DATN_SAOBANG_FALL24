@@ -20,8 +20,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="anh_phim" class="form-label">Ảnh Phim</label>
-                        <input type="file" class="form-control" id="anh_phim" name="anh_phim" accept="image/*" value="{{old('anh_phim')}}"
-                            >
+                        <input type="file" class="form-control" id="anh_phim" name="anh_phim" accept="image/*"
+                            value="{{ old('anh_phim') }}">
                         @error('anh_phim')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -97,23 +97,24 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="the_loai_phim_ids">Chọn Thể Loại</label>
-                        <select name="the_loai_phim_ids[]" class="form-control" multiple>
-                            @foreach ($theLoais as $theLoai)
-                                <option value="{{ $theLoai->id }}"
-                                    {{ in_array($theLoai->id, old('the_loai_phim_ids', [])) ? 'selected' : '' }}>
-                                    {{ $theLoai->ten_the_loai }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('the_loai_phim_ids')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="the_loai_phim_ids">Chọn Thể Loại</label>
+                                <select name="the_loai_phim_ids[]" class="form-control" multiple>
+                                    @foreach ($theLoais as $theLoai)
+                                        <option value="{{ $theLoai->id }}"
+                                            {{ in_array($theLoai->id, old('the_loai_phim_ids', [])) ? 'selected' : '' }}>
+                                            {{ $theLoai->ten_the_loai }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('the_loai_phim_ids')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="dao_dien_ids">Chọn Đạo Diễn</label>
                                 <select name="dao_dien_ids[]" class="form-control" multiple>
@@ -129,7 +130,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="dien_vien_ids">Chọn Diễn Viên</label>
                                 <select name="dien_vien_ids[]" class="form-control" multiple>
@@ -171,4 +172,29 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script-libs')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#mo_ta'), {
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.phim.upload', ['_token' => csrf_token()]) }}"
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endsection
+
+@section('styles')
+    <style>
+        .ck-editor__editable_inline {
+            height: 200px;
+        }
+    </style>
 @endsection

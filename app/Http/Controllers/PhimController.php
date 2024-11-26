@@ -9,6 +9,7 @@ use App\Models\TheLoaiPhim;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePhimRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePhimRequest;
 
 class PhimController extends Controller
@@ -63,6 +64,18 @@ class PhimController extends Controller
         }
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được thêm thành công.');
+    }
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload')->storeAs('anh_phim', $fileName, 'public');
+            $url = Storage::url($path);
+            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+        }
     }
     public function edit(Phim $phim)
     {

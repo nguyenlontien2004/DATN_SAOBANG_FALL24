@@ -18,6 +18,11 @@ class DaoDienController extends Controller
     public function create()
     {
         return view('admin.contents.daoDiens.creater');
+    } 
+    public function show($id)
+    {
+        $daoDiens = DaoDien::findOrFail($id);
+        return view('admin.contents.daoDiens.show', compact('daoDiens'));
     }
     public function store(StoreDaoDienRequest $request)
     {
@@ -33,6 +38,18 @@ class DaoDienController extends Controller
         ]);
 
         return redirect()->route('daoDien.index')->with('success', 'Thêm mới Đạo diễn thành công!');
+    }
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload')->storeAs('dao_dien', $fileName, 'public');
+            $url = Storage::url($path);
+            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+        }
     }
     public function edit(DaoDien $daoDien)
     {

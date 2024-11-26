@@ -38,7 +38,7 @@
                     <div class="movie-info">
                         <div class="mb-2">
                             <strong>Nội dung</strong>
-                            <p>{{ $phim->mo_ta }}</p>
+                            <div>{!! $phim->mo_ta !!}</div>
                         </div>
                         <div class="d-flex justify-content-left mb-2">
                             <div class="mr-5">

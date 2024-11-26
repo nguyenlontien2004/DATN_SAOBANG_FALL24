@@ -1,22 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthController;
-
-use App\Http\Controllers\AnhBannerQuangCaoController;
-use App\Http\Controllers\BaiVietTinTucController;
-use App\Http\Controllers\BannerQuangCaoController;
-use App\Http\Controllers\DanhMucBaiVietTinTucController;
-use App\Http\Controllers\MaGiamGiaController;
+use App\Http\Controllers\VeController;
 use App\Http\Controllers\DoAnController;
-use App\Http\Controllers\PhongChieuController;
-use App\Http\Controllers\GheNgoiController;
-use App\Http\Controllers\NguoiDungController;
+
+use App\Http\Controllers\PhimController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VaiTroController;
+use App\Http\Controllers\DaoDienController;
+use App\Http\Controllers\GheNgoiController;
+use App\Http\Controllers\DienVienController;
+use App\Http\Controllers\MaGiamGiaController;
+use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\PhongChieuController;
+use App\Http\Controllers\BaiVietTinTucController;
+use App\Http\Controllers\BannerQuangCaoController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\VeController;
+use App\Http\Controllers\DanhMucBaiVietTinTucController;
 
 
 /*
@@ -122,8 +125,12 @@ Route::prefix('admin')->group(function () {
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
   Route::resource('phim', App\Http\Controllers\PhimController::class);
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
 
   Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
+

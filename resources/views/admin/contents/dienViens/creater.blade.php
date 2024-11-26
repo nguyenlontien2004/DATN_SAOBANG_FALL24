@@ -37,7 +37,7 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="quoc_tich" class="form-label">Quốc tịch</label>
-                            <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" value="{{old('quoc_tich')}}"">
+                            <input type="text" class="form-control" id="quoc_tich" name="quoc_tich" value="{{old('quoc_tich')}}">
                             @error('quoc_tich')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -78,4 +78,29 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script-libs')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#tieu_su'), {
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.dienVien.upload', ['_token' => csrf_token()]) }}"
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endsection
+
+@section('styles')
+    <style>
+        .ck-editor__editable_inline {
+            height: 300px;
+        }
+    </style>
 @endsection

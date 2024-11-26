@@ -16,6 +16,11 @@ class DienVienController extends Controller
         $dienViens = DienVien::orderBy('id', 'desc')->get();
         return view('admin.contents.dienViens.index', compact('dienViens'));
     }
+    public function show($id)
+    {
+        $dienViens = DienVien::findOrFail($id);
+        return view('admin.contents.dienViens.show', compact('dienViens'));
+    }
     public function create()
     {
         return view('admin.contents.dienViens.creater');
@@ -33,6 +38,18 @@ class DienVienController extends Controller
         ]);
 
         return redirect()->route('dienVien.index')->with('success', 'Thêm mới Diễn viên thành công!');
+    }
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload')->storeAs('dien_vien', $fileName, 'public');
+            $url = Storage::url($path);
+            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+        }
     }
     public function edit(DienVien $dienVien)
     {

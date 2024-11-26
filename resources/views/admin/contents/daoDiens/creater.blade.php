@@ -84,3 +84,28 @@
         </div>
     </div>
 @endsection
+@section('script-libs')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#tieu_su'), {
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.dienVien.upload', ['_token' => csrf_token()]) }}"
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endsection
+
+@section('styles')
+    <style>
+        .ck-editor__editable_inline {
+            height: 300px;
+        }
+    </style>
+@endsection

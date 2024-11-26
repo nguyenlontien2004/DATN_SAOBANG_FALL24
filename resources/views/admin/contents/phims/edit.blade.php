@@ -14,7 +14,7 @@
                     <div class="mb-3">
                         <label for="ten_phim" class="form-label">Tên Phim</label>
                         <input type="text" class="form-control" id="ten_phim" name="ten_phim"
-                            value="{{ old('ten_phim', $phim->ten_phim) }}" >
+                            value="{{ old('ten_phim', $phim->ten_phim) }}">
                         @error('ten_phim')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -23,12 +23,14 @@
                         <label for="anh_phim" class="form-label">Ảnh Phim</label>
                         @if ($phim->anh_phim)
                             <div>
-                                <img src="{{ asset('storage/' . $phim->anh_phim) }}" alt="Ảnh Phim" class="img-fluid" width="200">
+                                <img src="{{ asset('storage/' . $phim->anh_phim) }}" alt="Ảnh Phim" class="img-fluid"
+                                    width="200">
                             </div>
                         @else
                             <div>Chưa có ảnh phim</div>
                         @endif
-                        <input type="file" class="form-control" id="anh_phim" name="anh_phim" accept="image/*" value="{{old('anh_phim')}}">
+                        <input type="file" class="form-control" id="anh_phim" name="anh_phim" accept="image/*"
+                            value="{{ old('anh_phim') }}">
                         @error('anh_phim')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -45,7 +47,8 @@
                             <label for="do_tuoi" class="form-label">Độ Tuổi</label>
                             {{-- <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
                                 value="{{ old('do_tuoi') }}"> --}}
-                                <input type="number" class="form-control" id="do_tuoi" name="do_tuoi" value="{{ old('do_tuoi', $phim->do_tuoi) }}">
+                            <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
+                                value="{{ old('do_tuoi', $phim->do_tuoi) }}">
                             @error('do_tuoi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -54,7 +57,8 @@
                             <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label>
                             {{-- <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
                                 value="{{ old('ngon_ngu') }}"> --}}
-                                <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu" value="{{ old('ngon_ngu', $phim->ngon_ngu) }}">
+                            <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
+                                value="{{ old('ngon_ngu', $phim->ngon_ngu) }}">
 
                             @error('ngon_ngu')
                                 <div class="text-danger">{{ $message }}</div>
@@ -65,7 +69,8 @@
                             <label for="luot_xem_phim" class="form-label">Lượt Xem</label>
                             {{-- <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
                                 value="{{ old('luot_xem_phim') }}"> --}}
-                                <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim" value="{{ old('luot_xem_phim', $phim->luot_xem_phim) }}">
+                            <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
+                                value="{{ old('luot_xem_phim', $phim->luot_xem_phim) }}">
 
                             @error('luot_xem_phim')
                                 <div class="text-danger">{{ $message }}</div>
@@ -127,26 +132,24 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label for="the_loai_phim_ids">Chọn Thể Loại</label>
-                        <select name="the_loai_phim_ids[]" class="form-control" multiple >
-                            @foreach ($theLoaiPhims as $theLoai)
-                                <option value="{{ $theLoai->id }}"
-                                    {{ in_array($theLoai->id, $phim->theLoaiPhims->pluck('id')->toArray() ?? []) ? 'selected' : '' }}>
-                                    {{ $theLoai->ten_the_loai }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('the_loai_phim_ids')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="the_loai_phim_ids">Chọn Thể Loại</label>
+                            <select name="the_loai_phim_ids[]" class="form-control" multiple>
+                                @foreach ($theLoaiPhims as $theLoai)
+                                    <option value="{{ $theLoai->id }}"
+                                        {{ in_array($theLoai->id, $phim->theLoaiPhims->pluck('id')->toArray() ?? []) ? 'selected' : '' }}>
+                                        {{ $theLoai->ten_the_loai }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('the_loai_phim_ids')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
                             <label for="dao_dien_ids">Chọn Đạo Diễn</label>
-                            <select name="dao_dien_ids[]" class="form-control" multiple >
+                            <select name="dao_dien_ids[]" class="form-control" multiple>
                                 @foreach ($daoDiens as $daoDien)
                                     <option value="{{ $daoDien->id }}"
                                         {{ in_array($daoDien->id, $phim->daoDiens->pluck('id')->toArray() ?? []) ? 'selected' : '' }}>
@@ -158,9 +161,9 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="dien_vien_ids">Chọn Diễn Viên</label>
-                            <select id="dien_vien_ids" name="dien_vien_ids[]" class="form-control" multiple >
+                            <select id="dien_vien_ids" name="dien_vien_ids[]" class="form-control" multiple>
                                 @foreach ($dienViens as $dienVien)
                                     <option value="{{ $dienVien->id }}"
                                         {{ in_array($dienVien->id, $phim->dienViens->pluck('id')->toArray() ?? []) ? 'selected' : '' }}>
@@ -176,7 +179,7 @@
 
                     <div class="mb-3">
                         <label for="trang_thai" class="form-label">Trạng Thái</label>
-                        <select class="form-select" id="trang_thai" name="trang_thai" >
+                        <select class="form-select" id="trang_thai" name="trang_thai">
                             <option value="1" {{ $phim->trang_thai == 1 ? 'selected' : '' }}>Hoạt động</option>
                             <option value="0" {{ $phim->trang_thai == 0 ? 'selected' : '' }}>Không hoạt động</option>
                         </select>
@@ -202,4 +205,29 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script-libs')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#mo_ta'), {
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.phim.upload', ['_token' => csrf_token()]) }}"
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endsection
+
+@section('styles')
+    <style>
+        .ck-editor__editable_inline {
+            height: 500px;
+        }
+    </style>
 @endsection
