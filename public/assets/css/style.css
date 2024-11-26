@@ -1,0 +1,187 @@
+.film-card {
+    max-width: 300px;
+    /* Đặt chiều rộng tối đa cho card */
+    height: auto;
+    /* Để chiều cao tự động */
+    padding: 0;
+    /* Bỏ padding để ảnh lấp kín card */
+    border-radius: 12px;
+    /* Để tạo góc bo tròn cho card */
+    overflow: hidden;
+    /* Ngăn các phần tử bên trong tràn ra ngoài */
+    margin: 10px;
+    /* Thêm khoảng cách giữa các card */
+}
+
+.film-image {
+    width: 100%;
+    /* Đặt chiều rộng hình ảnh chiếm toàn bộ chiều rộng của card */
+    height: 300px;
+    /* Đặt chiều cao hình ảnh để lấp kín card */
+    object-fit: cover;
+    /* Đảm bảo hình ảnh không bị méo */
+    border-radius: 8px;
+    /* Góc bo tròn cho hình ảnh */
+    margin-bottom: 15px;
+    /* Thêm khoảng cách phía dưới ảnh */
+    transition: transform 0.3s ease;
+    /* Thêm hiệu ứng chuyển động khi phóng to */
+}
+
+.film-image:hover {
+    transform: scale(1.05);
+    /* Phóng to hình ảnh khi hover */
+}
+
+.film-title {
+    font-size: 1.5rem;
+    /* Tăng kích thước chữ tiêu đề */
+}
+
+.film-genre {
+    font-size: 1.2rem;
+    /* Tăng kích thước chữ thể loại */
+}
+
+.text-yellow-500 {
+    font-size: 1.2rem;
+    /* Tăng kích thước chữ cho đánh giá */
+}
+
+.btn-custom {
+    padding: 10px 20px;
+    /* Thay đổi kích thước nút */
+    border-radius: 25px;
+    /* Bo góc nút */
+    transition: background-color 0.3s, color 0.3s;
+    /* Hiệu ứng chuyển màu */
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+    /* Màu nền khi hover */
+    color: white;
+    /* Màu chữ khi hover */
+}
+
+.xam a {
+    text-decoration: none;
+    /* Bỏ gạch chân cho chữ */
+}
+
+/* Custom styles for spacing and font size */
+.navbar-nav .nav-link {
+    font-size: 19px;
+    /* Slightly larger font */
+    color: #000;
+    font-weight: 700;
+}
+
+.navbar-nav .nav-item:hover {
+    background-color: #f8f9fa;
+    /* Background color used in navbar-light */
+    border-radius: 5px;
+    /* Optional: add rounded corners */
+}
+
+/* Adjust dropdown menu width */
+.dropdown-menu {
+    min-width: 300px;
+}
+/* Css đặt vé*/
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.seat.available {
+    background-color: #28a745;
+}
+.seat.available-note {
+    background-color: #28a745;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+}
+
+.seat.vip {
+    background-color: #dc3545;
+}
+.seat.vip-note {
+    background-color: #dc3545;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+}
+
+.seat.love {
+    background-color: #bd35dc;
+    width: 80px;
+    height: 40px;
+    color: #fff;
+}
+.seat.love-note {
+    background-color: #bd35dc;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+}
+.seat.selected {
+    background-color: #ff69b4;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+}
+.seat.selected.seat.love {
+    background-color: #ff69b4;
+    width: 80px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.summary-details {
+    font-size: 1.2rem;
+}
+#showtimes {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;  /* Ẩn lịch chiếu mặc định */
+}
+
+#showtimes ul {
+    list-style-type: none;  /* Xóa dấu chấm */
+    padding-left: 0;
+}
+
+#showtimes ul li {
+    padding: 5px;
+    background-color: #e9ecef;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}

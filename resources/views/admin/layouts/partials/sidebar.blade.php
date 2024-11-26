@@ -31,18 +31,37 @@
             <ul class="nav nav-secondary">
                 <li class="nav-item active">
                     <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Thống kê</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="../demo1/index.html">
-                                    <span class="sub-item">Dashboard 1</span>
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </li>
                 <li class="nav-section">
@@ -53,7 +72,7 @@
                 </li>
                 {{-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-folder"></i>
                         <p>Danh sách thể loại</p>
                         <span class="caret"></span>
                     </a>
@@ -80,7 +99,7 @@
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                        <i class="fas fa-th-list"></i>
+                        <i class="fas fa-theater-masks"></i>
                         <p>Diễn viên & Đạo diễn</p>
                         <span class="caret"></span>
                     </a>
@@ -101,7 +120,7 @@
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#forms">
-                        <i class="fas fa-pen-square"></i>
+                        <i class="fas fa-film"></i>
                         <p>Quản lý phim</p>
                         <span class="caret"></span>
                     </a>
@@ -131,50 +150,21 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#ngdung">
-                        <i class="fas fa-table"></i>
+                    <a href="{{ route('nguoi-dung.index') }}">
+                        <i class="fas fa-user"></i>
                         <p>Quản lý người dùng</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="ngdung">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('nguoi-dung.index') }}">
-                                    <span class="sub-item">Danh sách người dùng</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('nguoi-dung.create') }}">
-                                    <span class="sub-item">Thêm người dùng</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#role">
-                        <i class="fas fa-table"></i>
+                        <i class="fas fa-user-tag"></i>
                         <p>Người dùng & vai trò</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="role">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('admin.role.index') }}">
-                                    <span class="sub-item">Vai trò</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.roleAndUser.index') }}">
-                                    <span class="sub-item">Phân quyền</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">
-                        <i class="fas fa-table"></i>
+                        <i class="fas fa-utensils"></i>
                         <p>Quản lý đồ ăn</p>
                         <span class="caret"></span>
                     </a>
@@ -196,13 +186,13 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.ticket.index') }}">
-                        <i class="fas fa-table"></i>
+                        <i class="fas fa-ticket-alt"></i>
                         <p>Quản lý vé</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#charts">
-                        <i class="far fa-chart-bar"></i>
+                        <i class="fas fa-newspaper"></i>
                         <p>Bài viết tin tức</p>
                         <span class="caret"></span>
                     </a>
@@ -214,18 +204,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.create') }}">
-                                    <span class="sub-item">Thêm danh mục bài viết tin tức</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{{ route('bai-viet-tin-tuc.index') }}">
                                     <span class="sub-item">Danh sách bài viết tin tức</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('bai-viet-tin-tuc.create') }}">
-                                    <span class="sub-item">Thêm bài viết tin tức</span>
                                 </a>
                             </li>
                         </ul>
@@ -233,8 +213,7 @@
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#banner">
-                        <i class="far fa-chart-bar"></i>
-
+                        <i class="fas fa-flag"></i>
                         <p>Banner quảng cáo</p>
                         <span class="caret"></span>
                     </a>
@@ -246,45 +225,20 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('banner-quang-cao.create') }}">
-                                    <span class="sub-item">Thêm vị trí banner quảng cáo</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="{{ route('anh-banner-quang-cao.index') }}">
                                     <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('anh-banner-quang-cao.create') }}">
-                                    <span class="sub-item">Thêm ảnh banner quảng cáo</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#km">
-                        <i class="far fa-chart-bar"></i>
-                        <p>Chương trình khuyến mãi</p>
-                        <span class="caret"></span>
+                    <a href="{{ route('ma_giam_gia.index') }}">
+                        <i class="fas fa-tags"></i>
+                        <p>Mã giảm giá</p>
                     </a>
-                    <div class="collapse" id="km">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('ma_giam_gia.index') }}">
-                                    <span class="sub-item">Danh sách mã giảm giá</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('ma_giam_gia.create') }}">
-                                    <span class="sub-item">Thêm mã giảm giá</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html') }}">
                         <i class="fas fa-desktop"></i>
                         <p>Chương trình khuyến mãi</p>
@@ -341,7 +295,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

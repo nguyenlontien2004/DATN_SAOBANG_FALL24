@@ -103,7 +103,7 @@
 
                     <div class="card-footer">
 
-                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Cancel</a>
+                        <a href="{{ route('ma_giam_gia.index') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>

@@ -68,11 +68,25 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('bai-viet-tin-tuc.index') }}" class="btn btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
+                        <a href="{{ route('bai-viet-tin-tuc.index') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#noi_dung'), {
+                ckfinder: {
+                    uploadUrl: '{{ route('bai-viet-tin-tuc.upload-image') }}?_token={{ csrf_token() }}'
+                }
+            })
+            .catch(
+                error => {
+                    console.error(error);
+                }
+            )
+    </script>
 @endsection

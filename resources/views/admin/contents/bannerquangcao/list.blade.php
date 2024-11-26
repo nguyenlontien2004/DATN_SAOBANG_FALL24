@@ -20,21 +20,25 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Danh sách banner quảng cáo</a>
+                    <a href="#">Danh sách vị trí banner quảng cáo</a>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Danh sách banner quảng cáo</div>
-                    <div class="thongbao text-center">
-                        @if (session('success'))
-                            <span class="text text-success font-weight-bold"
-                                style="font-size: 1.2rem;">{{ session('success') }}</span>
-                        @endif
-                    </div>
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-title">Danh sách vị trí banner quảng cáo</div>
+                    <a href="{{ route('banner-quang-cao.create') }}" class="btn btn-primary">Thêm vị trí banner
+                        quảng cáo</a>
                 </div>
+                <div class="thongbao text-center">
+                    @if (session('success'))
+                        <span class="alert alert-success font-weight-bold"
+                            style="font-size: 1.2rem;">{{ session('success') }}</span>
+                    @endif
+                </div>
+
                 <div class="card-body">
                     <table class="table mt-3">
                         <thead>
@@ -83,7 +87,7 @@
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 <!-- Nút chỉnh sửa -->
                                                 <a href="{{ route('banner-quang-cao.edit', $bn->id) }}"
-                                                    class="btn btn-warning btn-sm me-1">Edit</a>
+                                                    class="btn btn-warning btn-sm me-1">Sửa</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
                                                 <form action="{{ route('banner-quang-cao.destroy', $bn->id) }}"
                                                     method="POST" class="d-inline">
