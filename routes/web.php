@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
 use App\Http\Controllers\DoAnController;
@@ -25,11 +23,10 @@ use App\Http\Controllers\BannerQuangCaoController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
-use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
+use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\MemberController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\MemberMiddleware;
+use App\Http\Controllers\PasswordResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,12 +39,10 @@ use App\Http\Middleware\MemberMiddleware;
 |
 */
 
+Route::get('/', function () {
+  return view('welcome');
+});
 
-Route::get('/search', [SearchController::class, 'search']);
-
-// Route::get('/', function () {
-//   return view('welcome');
-// });
 Route::prefix('admin')->group(function () {
   // route auth admin
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
@@ -57,7 +52,6 @@ Route::prefix('admin')->group(function () {
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
-  Route::post('admin/upload-image', [BaiVietTinTucController::class, 'uploadImage'])->name('bai-viet-tin-tuc.upload-image');
   Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
   Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
 
@@ -83,13 +77,9 @@ Route::prefix('admin')->group(function () {
 
   // Người dùng
   Route::resource('nguoi-dung', NguoiDungController::class);
+  Route::post('admin/ttadmin', [AdminController::class, 'thongTin'])->name('tt.admin');
   Route::post('admin/nguoi-dung/{id}/restore', [NguoiDungController::class, 'restore'])->name('nguoi-dung.restore');
   Route::delete('admin/nguoi-dung/{id}/force-delete', [NguoiDungController::class, 'forceDelete'])->name('nguoi-dung.forceDelete');
-
-  // Thông tin quản trị
-  Route::get('admin/ttadmin', [AdminController::class, 'thongTin'])->name('admin.ttadmin');
-  Route::get('admin/edit', [AdminController::class, 'formEdit'])->name('admin.edit');
-  Route::put('admin/edit-thong-tin', [AdminController::class, 'editThongTin'])->name('admin.editpro');
 
   // Đồ ăn
   Route::get('/danh-sach-do-an', [DoAnController::class, 'index'])->name('do-an.index');
@@ -117,6 +107,7 @@ Route::prefix('admin')->group(function () {
   Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
   Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
   Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
+
   //end route phòng chiếu
 
   //start route vai trò
@@ -143,20 +134,42 @@ Route::prefix('admin')->group(function () {
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
   Route::resource('phim', App\Http\Controllers\PhimController::class);
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
-  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
-  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
-  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
 
   Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
+// Đăng ký
+Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
+Route::post('dang-ky', [AuthenController::class, 'dangKy']);
 
+// Đăng nhập
+Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('formDangNhap');
+Route::post('dang-nhap', [AuthenController::class, 'dangNhap'])->name('dangNhap');
+
+// Đăng xuất
+Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
+
+
+// Member
+// Route::prefix('thanh-vien')->group(function () {
+//   Route::get('trang-chu', [MemberController::class, 'trangChu'])
+//     ->name('trangchu.member');
+//   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
+//   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau']);
+// });
+
+//Route người dùng
+Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
+Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
+Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+Route::resource('binhluan', BinhLuanPhimController::class);
+Route::resource('danhgia', DanhGiaController::class);
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
-  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
-  //   ->name('trangchu.member');
-
 
   // Đăng ký
   Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
@@ -176,8 +189,7 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
-  // Xem và cập nhập thông tin cá nhân
-  Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
+  Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('admin.ttadmin');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
   //Lịch sử đặt vé
@@ -185,7 +197,6 @@ Route::prefix('thanh-vien')->group(function () {
   Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
 
 
-  // Đặt lại mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
   Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
