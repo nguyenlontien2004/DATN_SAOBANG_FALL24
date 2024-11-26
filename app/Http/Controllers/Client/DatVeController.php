@@ -23,6 +23,8 @@ use Endroid\QrCode\Writer\PngWriter;
 use App\Events\OrderSuccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Endroid\QrCode\Writer\SvgWriter;
+use Endroid\QrCode\Color\Color;
 
 class DatVeController extends Controller
 {
@@ -261,12 +263,18 @@ class DatVeController extends Controller
 
         $qrCodeData = asset('check-qrCode/' . $createVe->id);
         $qrCode = new QrCode($qrCodeData);
-        $writer = new PngWriter();
-        $fileName = 'qrcode_' . time() . '.png';
-        $path = 'qrcodes/' . $fileName;
-        Storage::disk('public')->put($path, $writer->write($qrCode)->getString());
+        // $writer = new PngWriter();
+        // $fileName = 'qrcode_' . time() . '.png';
+        // $path = 'qrcodes/' . $fileName;
+        // Storage::disk('public')->put($path, $writer->write($qrCode)->getString());
+        $qrCode->setSize(230);
+        $qrCode->setMargin(10);
+        $qrCode->setBackgroundColor(new Color(0, 0, 0, 127));
+        // Chuyển QR code sang định dạng SVG
+        $writer = new SvgWriter();
+        $result = $writer->write($qrCode);
 
-        $createVe->qr_code = $path;
+        $createVe->qr_code = $result->getString();
         $createVe->save();
         return $createVe;
     }
@@ -594,6 +602,15 @@ class DatVeController extends Controller
     }
     public function testMail()
     {
-        $this->guiThongtinVeMail(57);
+        $qrCode = new QrCode('https://example.com'); // Nội dung QR code
+    $qrCode->setSize(300); // Kích thước QR code
+    $qrCode->setMargin(10); // Viền QR code
+
+    // Chuyển QR code sang định dạng SVG
+    $writer = new SvgWriter();
+    $result = $writer->write($qrCode);
+    
+     return $result->getString();
+        //$this->guiThongtinVeMail(57);
     }
 }

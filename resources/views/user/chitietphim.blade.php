@@ -154,9 +154,9 @@
                     </div>
                 </div>
             </div>
-
-        <!-- Phần phim đang chiếu bên phải -->
-        <div class="col-md-4">
+        </div>
+            <!-- Phần phim đang chiếu bên phải -->
+            <div class="col-md-4">
             <div class="border p-3 bg-light rounded">
                 <h5 class="text-dark fw-bold mb-3">Phim đang chiếu</h5>
                 <ul class="list-unstyled">
@@ -194,28 +194,32 @@
                 </div>
             </div>
 
-        </div>
-
-    </div>
-
     <!-- Đánh giá-->
     @auth
         <br>
         <h3>Danh sách đánh giá:</h3><br>
         @foreach ($danhSachDanhGia as $item)
             <div class="list-group-item">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><strong>TE</strong></h5>
-                    <small>{{ $item->created_at->format('d/m/Y') }}</small>
+                <div class="d-flex w-100 mb-2">
+                    <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
+                    <small class="ml-2">{{ $item->created_at->format('d/m/Y') }}</small>
+                </div>                  
+                    <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
+                    <div class="d-flex">
+                        Điểm đánh giá:
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa fa-star {{ $i <= $item->diem_danh_gia ? 'text-warning' : 'text-muted' }}"></i>
+                        @endfor
+                    </div>
+                    <br>
                 </div>
-                <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
-                <div class="d-flex">
-                    Điểm đánh giá:
-                    @for ($i = 1; $i <= 5; $i++)
-                        <i class="fa fa-star {{ $i <= $item->diem_danh_gia ? 'text-warning' : 'text-muted' }}"></i>
-                    @endfor
-                </div>
-                <br>
+                @endforeach
+            <div class="mt-4">
+                <p class="text-muted">
+                    <a href="#" onclick="showReviewTab(); return false;">
+                        <h2><strong>Viết bài đánh giá</strong></h2>
+                    </a>
+                </p>
             </div>
         @endforeach
         <div class="mt-4">
@@ -245,36 +249,33 @@
                         <span class="fa fa-star" data-value="4" onclick="setRating(4)"></span>
                         <span class="fa fa-star" data-value="5" onclick="setRating(5)"></span>
                     </div>
-                    <input type="hidden" name="diem_danh_gia" id="rating" value="">
-                </div>
-                <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-            </form>
-        </div>
-        <br>
-    @else
-        <!-- Thông báo khi chưa đăng nhập -->
-        <div class="mt-4">
-            <p class="text-muted">Bạn cần <a href="{{ route('dangNhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
-            </p>
-        </div>
-    @endauth
-    <div class="container my-5">
-
-
-
-        <!-- Bình luận người xem -->
-        <br>
-        <h3>Bình luận người xem</h3><br>
-        @foreach ($chiTietPhim->binhLuans as $item)
-            <div class="d-flex mb-4">
-                <img src="user.png" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
-                <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
-                    <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span class="text-muted"
-                            style="font-size: 12px;">{{ $item->created_at->timezone('Asia/Ho_Chi_Minh') }}</span></h6>
-                    <p class="mb-1" style="font-size: 14px; color: #333;">{{ $item->noi_dung }}</p>
-                    <div style="font-size: 12px; color: #65676b;">
-                        <a href="#" class="text-decoration-none me-3">Thích</a>
-                        <a href="#" class="text-decoration-none me-3">Trả lời</a>
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+            </div>
+            <br>
+        @else
+            <!-- Thông báo khi chưa đăng nhập -->
+            <div class="mt-4">
+                <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
+                </p>
+            </div>
+        @endauth
+        <div class="container my-5">
+            <!-- Bình luận người xem -->
+            <br>
+            <h3>Bình luận người xem</h3><br>
+            @foreach ($chiTietPhim->binhLuans as $item)
+                <div class="d-flex mb-4">
+                    <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+                    <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
+                        <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span
+                                class="text-muted"
+                                style="font-size: 12px;">{{ $item->created_at->timezone('Asia/Ho_Chi_Minh') }}</span></h6>
+                        <p class="mb-1" style="font-size: 14px; color: #333;">{{ $item->noi_dung }}</p>
+                        <div style="font-size: 12px; color: #65676b;">
+                            <a href="#" class="text-decoration-none me-3">Thích</a>
+                            <a href="#" class="text-decoration-none me-3">Trả lời</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -308,7 +309,7 @@
             @else
                 <!-- Thông báo khi chưa đăng nhập -->
                 <div class="mt-4">
-                    <p class="text-muted">Bạn cần <a href="{{ route('dangNhap') }}"><strong>đăng nhập</strong></a> để
+                    <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để
                         bình luận.</p>
                 </div>
             @endauth

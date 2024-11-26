@@ -15,7 +15,12 @@ class DanhGia extends Model
         'diem_danh_gia',
         'noi_dung',
     ];
-    public function danhGiaNguoiDungs(){
+    public function phim()
+    {
+        return $this->belongsTo(Phim::class);
+    }
+    public function nguoiDung()
+    {
         return $this->belongsTo(NguoiDung::class);
     }
 }

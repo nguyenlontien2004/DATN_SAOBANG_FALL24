@@ -9,7 +9,7 @@ $(document).ready(function () {
     let page = 0
 
     $('.list-row-seats').on('click', '.seats', function () {
-        if ($(this).hasClass('takenSeat')) return
+        if ($(this).hasClass('takenSeat') || $(this).hasClass('unavailabledrop')) return
         let typeSeat = $(this).attr('data-type');
         if (typeSeat == 'thuong') {
             $(this).toggleClass('regularchair chooseSeat')
