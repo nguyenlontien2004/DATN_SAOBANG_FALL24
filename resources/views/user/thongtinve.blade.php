@@ -86,8 +86,9 @@
                         <!-- qr-code p-8  -->
                         <div class="flex flex-col items-center justify-center">
                             <p class="text-lg font-bold">QR CODE</p>
-                            <img width="220px" src="{{ \Storage::url('/'.$ve->qr_code) }}" alt="QR Code"
-                                class="mt-4 rounded-md" />
+                            <div>
+                            {!! $ve->qr_code !!}
+                            </div>
                         </div>
                         <p class="mt-4 text-sm">
                             Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn

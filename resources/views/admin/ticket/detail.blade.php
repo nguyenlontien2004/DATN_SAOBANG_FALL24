@@ -55,16 +55,6 @@
                                         {{ $seat->seat->hang_ghe . $seat->seat->so_hieu_ghe }}
                                     @endforeach
                                 </strong>
-                                - Loại:
-                                <strong>
-                                    @if ($dataTicket->chiTietVe[0]->seat->the_loai == 'thuong')
-                                        Thường
-                                    @elseif($dataTicket->chiTietVe[0]->seat->the_loai == 'vip')
-                                        Vip
-                                    @else
-                                        Đôi
-                                    @endif
-                                </strong>
                             </p>
                             <p class="mb-2">Đồ ăn:
                                 @if (count($food) > 0)
@@ -86,7 +76,7 @@
                         </div>
                     </div>
                     <div class="flex-1 col-md-12 mt-3 col-sm-12 col-xl-5">
-                        <img src="{{ \Storage::url($dataTicket->qr_code) }}" alt="">
+                        {!! $dataTicket->qr_code !!}
                     </div>
                 </div>
                 <div class="row" >

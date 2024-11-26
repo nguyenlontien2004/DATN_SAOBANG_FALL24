@@ -16,7 +16,7 @@ $(document).ready(function () {
             clearInterval(timer);
             alert("Hết thời gian giữ vé!");
             postData()
-            window.location.replace('/')
+            window.location.replace('/thanh-vien/')
         }
         countdownTime--;
         if (countdownTime < 0) {

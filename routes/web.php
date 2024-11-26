@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\AuthenController;
@@ -16,7 +15,6 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
-use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
@@ -55,7 +53,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');//->middleware(['auth', AdminMiddleware::class])
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
