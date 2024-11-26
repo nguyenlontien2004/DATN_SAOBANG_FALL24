@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class NguoiDung extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     const TYPE_ADMIN = 'admin';
 
@@ -19,7 +19,6 @@ class NguoiDung extends Authenticatable
         'ho_ten',
         'email',
         'so_dien_thoai',
-        'hinh_anh',
         'password',
         'hinh_anh',
         'gioi_tinh',
@@ -31,6 +30,8 @@ class NguoiDung extends Authenticatable
         'trang_thai'
     ];
     protected $hidden = ['password', 'remember_token'];
+
+    // protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
@@ -50,13 +51,18 @@ class NguoiDung extends Authenticatable
         return $this->belongsToMany(VaiTro::class);
     }
 
+    public function danhGias()
+    {
+        return $this->hasMany(DanhGia::class);
+    }
+
     public function admin()
     {
-        return $this->ten_vai_tro == self::TYPE_ADMIN;
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_ADMIN)->exists();
     }
 
     public function member()
     {
-        return $this->ten_vai_tro == self::TYPE_MEMBER;
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
     }
 }

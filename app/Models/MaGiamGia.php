@@ -20,4 +20,9 @@ class MaGiamGia extends Model
         'gia_tri_giam',
         'trang_thai'
     ];
+
+    public function phim()
+    {
+        return  $this->belongsTo(Phim::class);
+    }
 }

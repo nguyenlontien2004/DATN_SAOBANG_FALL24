@@ -8,6 +8,7 @@ use App\Models\DienVien;
 use App\Models\TheLoaiPhim;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\MaGiamGia;
 
 class PhimController extends Controller
 {
@@ -101,6 +102,12 @@ class PhimController extends Controller
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được cập nhật thành công.');
     }
+
+    // public function maGiamGia()
+    // {
+    //     return $this->hasMany(MaGiamGia::class);
+    // }
+
     public function destroy(Phim $phim)
     {
         $phim->trang_thai = 0;
