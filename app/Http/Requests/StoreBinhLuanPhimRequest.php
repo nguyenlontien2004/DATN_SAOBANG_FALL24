@@ -11,7 +11,7 @@ class StoreBinhLuanPhimRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,13 +22,7 @@ class StoreBinhLuanPhimRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'noi_dung' => 'required',
-        ];
-    }
-    public function messages(): array
-    {
-        return [
-            'noi_dung.required' => 'Nội dung bình luận không được bỏ trống',
+            //
         ];
     }
 }

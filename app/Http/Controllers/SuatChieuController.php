@@ -7,28 +7,15 @@ use App\Models\SuatChieu;
 use App\Models\PhongChieu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSuatChieuRequest;
-use App\Http\Requests\UpdateSuatChieuRequest;
 
 class SuatChieuController extends Controller
 {
-    public function index(Request $request)
-{
-    $query = SuatChieu::with(['phongChieu', 'phim']);
-    if ($request->filled('phim_id')) {
-        $query->where('phim_id', $request->phim_id);
+    public function index()
+    {
+
+        $suatChieus = SuatChieu::with(['phongChieu', 'phim'])->orderBy('id', 'desc')->get();
+        return view('admin.contents.suatChieus.index', compact('suatChieus'));
     }
-    if ($request->filled('phong_chieu_id')) {
-        $query->where('phong_chieu_id', $request->phong_chieu_id);
-    }
-
-    $suatChieus = $query->orderBy('id', 'desc')->get();
-
-    $phims = Phim::where('trang_thai', 1)->get();
-    $phongChieus = PhongChieu::where('trang_thai', 1)->get();
-    return view('admin.contents.suatChieus.index', compact('suatChieus', 'phims', 'phongChieus'));
-}
-
     public function create()
     {
         $phongChieus = PhongChieu::where('trang_thai', 1)->get();
@@ -36,13 +23,21 @@ class SuatChieuController extends Controller
 
         return view('admin.contents.suatChieus.creater', compact('phongChieus', 'phims'));
     }
-    public function store(StoreSuatChieuRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'gio_bat_dau' => 'required',
+            'gio_ket_thuc' => 'required',
+            'trang_thai' => 'required|boolean',
+        ]);
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
             'gio_ket_thuc' => $request->gio_ket_thuc,
             'gio_bat_dau' => $request->gio_bat_dau,
+            'trang_thai' => $request->trang_thai,
         ]);
 
         return redirect()->route('suatChieu.index')->with('success', 'Thêm suất chiếu thành công!');
@@ -54,8 +49,15 @@ class SuatChieuController extends Controller
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
 
-    public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
+    public function update(Request $request, SuatChieu $suatChieu)
     {
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'gio_ket_thuc' => 'required',
+            'gio_bat_dau' => 'required',
+            'trang_thai' => 'required|boolean',
+        ]);
         $suatChieu->update([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,

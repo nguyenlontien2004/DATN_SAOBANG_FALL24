@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 
 class NguoiDung extends Authenticatable
 {
-    use HasFactory, SoftDeletes, Notifiable;
+    use HasFactory, SoftDeletes;
 
     const TYPE_ADMIN = 'admin';
 
     const TYPE_MEMBER = 'member';
-
-    const TYPE_NHANVIEN = 'Nhân viên';
 
     protected $fillable = [
         'ho_ten',
@@ -26,13 +24,8 @@ class NguoiDung extends Authenticatable
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
-        'ngay_dang_ky',
-        'huy_ve',
-        'gold',
         'trang_thai'
     ];
-
-    protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
@@ -41,7 +34,7 @@ class NguoiDung extends Authenticatable
 
     public function checkAdmin()
     {
-        if ($this->role?->id == 1) {
+        if ($this->role->id == 1) {
             return true;
         }
         return false;
@@ -52,23 +45,13 @@ class NguoiDung extends Authenticatable
         return $this->belongsToMany(VaiTro::class);
     }
 
-    public function danhGias()
-    {
-        return $this->hasMany(DanhGia::class);
-    }
-
     public function admin()
     {
-        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_ADMIN)->exists();
+        return $this->ten_vai_tro == self::TYPE_ADMIN;
     }
 
     public function member()
     {
-        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
-    }
-
-    public function nhanVien()
-    {
-        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_NHANVIEN)->exists();
+        return $this->ten_vai_tro == self::TYPE_MEMBER;
     }
 }

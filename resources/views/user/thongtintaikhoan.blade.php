@@ -16,15 +16,8 @@
             <hr />
             <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
-            <a href="{{ route('lichsudatve') }}">Lịch sử đặt vé</a>
+            <a href="#">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
-            <a href="" class="text-danger">
-                <form action="{{ route('dangxuat') }}" method="POST">
-                @csrf
-                <button type="submit">Đăng xuất</button>
-            </form> 
-            </a>
-              
         </div>
 
         <div class="content">
@@ -43,6 +36,11 @@
             <div class="form-group mb-3">
                 <label for="email">Email</label>
                 <input type="email" value="{{ $user->email }}" id="email" placeholder="Nhập email" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="password">Mật khẩu</label>
+                <input type="password" value="{{ $user->password }}" id="password" placeholder="Nhập mật khẩu mới" />
             </div>
 
             <div class="text-center">
