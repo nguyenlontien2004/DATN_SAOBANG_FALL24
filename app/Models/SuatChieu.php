@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class SuatChieu extends Model
 {
     use HasFactory;
@@ -26,14 +26,7 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
-
-    public function screeningRoom()
-    {
-        return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
-    }
-
-    public function movie()
-    {
-        return $this->belongsTo(Phim::class, 'phim_id');
+    public function rap(){
+        return $this->hasOneThrough(Rap::class,PhongChieu::class,'id','id','phong_chieu_id');
     }
 }

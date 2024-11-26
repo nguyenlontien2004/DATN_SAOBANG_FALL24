@@ -97,7 +97,8 @@
 
                         <!-- Top phim Link -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Top phim</a>
+
+                            <a class="nav-link" href="{{ route('tintuc.hienthi') }}">Tin tức</a>
                         </li>
                         <!-- Blog phim Dropdown -->
                         <li class="nav-item dropdown">
@@ -138,7 +139,30 @@
                     </li>
                 </ul>
             @endif
-        </div>
+
+            </div>
     </div>
 </div>
 
+    {{-- <style>
+        .btn-custom {
+            padding: 10px 20px;
+            /* Thay đổi kích thước nút */
+            border-radius: 25px;
+            /* Bo góc nút */
+            transition: background-color 0.3s, color 0.3s;
+            /* Hiệu ứng chuyển màu */
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            /* Màu nền khi hover */
+            color: white;
+            /* Màu chữ khi hover */
+        }
+
+        .xam a {
+            text-decoration: none;
+            /* Bỏ gạch chân cho chữ */
+        }
+    </style> --}}

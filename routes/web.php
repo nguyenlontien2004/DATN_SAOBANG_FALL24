@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\AuthenController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
@@ -26,9 +29,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\MemberMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,19 +45,21 @@ use App\Http\Controllers\AdminController;
 */
 
 
-Route::get('/', function () {
-  return view('welcome');
-});
+Route::get('/search', [SearchController::class, 'search']);
 
-// Admin
+// Route::get('/', function () {
+//   return view('welcome');
+// });
 Route::prefix('admin')->group(function () {
   // route auth admin
-  Route::get('/login', [AuthController::class, 'login']);
-  Route::post('post/login', [AuthController::class, 'postLogin'])->name('login.admin');
-  Route::get('/', [DashboardController::class, 'dashboard']);
+  Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
+  Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
+  Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
+  Route::post('admin/upload-image', [BaiVietTinTucController::class, 'uploadImage'])->name('bai-viet-tin-tuc.upload-image');
   Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
   Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
 
@@ -80,9 +85,13 @@ Route::prefix('admin')->group(function () {
 
   // Người dùng
   Route::resource('nguoi-dung', NguoiDungController::class);
-  Route::post('admin/ttadmin', [AdminController::class, 'thongTin'])->name('tt.admin');
   Route::post('admin/nguoi-dung/{id}/restore', [NguoiDungController::class, 'restore'])->name('nguoi-dung.restore');
   Route::delete('admin/nguoi-dung/{id}/force-delete', [NguoiDungController::class, 'forceDelete'])->name('nguoi-dung.forceDelete');
+
+  // Thông tin quản trị
+  Route::get('admin/ttadmin', [AdminController::class, 'thongTin'])->name('admin.ttadmin');
+  Route::get('admin/edit', [AdminController::class, 'formEdit'])->name('admin.edit');
+  Route::put('admin/edit-thong-tin', [AdminController::class, 'editThongTin'])->name('admin.editpro');
 
   // Đồ ăn
   Route::get('/danh-sach-do-an', [DoAnController::class, 'index'])->name('do-an.index');
@@ -105,24 +114,22 @@ Route::prefix('admin')->group(function () {
   Route::get('phong-chieu/quan-ly-ghe/{id}', [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
 
   // route thêm ghế cho phòng chiếu
-
-  Route::get('get/ghe/phong-chieu/{id}', [GheNgoiController::class, 'index'])->name('admin.showSeats');
-  Route::post('post/them-ghe/phong-chieu/{id}', [GheNgoiController::class, 'store'])->name('admin.storeGhe');
-  Route::post('delete/ghe/phong-chieu/', [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
-  Route::get('get/loai-ghe/phong-chieu/{id}/{type}', [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
-  Route::post('post/sua-ghe/phong-chieu/{id}', [GheNgoiController::class, 'update'])->name('admin.update');
-
+  Route::get('get/ghe/phong-chieu/{id}',                 [GheNgoiController::class, 'index'])->name('admin.showSeats');
+  Route::post('post/them-ghe/phong-chieu/{id}',          [GheNgoiController::class, 'store'])->name('admin.storeGhe');
+  Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
+  Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
+  Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
   //end route phòng chiếu
 
   //start route vai trò
-  Route::get('danh-sach-vai-tro/', [VaiTroController::class, 'index'])->name('admin.role.index');
-  Route::get('danh-sach-vai-tro-an/', [VaiTroController::class, 'listRoleSoft'])->name('admin.role.listRoleSoft');
-  Route::get('them-vai-tro/', [VaiTroController::class, 'create'])->name('admin.role.create');
-  Route::post('post/them-vai-tro/', [VaiTroController::class, 'store'])->name('admin.role.store');
-  Route::get('sua-vai-tro/{id}', [VaiTroController::class, 'edit'])->name('admin.role.edit');
-  Route::post('post/sua-vai-tro/{id}', [VaiTroController::class, 'update'])->name('admin.role.update');
-  Route::get('restore/vai-tro/{id}', [VaiTroController::class, 'restore'])->name('admin.role.restore');
-  Route::get('xoa-vai-tro/{id}', [VaiTroController::class, 'delete'])->name('admin.role.delete');
+  Route::get('danh-sach-vai-tro/',                       [VaiTroController::class, 'index'])->name('admin.role.index');
+  Route::get('danh-sach-vai-tro-an/',                    [VaiTroController::class, 'listRoleSoft'])->name('admin.role.listRoleSoft');
+  Route::get('them-vai-tro/',                            [VaiTroController::class, 'create'])->name('admin.role.create');
+  Route::post('post/them-vai-tro/',                      [VaiTroController::class, 'store'])->name('admin.role.store');
+  Route::get('sua-vai-tro/{id}',                         [VaiTroController::class, 'edit'])->name('admin.role.edit');
+  Route::post('post/sua-vai-tro/{id}',                   [VaiTroController::class, 'update'])->name('admin.role.update');
+  Route::get('restore/vai-tro/{id}',                     [VaiTroController::class, 'restore'])->name('admin.role.restore');
+  Route::get('xoa-vai-tro/{id}',                         [VaiTroController::class, 'delete'])->name('admin.role.delete');
 
   // route người dùng và vai trò
   Route::get('danh-sach-vai-tro-nguoi-dung/', [VaiTroVaNguoiDungController::class, 'index'])->name('admin.roleAndUser.index');
@@ -130,37 +137,48 @@ Route::prefix('admin')->group(function () {
   Route::post('post/cap-nhat-vai-tro-nguoi-dung/{id}', [VaiTroVaNguoiDungController::class, 'update'])->name('admin.roleAndUser.update');
 
   // route vé 
-  Route::get('danh-sach-ve/', [VeController::class, 'index'])->name('admin.ticket.index');
-  Route::get('chi-tiet-ve/{id}', [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
+  Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('tao-ve-gia-lap/',                          [VeController::class, 'create'])->name('admin.ticket.create');
 
   // Route::resources('phims');
-  Route::resource('daoDien', DaoDienController::class);
-  Route::resource('phim', PhimController::class);
-  Route::resource('dienVien', DienVienController::class);
+  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
+  Route::resource('phim', App\Http\Controllers\PhimController::class);
+  Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
 
-  Route::resource('theLoaiPhim', TheLoaiPhimController::class);
-  Route::resource('rap', RapController::class);
-  Route::resource('suatChieu', SuatChieuController::class);
+  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
+  Route::resource('rap', App\Http\Controllers\RapController::class);
+  Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
-
-// Đăng ký
-Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
-Route::post('dang-ky', [AuthenController::class, 'dangKy']);
-
-// Đăng nhập
-Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('dangnhap');
-Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
-
-// Đăng xuất
-Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
   // Route::get('trang-chu', [MemberController::class, 'trangChu'])
   //   ->name('trangchu.member');
+
+
+  // Đăng ký
+  Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
+  Route::post('dang-ky', [AuthenController::class, 'dangKy']);
+
+  // Đăng nhập
+  Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('dangnhap');
+  Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
+  
+  // Đăng xuất
+  Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
+
+  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
+  //   ->name('trangchu.member');
+  
+  // Đổi mật khẩu
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
+  // Xem và cập nhập thông tin cá nhân
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
@@ -169,12 +187,16 @@ Route::prefix('thanh-vien')->group(function () {
   Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
 
 
+  // Đặt lại mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
   Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
   Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
-  //Route người dùng
-  Route::get('trang-chu', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
+
+  // Tin tức
+  Route::get('tin-tuc', [BaiVietTinTucController::class, 'hienThi'])->name('tintuc.hienthi');
+  Route::get('tin-tuc/{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
+  Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member')->middleware(['auth', MemberMiddleware::class]);
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
@@ -183,3 +205,4 @@ Route::prefix('thanh-vien')->group(function () {
   Route::resource('binhluan', BinhLuanPhimController::class);
   Route::resource('danhgia', DanhGiaController::class);
 });
+

@@ -19,17 +19,17 @@ class AuthAdminRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'email' => ['required', 'email'],
-            'password' => ['required']
-        ];
-    }
-    public function messages(): array
-    {
-        return [
-            'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required']
+    //     ];
+    // }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
+    //     ];
+    // }
 }

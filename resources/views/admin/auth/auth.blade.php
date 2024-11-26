@@ -6,7 +6,31 @@
     <title>Login &amp; Register - Kaiadmin Bootstrap 5 Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
     <!-- <link rel="icon" href="kaiadmin-lite-1.2.0/assets/img/kaiadmin/favicon.ico" type="image/x-icon"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login &amp; Register - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+    <!-- <link rel="icon" href="kaiadmin-lite-1.2.0/assets/img/kaiadmin/favicon.ico" type="image/x-icon"> -->
 
+    <!-- Fonts and icons -->
+    <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/plugin/webfont/webfont.min.js') }}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Public+Sans:300,400,500,600,700" media="all">
+    <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/fonts.min.css') }}" media="all">
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Public Sans:300,400,500,600,700"]
+            },
+            custom: {
+                "families": ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
+                    "simple-line-icons"
+                ],
+                urls: ["{{ asset('kaiadmin-lite-1.2.0/assets/css/fonts.min.css') }}"]
+            },
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
     <!-- Fonts and icons -->
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Public+Sans:300,400,500,600,700" media="all">
@@ -112,87 +136,82 @@
                 {{-- <a href="#" class="mr">
                     Đăng ký
                 </a> --}}
-
-                <div class="form-action pt-2">
-                    <a href="#" style="color: white;">HOẶC</a>
-                </div>
-                <div class="form-action pt-3">
-                    <a href="#" class="btn w-100"
-                        style="width:100%;border: 1px solid #dadce0;color: white;height:40px;display: flex;align-items: center;padding-left: 20px;border-radius:5px;">
-                        <svg style="width:20px;margin-right: 10px;" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 48 48" class="LgbsSe-Bz112c">
-                            <g>
-                                <path fill="#EA4335"
-                                    d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
-                                </path>
-                                <path fill="#4285F4"
-                                    d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
-                                </path>
-                                <path fill="#FBBC05"
-                                    d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
-                                </path>
-                                <path fill="#34A853"
-                                    d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
-                                </path>
-                                <path fill="none" d="M0 0h48v48H0z"></path>
-                            </g>
-                        </svg>
-                        <span>Đăng nhập bằng google</span>
-                    </a>
-                </div>
-                <div class="form-action pt-3">
-                    <a href="#" class="btn w-100"
-                        style="width:100%;border: 1px solid #dadce0;color: white;height:40px;display: flex;align-items: center;padding-left: 20px;border-radius:5px;">
-                        <img width="20px" style="margin-right: 20px;"
-                            src="https://cdn-icons-png.flaticon.com/512/3128/3128304.png" alt="">
-                        <span>Đăng nhập bằng facebook</span>
-                    </a>
-                </div>
-                <!-- <div class="login-account">
+        <div class="form-action pt-2">
+          <a href="#" style="color: white;">HOẶC</a>
+        </div>
+        <div class="form-action pt-3">
+          <a href="#" class="btn w-100"
+            style="width:100%;border: 1px solid #dadce0;color: white;height:40px;display: flex;align-items: center;padding-left: 20px;border-radius:5px;">
+            <svg style="width:20px;margin-right: 10px;" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48" class="LgbsSe-Bz112c">
+              <g>
+                <path fill="#EA4335"
+                  d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
+                </path>
+                <path fill="#4285F4"
+                  d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
+                </path>
+                <path fill="#FBBC05"
+                  d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
+                </path>
+                <path fill="#34A853"
+                  d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
+                </path>
+                <path fill="none" d="M0 0h48v48H0z"></path>
+              </g>
+            </svg>
+            <span>Đăng nhập bằng google</span>
+          </a>
+        </div>
+        <div class="form-action pt-3">
+          <a href="#" class="btn w-100"
+            style="width:100%;border: 1px solid #dadce0;color: white;height:40px;display: flex;align-items: center;padding-left: 20px;border-radius:5px;">
+            <img width="20px" style="margin-right: 20px;" src="https://cdn-icons-png.flaticon.com/512/3128/3128304.png"
+              alt="">
+            <span>Đăng nhập bằng facebook</span>
+          </a>
+        </div>
+        <!-- <div class="login-account">
           <span class="msg">Bạn chưa có tài khoản ?</span>
           <a href="#" id="show-signup" class="link">Đăng ký</a>
         </div> -->
-
-            </div>
-        </div>
-        <!-- Đăng ký tài khoản -->
-        <div class="container container-signup animated fadeIn"
-            style="display: none;background: rgba(0, 0, 0, 0.7);color:white;border:none;">
-            <h3 class="fs-1 fw-bolder">Đăng ký</h3>
-            <div class="login-form">
-                <div class="form-sub">
-                    <div class="mb-3">
-                        <input id="fullname" name="fullname" type="text" class="inputAuth"
-                            placeholder="Fullname" required="">
-                    </div>
-                    <div class="mb-3">
-                        <input id="email" name="email" type="email" class="inputAuth" placeholder="Email"
-                            required="">
-                    </div>
-                    <div class="mb-3" style="position:relative;">
-                        <input id="passwordsignin" name="passwordsignin" type="password" class="inputAuth"
-                            placeholder="Password" required="" style="padding-right: 40px;">
-                        <div class="show-password">
-                            <i class="icon-eye"></i>
-                        </div>
-                    </div>
-                    <div class="mb-3" style="position:relative;">
-                        <input id="confirmpassword" name="confirmpassword" type="password" class="inputAuth"
-                            placeholder="Confirm password" required="" style="padding-right: 40px;">
-                        <div class="show-password">
-                            <i class="icon-eye"></i>
-                        </div>
-                    </div>
-                </div>
-                <div style="padding-left: 10px;">
-                    <a href="#" id="show-signin" class="btn text-danger me-3"
-                        style="border: 1px solid #959393;">Cancel</a>
-                    <a href="#" class="btn btn-primary">Sign Up</a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/jquery-3.7.1.min.js') }}"></script>
+    <!-- Đăng ký tài khoản -->
+    <div class="container container-signup animated fadeIn"
+      style="display: none;background: rgba(0, 0, 0, 0.7);color:white;border:none;">
+      <h3 class="fs-1 fw-bolder">Đăng ký</h3>
+      <div class="login-form">
+        <div class="form-sub">
+          <div class="mb-3">
+            <input id="fullname" name="fullname" type="text" class="inputAuth" placeholder="Fullname" required="">
+          </div>
+          <div class="mb-3">
+            <input id="email" name="email" type="email" class="inputAuth" placeholder="Email" required="">
+          </div>
+          <div class="mb-3" style="position:relative;">
+            <input id="passwordsignin" name="passwordsignin" type="password" class="inputAuth" placeholder="Password"
+              required="" style="padding-right: 40px;">
+            <div class="show-password">
+              <i class="icon-eye"></i>
+            </div>
+          </div>
+          <div class="mb-3" style="position:relative;">
+            <input id="confirmpassword" name="confirmpassword" type="password" class="inputAuth"
+              placeholder="Confirm password" required="" style="padding-right: 40px;">
+            <div class="show-password">
+              <i class="icon-eye"></i>
+            </div>
+          </div>
+        </div>
+        <div style="padding-left: 10px;">
+          <a href="#" id="show-signin" class="btn text-danger me-3" style="border: 1px solid #959393;">Cancel</a>
+          <a href="#" class="btn btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/bootstrap.min.js') }}"></script>
