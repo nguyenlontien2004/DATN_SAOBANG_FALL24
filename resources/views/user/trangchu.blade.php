@@ -1,5 +1,9 @@
 @extends('layout.user')
 
+{{-- @section('title')
+    {{ $title }}
+@endsection --}}
+
 @section('content')
     <main class="container mx-auto px-4 py-8">
         <!-- banner -->
@@ -44,62 +48,52 @@
                 Phim đang chiếu
             </h2>
             <div class="grid grid-cols-5 gap-4">
-                <div class="bg-black text-white p-4 rounded-lg">
-                    <img alt="Movie Poster 1" class="rounded-lg mb-4" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/rsf7RftzSBsheI4LMfqkFDXNFxCNgTePbXajseZPydiJMd54E.jpg"
-                        width="200" />
-                    <h3 class="text-lg font-bold">CẤM</h3>
-                    <p>Kinh Dị</p>
-                    <p class="text-yellow-500">
-                        <i class="fas fa-star"> </i>
-                        6.3
-                    </p>
-                </div>
-                <div class="bg-black text-white p-4 rounded-lg">
-                    <img alt="Movie Poster 2" class="rounded-lg mb-4" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/HmJyHfw6F5xXHCJdmV01YidmP4Gcjn5ly4X4cc1yceN10ljTA.jpg"
-                        width="200" />
-                    <h3 class="text-lg font-bold">Joker: Folie à Deux - Điên Cuồng</h3>
-                    <p>Nhạc Kịch, Tâm Lý</p>
-                    <p class="text-yellow-500">
-                        <i class="fas fa-star"> </i>
-                        4.8
-                    </p>
-                </div>
-                <div class="bg-black text-white p-4 rounded-lg">
-                    <img alt="Movie Poster 3" class="rounded-lg mb-4" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/m5YdNkwP3nLJJtcDgFGEVQDOQtLTfMeBNSBKqPoluFRu0ljTA.jpg"
-                        width="200" />
-                    <h3 class="text-lg font-bold">Yeo: Quỷ Án Tang Phần 2</h3>
-                    <p>Kinh Dị, Gây Cấn</p>
-                    <p class="text-yellow-500">
-                        <i class="fas fa-star"> </i>
-                        9.6
-                    </p>
-                </div>
-                <div class="bg-black text-white p-4 rounded-lg">
-                    <img alt="Movie Poster 4" class="rounded-lg mb-4" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/f1Rj2Bs7hNy1NSCFByfnO7VfmXZQe1JBHTdslmX5fRRWmuccC.jpg"
-                        width="200" />
-                    <h3 class="text-lg font-bold">Transformers Một</h3>
-                    <p>Khoa Học Viễn Tưởng, Hoạt Hình</p>
-                    <p class="text-yellow-500">
-                        <i class="fas fa-star"> </i>
-                        9.6
-                    </p>
-                </div>
-                <div class="bg-black text-white p-4 rounded-lg">
-                    <img alt="Movie Poster 5" class="rounded-lg mb-4" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/ruZcDS03ZzbIPBgKIAf5OtfEPWjcEuJ03v2pbEIUoh8x0ljTA.jpg"
-                        width="200" />
-                    <h3 class="text-lg font-bold">Đồ Anh Công Dược Tôi</h3>
-                    <p>Hài, Hình Sự</p>
-                    <p class="text-yellow-500">
-                        <i class="fas fa-star"> </i>
-                        8.9
-                    </p>
+                @foreach ($phimDangChieu as $item)
+                    <div class="bg-secondary text-white rounded-lg">
+                        <div class="film-card position-relative">
+                            <!-- Hình ảnh của video -->
+                            <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
+                                src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
+                                onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
+                                style="cursor: pointer;" />
+                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
+
+                                <h3 class="text-lg font-bold film-title">
+                                    {{ $item->ten_phim }}
+                                </h3>
+                            </a>
+                            <p class="film-genre">
+                                @foreach ($item->theLoaiPhims as $theLoaiPhim)
+                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            </p>
+                            <p class="text-yellow-500">
+                                <i class="fas fa-star"></i> 6.3
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+        <!-- Modal để hiển thị video -->
+        <div id="videoModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" onclick="closeModal()">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="video" src="" frameborder="0" allowfullscreen
+                            style="width: 100%; height: 60vh;"></iframe>
+                    </div>
                 </div>
             </div>
+        </div>
+        </div>
         </section>
     </main>
     <!-- lịch chiếu phim -->
@@ -286,11 +280,11 @@
                 </div>
             </div>
         </div>
-        <div class="flex mt-2 justify-center">
+        {{-- <div class="flex mt-2 justify-center">
             <button class="bg-pink-600 text-white w-52 py-2 rounded-lg">
                 Xem tất cả
             </button>
-        </div>
+        </div> --}}
     </div>
     <!-- banner 2 -->
     <div class="bg-red-600 text-white text-center py-10">

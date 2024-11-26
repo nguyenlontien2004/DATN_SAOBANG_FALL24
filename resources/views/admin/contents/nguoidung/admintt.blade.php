@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="{{ route('nguoi-dung.index') }}" class="btn btn-danger">Quay lại</a>
+                <a href="{{ route('admin.index') }}" class="btn btn-danger">Quay lại</a>
             </div>
         </div>
     </div>
