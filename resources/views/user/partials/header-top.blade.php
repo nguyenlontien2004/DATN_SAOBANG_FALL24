@@ -70,10 +70,10 @@
                             </form>
                             <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
                             <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
-
+                    @endif
                         </div>
             </nav>
-            <div class="d-flex align-items-center mt-3">
+            <!-- <div class="d-flex align-items-center mt-3">
                 <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
                     <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
                         aria-label="Search" value="{{ request('timkiem') }}">
@@ -101,7 +101,7 @@
                         </li>
                     </ul>
                 @endif
-            </div>
+            </div> -->
         </div>
     </div>
 

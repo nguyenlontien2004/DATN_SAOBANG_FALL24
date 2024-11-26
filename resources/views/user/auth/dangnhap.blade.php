@@ -13,7 +13,7 @@
                                 Nếu bạn đã có tài khoản, hãy đăng nhập để tích lũy điểm thành viên và nhận được những ưu đãi
                                 tốt hơn!
                             </p>
-                            <form action="{{ route('dangnhap') }}" method="POST">
+                            <form action="{{ route('dang-nhap') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email:</label>

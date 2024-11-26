@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\AuthenController;
@@ -15,7 +14,6 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
-use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
