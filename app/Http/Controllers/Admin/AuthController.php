@@ -24,7 +24,6 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($login)) {
-
             request()->session()->regenerate();
 
             /**

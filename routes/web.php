@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\AuthenController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
@@ -26,9 +29,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 
@@ -44,11 +45,11 @@ use App\Http\Middleware\MemberMiddleware;
 */
 
 
+Route::get('/search', [SearchController::class, 'search']);
+
 // Route::get('/', function () {
 //   return view('welcome');
 // });
-
-// Admin
 Route::prefix('admin')->group(function () {
   // route auth admin
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
@@ -113,24 +114,22 @@ Route::prefix('admin')->group(function () {
   Route::get('phong-chieu/quan-ly-ghe/{id}', [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
 
   // route thêm ghế cho phòng chiếu
-
-  Route::get('get/ghe/phong-chieu/{id}', [GheNgoiController::class, 'index'])->name('admin.showSeats');
-  Route::post('post/them-ghe/phong-chieu/{id}', [GheNgoiController::class, 'store'])->name('admin.storeGhe');
-  Route::post('delete/ghe/phong-chieu/', [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
-  Route::get('get/loai-ghe/phong-chieu/{id}/{type}', [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
-  Route::post('post/sua-ghe/phong-chieu/{id}', [GheNgoiController::class, 'update'])->name('admin.update');
-
+  Route::get('get/ghe/phong-chieu/{id}',                 [GheNgoiController::class, 'index'])->name('admin.showSeats');
+  Route::post('post/them-ghe/phong-chieu/{id}',          [GheNgoiController::class, 'store'])->name('admin.storeGhe');
+  Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
+  Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
+  Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
   //end route phòng chiếu
 
   //start route vai trò
-  Route::get('danh-sach-vai-tro/', [VaiTroController::class, 'index'])->name('admin.role.index');
-  Route::get('danh-sach-vai-tro-an/', [VaiTroController::class, 'listRoleSoft'])->name('admin.role.listRoleSoft');
-  Route::get('them-vai-tro/', [VaiTroController::class, 'create'])->name('admin.role.create');
-  Route::post('post/them-vai-tro/', [VaiTroController::class, 'store'])->name('admin.role.store');
-  Route::get('sua-vai-tro/{id}', [VaiTroController::class, 'edit'])->name('admin.role.edit');
-  Route::post('post/sua-vai-tro/{id}', [VaiTroController::class, 'update'])->name('admin.role.update');
-  Route::get('restore/vai-tro/{id}', [VaiTroController::class, 'restore'])->name('admin.role.restore');
-  Route::get('xoa-vai-tro/{id}', [VaiTroController::class, 'delete'])->name('admin.role.delete');
+  Route::get('danh-sach-vai-tro/',                       [VaiTroController::class, 'index'])->name('admin.role.index');
+  Route::get('danh-sach-vai-tro-an/',                    [VaiTroController::class, 'listRoleSoft'])->name('admin.role.listRoleSoft');
+  Route::get('them-vai-tro/',                            [VaiTroController::class, 'create'])->name('admin.role.create');
+  Route::post('post/them-vai-tro/',                      [VaiTroController::class, 'store'])->name('admin.role.store');
+  Route::get('sua-vai-tro/{id}',                         [VaiTroController::class, 'edit'])->name('admin.role.edit');
+  Route::post('post/sua-vai-tro/{id}',                   [VaiTroController::class, 'update'])->name('admin.role.update');
+  Route::get('restore/vai-tro/{id}',                     [VaiTroController::class, 'restore'])->name('admin.role.restore');
+  Route::get('xoa-vai-tro/{id}',                         [VaiTroController::class, 'delete'])->name('admin.role.delete');
 
   // route người dùng và vai trò
   Route::get('danh-sach-vai-tro-nguoi-dung/', [VaiTroVaNguoiDungController::class, 'index'])->name('admin.roleAndUser.index');
@@ -138,17 +137,21 @@ Route::prefix('admin')->group(function () {
   Route::post('post/cap-nhat-vai-tro-nguoi-dung/{id}', [VaiTroVaNguoiDungController::class, 'update'])->name('admin.roleAndUser.update');
 
   // route vé 
-  Route::get('danh-sach-ve/', [VeController::class, 'index'])->name('admin.ticket.index');
-  Route::get('chi-tiet-ve/{id}', [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
+  Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('tao-ve-gia-lap/',                          [VeController::class, 'create'])->name('admin.ticket.create');
 
   // Route::resources('phims');
-  Route::resource('daoDien', DaoDienController::class);
-  Route::resource('phim', PhimController::class);
-  Route::resource('dienVien', DienVienController::class);
+  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
+  Route::resource('phim', App\Http\Controllers\PhimController::class);
+  Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
 
-  Route::resource('theLoaiPhim', TheLoaiPhimController::class);
-  Route::resource('rap', RapController::class);
-  Route::resource('suatChieu', SuatChieuController::class);
+  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
+  Route::resource('rap', App\Http\Controllers\RapController::class);
+  Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 });
 
 // Thành viên
@@ -161,13 +164,13 @@ Route::prefix('thanh-vien')->group(function () {
   // Đăng nhập
   Route::get('dang-nhap', [AuthenController::class, 'formDangNhap'])->name('dangnhap');
   Route::post('dang-nhap', [AuthenController::class, 'dangNhap']);
-
+  
   // Đăng xuất
   Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
   // Route::get('trang-chu', [MemberController::class, 'trangChu'])
   //   ->name('trangchu.member');
-
+  
   // Đổi mật khẩu
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
@@ -188,6 +191,7 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('tin-tuc/{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
 
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member')->middleware(['auth', MemberMiddleware::class]);
+
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
