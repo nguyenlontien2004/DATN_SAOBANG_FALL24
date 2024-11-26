@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
 use App\Http\Controllers\AdminController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
@@ -26,7 +28,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
-
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +108,7 @@ Route::prefix('admin')->group(function () {
   Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
   Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
   Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
-  
+
   //end route phòng chiếu
 
   //start route vai trò
@@ -149,20 +151,28 @@ Route::post('dang-nhap', [AuthenController::class, 'dangNhap'])->name('dangNhap'
 // Đăng xuất
 Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
-// Member
-// Route::prefix('thanh-vien')->group(function () {
-//   Route::get('trang-chu', [MemberController::class, 'trangChu'])
-//     ->name('trangchu.member');
-//   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
-//   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau']);
-// });
+// Thành viên
+Route::prefix('thanh-vien')->group(function () {
+  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
+  //   ->name('trangchu.member');
+  Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
+  Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
-//Route người dùng
-Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
-Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
-Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
-Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
-Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
-Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
-Route::resource('binhluan', BinhLuanPhimController::class);
-Route::resource('danhgia', DanhGiaController::class);
+  Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
+  Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
+  Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
+
+  Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
+  Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
+  Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
+  Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
+
+  Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('/');
+  Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+  Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+  Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
+  Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+  Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+  Route::resource('binhluan', BinhLuanPhimController::class);
+  Route::resource('danhgia', DanhGiaController::class);
+});

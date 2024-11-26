@@ -99,19 +99,19 @@ class NguoiDungController extends Controller
         try {
             DB::transaction(function () use ($request, $nguoiDung) {
 
-                $nguoidung = $request->only(['ho_ten', 'email', 'so_dien_thoai', 'mat_khau', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
+                $nguoidung = $request->only(['ho_ten', 'email', 'so_dien_thoai', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
 
                 if ($request->hasFile('hinh_anh')) {
                     $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');
                 } else {
-                    $hinhanh = null;
+                    $hinhanh = $nguoiDung->hinh_anh;
                 }
 
                 $nguoidung['hinh_anh'] = $hinhanh;
 
                 $nguoiDung->update($nguoidung);
 
-                $nguoiDung->vaiTros()->attach($request->vai_tros);
+                $nguoiDung->vaiTros()->sync($request->vai_tros);
             });
 
             return redirect()->route('nguoi-dung.index')

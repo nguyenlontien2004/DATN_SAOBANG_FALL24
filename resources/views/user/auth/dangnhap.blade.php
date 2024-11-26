@@ -32,7 +32,7 @@
                                     @enderror
                                 </div>
                                 <div class="bnt_reemem mb-3">
-                                    <a href="#" class="quenmk">Bạn quên mật khẩu?</a>
+                                    <a href="{{ route('forgot.password') }}" class="quenmk">Bạn quên mật khẩu?</a>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Đăng nhập</button>

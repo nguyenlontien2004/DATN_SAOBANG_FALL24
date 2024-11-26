@@ -10,8 +10,6 @@ class MaGiamGia extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ma_giam_gias';
-
     protected $fillable = [
         'ten_ma_giam_gia',
         'ma_giam_gia',
