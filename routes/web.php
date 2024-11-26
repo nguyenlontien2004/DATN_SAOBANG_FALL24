@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
 use App\Http\Controllers\AdminController;
@@ -46,10 +47,11 @@ use App\Http\Middleware\MemberMiddleware;
 */
 
 
+Route::get('/search', [SearchController::class, 'search']);
+
 // Route::get('/', function () {
 //   return view('welcome');
 // });
-
 Route::prefix('admin')->group(function () {
   // route auth admin
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
@@ -145,6 +147,9 @@ Route::prefix('admin')->group(function () {
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
   Route::resource('phim', App\Http\Controllers\PhimController::class);
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
 
   Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
   Route::resource('rap', App\Http\Controllers\RapController::class);

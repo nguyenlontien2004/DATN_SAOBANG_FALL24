@@ -12,11 +12,14 @@ class Phim extends Model
     protected $fillable = [
         'ten_phim',
         'mo_ta',
+        'anh_phim',
         'thoi_luong',
         'luot_xem_phim',
         'ngay_khoi_chieu',
         'ngay_ket_thuc',
         'trailer',
+        'ngon_ngu',
+        'do_tuoi',
         'trang_thai',
     ];
     public function daoDiens()
@@ -41,6 +44,4 @@ class Phim extends Model
     public function danhGias(){
         return $this->hasMany(BinhLuanPhim::class, 'phim_id');
     }
-
-  
 }
