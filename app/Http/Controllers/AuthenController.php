@@ -42,7 +42,7 @@ class AuthenController extends Controller
     public function formDangNhap()
     {
 
-        return view('user.dangnhap');
+        return view('user.auth.dangnhap');
     }
 
     public function dangNhap()

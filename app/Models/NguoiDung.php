@@ -15,6 +15,8 @@ class NguoiDung extends Authenticatable
 
     const TYPE_MEMBER = 'member';
 
+    const TYPE_NHANVIEN = 'Nhân viên';
+
     protected $fillable = [
         'ho_ten',
         'email',
@@ -64,5 +66,10 @@ class NguoiDung extends Authenticatable
     public function member()
     {
         return $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
+    }
+
+    public function nhanVien()
+    {
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_NHANVIEN)->exists();
     }
 }

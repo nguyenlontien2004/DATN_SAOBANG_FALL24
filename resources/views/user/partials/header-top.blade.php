@@ -72,6 +72,7 @@
                             <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
 
                         </div>
+                    @endif
             </nav>
             <div class="d-flex align-items-center mt-3">
                 <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
@@ -105,7 +106,7 @@
         </div>
     </div>
 
-    <style>
+    {{-- <style>
         .btn-custom {
             padding: 10px 20px;
             /* Thay đổi kích thước nút */
@@ -126,4 +127,4 @@
             text-decoration: none;
             /* Bỏ gạch chân cho chữ */
         }
-    </style>
+    </style> --}}

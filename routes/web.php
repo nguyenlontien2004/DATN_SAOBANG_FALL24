@@ -29,9 +29,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 
@@ -202,4 +200,3 @@ Route::prefix('thanh-vien')->group(function () {
   Route::resource('binhluan', BinhLuanPhimController::class);
   Route::resource('danhgia', DanhGiaController::class);
 });
-
