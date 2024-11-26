@@ -46,10 +46,11 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
   // route auth admin
-  Route::get('/login', [AuthController::class, 'login']);
-  Route::post('post/login', [AuthController::class, 'postLogin'])->name('login.admin');
-  Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');;
+
+  Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
+  Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
+  Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');//->middleware(['auth', AdminMiddleware::class])
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -148,8 +149,6 @@ Route::prefix('admin')->group(function () {
 
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
-  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
-  //   ->name('trangchu.member');
 
   // Đăng ký
   Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
@@ -162,6 +161,8 @@ Route::prefix('thanh-vien')->group(function () {
   // Đăng xuất
   Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
+
+  // Đổi mật khẩu
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
