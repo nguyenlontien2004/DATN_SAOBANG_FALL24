@@ -5,7 +5,6 @@
                 width="50" height="50" class="ms-5">
         </a>
         <div class="d-flex align-items-center">
-
             <nav class="navbar navbar-expand-lg mt-3">
                 <div class="container">
                     <ul class="navbar-nav mx-auto">
@@ -42,7 +41,8 @@
 
                         <!-- Top phim Link -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Top phim</a>
+
+                            <a class="nav-link" href="{{ route('tintuc.hienthi') }}">Tin tức</a>
                         </li>
                         <!-- Blog phim Dropdown -->
                         <li class="nav-item dropdown">
@@ -56,7 +56,22 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
+
+                    <form class="d-flex" method="GET" action="#">
+                        <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
+                            aria-label="Search" value="{{ request('timkiem') }}">
+                        <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    @if (Auth::check())
+                        <div class="tt ms-4">
+                            <form action="{{ route('dangxuat') }}" method="POST">
+                                @csrf
+                                <button type="submit">Đăng xuất</button>
+                            </form>
+                            <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
+                            <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
+
+                        </div>
             </nav>
             <div class="d-flex align-items-center mt-3">
                 <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
@@ -71,6 +86,9 @@
                             @csrf
                             <button class="btn btn-secondary btn-custom" type="submit">Đăng xuất</button>
                         </form>
+
+                        <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
+                        <a href="{{ route('trangchu.member') }}"> Trangchủ</a>
                     </div>
                 @else
                     <ul class="menu d-flex align-items-center mb-0 ms-3">
@@ -78,7 +96,8 @@
                             <a class="btn btn-secondary btn-custom" href="{{ route('dangky') }}">Đăng Ký</a>
                         </li>
                         <li class="xam ms-2">
-                            <a class="btn btn-secondary btn-custom" href="{{ route('formDangNhap') }}">Đăng Nhập</a>
+                            <a class="btn btn-secondary btn-custom" href="{{ route('dangnhap') }}">Đăng Nhập</a>
+
                         </li>
                     </ul>
                 @endif

@@ -72,6 +72,9 @@
                         <i class="fas fa-star"></i>
                         <span>Xem review</span>
                     </a>
+                    <button class="btn btn-outline-secondary" type="button">
+                        Thêm vào yêu thích
+                    </button>
                 </div>
             </div>
         </div>
@@ -151,7 +154,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Phần phim đang chiếu bên phải -->
         <div class="col-md-4">
@@ -188,7 +190,10 @@
                         </li>
                     @endforeach
                 </ul>
+            
+                </div>
             </div>
+
         </div>
 
     </div>

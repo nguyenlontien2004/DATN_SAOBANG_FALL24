@@ -49,6 +49,7 @@ class SanPhamController extends Controller
         }
         return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
     }
+
     public function TimKiemPhim(Request $request)
     {
         $title = "Kết quả tìm kiếm";
@@ -63,18 +64,21 @@ class SanPhamController extends Controller
         }
         return view('user.timkiem', compact('title', 'timkiem', 'ketqua1', 'ketqua2'));
     }
+
     public function DanhSachPhim()
     {
         $title = "Danh sách phim";
         $danhSachPhim = Phim::query()->paginate(1);
         return view('user.danhsachphim', compact('title', 'danhSachPhim'));
     }
+
     public function PhimDangChieu()
     {
         $title = "Phim đang chiếu";
         $phimDangChieu = Phim::query()->paginate(1);
         return view('user.phimdangchieu', compact('title', 'phimDangChieu'));
     }
+
     public function DatVe()
     {
         $title = "Đặt vé";
@@ -102,3 +106,4 @@ class SanPhamController extends Controller
         }
     }
 }
+

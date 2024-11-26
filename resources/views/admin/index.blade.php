@@ -260,16 +260,18 @@
                                     </div>
                                 </div>
                             </li>
-
+                            @php
+                                $user = Auth::user();
+                            @endphp
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/profile.jpg') }}"
-                                            alt="..." class="avatar-img rounded-circle" />
+                                        <img src="{{ asset('storage/' . $user->hinh_anh) }}" alt="..."
+                                            class="avatar-img rounded-circle" />
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Hi,</span>
+                                        <span class="op-7">Xin chào, {{ $user->ho_ten }}</span>
                                         {{-- <span class="fw-bold">{{ Auth::user()->ho_ten }}</span> --}}
                                     </span>
                                 </a>
@@ -278,26 +280,31 @@
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/profile.jpg') }}"
+                                                    <img src="{{ asset('storage/' . $user->hinh_anh) }}"
                                                         alt="image profile" class="avatar-img rounded" />
                                                 </div>
                                                 <div class="u-text">
-                                                    <h4>Hizrian</h4>
-                                                    <p class="text-muted">hello@example.com</p>
-                                                    <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
-                                                        Profile</a>
+                                                    <h4>{{ $user->ho_ten }}</h4>
+                                                    <p class="text-muted">{{ $user->email }}</p>
+                                                    {{-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
+                                                        Profile</a> --}}
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">My Profile</a>
-                                            <a class="dropdown-item" href="#">My Balance</a>
+                                            <a class="dropdown-item" href="{{ route('admin.ttadmin') }}">Hồ sơ của
+                                                tôi</a>
+                                            {{-- <a class="dropdown-item" href="#">My Balance</a>
                                             <a class="dropdown-item" href="#">Inbox</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Account Setting</a>
+                                            <a class="dropdown-item" href="#">Account Setting</a> --}}
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Logout</a>
+                                            <form action="{{ route('admin.dangxuat') }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-secondary btn-custom ms-2" type="submit">Đăng
+                                                    xuất</button>
+                                            </form>
                                         </li>
                                     </div>
                                 </ul>
