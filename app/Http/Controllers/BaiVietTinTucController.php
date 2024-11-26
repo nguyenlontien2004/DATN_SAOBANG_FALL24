@@ -151,7 +151,7 @@ class BaiVietTinTucController extends Controller
 
     public function hienThi()
     {
-        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(1);
+        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(15);
         return view('user.tintuc.tintuc', compact('baiviet'));
     }
 
@@ -163,7 +163,7 @@ class BaiVietTinTucController extends Controller
             ->orderBy('ngay_dang', 'desc')
             ->limit(10)
             ->get();
-            
+
         $tt = BaiVietTinTuc::findOrFail($id);
 
         $tt->increment('luot_xem');

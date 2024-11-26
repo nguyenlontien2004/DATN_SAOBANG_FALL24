@@ -27,16 +27,18 @@
         <!-- Sidebar Tin tức liên quan -->
         <div class="col-md-4">
             <div class="p-3 bg-light">
-                <h4 class="border-bottom pb-2">Tin tức</h4>
+                <h4 class="border-bottom mb-3 pb-2">Tin tức</h4>
                 <!-- Danh sách tin tức liên quan -->
                 @foreach ($lienquan as $lq)
-                    <a href="{{ route('tintuc.show', $lq->id) }}">
+                    <a href="{{ route('tintuc.show', $lq->id) }}" class="text-decoration-none">
                         <ul class="list-unstyled">
                             <li class="mb-3">
-                                <div class="d-flex">
-                                    <img src="{{ asset('storage/' . $lq->hinh_anh) }}" alt="News Thumbnail" class="me-3"
-                                        style="width: 64px; height: 64px" />
-                                    <div>
+                                <div class="row" style="max-height: 100px">
+                                    <div class="col-md-2">
+                                        <img src="{{ asset('storage/' . $lq->hinh_anh) }}" alt="News Thumbnail"
+                                            style="width: 64px; height: 100%; object-fit: cover;" />
+                                    </div>
+                                    <div class="col-md-10">
                                         <h5 class="h6 mb-1">{{ $lq->tieu_de }}</h5>
                                         <p class="small text-muted mb-0">
                                             {{ $lq->tom_tat }}
