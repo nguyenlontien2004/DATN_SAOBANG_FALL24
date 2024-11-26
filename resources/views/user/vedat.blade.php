@@ -12,6 +12,21 @@
     .choose-food {
         display: none;
     }
+    .unavailabledrop{
+    /* display: block; */
+    background-color: #cdcdcd;
+    white-space: nowrap;
+    /* height: 20px;
+    width: 20px; */
+    border-radius: 2px;
+    position: relative;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-image: url('https://cdn.moveek.com/build/images/seat-unavailable.6c1ab33c.png');
+    z-index: 99999;
+    cursor: no-drop;
+    color: #ababab;
+}
 </style>
 <div class="main-content">
     <div>

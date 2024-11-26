@@ -165,7 +165,7 @@
                 <!-- qr-code p-8  -->
                 <div class="flex flex-col items-center justify-center">
                     <p class="text-lg font-bold">QR CODE</p>
-                    <img width="220px" src="{{ $urlCode }}" alt="QR Code" class="rounded-md" />
+                    {!! $ve['qr_code'] !!}
                 </div>
                 <p class="mt-4 text-sm" style="margin-top: 5px;margin-bottom: 5px;">
                     Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn
@@ -175,9 +175,9 @@
             <!-- Dấu gạch ngăn cách theo chiều dọc -->
             <div class="flex media" style="padding-left:25px;">
                 <div class="flex-shrink-0 image-anh-phim" style="margin-top:15px;">
-                    <img class="rounded-lg shadow-lg"
+                    <!-- <img class="rounded-lg shadow-lg"
                         src="https://cinema.momocdn.net/img/57605275586959326-Mai_600x800.png" alt="Poster Phim"
-                        width="150" />
+                        width="150" /> -->
                 </div>
                 <div class="ml-4 content">
                     <div class="dong mb-2">
