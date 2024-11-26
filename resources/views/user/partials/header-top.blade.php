@@ -13,7 +13,7 @@
                         @csrf
                         <button type="submit">Đăng xuất</button>
                     </form>
-                    <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
+                    <a href="{{ route('admin.ttadmin') }}"> Thông tin cá nhân</a>
                     <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
                 </div>
             @else

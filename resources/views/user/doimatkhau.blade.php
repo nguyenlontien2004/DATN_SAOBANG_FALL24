@@ -14,7 +14,7 @@
             </div>
             <div class="username">{{ $user->ho_ten }}</div>
             <hr />
-            <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
+            <a href="{{ route('admin.ttadmin') }}">Thông tin cá nhân</a>
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
             <a href="#">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
