@@ -156,6 +156,9 @@ Route::prefix('admin')->group(function () {
 
 // Thành viên
 Route::prefix('thanh-vien')->group(function () {
+  // Route::get('trang-chu', [MemberController::class, 'trangChu'])
+  //   ->name('trangchu.member');
+
 
   // Đăng ký
   Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
@@ -179,6 +182,10 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
+  //Lịch sử đặt vé
+  Route::get('lich-su-dat-ve}', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
+  Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
+
 
   // Đặt lại mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
@@ -189,9 +196,7 @@ Route::prefix('thanh-vien')->group(function () {
   // Tin tức
   Route::get('tin-tuc', [BaiVietTinTucController::class, 'hienThi'])->name('tintuc.hienthi');
   Route::get('tin-tuc/{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
-
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member')->middleware(['auth', MemberMiddleware::class]);
-
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
@@ -200,3 +205,4 @@ Route::prefix('thanh-vien')->group(function () {
   Route::resource('binhluan', BinhLuanPhimController::class);
   Route::resource('danhgia', DanhGiaController::class);
 });
+

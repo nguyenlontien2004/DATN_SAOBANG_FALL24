@@ -33,10 +33,7 @@ class Ve extends Model
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
     }
-    public function suatChieu()
-    {
-        return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
-    }
+
     public function maGiamGia()
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
@@ -44,5 +41,9 @@ class Ve extends Model
     public function anhPhim()
     {
         return $this->belongsTo(AnhPhim::class, 'id');
+    }
+    public function suatChieu()
+    {
+        return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
     }
 }

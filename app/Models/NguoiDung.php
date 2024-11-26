@@ -31,9 +31,8 @@ class NguoiDung extends Authenticatable
         'gold',
         'trang_thai'
     ];
-    protected $hidden = ['password', 'remember_token'];
 
-    // protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
