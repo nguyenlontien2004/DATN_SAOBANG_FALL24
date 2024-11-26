@@ -24,8 +24,12 @@ class NguoiDung extends Authenticatable
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
+        'ngay_dang_ky',
+        'huy_ve',
+        'gold',
         'trang_thai'
     ];
+    protected $hidden = ['password', 'remember_token'];
 
     // protected $hidden = ['password', 'remember_token'];
 
@@ -36,7 +40,7 @@ class NguoiDung extends Authenticatable
 
     public function checkAdmin()
     {
-        if ($this->role->id == 1) {
+        if ($this->role?->id == 1) {
             return true;
         }
         return false;

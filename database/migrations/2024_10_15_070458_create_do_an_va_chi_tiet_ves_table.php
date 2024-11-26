@@ -2,6 +2,7 @@
 
 use App\Models\ChiTietVe;
 use App\Models\DoAn;
+use App\Models\Ve;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +16,9 @@ return new class extends Migration
     {
         Schema::create('do_an_va_chi_tiet_ves', function (Blueprint $table) {
             $table->foreignIdFor(DoAn::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(ChiTietVe::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Ve::class)->constrained()->cascadeOnDelete();
             $table->integer('so_luong_do_an');
-            $table->primary(['do_an_id', 'chi_tiet_ve_id']);
+            $table->primary(['do_an_id', 've_id']);
             $table->timestamps();
         });
     }
