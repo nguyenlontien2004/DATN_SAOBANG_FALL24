@@ -31,7 +31,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
-
+use App\Http\Controllers\PasswordResetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,9 +91,9 @@ Route::prefix('admin')->group(function () {
   Route::delete('admin/nguoi-dung/{id}/force-delete', [NguoiDungController::class, 'forceDelete'])->name('nguoi-dung.forceDelete');
 
   // Thông tin quản trị
-  Route::get('admin/ttadmin', [AdminController::class, 'thongTin'])->name('admin.ttadmin');
-  Route::get('admin/edit', [AdminController::class, 'formEdit'])->name('admin.edit');
-  Route::put('admin/edit-thong-tin', [AdminController::class, 'editThongTin'])->name('admin.editpro');
+  // Route::get('admin/ttadmin', [AdminController::class, 'thongTin'])->name('admin.ttadmin');
+  // Route::get('admin/edit', [AdminController::class, 'formEdit'])->name('admin.edit');
+  // Route::put('admin/edit-thong-tin', [AdminController::class, 'editThongTin'])->name('admin.editpro');
 
   // Đồ ăn
   Route::get('/danh-sach-do-an', [DoAnController::class, 'index'])->name('do-an.index');
