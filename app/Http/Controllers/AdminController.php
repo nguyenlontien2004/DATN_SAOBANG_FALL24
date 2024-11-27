@@ -28,9 +28,8 @@ class AdminController extends Controller
 
     public function editThongTin(AuthAdminRequest $request)
     {
-        $nguoiDung = Auth::user();
 
-        $nguoidung = $request->only([
+        $dataNguoiDung = $request->only([
             'ho_ten',
             'email',
             'so_dien_thoai',
@@ -39,15 +38,22 @@ class AdminController extends Controller
             'nam_sinh'
         ]);
 
+        $nguoiDung = Auth::user();
+
         if ($request->hasFile('hinh_anh')) {
-            $nguoidung['hinh_anh'] = Storage::put('nguoidung', $request->file('hinh_anh'));
+
+            if ($nguoiDung->hinh_anh) {
+                Storage::delete($nguoiDung->hinh_anh);
+            }
+
+            $dataNguoiDung['hinh_anh'] = Storage::put('nguoidung', $request->file('hinh_anh'));
         }
 
         /**
          * @var NguoiDung $nguoiDung
          */
 
-        $nguoiDung->update($nguoidung);
+        $nguoiDung->update($dataNguoiDung);
 
         return redirect()->route('admin.ttadmin')
             ->with('sucess', 'Sửa thông tin thành công');
