@@ -31,6 +31,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
+use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,11 +50,14 @@ use App\Http\Middleware\MemberMiddleware;
 // });
 
 Route::prefix('admin')->group(function () {
+   // Thống kê doanh thu theo rạp
+   Route::get('thong-ke/doanh-thu-theo-rap', [ThongKeDoanhThuRapController::class,'thongkedoanhtheorap'])->name('doanhthutheorap');
+   Route::get('thong-ke/rap/doanh-thu-theo-phong/{idRap}', [ThongKeDoanhThuRapController::class,'doanhthutheophong'])->name('doanhthutheophong');
   // route auth admin
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');//->middleware(['auth', AdminMiddleware::class])
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);//
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);

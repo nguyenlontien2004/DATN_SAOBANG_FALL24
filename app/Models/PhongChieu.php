@@ -30,4 +30,8 @@ class PhongChieu extends Model
     {
         return $this->belongsTo(Rap::class, 'rap_id');
     }
+    public function ves()
+    {
+        return $this->hasManyThrough(Ve::class, SuatChieu::class, 'phong_chieu_id', 'suat_chieu_id');
+    }
 }

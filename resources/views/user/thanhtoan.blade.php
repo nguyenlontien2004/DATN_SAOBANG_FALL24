@@ -221,6 +221,31 @@
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th style="color:#95aac9;font-size:12.5px;font-weight:600;">Mã giảm giá
+                                            </th>
+                                            <th>Số lượng</th>
+                                            <th>Giá trị giảm</th>
+                                            <th>Hạn sử dụng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($magiamgia as $item)
+                                        <tr>
+                                            <td>{{ $item->ma_giam_gia }}</td>
+                                            <td>{{ $item->so_luong }}</td>
+                                            <td>{{ $item->gia_tri_giam }}%</td>
+                                            <td>{{ date("d/m/Y",strtotime($item->ngay_bat_dau)).' - '. date("d/m/Y",strtotime($item->ngay_ket_thuc)) }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="table-responsive table-food">
+                                <table>
+                                    <thead>
+                                        <tr>
                                             <th style="color:#95aac9;font-size:12.5px;font-weight:600;">Thông tin cá
                                                 nhân
                                             </th>
@@ -235,19 +260,19 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Họ và tên</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->ho_ten }}"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                            id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
 
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Email</label>
                                         <input type="email" class="form-control" value="{{ Auth::user()->email }}"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                            id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
 
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->so_dien_thoai }}"
-                                            id="exampleInputEmail1">
+                                            id="exampleInputEmail1" disabled>
 
                                     </div>
                                 </div>
@@ -349,7 +374,7 @@
                                     Vé đã mua không thể đổi hoặc hoàn tiền. <br>
                                     Mã vé sẽ được gửi
                                     <strong>01</strong>
-                                    lần qua email đã nhập. Vui lòng kiểm tra lại thông tin trước khi tiếp tục.
+                                    lần qua email đã đăng ký tài khoản. Vui lòng kiểm tra lại thông tin trước khi tiếp tục.
                                 </p>
                             </div>
                         </div>
