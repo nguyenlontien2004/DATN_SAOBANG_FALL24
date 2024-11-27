@@ -108,7 +108,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success">Cập nhật</button>
-                        <a href="{{ url('/') }}" class="btn btn-danger">Hủy bỏ</a>
+                        <a href="{{ route('admin.ttadmin') }}" class="btn btn-danger">Quay lại</a>
                     </div>
                 </form>
             </div>

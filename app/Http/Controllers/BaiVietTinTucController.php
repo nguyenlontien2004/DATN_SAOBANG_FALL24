@@ -125,4 +125,25 @@ class BaiVietTinTucController extends Controller
         return redirect()->route('bai-viet-tin-tuc.index')
             ->with('success', 'Xóa bài viết thành công');
     }
+
+    public function hienThi()
+    {
+        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(15);
+
+        return view('user.tintuc.tintuc', compact('baiviet'));
+    }
+
+    public function showTinTuc($id)
+    {
+        $lienquan = BaiVietTinTuc::query()
+            ->select('id', 'hinh_anh', 'tieu_de', 'tom_tat')
+            ->orderBy('ngay_dang', 'desc')
+            ->limit(10)->get();
+
+        $tt = BaiVietTinTuc::findOrFail($id);
+
+        $tt->increment('luot_xem');
+
+        return view('user.tintuc.chitiettintuc', compact('tt', 'lienquan', 'id'));
+    }
 }

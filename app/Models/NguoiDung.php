@@ -27,31 +27,23 @@ class NguoiDung extends Authenticatable
         'trang_thai'
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(VaiTro::class, 'id', 'ten_vai_tro');
-    }
-
-    public function checkAdmin()
-    {
-        if ($this->role->id == 1) {
-            return true;
-        }
-        return false;
-    }
-
     public function vaiTros()
     {
         return $this->belongsToMany(VaiTro::class);
     }
 
+    public function danhGia()
+    {
+        return $this->hasMany(DanhGia::class);
+    }
+
     public function admin()
     {
-        return $this->ten_vai_tro == self::TYPE_ADMIN;
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_ADMIN)->exists();
     }
 
     public function member()
     {
-        return $this->ten_vai_tro == self::TYPE_MEMBER;
+        return  $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
     }
 }

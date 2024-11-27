@@ -36,9 +36,9 @@
                                 <div class="row" style="max-height: 100px">
                                     <div class="col-md-2">
                                         <img src="{{ asset('storage/' . $lq->hinh_anh) }}" alt="News Thumbnail"
-                                            style="width: 64px; height: 100%; object-fit: cover;" />
+                                            style="width: 64px; height: 64px; object-fit: cover;" />
                                     </div>
-                                    <div class="col-md-10">
+                                    <div class="col-md-10" style="height: 64px;">
                                         <h5 class="h6 mb-1">{{ $lq->tieu_de }}</h5>
                                         <p class="small text-muted mb-0">
                                             {{ $lq->tom_tat }}

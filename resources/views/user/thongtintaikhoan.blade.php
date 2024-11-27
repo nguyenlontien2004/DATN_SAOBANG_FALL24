@@ -18,6 +18,11 @@
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
             <a href="#">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
+            <a href="" class="text-danger">
+                <form action="{{ route('dangxuat') }}" method="POST">
+                    @csrf
+                    <button type="submit">Đăng xuất</button>
+                </form>
         </div>
 
         <div class="content">

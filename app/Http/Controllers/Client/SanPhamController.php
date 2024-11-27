@@ -49,7 +49,6 @@ class SanPhamController extends Controller
             ]);
         }
         return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
-
     }
 
     public function TimKiemPhim(Request $request)
@@ -108,4 +107,3 @@ class SanPhamController extends Controller
         }
     }
 }
-

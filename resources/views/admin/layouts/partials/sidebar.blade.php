@@ -32,17 +32,36 @@
                 <li class="nav-item active">
                     <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                         <i class="fas fa-chart-bar"></i>
-                        <p>Dashboard</p>
+                        <p>Thống kê</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="../demo1/index.html">
-                                    <span class="sub-item">Dashboard 1</span>
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </li>
                 <li class="nav-section">
@@ -51,7 +70,7 @@
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
                         <i class="fas fa-folder"></i>
                         <p>Danh sách thể loại</p>
@@ -71,6 +90,12 @@
                             </li>
                         </ul>
                     </div>
+                </li> --}}
+                <li class="nav-item">
+                    <a href="{{ route('theLoaiPhim.index') }}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Danh sách thể loại</p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">
@@ -136,20 +161,6 @@
                         <p>Người dùng & vai trò</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="role">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('admin.role.index') }}">
-                                    <span class="sub-item">Vai trò</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.roleAndUser.index') }}">
-                                    <span class="sub-item">Phân quyền</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">

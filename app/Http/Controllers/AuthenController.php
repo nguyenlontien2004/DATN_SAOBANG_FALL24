@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\NguoiDung;
 use App\Models\VaiTro;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenController extends Controller
@@ -32,7 +31,7 @@ class AuthenController extends Controller
         $nguoidung->vaiTros()->attach($member->id);
 
         Auth::login($nguoidung);
-        
+
         request()->session()->regenerate();
 
         return redirect()->route('trangchu.member');
@@ -56,11 +55,14 @@ class AuthenController extends Controller
             request()->session()->regenerate();
             $user = Auth::user();
 
-            // if ($user->admin()) {
-            //    return redirect()->route('')
-            // }
+            /**
+             * @var NguoiDung $user
+             */
 
-            return redirect()->route('trangchu.member');
+            if ($user->member()) {
+
+                return redirect()->route('trangchu.member');
+            }
         }
 
         return back()->withErrors([
