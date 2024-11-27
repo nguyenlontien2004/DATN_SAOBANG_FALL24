@@ -336,7 +336,9 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'
+                        'phongChieu'=>function($qr){
+                            $qr->with('rap');
+                        }
                     ]);
             },
             'maGiamGia'
@@ -360,7 +362,9 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'
+                        'phongChieu'=>function($qr){
+                            $qr->with('rap');
+                        }
                     ]);
             },
             'maGiamGia'
@@ -374,8 +378,6 @@ class DatVeController extends Controller
             'food'
         ])->where('ve_id', $ve->id)->get();
         $ghe = $ve->chiTietVe->pluck('seat')->groupBy('the_loai');
-
-        // dd($ghe,$ve->toArray());
         return view('user.thongtinve', compact(['ve', 'ghe', 'food']));
     }
     public function execPostRequest($url, $data)

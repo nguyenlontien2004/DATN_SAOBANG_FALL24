@@ -213,7 +213,7 @@
                     </div>
                     <br>
                 </div>
-                @endforeach
+              
             <div class="mt-4">
                 <p class="text-muted">
                     <a href="#" onclick="showReviewTab(); return false;">

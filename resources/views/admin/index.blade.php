@@ -30,8 +30,8 @@
                     <!-- End Logo Header -->
                 </div>
                 <!-- End Logo Header -->
-            </div>
-            <!-- Navbar Header -->
+                   <!-- Layout đúng khi sửa -->
+                   <!-- Navbar Header -->
             <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                 <div class="container-fluid">
                     <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
@@ -383,8 +383,10 @@
                 </nav>
                 <!-- End Navbar -->
             </div>
-
+          <!-- Layout đúng khi sửa -->
             <div class="container">
                 @yield('content')
             </div>
+            </div>
+
         @endsection

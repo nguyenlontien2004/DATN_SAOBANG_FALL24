@@ -109,7 +109,7 @@
                                     {{ $ve->suatChieu->gio_bat_dau."~".$ve->suatChieu->gio_ket_thuc }}</p>
                             </div>
                             <p class="mt-4">Mã vé: <strong>{{ $ve->ma_code_ve }}</strong></p>
-                            <p class="mt-2">Rạp: <strong>{{ $ve->suatChieu->rap->ten_rap }}</strong></p>
+                            <p class="mt-2">Rạp: <strong>{{ $ve->suatChieu->phongChieu->rap->ten_rap }}</strong></p>
                             <p class="mt-1">Phòng chiếu: <strong>{{ $ve->suatChieu->phongChieu->ten_phong_chieu }}</strong></p>
                             <div class="mt-1">
                                 <p class="d-flex">Ghế:

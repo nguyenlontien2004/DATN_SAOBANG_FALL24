@@ -80,6 +80,6 @@ class AuthenController extends Controller
 
         request()->session()->regenerateToken();
 
-        return redirect()->route('thanh-vien/');
+        return redirect()->route('trangchu.member');
     }
 }

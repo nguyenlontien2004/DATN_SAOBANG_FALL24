@@ -30,7 +30,8 @@ class SanPhamController extends Controller
         $title = "Chi tiết phim";
         $chiTietPhim = Phim::findOrFail($id);
         $chiTietPhim->increment('luot_xem_phim');
-        $danhGiaPhim = DanhGia::findOrFail($id);
+        //$danhGiaPhim = DanhGia::findOrFail($id);
+        $danhSachDanhGia = DanhGia::query()->get();
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
