@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DaoDienController;
@@ -20,14 +22,14 @@ use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\TheLoaiPhimController;
 use App\Http\Controllers\BinhLuanPhimController;
 use App\Http\Controllers\BaiVietTinTucController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\BannerQuangCaoController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\PasswordResetController;
+use App\Http\Middleware\MemberMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +52,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');//->middleware(['auth', AdminMiddleware::class])
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -161,15 +163,16 @@ Route::prefix('thanh-vien')->group(function () {
   // Đăng xuất
   Route::post('dang-xuat', [AuthenController::class, 'dangXuat'])->name('dangxuat');
 
-
   // Đổi mật khẩu
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
 
+  // Xem và cập nhật thông tin cá nhân
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('admin.ttadmin');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
 
+  // Quên mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');
   Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'])->name('forgot.password.submit');
   Route::get('/reset-password/{token}', [PasswordResetController::class, 'formResetPass'])->name('reset.pass');
@@ -180,12 +183,27 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
 
+  // Tin tức
+  Route::get('tin-tuc', [BaiVietTinTucController::class, 'hienThi'])->name('tintuc.hienthi');
+  Route::get('tin-tuc{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
+  // ->middleware(['auth', MemberMiddleware::class])
+  // Sản phẩm
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
-  Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
+  
+  // Tìm kiếm
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
+  
+  // Phim
+  Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
   Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+  
+  // Đặt vé
   Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
+
+  // Bình luận
   Route::resource('binhluan', BinhLuanPhimController::class);
+  
+  // Đánh giá
   Route::resource('danhgia', DanhGiaController::class);
 });
