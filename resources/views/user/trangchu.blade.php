@@ -6,42 +6,54 @@
 
 @section('content')
     <main class="container mx-auto px-4 py-8">
-        <!-- banner -->
-        <section class="bg-pink-200 p-8 rounded-lg flex justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-bold text-pink-600 mb-4">
-                    Mua vé xem phim Online trên MoMo
-                </h1>
-                <p class="text-gray-700 mb-4">
-                    Với nhiều ưu đãi hấp dẫn và kết nối với tất cả các rạp lớn phủ rộng
-                    khắp Việt Nam. Đặt vé ngay tại MoMo!
-                </p>
-                <ul class="text-gray-700 mb-4">
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Mua vé Online, trải nghiệm phim hay
-                    </li>
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Đặt vé an toàn trên MoMo
-                    </li>
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Tha hồ chọn chỗ ngồi, mua bắp nước tiện lợi.
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Lịch sử đặt vé được lưu lại ngay
-                    </li>
-                </ul>
-                <button class="bg-pink-600 text-white px-6 py-2 rounded-full">
-                    ĐẶT VÉ NGAY
+        <div class="slide container-fluid">
+            <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    {{-- @foreach ($banner as $index => $bn)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-bs-interval="10000">
+                            <img src="{{ asset('storage/' . $bn->hinh_anh) }}" class="d-block w-100"
+                                alt="{{ $image->hinh_anh }}"> --}}
+                    {{-- <div class="carousel-caption d-none d-md-block">
+                                <h5>First slide label</h5>
+                                <p>Some representative placeholder content for the first slide.</p>
+                            </div> --}}
+                    {{-- </div>
+                    @endforeach --}}
+                    {{-- <div class="carousel-item" data-bs-interval="2000">
+                        <img src="..." class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Second slide label</h5>
+                            <p>Some representative placeholder content for the second slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="..." class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Third slide label</h5>
+                            <p>Some representative placeholder content for the third slide.</p>
+                        </div>
+                    </div> --}}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <img alt="Promotional Banner" class="rounded-lg" height="200"
-                src="https://storage.googleapis.com/a1aa/image/yyDVCIcr3oqJLBUI7Jy23AirAE7VCS2vaOpJSgEyT2fW6yxJA.jpg"
-                width="400" />
-        </section>
+        </div>
         <!-- phim đang chiếu -->
         <section class="mt-12">
             <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">

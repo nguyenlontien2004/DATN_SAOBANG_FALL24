@@ -27,9 +27,11 @@ use App\Http\Controllers\BannerQuangCaoController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
+use App\Http\Controllers\Client\BannerImageController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
 use App\Http\Middleware\MemberMiddleware;
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -189,21 +191,24 @@ Route::prefix('thanh-vien')->group(function () {
   // ->middleware(['auth', MemberMiddleware::class])
   // Sản phẩm
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
-  
+
+  // Banner
+  Route::get('banner', [BannerImageController::class, 'banner'])->name('banner.trangchu');
+
   // Tìm kiếm
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');
-  
+
   // Phim
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
   Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
-  
+
   // Đặt vé
   Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
 
   // Bình luận
   Route::resource('binhluan', BinhLuanPhimController::class);
-  
+
   // Đánh giá
   Route::resource('danhgia', DanhGiaController::class);
 });

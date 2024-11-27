@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PhimVaTheLoai;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
+use App\Models\AnhBannerQuangCao;
 use App\Models\Ve;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,9 @@ class SanPhamController extends Controller
 {
     public function SanPhamHome()
     {
+        // $bannerDau = AnhBannerQuangCao::with('banner')
+        //     ->orderBy('thu_tu')->get();
+
         $title = "Trang chủ";
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
@@ -25,20 +29,31 @@ class SanPhamController extends Controller
         $danhSachPhim = Phim::query()->paginate(1);
         return view('user.trangchu', compact('title', 'phimDangChieu', 'danhSachPhim'));
     }
+
     public function ChiTietPhim(string $id)
     {
         $title = "Chi tiết phim";
+
         $chiTietPhim = Phim::findOrFail($id);
+
         $chiTietPhim->increment('luot_xem_phim');
-        $danhGiaPhim = DanhGia::findOrFail($id);
+
+        // $danhGiaPhim = DanhGia::findOrFail($id);
+
+        $danhSachDanhGia = DanhGia::where('phim_id', $id)->get();
+
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
+
         $userId = null;
+
         if (Auth::check()) {
             $userId = Auth::user()->id;
         }
+
         $listday = collect();
+
         for ($i = 0; $i < 6; $i++) {
             $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
             $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
@@ -48,6 +63,7 @@ class SanPhamController extends Controller
                 'day' => $dayName
             ]);
         }
+
         return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
     }
 
