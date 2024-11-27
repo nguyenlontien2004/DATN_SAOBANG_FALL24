@@ -151,17 +151,23 @@ class BaiVietTinTucController extends Controller
 
     public function hienThi()
     {
-        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(1);
+        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(15);
         return view('user.tintuc.tintuc', compact('baiviet'));
     }
 
     public function showTinTuc($id)
     {
-        // $danhmuc = DanhMucBaiVietTinTuc::all();
+
+        $lienquan = BaiVietTinTuc::query()
+            ->select('id', 'hinh_anh', 'tieu_de', 'tom_tat')
+            ->orderBy('ngay_dang', 'desc')
+            ->limit(10)
+            ->get();
+
         $tt = BaiVietTinTuc::findOrFail($id);
 
         $tt->increment('luot_xem');
 
-        return view('user.tintuc.chitiettintuc', compact('tt'));
+        return view('user.tintuc.chitiettintuc', compact('tt', 'lienquan', 'id'));
     }
 }

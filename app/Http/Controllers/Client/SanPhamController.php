@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PhimVaTheLoai;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
+use App\Models\Ve;
 use Illuminate\Support\Facades\Auth;
 
 class SanPhamController extends Controller
@@ -28,8 +29,8 @@ class SanPhamController extends Controller
     {
         $title = "Chi tiết phim";
         $chiTietPhim = Phim::findOrFail($id);
-        $danhSachDanhGia = DanhGia::query()->get();
-        // $dsBL = BinhLuanPhim::query()->get();
+        $chiTietPhim->increment('luot_xem_phim');
+        $danhGiaPhim = DanhGia::findOrFail($id);
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
@@ -48,6 +49,7 @@ class SanPhamController extends Controller
             ]);
         }
         return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
+
     }
 
     public function TimKiemPhim(Request $request)

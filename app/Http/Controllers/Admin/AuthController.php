@@ -33,8 +33,12 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->admin()) {
+                
                 return redirect('admin/');
             }
+            // else if (condition) {
+            //     # code...
+            // }
         }
 
         return back()->withErrors(

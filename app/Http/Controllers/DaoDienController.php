@@ -18,19 +18,14 @@ class DaoDienController extends Controller
     public function create()
     {
         return view('admin.contents.daoDiens.creater');
-    }
-    public function store(Request $request)
+    } 
+    public function show($id)
     {
-        $request->validate([
-            'ten_dao_dien' => 'required|string|max:255',
-            'anh_dao_dien' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nam_sinh' => 'required|date',
-            'quoc_tich' => 'required|string|max:255',
-            'gioi_tinh' => 'required|string',
-            'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string',
-        ]);
-
+        $daoDiens = DaoDien::findOrFail($id);
+        return view('admin.contents.daoDiens.show', compact('daoDiens'));
+    }
+    public function store(StoreDaoDienRequest $request)
+    {
         $path = $request->file('anh_dao_dien')->store('dao_dien', 'public');
 
         DaoDien::create([
@@ -39,28 +34,29 @@ class DaoDienController extends Controller
             'nam_sinh' => $request->nam_sinh,
             'quoc_tich' => $request->quoc_tich,
             'gioi_tinh' => $request->gioi_tinh,
-            'trang_thai' => $request->trang_thai,
-            'tieu_su' => $request->tieu_su, // Lưu trường tieu_su
+            'tieu_su' => $request->tieu_su,
         ]);
 
         return redirect()->route('daoDien.index')->with('success', 'Thêm mới Đạo diễn thành công!');
+    }
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $path = $request->file('upload')->storeAs('dao_dien', $fileName, 'public');
+            $url = Storage::url($path);
+            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+        }
     }
     public function edit(DaoDien $daoDien)
     {
         return view('admin.contents.daoDiens.edit', compact('daoDien'));
     }
-    public function update(Request $request, DaoDien $daoDien)
+    public function update(UpdateDaoDienRequest $request, DaoDien $daoDien)
     {
-        $request->validate([
-            'ten_dao_dien' => 'required|string|max:255',
-            'anh_dao_dien' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'nam_sinh' => 'required|date',
-            'quoc_tich' => 'required|string|max:255',
-            'gioi_tinh' => 'required|string',
-            'trang_thai' => 'required|boolean',
-            'tieu_su' => 'nullable|string',
-        ]);
-
         if ($request->hasFile('anh_dao_dien')) {
             $path = $request->file('anh_dao_dien')->store('dao_dien', 'public');
             $daoDien->anh_dao_dien = $path;
