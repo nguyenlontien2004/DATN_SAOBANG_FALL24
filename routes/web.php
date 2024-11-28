@@ -149,9 +149,14 @@ Route::prefix('admin')->group(function () {
   Route::get('tao-ve-gia-lap/', [VeController::class, 'create'])->name('admin.ticket.create');
 
   // Route::resources('phims');
+
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
   Route::resource('daoDien', DaoDienController::class);
   Route::resource('phim', PhimController::class);
   Route::resource('dienVien', DienVienController::class);
+
 
   Route::resource('theLoaiPhim', TheLoaiPhimController::class);
   Route::resource('rap', RapController::class);

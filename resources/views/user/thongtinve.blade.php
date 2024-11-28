@@ -30,22 +30,14 @@
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Your%20QRCode%20Data"
                             alt="QR Code" class="mt-4 rounded-md" />
                     </div>
-                    <p class="mt-4 text-sm">
-                        Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn
-                    </p>
-                </div>
-                <div class="divider mx-4"></div>
-                <!-- Dấu gạch ngăn cách theo chiều dọc -->
-                <div class="w-2/3 pl-8 flex">
-                    <div class="flex-shrink-0">
-                        <img class="rounded-lg shadow-lg"
-                            src="https://cinema.momocdn.net/img/57605275586959326-Mai_600x800.png" alt="Poster Phim"
-                            width="150" />
-                    </div>
-                    <div class="ml-4">
-                        <div class="dong mb-2">
-                            <p class="text-lg font-bold flex-grow">Phim: Cám</p>
-                            <p class="ms-5 flex-none">Ngày 21/9/2024 - 20:30</p>
+                    <div class="divider mx-4"></div>
+                    <!-- Dấu gạch ngăn cách theo chiều dọc -->
+                    <div class="w-2/3 pl-8 flex">
+                        <div class="flex-shrink-0">
+                            <!-- <img class="rounded-lg shadow-lg"
+                                src="https://cinema.momocdn.net/img/57605275586959326-Mai_600x800.png" alt="Poster Phim"
+                                width="150" /> -->
+
                         </div>
                         <div class="ml-4">
                             <div class="dong mb-2">
