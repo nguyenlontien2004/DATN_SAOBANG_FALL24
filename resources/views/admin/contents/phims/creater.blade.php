@@ -27,7 +27,9 @@
                         @enderror
                     </div>
                    <!-- đây nha  phần thiếu-->
-                    <div class="mb-3 row">
+            
+                   
+                   <div class="mb-3 row">
                         <div class="col-md-4">
                             <label for="do_tuoi" class="form-label">Độ Tuổi</label>
                             <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
