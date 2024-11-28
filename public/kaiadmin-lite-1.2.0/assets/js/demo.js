@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 
 const modalShowcase = `
@@ -190,18 +191,18 @@ Circles.create({
 })
 
 //Notify
-$.notify({
-	icon: 'icon-bell',
-	title: 'Kaiadmin',
-	message: 'Premium Bootstrap 5 Admin Dashboard',
-},{
-	type: 'secondary',
-	placement: {
-		from: "bottom",
-		align: "right"
-	},
-	time: 1000,
-});
+// $.notify({
+// 	icon: 'icon-bell',
+// 	title: 'Kaiadmin',
+// 	message: 'Premium Bootstrap 5 Admin Dashboard',
+// },{
+// 	type: 'secondary',
+// 	placement: {
+// 		from: "bottom",
+// 		align: "right"
+// 	},
+// 	time: 1000,
+// });
 
 // Jsvectormap
 var world_map = new jsVectorMap({
@@ -427,3 +428,5 @@ $("#activeUsersChart").sparkline([112,109,120,107,110,85,87,90,102,109,120,99,11
 	barSpacing: 10,
 	barColor: 'rgba(255,255,255,.3)'
 });
+=======
+>>>>>>> c8dafb849801c43f614c51b80f52f9eeab625519

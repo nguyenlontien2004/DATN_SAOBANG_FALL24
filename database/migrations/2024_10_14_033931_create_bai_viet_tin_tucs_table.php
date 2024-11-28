@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('luot_xem')->default(0);
             $table->date('ngay_dang');
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

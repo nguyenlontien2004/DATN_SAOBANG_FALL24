@@ -13,7 +13,8 @@ class MaGiamGiaController extends Controller
      */
     public function index()
     {
-        //
+        $magiamgia = MaGiamGia::withTrashed()->get();
+        return view('admin.contents.magiamgia.list', compact('magiamgia'));
     }
 
     /**
@@ -21,7 +22,7 @@ class MaGiamGiaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.contents.magiamgia.add');
     }
 
     /**
@@ -29,38 +30,76 @@ class MaGiamGiaController extends Controller
      */
     public function store(StoreMaGiamGiaRequest $request)
     {
-        //
+        $magiamgia = $request->all();
+
+        MaGiamGia::create($magiamgia);
+
+        return redirect()->route('ma_giam_gia.index')
+            ->with('success', 'Thêm mã giảm giá thành công');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(MaGiamGia $maGiamGia)
+    public function show($id)
     {
-        //
+        $maGiamGia = MaGiamGia::findOrFail($id);
+        
+        return view('admin.contents.magiamgia.show', compact('maGiamGia'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MaGiamGia $maGiamGia)
+    public function edit($id)
     {
-        //
+        // Tìm mã giảm giá theo ID
+        $maGiamGia = MaGiamGia::findOrFail($id);
+
+        // Truyền mã giảm giá tìm được sang view
+        return view('admin.contents.magiamgia.edit', compact('maGiamGia'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMaGiamGiaRequest $request, MaGiamGia $maGiamGia)
+    public function update(UpdateMaGiamGiaRequest $request, $id)
     {
-        //
+        $maGiamGia = MaGiamGia::findOrFail($id);
+
+        $maGiamGia->update($request->validated());
+
+        return redirect()->route('ma_giam_gia.index')
+            ->with('success', 'Cập nhật thành công');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MaGiamGia $maGiamGia)
+    public function destroy($id)
     {
-        //
+        $maGiamGia = MaGiamGia::findOrFail($id);
+        
+        $maGiamGia->delete();
+
+        return redirect()->route('ma_giam_gia.index')
+            ->with('success', 'Mã giảm giá đã được ẩn thành công.');
+    }
+
+    public function restore($id)
+    {
+        $maGiamGia = MaGiamGia::onlyTrashed()->findOrFail($id); // Tìm bản ghi đã bị xóa mềm
+        $maGiamGia->restore();
+        return redirect()->route('ma_giam_gia.index')
+            ->with('success', 'Mã giảm giá đã được khôi phục thành công.');
+    }
+
+    public function forceDelete($id)
+    {
+        $maGiamGia = MaGiamGia::onlyTrashed()->findOrFail($id); // Tìm bản ghi đã bị xóa mềm
+        $maGiamGia->forceDelete();
+
+        return redirect()->route('ma_giam_gia.index')
+            ->with('success', 'Mã giảm giá đã được xóa vĩnh viễn.');
     }
 }

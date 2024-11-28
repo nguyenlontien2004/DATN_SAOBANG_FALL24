@@ -1,19 +1,25 @@
 <div class="sidebar" data-background-color="dark">
+    <!-- Sidebar Logo -->
     <div class="sidebar-logo">
         <!-- Logo Header -->
-        <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-                <img src="{{asset('kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand" height="20" />
-    </a>
+        <div class="logo-header" data-background-color="light"
+            style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center;">
+                <img src="https://files.oaiusercontent.com/file-fzKrGiSjtFvjVxuESDMgtKKD?se=2024-10-30T04%3A57%3A16Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D54b5a2cd-b6e4-4fc4-9f8b-ef36090d88d8.webp&sig=IVUSPVuT5il78/tPX228UeRwLXuStxnPHMfeQOItmlo%3D"
+                    alt="Sao Băng Logo" style="max-height: 50px;">
             </a>
-            <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
+
+            <!-- Toggle Buttons -->
+            <div class="nav-toggle" style="display: flex; align-items: center;">
+                <button class="btn btn-toggle toggle-sidebar" style="margin-right: 5px;">
                     <i class="gg-menu-right"></i>
                 </button>
                 <button class="btn btn-toggle sidenav-toggler">
                     <i class="gg-menu-left"></i>
                 </button>
             </div>
+
+            <!-- Topbar Toggler -->
             <button class="topbar-toggler more">
                 <i class="gg-more-vertical-alt"></i>
             </button>
@@ -25,18 +31,37 @@
             <ul class="nav nav-secondary">
                 <li class="nav-item active">
                     <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Thống kê</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="../demo1/index.html">
-                                    <span class="sub-item">Dashboard 1</span>
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('doanhthutheorap') }}">
+                                    <span class="sub-item">Số vé bán ra theo rạp</span>
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </li>
                 <li class="nav-section">
@@ -45,77 +70,48 @@
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-folder"></i>
                         <p>Danh sách thể loại</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="base">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/avatars.html')}}">
-                                    <span class="sub-item">Avatars</span>
+                                <a href="{{ route('theLoaiPhim.index') }}">
+                                    <span class="sub-item">Danh Sách Thể Loại</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/buttons.html')}}">
-                                    <span class="sub-item">Buttons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/gridsystem.html')}}">
-                                    <span class="sub-item">Grid System</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/panels.html')}}">
-                                    <span class="sub-item">Panels</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/notifications.html')}}">
-                                    <span class="sub-item">Notifications</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/sweetalert.html')}}">
-                                    <span class="sub-item">Sweet Alert</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/font-awesome-icons.html')}}">
-                                    <span class="sub-item">Font Awesome Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/simple-line-icons.html')}}">
-                                    <span class="sub-item">Simple Line Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/typography.html')}}">
-                                    <span class="sub-item">Typography</span>
+                                <a href="{{ route('theLoaiPhim.create') }}">
+                                    <span class="sub-item">Thêm Mới Thể Loại</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
+                </li> --}}
+                <li class="nav-item">
+                    <a href="{{ route('theLoaiPhim.index') }}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Danh sách thể loại</p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                        <i class="fas fa-th-list"></i>
+                        <i class="fas fa-theater-masks"></i>
                         <p>Diễn viên & Đạo diễn</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="sidebarLayouts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/sidebar-style-2.html')}}">
+                                <a href="{{ route('dienVien.index') }}">
                                     <span class="sub-item">Quản lý diễn viên</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/icon-menu.html')}}">
+                                <a href="{{ route('daoDien.index') }}">
                                     <span class="sub-item">Quản lý Đạo diễn</span>
                                 </a>
                             </li>
@@ -124,29 +120,29 @@
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#forms">
-                        <i class="fas fa-pen-square"></i>
+                        <i class="fas fa-film"></i>
                         <p>Quản lý phim</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="forms">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('phim.index') }}">
                                     <span class="sub-item">Quản lý phim</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('rap.index') }}">
                                     <span class="sub-item">Quản lý rạp chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('admin.phongChieu') }}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/forms/forms.html')}}">
+                                <a href="{{ route('suatChieu.index') }}">
                                     <span class="sub-item">Quản lý suất chiếu</span>
                                 </a>
                             </li>
@@ -154,91 +150,96 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#tables">
-                        <i class="fas fa-table"></i>
-                        <p>Quản lý nhân viên</p>
+                    <a href="{{ route('nguoi-dung.index') }}">
+                        <i class="fas fa-user"></i>
+                        <p>Quản lý người dùng</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#role">
+                        <i class="fas fa-user-tag"></i>
+                        <p>Người dùng & vai trò</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="tables">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
-                                    <span class="sub-item">Basic Table</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
-                                    <span class="sub-item">Datatables</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">
-                        <i class="fas fa-table"></i>
+                        <i class="fas fa-utensils"></i>
                         <p>Quản lý đồ ăn</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="food">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/tables.html')}}">
-                                    <span class="sub-item">Basic Table</span>
+                                <a href="{{ route('do-an.index') }}">
+                                    <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/tables/datatables.html')}}">
-                                    <span class="sub-item">Datatables</span>
+                                <a href="">
+                                    <span class="sub-item">Món ăn theo vé</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#maps">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Banner quảng cáo</p>
-                        <span class="caret"></span>
+                    <a href="{{ route('admin.ticket.index') }}">
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>Quản lý vé</p>
                     </a>
-                    <div class="collapse" id="maps">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/maps/googlemaps.html')}}">
-                                    <span class="sub-item">Google Maps</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/maps/jsvectormap.html')}}">
-                                    <span class="sub-item">Jsvectormap</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#charts">
-                        <i class="far fa-chart-bar"></i>
+                        <i class="fas fa-newspaper"></i>
                         <p>Bài viết tin tức</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="charts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ asset('kaiadmin-lite-1.2.0/charts/charts.html')}}">
-                                    <span class="sub-item">Chart Js</span>
+                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách danh mục bài viết tin tức</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="charts/sparkline.html')}}">
-                                    <span class="sub-item">Sparkline</span>
+                                <a href="{{ route('bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách bài viết tin tức</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html')}}">
+                    <a data-bs-toggle="collapse" href="#banner">
+                        <i class="fas fa-flag"></i>
+                        <p>Banner quảng cáo</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="banner">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('banner-quang-cao.index') }}">
+                                    <span class="sub-item">Danh sách vị trí banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('anh-banner-quang-cao.index') }}">
+                                    <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('ma_giam_gia.index') }}">
+                        <i class="fas fa-tags"></i>
+                        <p>Mã giảm giá</p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a href="{{ asset('kaiadmin-lite-1.2.0/widgets.html') }}">
                         <i class="fas fa-desktop"></i>
                         <p>Chương trình khuyến mãi</p>
                         <span class="badge badge-success">4</span>
@@ -294,7 +295,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>
