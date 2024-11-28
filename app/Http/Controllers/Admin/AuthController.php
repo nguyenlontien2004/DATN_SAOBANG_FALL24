@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\AuthAdminRequest;
 use App\Models\NguoiDung;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +31,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->admin()) {
-                
+
                 return redirect('admin/');
             }
             // else if (condition) {

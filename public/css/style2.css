@@ -107,7 +107,6 @@ a:hover {
     font-size: 1rem;
     font-weight: bold;
 }
-
 .news-info {
     display: flex;
     justify-content: space-between;
@@ -319,12 +318,26 @@ a:hover {
     vertical-align: top;
 }
 
+
 .seat-selection .seats-wrapper-parent .seats-wrapper-row .seats-row .row-wrapper {
+
+.seat-selection
+    .seats-wrapper-parent
+    .seats-wrapper-row
+    .seats-row
+    .row-wrapper {
     display: inline-block;
     text-align: left;
 }
 
 .seat-selection .seats-wrapper-parent .seats-wrapper-row .seats-row .row-wrapper .seat-row {
+
+.seat-selection
+    .seats-wrapper-parent
+    .seats-wrapper-row
+    .seats-row
+    .row-wrapper
+    .seat-row {
     background: #727575;
     border-radius: 2px;
     display: flex;
@@ -430,11 +443,13 @@ a:hover {
     width: 20px;
     border-radius: 2px;
     position: relative;
-    background: repeating-linear-gradient(45deg,
-            hsla(0, 0%, 60%, 0.4),
-            hsla(0, 0%, 60%, 0.4) 10px,
-            hsla(0, 0%, 60%, 0.6) 0,
-            hsla(0, 0%, 60%, 0.6) 20px);
+    background: repeating-linear-gradient(
+        45deg,
+        hsla(0, 0%, 60%, 0.4),
+        hsla(0, 0%, 60%, 0.4) 10px,
+        hsla(0, 0%, 60%, 0.6) 0,
+        hsla(0, 0%, 60%, 0.6) 20px
+    );
 }
 
 .doubSeat {
@@ -468,11 +483,13 @@ a:hover {
 
     white-space: nowrap;
     position: relative;
-    background: repeating-linear-gradient(45deg,
-            hsla(0, 0%, 60%, 0.4),
-            hsla(0, 0%, 60%, 0.4) 10px,
-            hsla(0, 0%, 60%, 0.6) 0,
-            hsla(0, 0%, 60%, 0.6) 20px);
+    background: repeating-linear-gradient(
+        45deg,
+        hsla(0, 0%, 60%, 0.4),
+        hsla(0, 0%, 60%, 0.4) 10px,
+        hsla(0, 0%, 60%, 0.6) 0,
+        hsla(0, 0%, 60%, 0.6) 20px
+    );
 }
 
 .container-ticket-information {
@@ -822,7 +839,6 @@ p.add_p1 {
     max-width: 1200px;
     margin: auto;
 }
-
 .sidebar6669,
 .content {
     background-color: white;
@@ -830,18 +846,15 @@ p.add_p1 {
     border-radius: 8px;
     padding: 20px;
 }
-
+  
 .sidebar6669 {
-    width: 250px;
+    width: 350px;
     margin-right: 20px;
     text-align: center;
 }
-
 .sidebar6669 a {
-    color: black;
-    /* Đổi màu chữ thành đen */
-    text-decoration: none;
-    /* Bỏ gạch chân nếu bạn muốn */
+    color: black; /* Đổi màu chữ thành đen */
+    text-decoration: none; /* Bỏ gạch chân nếu bạn muốn */
 }
 
 .btn-custom56:hover .sidebar6669 img {
@@ -850,18 +863,15 @@ p.add_p1 {
     border-radius: 50%;
     margin-bottom: 10px;
 }
-
 .sidebar6669 .username {
     font-weight: bold;
     margin-bottom: 10px;
 }
-
 .sidebar6669 hr {
     border: 0;
     border-top: 1px solid #ced4da;
     margin-bottom: 20px;
 }
-
 .sidebar6669 a {
     display: block;
     color: #000000;
@@ -869,7 +879,6 @@ p.add_p1 {
     margin-bottom: 10px;
     text-align: left;
 }
-
 .sidebar6669 a:hover {
     color: #ff24af;
 }
@@ -877,7 +886,6 @@ p.add_p1 {
 .content {
     flex-grow: 1;
 }
-
 .content h1 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -888,14 +896,12 @@ p.add_p1 {
     margin-bottom: 5px;
     font-weight: bold;
 }
-
 .form-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 4px;
 }
-
 .btn123 {
     background-color: #000000;
     color: rgb(255, 255, 255);
@@ -911,7 +917,6 @@ p.add_p1 {
     color: #000;
     border: 1px solid black;
 }
-
 .text-center {
     text-align: center;
 }
@@ -959,6 +964,8 @@ p.add_p1 {
     /* Kích thước chiều rộng QR */
     height: 120px;
     /* Kích thước chiều cao QR */
+    justify-content: space-between; /* Căn đều không gian giữa các phần tử */
+    align-items: center; /* Căn giữa theo chiều dọc */
 }
 
 /* CSS cho nút */
@@ -1038,7 +1045,7 @@ h5 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+  }
 
 /* CSS cho nút */
 .btn-custom56 {
@@ -1078,6 +1085,8 @@ h5 {
     margin: auto;
 }
 
+/* Danh sách vé */
+
 .sidebar6669,
 .content {
     background-color: white;
@@ -1102,8 +1111,7 @@ h5 {
 .sidebar6669 .username {
     font-weight: bold;
     margin-bottom: 10px;
-}
-
+  }
 .sidebar6669 hr {
     border: 0;
     border-top: 1px solid #ced4da;
@@ -1126,7 +1134,6 @@ h5 {
     font-size: 24px;
     margin-bottom: 20px;
 }
-
 .history-table {
     width: 100%;
     border-collapse: collapse;
@@ -1138,7 +1145,6 @@ h5 {
     border: 1px solid #ced4da;
     text-align: left;
 }
-
 .history-table th {
     background-color: #f1f1f1;
 }
@@ -1170,6 +1176,7 @@ h5 {
     font-size: 20px;
     padding: 10px;
     border-radius: 50%;
+
     background-color: #ffffff;
     /* Nền của icon */
     color: #000;
@@ -1187,6 +1194,7 @@ h5 {
     border-color: #ffff00;
     /* Border màu vàng cho review */
 }
+
 
 .button123:hover {
     text-decoration: underline;
@@ -1295,4 +1303,98 @@ h5 {
     100% {
         transform: rotate(360deg);
     }
+    display: flex; /* Sử dụng flexbox */
+    align-items: flex-start; /* Căn chỉnh hình ảnh và thông tin ở đầu hàng */
+}
+.ml-4 {
+    margin-left: 1rem; /* Khoảng cách bên trái cho thông tin */
+}
+.rounded-lg {
+    border-radius: 0.5rem; /* Bo góc */
+}
+
+/* tin  tức */
+.news-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Arial", sans-serif;
+    line-height: 1.6;
+}
+
+.news-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.view-count {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+.summary {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.content {
+    margin-top: 20px;
+}
+
+.content img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content strong {
+    color: #333;
+}
+
+.content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
+
+/* Slide */
+.carousel-item img {
+    object-fit: cover; /* Ensures the image covers the whole space without distorting */
+    height: 500px; /* You can adjust the height to fit your design */
+}
+
+.carousel-indicators button {
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.5
+    ); /* Adds background color to indicators */
+}
+
+.carousel-indicators .active {
+    background-color: #fff; /* Changes the color of the active indicator */
 }
