@@ -112,22 +112,9 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" method="GET" action="#">
-                        <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
-                            aria-label="Search" value="{{ request('timkiem') }}">
-                        <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                    </form>
-                    @if (Auth::check())
-                        <div class="tt ms-4">
-                            <form action="{{ route('dangxuat') }}" method="POST">
-                                @csrf
-                                <button type="submit">Đăng xuất</button>
-                            </form>
-                            <a href="{{ route('thongtin3') }}"> Thông tin cá nhân</a>
-                            <a href="{{ route('trangchu.member') }}"> Trangc hủ</a>
-                    @endif
-                        </div>
+                </div>
             </nav>
+        </div>
 
         <div class="d-flex align-items-center mt-3 ms-auto">
             <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
@@ -152,29 +139,30 @@
                     </li>
                 </ul>
             @endif
-            </div>
+
+        </div>
     </div>
 </div>
 
-    {{-- <style>
-        .btn-custom {
-            padding: 10px 20px;
-            /* Thay đổi kích thước nút */
-            border-radius: 25px;
-            /* Bo góc nút */
-            transition: background-color 0.3s, color 0.3s;
-            /* Hiệu ứng chuyển màu */
-        }
+<style>
+    .btn-custom {
+        padding: 10px 20px;
+        /* Thay đổi kích thước nút */
+        border-radius: 25px;
+        /* Bo góc nút */
+        transition: background-color 0.3s, color 0.3s;
+        /* Hiệu ứng chuyển màu */
+    }
 
-        .btn-custom:hover {
-            background-color: #0056b3;
-            /* Màu nền khi hover */
-            color: white;
-            /* Màu chữ khi hover */
-        }
+    .btn-custom:hover {
+        background-color: #0056b3;
+        /* Màu nền khi hover */
+        color: white;
+        /* Màu chữ khi hover */
+    }
 
-        .xam a {
-            text-decoration: none;
-            /* Bỏ gạch chân cho chữ */
-        }
-    </style> --}}
+    .xam a {
+        text-decoration: none;
+        /* Bỏ gạch chân cho chữ */
+    }
+</style>

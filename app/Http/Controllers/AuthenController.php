@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\NguoiDung;
 use App\Models\VaiTro;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenController extends Controller
@@ -18,7 +17,6 @@ class AuthenController extends Controller
     {
         $data = request()->validate([
             'ho_ten' => 'required',
-            //'nam_sinh' => 'required',
             'so_dien_thoai' => 'required',
             'email' => 'required|email|unique:nguoi_dungs',
             'password' => 'required|confirmed',
@@ -36,7 +34,7 @@ class AuthenController extends Controller
 
         request()->session()->regenerate();
 
-        return redirect()->back();
+        return redirect()->route('trangchu.member');
     }
 
     public function formDangNhap()
@@ -55,13 +53,14 @@ class AuthenController extends Controller
         if (Auth::attempt($nguoidung)) {
 
             request()->session()->regenerate();
-
             $user = Auth::user();
+
             /**
              * @var NguoiDung $user
              */
 
             if ($user->member()) {
+
                 return redirect()->route('trangchu.member');
             }
         }
@@ -80,6 +79,6 @@ class AuthenController extends Controller
 
         request()->session()->regenerateToken();
 
-        return redirect()->route('thanh-vien/');
+        return redirect()->route('trangchu.member');
     }
 }

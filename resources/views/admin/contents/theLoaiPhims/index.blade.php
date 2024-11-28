@@ -4,7 +4,6 @@
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Thể loại</div>
-            <a href="{{ route('theLoaiPhim.create') }}" class="btn btn-primary">Thêm mới thể loại</a>
         </div>
 
         <div class="card-body">

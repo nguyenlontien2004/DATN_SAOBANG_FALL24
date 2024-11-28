@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\MaGiamGia;
 use App\Http\Requests\StoreMaGiamGiaRequest;
 use App\Http\Requests\UpdateMaGiamGiaRequest;
-use App\Models\Phim;
 
 class MaGiamGiaController extends Controller
 {
@@ -23,11 +22,7 @@ class MaGiamGiaController extends Controller
      */
     public function create()
     {
-        $phim = Phim::select('ten_phim', 'id')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        // ->paginate(1);
-        return view('admin.contents.magiamgia.add', compact('phim'));
+        return view('admin.contents.magiamgia.add');
     }
 
     /**
@@ -39,8 +34,6 @@ class MaGiamGiaController extends Controller
 
         MaGiamGia::create($magiamgia);
 
-        // $maGiamGia->phim()->attach($request->phim);
-        
         return redirect()->route('ma_giam_gia.index')
             ->with('success', 'Thêm mã giảm giá thành công');
     }
@@ -51,7 +44,7 @@ class MaGiamGiaController extends Controller
     public function show($id)
     {
         $maGiamGia = MaGiamGia::findOrFail($id);
-
+        
         return view('admin.contents.magiamgia.show', compact('maGiamGia'));
     }
 
@@ -86,7 +79,7 @@ class MaGiamGiaController extends Controller
     public function destroy($id)
     {
         $maGiamGia = MaGiamGia::findOrFail($id);
-
+        
         $maGiamGia->delete();
 
         return redirect()->route('ma_giam_gia.index')

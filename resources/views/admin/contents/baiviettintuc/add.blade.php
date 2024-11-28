@@ -75,18 +75,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#noi_dung'), {
-                ckfinder: {
-                    uploadUrl: '{{ route('bai-viet-tin-tuc.upload-image') }}?_token={{ csrf_token() }}'
-                }
-            })
-            .catch(
-                error => {
-                    console.error(error);
-                }
-            )
-    </script>
 @endsection

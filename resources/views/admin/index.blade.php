@@ -29,99 +29,30 @@
                     </div>
                     <!-- End Logo Header -->
                 </div>
-                <!-- End Logo Header -->
-            </div>
-            <!-- Navbar Header -->
-            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-                <div class="container-fluid">
-                    <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button type="button" class="btn btn-search pe-1" onclick="search()">
-                                    <i class="fa fa-search search-icon"></i>
-                                </button>
+                <!-- Navbar Header -->
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="submit" class="btn btn-search pe-1">
+                                        <i class="fa fa-search search-icon"></i>
+                                    </button>
+                                </div>
+                                <input type="text" placeholder="Search ..." class="form-control" />
                             </div>
-                            <input type="text" id="searchInput" placeholder="Tìm kiếm ..." class="form-control" oninput="search()" />
-                        </div>
-                    </nav>
-                    <div id="searchResults" style="position: absolute; left: 100px; padding: 5px; width: 100px; border: 1px solid #ccc; display: none;">        
-                    </div>
-                    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                        <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                aria-expanded="false" aria-haspopup="true">
-                                <i class="fa fa-search"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-search animated fadeIn">
-                                <form class="navbar-left navbar-form nav-search">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Search ..." class="form-control" />
-                                    </div>
-                                </form>
-                            </ul>
-                        </li>
-                        <li class="nav-item topbar-icon dropdown hidden-caret">
-                            <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-envelope"></i>
-                            </a>
-                            <ul class="dropdown-menu messages-notif-box animated fadeIn"
-                                aria-labelledby="messageDropdown">
-                                <li>
-                                    <div class="dropdown-title d-flex justify-content-between align-items-center">
-                                        Messages
-                                        <a href="#" class="small">Mark all as read</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="message-notif-scroll scrollbar-outer">
-                                        <div class="notif-center">
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/jm_denis.jpg') }}"
-                                                        alt="Img Profile" />
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Jimmy Denis</span>
-                                                    <span class="block"> How are you ? </span>
-                                                    <span class="time">5 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/chadengle.jpg') }}"
-                                                        alt="Img Profile" />
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Chad</span>
-                                                    <span class="block"> Ok, Thanks ! </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/mlane.jpg') }}"
-                                                        alt="Img Profile" />
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Jhon Doe</span>
-                                                    <span class="block">
-                                                        Ready for the meeting today...
-                                                    </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/talha.jpg') }}"
-                                                        alt="Img Profile" />
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Talha</span>
-                                                    <span class="block"> Hi, Apa Kabar ? </span>
-                                                    <span class="time">17 minutes ago</span>
-                                                </div>
-                                            </a>
+                        </nav>
+
+                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                            <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                    aria-expanded="false" aria-haspopup="true">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-search animated fadeIn">
+                                    <form class="navbar-left navbar-form nav-search">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Search ..." class="form-control" />
                                         </div>
                                     </form>
                                 </ul>
@@ -329,6 +260,7 @@
                                     </div>
                                 </div>
                             </li>
+
                             @php
                                 $user = Auth::user();
                             @endphp

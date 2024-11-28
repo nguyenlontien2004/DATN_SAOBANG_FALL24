@@ -86,6 +86,7 @@ class NguoiDungController extends Controller
         $nguoidungvt = $nguoiDung->vaiTros->pluck('id')->all();
         $vaitro = VaiTro::pluck('ten_vai_tro', 'id');
 
+
         return  view('admin.contents.nguoidung.edit', compact('nguoiDung', 'vaitro', 'nguoidungvt'));
     }
 
