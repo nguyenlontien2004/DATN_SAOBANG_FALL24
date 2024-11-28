@@ -112,55 +112,55 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="d-flex align-items-center mt-3 ms-auto">
-                        <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
-                            <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
-                                aria-label="Search" value="{{ request('timkiem') }}">
-                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
-                        </form>
-                        @if (Auth::check())
-                            <div class="tt ms-4">
-                                <a href="{{ route('admin.ttadmin') }}">
-                                    <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
-                                        style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
-                                </a>
-                            </div>
-                        @else
-                            <ul class="menu d-flex align-items-center mb-0 ms-3">
-                                <li class="xam ms-2">
-                                    <a class="btn btn-secondary btn-custom" href="{{ route('dangky') }}">Đăng Ký</a>
-                                </li>
-                                <li class="xam ms-2">
-                                    <a class="btn btn-secondary btn-custom" href="{{ route('dangnhap') }}">Đăng Nhập</a>
-                                </li>
-                            </ul>
-                        @endif
-                        </div>
-                        </div>
-            </nav>
 
+        <div class="d-flex align-items-center mt-3 ms-auto">
+            <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
+                <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
+                    aria-label="Search" value="{{ request('timkiem') }}">
+                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            @if (Auth::check())
+                <div class="tt ms-4">
+                    <a href="{{ route('thongtin3') }}">
+                        <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
+                            style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                    </a>
+                </div>
+            @else
+                <ul class="menu d-flex align-items-center mb-0 ms-3">
+                    <li class="xam ms-2">
+                        <a class="btn btn-secondary btn-custom" href="{{ route('dangky') }}">Đăng Ký</a>
+                    </li>
+                    <li class="xam ms-2">
+                        <a class="btn btn-secondary btn-custom" href="{{ route('dangnhap') }}">Đăng Nhập</a>
+                    </li>
+                </ul>
+            @endif
+
+        </div>
     </div>
 </div>
 
-    {{-- <style>
-        .btn-custom {
-            padding: 10px 20px;
-            /* Thay đổi kích thước nút */
-            border-radius: 25px;
-            /* Bo góc nút */
-            transition: background-color 0.3s, color 0.3s;
-            /* Hiệu ứng chuyển màu */
-        }
 
-        .btn-custom:hover {
-            background-color: #0056b3;
-            /* Màu nền khi hover */
-            color: white;
-            /* Màu chữ khi hover */
-        }
+<style>
+    .btn-custom {
+        padding: 10px 20px;
+        /* Thay đổi kích thước nút */
+        border-radius: 25px;
+        /* Bo góc nút */
+        transition: background-color 0.3s, color 0.3s;
+        /* Hiệu ứng chuyển màu */
+    }
 
-        .xam a {
-            text-decoration: none;
-            /* Bỏ gạch chân cho chữ */
-        }
-    </style> --}}
+    .btn-custom:hover {
+        background-color: #0056b3;
+        /* Màu nền khi hover */
+        color: white;
+        /* Màu chữ khi hover */
+    }
+
+    .xam a {
+        text-decoration: none;
+        /* Bỏ gạch chân cho chữ */
+    }
+</style>

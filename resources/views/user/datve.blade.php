@@ -11,7 +11,8 @@
     }
 
     #showtimes ul {
-        list-style-type: none;  /* Xóa dấu chấm */
+        list-style-type: none;
+        /* Xóa dấu chấm */
         padding-left: 0;
     }
 
@@ -200,7 +201,7 @@
                             <p><strong>KĐA:</strong> Beta Đan Phượng</p>
                             <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
                         </div>
-                        
+
                         <!-- Lịch chiếu sẽ hiển thị khi bấm vào trên -->
                         <div id="showtimes" style="display: none;">
                             <h4>Lịch chiếu phim:</h4>
