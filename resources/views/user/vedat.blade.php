@@ -1,293 +1,238 @@
 @extends('layout.user')
 @section('title')
-{{ 'Đặt vé' }}
+    {{ $title }}
 @endsection
-
-@section('content')
 <style>
-    .choose-seat {
-        display: block;
+    #showtimes {
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
     }
 
-    .choose-food {
-        display: none;
+    #showtimes ul {
+        list-style-type: none;
+        /* Xóa dấu chấm */
+        padding-left: 0;
     }
-    .unavailabledrop{
-    /* display: block; */
-    background-color: #cdcdcd;
-    white-space: nowrap;
-    /* height: 20px;
-    width: 20px; */
-    border-radius: 2px;
-    position: relative;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-image: url('https://cdn.moveek.com/build/images/seat-unavailable.6c1ab33c.png');
-    z-index: 99999;
-    cursor: no-drop;
-    color: #ababab;
-}
+
+    #showtimes ul li {
+        padding: 5px;
+        background-color: #e9ecef;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
 </style>
-<div class="main-content">
-    <div>
-        <div class="ticketing-steps" style="border-top: 1px solid #d4d4d4">
-            <div class="container-ticket-steps">
-                <div class="row">
-                    <div class="ticketing-step col">
-                        <div class="wrapper-content chonghe text-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-layout-grid">
-                                <rect width="7" height="7" x="3" y="3" rx="1" />
-                                <rect width="7" height="7" x="14" y="3" rx="1" />
-                                <rect width="7" height="7" x="14" y="14" rx="1" />
-                                <rect width="7" height="7" x="3" y="14" rx="1" />
-                            </svg>
-                            <span>Chọn ghế</span>
-                        </div>
-                        <span class="next-icon-ticket">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-right">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="ticketing-step col">
-                        <div class="wrapper-content chonDoAn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-shopping-bag">
-                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                                <path d="M3 6h18" />
-                                <path d="M16 10a4 4 0 0 1-8 0" />
-                            </svg>
-                            <span>Đồ ăn</span>
-                        </div>
-                        <span class="next-icon-ticket">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-right">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="ticketing-step col">
-                        <div class="wrapper-content">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-credit-card">
-                                <rect width="20" height="14" x="2" y="5" rx="2" />
-                                <line x1="2" x2="22" y1="10" y2="10" />
-                            </svg>
-                            <span>Thanh toán</span>
-                        </div>
-                        <span class="next-icon-ticket">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-chevron-right">
-                                <path d="m9 18 6-6-6-6" />
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="ticketing-step col">
-                        <div class="wrapper-content">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-inbox">
-                                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
-                                <path
-                                    d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
-                            </svg>
-                            <span>Thông tin vé</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-seat" style="position: relative;">
-            <div class="mb-3"></div>
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="col-12 choose-seat">
-                        <div class="seat-selection">
-                            <div class="legend">
-                                <div>
-                                    <span class="selected"></span>
-                                    <p>Ghế bạn chọn</p>
-                                </div>
-                                <div>
-                                    <span class="unavailable"></span>
-                                    <p>Không thể chọn</p>
-                                </div>
-                                <div>
-                                    <span class="taken"></span>
-                                    <p>Đã bán</p>
-                                </div>
-                            </div>
-                            <span class="front">Màn hình</span>
-                            <div class="seats-wrapper-parent">
-                                <div class="seats-wrapper-row">
-                                    <div class="seats-row">
-                                        <div class="row-wrapper">
-                                            <div class="seat-row">A</div>
-                                            <div class="seat-row">B</div>
-                                            <div class="seat-row">C</div>
-                                            <div class="seat-row">D</div>
-                                            <div class="seat-row">E</div>
-                                            <div class="seat-row">F</div>
-                                            <div class="seat-row">G</div>
-                                            <div class="seat-row">H</div>
-                                            <div class="seat-row">I</div>
-                                        </div>
-                                    </div>
-                                    <div class="seats-map">
-                                        <div class="row-wrapper list-row-seats">
-                                            @foreach ($hangghe->resource as $key => $value)
-                                                <ul class="seat-row">
-                                                    @for ($i = 0; $i < count($value); $i++)
-                                                        @if ($value[$i]['isDoubleChair'] !== null && $i + 1 < count($value))
-                                                            {{-- Ghế đôi --}}
-                                                            <div id="{{ $value[$i]['id'] . '-' . $value[$i + 1]['id'] }}"
-                                                                data-type="{{ $value[$i]['the_loai'] }}"
-                                                                class="seat-group-parent doubSeat seats {{ $value[$i]['chitietve_count'] >= 1 ? 'takenSeat' : '' }}">
-                                                                <li id="{{ $value[$i]['id'] }}"
-                                                                    data-hang="{{ $key . $value[$i]['so_hieu_ghe'] }}"
-                                                                    class="seat-group">
-                                                                    {{ $key . $value[$i]['so_hieu_ghe'] }}
-                                                                </li>
-                                                                <li id="{{ $value[$i + 1]['id'] }}"
-                                                                    data-hang="{{ $key . $value[$i + 1]['so_hieu_ghe'] }}"
-                                                                    class="seat-group">
-                                                                    {{ $key . $value[$i + 1]['so_hieu_ghe'] }}
-                                                                </li>
-                                                            </div>
-                                                            {{-- --}}
-                                                            @php            $i++ @endphp
-                                                        @else
-                                                            {{-- Ghế thường --}}
-                                                            <li id="{{ $value[$i]['id'] }}" data-type="{{ $value[$i]['the_loai'] }}"
-                                                                data-hang="{{ $key . $value[$i]['so_hieu_ghe'] }}"
-                                                                class="seats {{ $value[$i]['chitietve_count'] >= 1 ? 'takenSeat' : '' }} {{ $value[$i]['the_loai'] == 'thuong' ? 'regularchair' : 'seatVip' }}">
-                                                                {{ $key . $value[$i]['so_hieu_ghe'] }}
-                                                            </li>
-                                                        @endif
-                                                    @endfor
-                                                </ul>
-                                            @endforeach
+@section('content')
+    <!-- Header -->
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 choose-food">
-                        <div class="table-responsive table-food">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Combo</th>
-                                        <th>Giá tiền</th>
-                                        <th>Số lượng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($doAn as $item)
-                                        <tr>
-                                            <td class="concession-name d-flex align-items-center">
-                                                <img width="70px" src="{{ asset('storage/' . $item->hinh_anh) }}" alt="">
-                                                <div>
-                                                    {{$item->ten_do_an}} <br>
-                                                    <span>
-                                                        TIẾT KIỆM 46K!!! Gồm: 1 Bắp (69oz) + 2 Nước
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td class="concession-price text-right">
-                                                {{ number_format($item->gia, 0, ',', '.') }}&nbsp;₫
-                                            </td>
-                                            <td>
-                                                <div class="quantity-toggle-food">
-                                                    <a class="minus" id="{{ $item->id }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="24"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="0.75" stroke-linecap="round"
-                                                            stroke-linejoin="round" class="lucide lucide-minus">
-                                                            <path d="M5 12h14" />
-                                                        </svg>
-                                                    </a>
-                                                    <input type="number" class="quanlity-{{ $item->id }}"
-                                                        data-gia="{{$item->gia}}" min="0" max="10" value="0"
-                                                        style="width: 30px;">
-                                                    <a class="plus" id="{{ $item->id }}">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="0.75" stroke-linecap="round"
-                                                            stroke-linejoin="round" class="lucide lucide-plus">
-                                                            <path d="M5 12h14" />
-                                                            <path d="M12 5v14" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12 order-sm-last">
-                    <div class="container-ticket-information">
-                        <div class="content-ticket-information">
-                            <p>{{ $suatchieu->phim->ten_phim }}</p>
-                            <strong>{{ $suatchieu->rap?->ten_rap }}</strong>
-                            <p>Suất <strong>{{ $suatchieu->gio_bat_dau . '~' . $suatchieu->gio_ket_thuc }}</strong> Ngày
-                                <strong>{{ $date }}</strong>
-                            </p>
-                            <p>{{ $suatchieu->phongChieu->ten_phong_chieu }} - Ghế <strong
-                                    class="so-hieu-hang-ghe">...</strong></p>
-                        </div>
-                    </div>
-                    <div class="container-total-oldel-ticket">
-                        <div class="content-total-oldel-ticket">
-                            <p class="text-total">Tổng đơn hàng</p>
-                            <span class="total">0</span>&nbsp;₫
-                        </div>
-                    </div>
-                    <div class="flow-actions sticky-footer-bars">
-                        <div class="flow-actions sticky-footer-bars">
-                            <div class="row">
-                                <div class="col-3"><a
-                                        class="action-pre btn btn-lg btn-outline-dark btn-block  disabled">
-                                        ←
-                                    </a></div>
-                                <!-- disabled -->
-                                <div class="col-9 button-next"><a
-                                        class="action-next btn btn-lg btn-dark btn-block btn-next-foof disabled"><span
-                                            data-v-0c8aac4d="" class="d-md-none">0&nbsp;₫ |</span>
-                                        Tiếp tục
-                                    </a></div>
-                            </div>
-                        </div>
+    <head>
+        <!-- Thêm Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    <header class="text-black text-center py-4">
+        <h1>Đặt vé xem phim</h1>
+    </header>
+
+    <!-- Movie Selection Section -->
+    <section class="movie-selection container my-5">
+        <h2 class="text-center mb-4">Chọn phim của bạn</h2>
+        <div class="row g-4">
+            <!-- Sample movie card -->
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="movie-image.jpg" class="card-img-top" alt="trailler phim">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Tên phim</h5>
+                        <button class="btn btn-primary select-movie-btn">Chọn phim</button>
                     </div>
                 </div>
             </div>
-            <div class="loading-chuyen-trang" style="width: 100%;height:100%;position: absolute;top:0;display:none;">
-                <span class="loader" style="position: absolute;top:3px;left:50%;"></span>
+            <!-- Repeat similar cards for more movies -->
+        </div>
+    </section>
+
+    <!-- Seat Selection Section -->
+    <!-- Seat Selection Section -->
+    <section class="seat-selection container my-5">
+        <h2 class="text-center mb-4">Choose Your Seat</h2>
+
+        <!-- Row A (Green) -->
+        <div class="d-flex justify-content-center mb-3">
+            <div class="seat available" data-seat="A1">A1</div>
+            <div class="seat available" data-seat="A2">A2</div>
+            <div class="seat available" data-seat="A3">A3</div>
+            <div class="seat available" data-seat="A4">A4</div>
+            <div class="seat available" data-seat="A5">A5</div>
+            <div class="seat available" data-seat="A6">A6</div>
+            <div class="seat available" data-seat="A7">A7</div>
+            <div class="seat available" data-seat="A8">A8</div>
+            <div class="seat available" data-seat="A9">A9</div>
+            <div class="seat available" data-seat="A10">A10</div>
+            <div class="seat available" data-seat="A11">A11</div>
+            <div class="seat available" data-seat="A12">A12</div>
+            <div class="seat available" data-seat="A13">A13</div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+            <div class="seat available" data-seat="B1">B1</div>
+            <div class="seat available" data-seat="B2">B2</div>
+            <div class="seat available" data-seat="B3">B3</div>
+            <div class="seat available" data-seat="B4">B4</div>
+            <div class="seat available" data-seat="B5">B5</div>
+            <div class="seat available" data-seat="B6">B6</div>
+            <div class="seat available" data-seat="B7">B7</div>
+            <div class="seat available" data-seat="B8">B8</div>
+            <div class="seat available" data-seat="B9">B9</div>
+            <div class="seat available" data-seat="B10">B10</div>
+            <div class="seat available" data-seat="B11">B11</div>
+            <div class="seat available" data-seat="B12">B12</div>
+            <div class="seat available" data-seat="B13">B13</div>
+
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+            <div class="seat available" data-seat="C1">C1</div>
+            <div class="seat available" data-seat="C2">C2</div>
+            <div class="seat available" data-seat="C3">C3</div>
+            <div class="seat available" data-seat="C4">C4</div>
+            <div class="seat available" data-seat="C5">C5</div>
+            <div class="seat available" data-seat="C6">C6</div>
+            <div class="seat available" data-seat="C7">C7</div>
+            <div class="seat available" data-seat="C8">C8</div>
+            <div class="seat available" data-seat="C9">C9</div>
+            <div class="seat available" data-seat="C10">C10</div>
+            <div class="seat available" data-seat="C11">C11</div>
+            <div class="seat available" data-seat="C12">C12</div>
+            <div class="seat available" data-seat="C13">C13</div>
+        </div>
+
+
+        <!-- Row B (Red) -->
+        <div class="d-flex justify-content-center mb-3">
+            <div class="seat vip" data-seat="D2">D2</div>
+            <div class="seat vip" data-seat="D1">D1</div>
+            <div class="seat vip" data-seat="D3">D3</div>
+            <div class="seat vip" data-seat="D4">D4</div>
+            <div class="seat vip" data-seat="D5">D5</div>
+            <div class="seat vip" data-seat="D6">D6</div>
+            <div class="seat vip" data-seat="D7">D7</div>
+            <div class="seat vip" data-seat="D8">D8</div>
+            <div class="seat vip" data-seat="D9">D9</div>
+            <div class="seat vip" data-seat="D10">D10</div>
+            <div class="seat vip" data-seat="D11">D11</div>
+            <div class="seat vip" data-seat="D12">D12</div>
+            <div class="seat vip" data-seat="D13">D13</div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+            <div class="seat love" data-seat="L1">L1</div>
+            <div class="seat love" data-seat="L3">L3</div>
+            <div class="seat love" data-seat="L2">L2</div>
+            <div class="seat love" data-seat="L4">L4</div>
+        </div>
+
+        <!-- Legend -->
+        <div class="d-flex justify-content-center mt-4">
+            <div class="legend me-3">
+                <div class="seat available-note"></div> Ghế thường
+            </div>
+            <div class="legend me-3">
+                <div class="seat vip-note"></div> Ghế V.I.P
+            </div>
+            <div class="legend">
+                <div class="seat love-note"></div> Ghế đôi
             </div>
         </div>
-    </div>
-</div>
-<script>
-    const id = "{{ $id }}"
-    const ngay = "{{ $date }}"
-    const gia = "{{ $suatchieu->phim->gia }}"
-   const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
-   const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
-    //$('asa').
-</script>
-@vite('resources/js/reatimeGhe.js')
-<script src="{{ asset('js/reatimeGhe.js') }}"></script>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="border p-3">
+                    <!-- Tiêu đề và chọn thành phố -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Lịch chiếu: <strong>Chi tiết phim</strong></h3>
+                        <div>
+                            <label for="city-select" class="form-label me-2">Chọn thành phố:</label>
+                            <select class="form-select" id="city-select" style="width: auto">
+                                <option selected>Hà Nội</option>
+                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                <option value="Hải Phòng">Hải Phòng</option>
+                                <option value="Cần Thơ">Cần Thơ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Nội dung lịch chiếu -->
+                    <div class="border p-3 mb-3">
+                        <div class="d-flex justify-content-around mb-2">
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">21/9</button></div>
+                            <div><button class="btn btn-outline-info">22/9</button></div>
+                            <div><button class="btn btn-outline-info">23/9</button></div>
+                            <div><button class="btn btn-outline-info">24/9</button></div>
+                            <div><button class="btn btn-outline-info">25/9</button></div>
+                            <div><button class="btn btn-outline-info">26/9</button></div>
+                            <div><button class="btn btn-outline-info">27/9</button></div>
+                            <div><button class="btn btn-outline-info">28/9</button></div>
+                            <div><button class="btn btn-outline-info">29/9</button></div>
+                        </div>
+
+                        <div class="border p-2" id="showtimesToggle" style="cursor: pointer;">
+                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        </div>
+
+                        <!-- Lịch chiếu sẽ hiển thị khi bấm vào trên -->
+                        <div id="showtimes" style="display: none;">
+                            <h4>Lịch chiếu phim:</h4>
+                            <ul class="list-unstyled">
+                                <li>08:00 AM - 10:00 AM</li>
+                                <li>10:30 AM - 12:30 PM</li>
+                                <li>01:00 PM - 03:00 PM</li>
+                                <li>03:30 PM - 05:30 PM</li>
+                                <li>06:00 PM - 08:00 PM</li>
+                                <li>08:30 PM - 10:30 PM</li>
+                                <li>11:00 PM - 01:00 AM</li>
+                                <li>01:30 AM - 03:30 AM</li>
+                                <li>04:00 AM - 06:00 AM</li>
+                                <li>06:30 AM - 08:30 AM</li>
+                            </ul>
+                        </div>
+
+                        <div class="border p-2" id="showtimesToggle" style="cursor: pointer;">
+                            <p><strong>KĐA:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        </div>
+
+                        <!-- Lịch chiếu sẽ hiển thị khi bấm vào trên -->
+                        <div id="showtimes" style="display: none;">
+                            <h4>Lịch chiếu phim:</h4>
+                            <ul class="list-unstyled">
+                                <li>08:00 AM - 10:00 AM</li>
+                                <li>10:30 AM - 12:30 PM</li>
+                                <li>01:00 PM - 03:00 PM</li>
+                                <li>03:30 PM - 05:30 PM</li>
+                                <li>06:00 PM - 08:00 PM</li>
+                                <li>08:30 PM - 10:30 PM</li>
+                                <li>11:00 PM - 01:00 AM</li>
+                                <li>01:30 AM - 03:30 AM</li>
+                                <li>04:00 AM - 06:00 AM</li>
+                                <li>06:30 AM - 08:30 AM</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Booking Summary Section -->
+    <section class="booking-summary container my-5">
+        <div class="summary-details text-center">
+            <p><strong>Phim:</strong> Tiêu đề phim đã chọn</p>
+            <p><strong>Ghế ngồi:</strong> A1, A2</p>
+            <p><strong>Tổng cộng:</strong> $20</p><br>
+            <button class="btn btn-success">Xác nhận đặt vé</button>
+        </div>
+    </section>
 @endsection
