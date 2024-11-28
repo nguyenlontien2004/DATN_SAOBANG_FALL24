@@ -10,7 +10,8 @@
         /* Thêm padding nếu cần để không gian bên trong card */
         height: 100%;
         /* Đảm bảo chiều cao của card đầy đủ */
-        overflow: hidden; /* Ẩn phần hình ảnh vượt quá khung */
+        overflow: hidden;
+        /* Ẩn phần hình ảnh vượt quá khung */
     }
 
     .film-image {
@@ -23,7 +24,8 @@
     }
 
     .film-title {
-        font-size: 1.1rem; /* Tăng kích thước chữ tiêu đề một chút */
+        font-size: 1.1rem;
+        /* Tăng kích thước chữ tiêu đề một chút */
     }
 </style>
 @section('content')
@@ -97,10 +99,6 @@
             </div>
         </div>
 
-
-
-
         <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }}
-        <br>
     </div>
 @endsection
