@@ -27,6 +27,7 @@ class StorePhimRequest extends FormRequest
             'do_tuoi' => 'required|integer|min:0|max:100', // Độ tuổi yêu cầu phải là số nguyên trong khoảng 0-100
             'luot_xem_phim' => 'integer',
             'ngon_ngu' => 'required|string|max:255',
+            'gia_phim' => 'required|numeric|min:0',
             'mo_ta' => 'nullable|string',
             'thoi_luong' => 'required|integer',
             'ngay_khoi_chieu' => 'required|date',
@@ -59,6 +60,10 @@ class StorePhimRequest extends FormRequest
             'do_tuoi.integer' => 'Độ tuổi phải là một số nguyên.',
             'do_tuoi.min' => 'Độ tuổi không thể nhỏ hơn 0.',
             'do_tuoi.max' => 'Độ tuổi không thể lớn hơn 100.',
+
+            'gia_phim.required' => 'Giá phim là bắt buộc.',
+            'gia_phim.numeric' => 'Giá phim phải là một số.',
+            'gia_phim.min' => 'Giá phim phải lớn hơn hoặc bằng 0.',
 
             'ngon_ngu.string' => 'Ngôn ngữ lượt xem phải là một chuỗi ký tự.',
             'ngon_ngu.max' => 'Ngôn ngữ lượt xem không được vượt quá 255 ký tự.',

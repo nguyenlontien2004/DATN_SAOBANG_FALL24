@@ -36,7 +36,7 @@ use App\Http\Controllers\DanhMucBaiVietTinTucController;
 Route::get('/', function () {
   return view('welcome');
 });
-Route::get('/search', [SearchController::class, 'search']);
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::prefix('admin')->group(function () {
     // route auth admin
@@ -124,6 +124,8 @@ Route::prefix('admin')->group(function () {
   // Route::resources('phims');
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
   Route::resource('phim', App\Http\Controllers\PhimController::class);
+  Route::get('/api/phim/{id}/ngay-chieu', [PhimController::class, 'layNgayChieu']);
+
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
   Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
   Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');

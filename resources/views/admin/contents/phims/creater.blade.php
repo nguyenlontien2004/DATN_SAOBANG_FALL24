@@ -26,6 +26,14 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="gia_phim" class="form-label">Gía Phim</label>
+                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
+                            value="{{ old('gia_phim') }}">
+                        @error('gia_phim')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <div class="mb-3 row">
                         <div class="col-md-4">

@@ -41,10 +41,10 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Phim</th>
                         <th scope="col">Thời Gian Bắt Đầu</th>
                         <th scope="col">Thời Gian Kết Thúc</th>
                         <th scope="col">Phòng Chiếu</th>
-                        <th scope="col">Phim</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
@@ -52,11 +52,12 @@
                 <tbody>
                     @forelse ($suatChieus as $suatChieu)
                         <tr>
-                            <td>{{ $suatChieu->id }}</td>
+                            <td>{{ $suatChieu->id }}</td> 
+                            <td>{{ $suatChieu->phim->ten_phim }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}</td>
                             <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
-                            <td>{{ $suatChieu->phim->ten_phim }}</td>
+                           
                             <td class="text-center">
                                 @if ($suatChieu->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
@@ -73,6 +74,7 @@
                                         <button type="submit" class="btn btn-danger">Xóa</button>
                                     </form>
                                     <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">Sửa</a>
+                                    <a class="btn btn-info" href="{{ route('suatChieu.show', $suatChieu->id) }}">Xem</a>
                                 </div>
                             </td>
                         </tr>

@@ -78,7 +78,7 @@ class VeController extends Controller
         ->with([
             'food:id,ten_do_an,gia,hinh_anh'
         ])
-        ->where('chi_tiet_ve_id', $dataTicket->detailTicket[0]->id)
+        // ->where('chi_tiet_ve_id', $dataTicket->detailTicket[0]->id)
         ->get();
         //dd($dataTicket->detailTicket->toArray());
         return view(self::PATH_VIEW . __FUNCTION__, compact(['dataTicket','food']));

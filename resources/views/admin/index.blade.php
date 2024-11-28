@@ -39,13 +39,12 @@
                                         <i class="fa fa-search search-icon"></i>
                                     </button>
                                 </div>
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm ..." class="form-control"
-                                    oninput="search()" />
+                                <form action="{{ route('search') }}" method="GET">
+                                    <input type="text" id="searchInput" name="query" placeholder="Tìm kiếm ..."
+                                        class="form-control" value="{{ old('query', $query ?? '') }}" oninput="search()" />
+                                </form>
                             </div>
                         </nav>
-                        <div id="searchResults"
-                            style="position: absolute; left: 100px; padding: 5px; width: 100px; border: 1px solid #ccc; display: none;">
-                        </div>
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                             <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"

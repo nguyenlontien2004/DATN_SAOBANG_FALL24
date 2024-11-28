@@ -19,6 +19,7 @@ class Phim extends Model
         'trailer',
         'ngon_ngu',
         'do_tuoi',
+        'gia_phim',
         'trang_thai',
     ];
     public function daoDiens()

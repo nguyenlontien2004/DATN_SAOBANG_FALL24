@@ -36,6 +36,14 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="gia_phim" class="form-label">Gía Phim</label>
+                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
+                            value="{{ old('gia_phim') }}">
+                        @error('gia_phim')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="mo_ta" class="form-label">Mô Tả</label>
                         <textarea class="form-control" id="mo_ta" name="mo_ta">{{ old('mo_ta', $phim->mo_ta) }}</textarea>
                         @error('mo_ta')
@@ -45,8 +53,7 @@
                     <div class="mb-3 row">
                         <div class="col-md-4">
                             <label for="do_tuoi" class="form-label">Độ Tuổi</label>
-                            {{-- <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
-                                value="{{ old('do_tuoi') }}"> --}}
+                      
                             <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
                                 value="{{ old('do_tuoi', $phim->do_tuoi) }}">
                             @error('do_tuoi')
@@ -55,8 +62,6 @@
                         </div>
                         <div class="col-md-4">
                             <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label>
-                            {{-- <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
-                                value="{{ old('ngon_ngu') }}"> --}}
                             <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
                                 value="{{ old('ngon_ngu', $phim->ngon_ngu) }}">
 
@@ -104,26 +109,6 @@
                             @enderror
                         </div>
                     </div>
-
-                    {{-- <div class="mb-3 row">
-                        <div class="col-md-6">
-                            <label for="ngay_khoi_chieu" class="form-label">Ngày Khởi Chiếu</label>
-                            <input type="date" class="form-control" id="ngay_khoi_chieu" name="ngay_khoi_chieu"
-                                value="{{ old('ngay_khoi_chieu', $phim->ngay_khoi_chieu) }}" >
-                            @error('ngay_khoi_chieu')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
-                                value="{{ old('ngay_ket_thuc', $phim->ngay_ket_thuc) }}">
-                            @error('ngay_ket_thuc')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div> --}}
-
                     <div class="mb-3">
                         <label for="trailer" class="form-label">Trailer (link)</label>
                         <input type="url" class="form-control" id="trailer" name="trailer"

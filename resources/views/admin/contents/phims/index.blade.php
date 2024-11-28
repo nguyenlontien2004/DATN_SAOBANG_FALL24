@@ -4,7 +4,7 @@
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Phim</div>
-            <a href="{{ route('phim.create') }}" class="btn btn-primary">Thêm mới Suất Chiếu</a>
+            <a href="{{ route('phim.create') }}" class="btn btn-primary">Thêm mới Phim</a>
         </div>
         <div class="card-body">
             <form method="GET" action="{{ route('phim.index') }}" id="filterForm" class="mb-4">
