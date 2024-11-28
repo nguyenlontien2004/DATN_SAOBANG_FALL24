@@ -98,9 +98,9 @@
                     <!-- Dấu gạch ngăn cách theo chiều dọc -->
                     <div class="w-2/3 pl-8 flex">
                         <div class="flex-shrink-0">
-                            <img class="rounded-lg shadow-lg"
+                            <!-- <img class="rounded-lg shadow-lg"
                                 src="https://cinema.momocdn.net/img/57605275586959326-Mai_600x800.png" alt="Poster Phim"
-                                width="150" />
+                                width="150" /> -->
                         </div>
                         <div class="ml-4">
                             <div class="dong mb-2">

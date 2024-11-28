@@ -76,11 +76,11 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         ClassicEditor
             .create(document.querySelector('#noi_dung'), {
                 ckfinder: {
-                    uploadUrl: '{{ route('bai-viet-tin-tuc.upload-image') }}?_token={{ csrf_token() }}'
+                    uploadUrl: '?_token= }}'
                 }
             })
             .catch(
@@ -88,5 +88,5 @@
                     console.error(error);
                 }
             )
-    </script>
+    </script> -->
 @endsection
