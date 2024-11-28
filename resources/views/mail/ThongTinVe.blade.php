@@ -189,7 +189,7 @@
                         {{ $ve['suat_chieu']['gio_bat_dau'] . "~" . $ve['suat_chieu']['gio_ket_thuc'] }}
                     </p>
                     <p class="mt-4">Mã vé: <strong>{{ $ve['ma_code_ve'] }}</strong></p>
-                    <p style="margin-top: 5px;">Rạp: <strong>{{ $ve['suat_chieu']['rap']['ten_rap'] }}</strong></p>
+                    <p style="margin-top: 5px;">Rạp: <strong>{{ $ve['suat_chieu']['phong_chieu']['rap']['ten_rap'] }}</strong></p>
                     <p class="mt-1">Phòng chiếu:
                         <strong>{{ $ve['suat_chieu']['phong_chieu']['ten_phong_chieu'] }}</strong></p>
                     <div class="mt-1">

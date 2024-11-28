@@ -112,9 +112,6 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
-            </nav>
-        </div>
 
         <div class="d-flex align-items-center mt-3 ms-auto">
             <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
@@ -143,6 +140,7 @@
         </div>
     </div>
 </div>
+
 
 <style>
     .btn-custom {

@@ -210,6 +210,9 @@
                         </div>
                         <br>
                     </div>
+                    <br>
+                </div>
+
                 @endforeach
             @endif
             <div class="mt-4">

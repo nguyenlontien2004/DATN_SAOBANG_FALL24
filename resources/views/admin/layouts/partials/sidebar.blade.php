@@ -56,8 +56,8 @@
                             </li>
 
                             <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                <a href="{{ route('doanhthutheorap') }}">
+                                    <span class="sub-item">Số vé bán ra theo rạp</span>
                                 </a>
                             </li>
                         </ul>

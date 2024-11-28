@@ -30,6 +30,11 @@ use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\Client\BannerImageController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 use GuzzleHttp\Client;
 
@@ -49,6 +54,9 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
+   // Thống kê doanh thu theo rạp
+   Route::get('thong-ke/doanh-thu-theo-rap', [ThongKeDoanhThuRapController::class,'thongkedoanhtheorap'])->name('doanhthutheorap');
+   Route::get('thong-ke/rap/doanh-thu-theo-phong/{idRap}', [ThongKeDoanhThuRapController::class,'doanhthutheophong'])->name('doanhthutheophong');
   // route auth admin
 
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
@@ -173,6 +181,10 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('admin.ttadmin');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
+  
+  //Lịch sử đặt vé
+  Route::get('lich-su-dat-ve', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
+  Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
 
   // Quên mật khẩu
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');

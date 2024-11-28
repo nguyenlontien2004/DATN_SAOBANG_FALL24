@@ -47,10 +47,52 @@
                             <p class="text-lg font-bold flex-grow">Phim: Cám</p>
                             <p class="ms-5 flex-none">Ngày 21/9/2024 - 20:30</p>
                         </div>
-                        <p class="mt-4">Rạp CGV: CGV Vincom Gò Vấp</p>
-                        <div class="font-bold mt-2">
-                            <p>Ghế: C3, C4</p>
-                            <p>Phòng chiếu: Cinema 3</p>
+                        <div class="ml-4">
+                            <div class="dong mb-2">
+                                <p class="text-lg font-bold flex-grow">Phim: {{ $ve->suatChieu->phim->ten_phim }}</p>
+                                <p class="ms-5 flex-none">Ngày vé  {{ $ve->ngay_ve_mo }} -
+                                    {{ $ve->suatChieu->gio_bat_dau."~".$ve->suatChieu->gio_ket_thuc }}</p>
+                            </div>
+                            <p class="mt-4">Mã vé: <strong>{{ $ve->ma_code_ve }}</strong></p>
+                            <p class="mt-2">Rạp: <strong>{{ $ve->suatChieu->phongChieu->rap->ten_rap }}</strong></p>
+                            <p class="mt-1">Phòng chiếu: <strong>{{ $ve->suatChieu->phongChieu->ten_phong_chieu }}</strong></p>
+                            <div class="mt-1">
+                                <p class="d-flex">Ghế:
+                                    @foreach ($ghe as $key=>$value)
+                                    <strong>
+                                    @for ($i = 0; $i < count($value); $i++) @if ($key=='doi' )
+                                        {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe . $value[$i + 1]->hang_ghe . $value[$i + 1]->so_hieu_ghe}}{{ isset($value[$i + 2]) ? "," : "" }}
+                                        @php $i++ @endphp @else
+                                        {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe }}{{ isset($value[$i + 1]) ? "," : "" }}
+                                        @endif 
+                                    @endfor
+                                    </strong>
+                                    -
+                                    <span>Loại: <strong>
+                                    @if ($key == 'thuong')
+                                    Thường
+                                    @elseif($key == 'vip')
+                                    Vip
+                                    @else
+                                    Đôi
+                                    @endif
+                                    &nbsp;
+                                    </strong></span>
+                                    @endforeach
+                                </p>
+                                <p class="mt-1">Đồ ăn:    @if (count($food) > 0)
+                                    {{ implode(
+                                        ', ',
+                                        array_map(function ($item) {
+                                            return $item['food']['ten_do_an'] . ' x ' . $item['so_luong_do_an'];
+                                        }, $food->toArray()),
+                                    ) }}
+                                @else
+                                    Không mua
+                                @endif</p>
+                               <p class="mt-1">Mã giảm giá: <strong>{{ $ve->maGiamGia == null ? 'Không áp dụng' : $ve->maGiamGia->ten_ma_giam_gia.'-'.$ve->maGiamGia->gia_tri_giam.'%' }}</strong></p>
+                               <p class="mt-1" style="font-size:18px;font-weight:500;">Tổng đơn hàng: {{ number_format($ve->tong_tien,0,',','.') }}đ</p>
+                            </div>
                         </div>
                     </div>
                 </div>

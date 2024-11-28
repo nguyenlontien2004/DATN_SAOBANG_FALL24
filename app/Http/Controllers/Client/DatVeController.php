@@ -102,7 +102,12 @@ class DatVeController extends Controller
         //     return $value['idFood'] == 3;
         // });
         // dd(reset($a));
-        return view('user.thanhtoan', compact(['id','idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+        $magiamgia = MaGiamGia::query()
+        ->where('so_luong','>',0)
+        ->whereDate('ngay_ket_thuc','>=',date('Y-m-d'))
+        ->get();
+        // dd($magiamgia->toArray());
+        return view('user.thanhtoan', compact(['id','idsuauChieu','magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
     public function checkViOnline(Request $request)
@@ -331,7 +336,9 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'
+                        'phongChieu'=>function($qr){
+                            $qr->with('rap');
+                        }
                     ]);
             },
             'maGiamGia'
@@ -355,7 +362,9 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'
+                        'phongChieu'=>function($qr){
+                            $qr->with('rap');
+                        }
                     ]);
             },
             'maGiamGia'
@@ -369,8 +378,6 @@ class DatVeController extends Controller
             'food'
         ])->where('ve_id', $ve->id)->get();
         $ghe = $ve->chiTietVe->pluck('seat')->groupBy('the_loai');
-
-        // dd($ghe,$ve->toArray());
         return view('user.thongtinve', compact(['ve', 'ghe', 'food']));
     }
     public function execPostRequest($url, $data)
