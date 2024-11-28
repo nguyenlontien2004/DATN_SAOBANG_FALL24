@@ -27,7 +27,7 @@ class GheNgoiController extends Controller
                             'chitietve as isBooked' => function ($query) {
                                 $query->whereHas('ticket', function ($q) {
                                     $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
-                                    $q->whereHas('suatChieu', function ($st) use ($currentTime) {
+                                    $q->whereHas('showtime', function ($st) use ($currentTime) {
                                         $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime);
                                     });
                                 });
@@ -37,7 +37,7 @@ class GheNgoiController extends Controller
                         //     'chitietve' => function ($q) {
                         //         $q->with([
                         //             'ticket' => function ($q) {
-                        //                 $q->with('suatChieu');
+                        //                 $q->with('showtime');
                         //             }
                         //         ]);
                         //     }

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ve;
-use App\Models\NguoiDung;
+use App\Http\Requests\DoiMatKhauRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\DoiMatKhauRequest;
+use App\Models\NguoiDung;
 
 class MemberController extends Controller
 {
@@ -75,26 +74,6 @@ class MemberController extends Controller
 
         return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
     }
-    public function lichSuDatVe()
-    {
-        // Lấy danh sách vé đặt của user hiện tại
-        $userId = Auth::id(); // Lấy ID user hiện tại
-        $lichSuDatVe = Ve::where('nguoi_dung_id', $userId)->paginate(10); // Phân trang 10 vé mỗi trang
-        return view('user.lichsuvedat', compact('lichSuDatVe'));
-    }
-    public function huyVe(Request $request, string $id){
-        if($request->isMethod('DELETE')){
-            $ve = Ve::findOrFail($id);
-            $ve->delete();
-        }
-        return redirect()->back()->with('success', 'Hủy vé thành công');
-
-    }
-    // public function lichSuDatVe(string $id){
-    //     $title = "Lịch sử đặt vé";
-    //     $lichSuDatVe = Ve::findOrFail($id);
-    //     return view('user.lichsuvedat', compact('title', 'lichSuDatVe'));
-    // }
 
     // public function doiMatKhau(Request $request)
     // {

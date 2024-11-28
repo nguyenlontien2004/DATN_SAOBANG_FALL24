@@ -5,43 +5,33 @@
 @endsection --}}
 
 @section('content')
-    <main class="container mx-auto px-4 py-8">
-        <!-- banner -->
-        <section class="bg-pink-200 p-8 rounded-lg flex justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-bold text-pink-600 mb-4">
-                    Mua vé xem phim Online trên MoMo
-                </h1>
-                <p class="text-gray-700 mb-4">
-                    Với nhiều ưu đãi hấp dẫn và kết nối với tất cả các rạp lớn phủ rộng
-                    khắp Việt Nam. Đặt vé ngay tại MoMo!
-                </p>
-                <ul class="text-gray-700 mb-4">
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Mua vé Online, trải nghiệm phim hay
-                    </li>
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Đặt vé an toàn trên MoMo
-                    </li>
-                    <li class="flex items-center mb-2">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Tha hồ chọn chỗ ngồi, mua bắp nước tiện lợi.
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-check-circle text-pink-600 mr-2"> </i>
-                        Lịch sử đặt vé được lưu lại ngay
-                    </li>
-                </ul>
-                <button class="bg-pink-600 text-white px-6 py-2 rounded-full">
-                    ĐẶT VÉ NGAY
-                </button>
+    <div class="slide container-fluid">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                @foreach ($bannerDau as $index => $bn)
+                    @foreach ($bn->anhBanners as $key => $banner)
+                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}" data-bs-interval="2000">
+                            <img src="{{ asset('storage/' . $banner->hinh_anh) }}" class="d-block w-100 img-fluid"
+                                alt="...">
+                        </div>
+                    @endforeach
+                @endforeach
             </div>
-            <img alt="Promotional Banner" class="rounded-lg" height="200"
-                src="https://storage.googleapis.com/a1aa/image/yyDVCIcr3oqJLBUI7Jy23AirAE7VCS2vaOpJSgEyT2fW6yxJA.jpg"
-                width="400" />
-        </section>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-8">
         <!-- phim đang chiếu -->
         <section class="mt-12">
             <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
@@ -56,7 +46,7 @@
                                 src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
                                 onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
                                 style="cursor: pointer;" />
-                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge"> 
+                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
 
                                 <h3 class="text-lg font-bold film-title">
                                     {{ $item->ten_phim }}
@@ -287,17 +277,16 @@
         </div> --}}
     </div>
     <!-- banner 2 -->
-    <div class="bg-red-600 text-white text-center py-10">
-        <div class="container mx-auto">
-            <img alt="Promotional banner with a couple sitting on a couch, holding popcorn, and a large smartphone in the background"
-                class="mx-auto" height="100"
-                src="https://storage.googleapis.com/a1aa/image/FSNbUd9C47IqJponVPl0VN8yy7NYhI3pql4zRArkKs5Cg54E.jpg"
-                width="600" />
-            <h1 class="text-4xl font-bold mt-4">Ngập tràn phim hay</h1>
-            <h2 class="text-5xl font-bold mt-2">ĐẶT VÉ XEM PHIM NGAY</h2>
-            <h3 class="text-3xl mt-2">TRÊN Ví VNPAY</h3>
+    @if ($bannerGiua)
+        <div class="text-white text-center py-10">
+            <div class="container mx-auto">
+                <img alt="Promotional banner" class="mx-auto" height="100"
+                    src="{{ asset('storage/' . $bannerGiua->anhBanners->first()->hinh_anh) }}" width="600" />
+            </div>
         </div>
-    </div>
+    @else
+        <p>No banner found.</p>
+    @endif
     <!-- bình luận nổi bật -->
     <main class="container mx-auto mt-10">
         <h2 class="text-3xl font-bold text-center text-pink-600 mb-8">
