@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('phuong_thuc_thanh_toan')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            
         });
     }
 
