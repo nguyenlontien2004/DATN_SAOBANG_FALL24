@@ -11,8 +11,12 @@
         <div class="header-top">
             @include('user.partials.header-top')
         </div>
-    </header>
 
+    </header>
+    {{-- <div class="header-main">
+        @include('user.partials.slide')
+    </div>
+     --}}
     <main>
         <div class="container mb-3 mt-4">
             @yield('content')

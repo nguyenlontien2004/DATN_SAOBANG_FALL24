@@ -1188,3 +1188,22 @@ hr {
 .content a:hover {
     text-decoration: underline;
 }
+
+/* Slide */
+.carousel-item img {
+    object-fit: cover; /* Ensures the image covers the whole space without distorting */
+    height: 500px; /* You can adjust the height to fit your design */
+}
+
+.carousel-indicators button {
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.5
+    ); /* Adds background color to indicators */
+}
+
+.carousel-indicators .active {
+    background-color: #fff; /* Changes the color of the active indicator */
+}

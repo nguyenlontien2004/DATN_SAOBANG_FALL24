@@ -5,55 +5,33 @@
 @endsection --}}
 
 @section('content')
-    <main class="container mx-auto px-4 py-8">
-        <div class="slide container-fluid">
-            <div id="carouselExampleDark" class="carousel carousel-dark slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    {{-- @foreach ($banner as $index => $bn)
-                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-bs-interval="10000">
-                            <img src="{{ asset('storage/' . $bn->hinh_anh) }}" class="d-block w-100"
-                                alt="{{ $image->hinh_anh }}"> --}}
-                    {{-- <div class="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>Some representative placeholder content for the first slide.</p>
-                            </div> --}}
-                    {{-- </div>
-                    @endforeach --}}
-                    {{-- <div class="carousel-item" data-bs-interval="2000">
-                        <img src="..." class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
+    <div class="slide container-fluid">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                @foreach ($bannerDau as $index => $bn)
+                    @foreach ($bn->anhBanners as $key => $banner)
+                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}" data-bs-interval="2000">
+                            <img src="{{ asset('storage/' . $banner->hinh_anh) }}" class="d-block w-100 img-fluid"
+                                alt="...">
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
-                    </div> --}}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                    @endforeach
+                @endforeach
             </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-8">
         <!-- phim đang chiếu -->
         <section class="mt-12">
             <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">
@@ -299,17 +277,16 @@
         </div> --}}
     </div>
     <!-- banner 2 -->
-    <div class="bg-red-600 text-white text-center py-10">
-        <div class="container mx-auto">
-            <img alt="Promotional banner with a couple sitting on a couch, holding popcorn, and a large smartphone in the background"
-                class="mx-auto" height="100"
-                src="https://storage.googleapis.com/a1aa/image/FSNbUd9C47IqJponVPl0VN8yy7NYhI3pql4zRArkKs5Cg54E.jpg"
-                width="600" />
-            <h1 class="text-4xl font-bold mt-4">Ngập tràn phim hay</h1>
-            <h2 class="text-5xl font-bold mt-2">ĐẶT VÉ XEM PHIM NGAY</h2>
-            <h3 class="text-3xl mt-2">TRÊN Ví VNPAY</h3>
+    @if ($bannerGiua)
+        <div class="text-white text-center py-10">
+            <div class="container mx-auto">
+                <img alt="Promotional banner" class="mx-auto" height="100"
+                    src="{{ asset('storage/' . $bannerGiua->anhBanners->first()->hinh_anh) }}" width="600" />
+            </div>
         </div>
-    </div>
+    @else
+        <p>No banner found.</p>
+    @endif
     <!-- bình luận nổi bật -->
     <main class="container mx-auto mt-10">
         <h2 class="text-3xl font-bold text-center text-pink-600 mb-8">

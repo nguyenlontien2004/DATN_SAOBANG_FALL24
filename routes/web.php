@@ -193,7 +193,8 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');
 
   // Banner
-  Route::get('banner', [BannerImageController::class, 'banner'])->name('banner.trangchu');
+  Route::get('banner-dau', [SanPhamController::class, 'bannerDau'])->name('banner.dau');
+  Route::get('banner-giua/{id}', [SanPhamController::class, 'bannerGiua'])->name('banner.giua');
 
   // Tìm kiếm
   Route::get('timkiem', [SanPhamController::class, 'TimKiemPhim'])->name('timkiem');

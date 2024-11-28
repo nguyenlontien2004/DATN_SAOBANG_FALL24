@@ -1,8 +1,11 @@
 @extends('layout.user')
+
 @section('title')
     {{ $title }}
 @endsection
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 @section('content')
     <div class="container mt-5">
         <div class="row">
@@ -72,9 +75,6 @@
                             <i class="fas fa-star"></i>
                             <span>Xem review</span>
                         </a>
-                        <button class="btn btn-outline-secondary" type="button">
-                            Thêm vào yêu thích
-                        </button>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="row">
             <!-- Phần lịch chiếu bên trái -->
             <div class="col-md-8">
-                <div class="border p-3" style="border-radius: .5rem;">
+                <div class="border p-3">
                     <!-- Tiêu đề và chọn thành phố -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3>Lịch chiếu: <strong>{{ $chiTietPhim->ten_phim }}</strong></h3>
@@ -115,50 +115,35 @@
                     </div>
 
                     <!-- Nội dung lịch chiếu -->
-                    <div class="p-3 mb-3">
-                        <div class="box-data d-inline-flex justify-content-around mb-2" style="width:100%">
-                            @for ($i = 0; $i <= count($listday) - 1; $i++)
-                                @if (Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') == $listday[$i]['date'])
-                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-right-custom active-date"
-                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }} <br> <span
-                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
-                                    </div>
-                                @elseif($i == count($listday) - 1)
-                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-left-custom"
-                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }} <br> <span
-                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
-                                    </div>
-                                @else
-                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-right-custom border-left-custom"
-                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }}<br> <span
-                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
-                                    </div>
-                                @endif
-                            @endfor
+                    <div class="border p-3 mb-3">
+                        <div class="d-flex justify-content-around mb-2">
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">20/9</button></div>
+                            <div><button class="btn btn-outline-info">20/9</button></div>
                         </div>
-                        <div style="position: relative;padding:5px 0">
-                            <div class="container-booth">
-                                <!-- <div class="border-bottom p-2">
-                                                <div>
-                                                    <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                                                    <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                                                </div>
-                                                <div class="d-flex pt-1 flex-wrap">
-                                                    <a href="">
-                                                        <div class="btn-somtime mr-1">15:30~18:30</div>
-                                                    </a>
-                                                    <a href="">
-                                                        <div class="btn-somtime mr-1">15:30~18:30</div>
-                                                    </a>
-                                                </div>
-                                            </div> -->
-                            </div>
-                            <span class="loader loading-suat"
-                                style="position: absolute;top:3px;left:50%;display:none;"></span>
+                        <div class="border p-2">
+                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        </div>
+                        <div class="border p-2">
+                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        </div>
+                        <div class="border p-2">
+                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        </div>
+                        <div class="border p-2">
+                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Phần phim đang chiếu bên phải -->
             <div class="col-md-4">
                 <div class="border p-3 bg-light rounded">
@@ -166,7 +151,9 @@
                     <ul class="list-unstyled">
                         @foreach ($phimDangChieu as $item)
                             <li class="border-bottom pb-3 mb-3">
+                                
                                 <div class="d-flex">
+
                                     <div class="me-3">
                                         <!-- Hình ảnh của video -->
                                         <img alt="Video Thumbnail" class="img-fluid rounded film-image"
@@ -174,6 +161,7 @@
                                             onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
                                             style="cursor: pointer; width: 100px; height: auto;" />
                                     </div>
+
                                     <div class="flex-grow-1">
                                         <a href="{{ route('chitietphim', $item->id) }}"
                                             class="text-decoration-none text-warning">
@@ -194,15 +182,20 @@
                             </li>
                         @endforeach
                     </ul>
-
                 </div>
             </div>
 
-            <!-- Đánh giá-->
-            @auth
-                <br>
-                <h3>Danh sách đánh giá:</h3><br>
-                @foreach ($danhSachDanhGia as $item)
+        </div>
+
+        <!-- Đánh giá-->
+        @auth
+            <br>
+            <h3>Danh sách đánh giá:</h3><br>
+
+            @if ($chiTietPhim->danhGias->isEmpty())
+                <p class="text-muted">Chưa có đánh giá nào cho phim này.</p>
+            @else
+                @foreach ($chiTietPhim->danhGias ?? [] as $item)
                     <div class="list-group-item">
                         <div class="d-flex w-100 mb-2">
                             <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
@@ -218,49 +211,55 @@
                         <br>
                     </div>
                 @endforeach
-                <div class="mt-4">
-                    <p class="text-muted">
-                        <a href="#" onclick="showReviewTab(); return false;">
-                            <h2><strong>Viết bài đánh giá</strong></h2>
-                        </a>
-                    </p>
-                </div>
-                <!-- Form đánh giá ẩn -->
-                <div id="reviewTab" style="display: none; margin-top: 20px;">
-                    <h4>Đánh giá của bạn</h4>
-                    <form action="{{ route('danhgia.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
-                        <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
-                        <div class="mb-3">
-                            <label for="content" class="form-label">Nội dung:</label>
-                            <textarea name="noi_dung" id="content" class="form-control" required></textarea>
+            @endif
+            <div class="mt-4">
+                <p class="text-muted">
+                    <a href="#" onclick="showReviewTab(); return false;">
+                        <h2><strong>Viết bài đánh giá</strong></h2>
+                    </a>
+                </p>
+            </div>
+            <!-- Form đánh giá ẩn -->
+            <div id="reviewTab" style="display: none; margin-top: 20px;">
+                <h4>Đánh giá của bạn</h4>
+                <form action="{{ route('danhgia.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
+                    <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Nội dung:</label>
+                        <textarea name="noi_dung" id="content" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Điểm đánh giá:</label>
+                        <div id="stars">
+                            <span class="fa fa-star" data-value="1" onclick="setRating(1)"></span>
+                            <span class="fa fa-star" data-value="2" onclick="setRating(2)"></span>
+                            <span class="fa fa-star" data-value="3" onclick="setRating(3)"></span>
+                            <span class="fa fa-star" data-value="4" onclick="setRating(4)"></span>
+                            <span class="fa fa-star" data-value="5" onclick="setRating(5)"></span>
                         </div>
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Điểm đánh giá:</label>
-                            <div id="stars">
-                                <span class="fa fa-star" data-value="1" onclick="setRating(1)"></span>
-                                <span class="fa fa-star" data-value="2" onclick="setRating(2)"></span>
-                                <span class="fa fa-star" data-value="3" onclick="setRating(3)"></span>
-                                <span class="fa fa-star" data-value="4" onclick="setRating(4)"></span>
-                                <span class="fa fa-star" data-value="5" onclick="setRating(5)"></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-                        </div>
-                    </form>
-                </div>
-            @else
-                <!-- Thông báo khi chưa đăng nhập -->
-                <div class="mt-4">
-                    <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh
-                        giá.</p>
-                </div>
-            @endauth
+                        <input type="hidden" name="diem_danh_gia" id="rating" value="">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+            </div>
+            <br>
+        @else
+            <!-- Thông báo khi chưa đăng nhập -->
+            <div class="mt-4">
+                <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng nhập</strong></a> để đánh giá.
+                </p>
+            </div>
+        @endauth
 
-            {{-- <div class="container my-5">
-                <!-- Bình luận người xem -->
-                <br>
-                <h3>Bình luận người xem</h3><br>
+        <div class="container my-5">
+            <!-- Bình luận người xem -->
+            <br>
+            <h3>Bình luận người xem</h3><br>
+            @if ($chiTietPhim->binhLuans->isEmpty())
+                <p class="text-muted">Chưa có bình luận nào cho phim này.</p>
+            @else
                 @foreach ($chiTietPhim->binhLuans as $item)
                     <div class="d-flex mb-4">
                         <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
@@ -278,9 +277,8 @@
                             </div>
                         </div>
                     </div>
-            </div>
-            @endforeach
-
+                @endforeach
+            @endif
             <div class="container my-5">
                 <!-- Nội dung bình luận -->
                 @auth
@@ -312,16 +310,7 @@
                             bình luận.</p>
                     </div>
                 @endauth
-            </div> --}}
+            </div>
         </div>
     </div>
-    <script>
-        let currDate = "{{ Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') }}"
-        const idMovie = "{{ $chiTietPhim->id }}"
-        const urlApi = "{{ asset('api/suat-chieu/phim') }}"
-        console.log(urlApi);
-
-        //$('asa').
-    </script>
-    <script src="{{ asset('js/chitietve.js') }}"></script>
 @endsection

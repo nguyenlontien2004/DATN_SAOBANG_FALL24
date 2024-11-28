@@ -18,6 +18,6 @@ class BannerQuangCao extends Model
 
     public function anhBanners()
     {
-        return $this->hasOne(AnhBannerQuangCao::class, 'banner_quang_cao_id');
+        return $this->hasMany(AnhBannerQuangCao::class, 'banner_quang_cao_id');
     }
 }
