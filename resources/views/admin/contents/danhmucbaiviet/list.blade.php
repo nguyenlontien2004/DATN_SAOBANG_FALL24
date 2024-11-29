@@ -9,12 +9,12 @@
                         <i class="icon-home"></i>
                     </a>
                 </li>
-                {{-- <li class="separator">
+                <li class="separator">
                     <i class="icon-arrow-right"></i>
-                </li> --}}
-                {{-- <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a href="#"></a>
-                </li> --}}
+                </li>
                 <li class="separator">
                     <i class="icon-arrow-right"></i>
                 </li>
@@ -25,16 +25,17 @@
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách danh mục bài viết tin tức</div>
-                    <div class="thongbao text-center">
-                        @if (session('success'))
-                            <span class="text text-success font-weight-bold"
-                                style="font-size: 1.2rem;">{{ session('success') }}</span>
-                        @endif
-                    </div>
+                    <a href="{{ route('danh-muc-bai-viet-tin-tuc.create') }}" class="btn btn-primary">Thêm danh mục bài viết
+                        tin tức</a>
                 </div>
-
+                <div class="thongbao text-center">
+                    @if (session('success'))
+                        <span class="alert alert-success font-weight-bold"
+                            style="font-size: 1.2rem;">{{ session('success') }}</span>
+                    @endif
+                </div>
                 <table class="table mt-3">
                     <thead>
                         <tr>
@@ -81,7 +82,7 @@
 
                                             <!-- Nút chỉnh sửa -->
                                             <a href="{{ route('danh-muc-bai-viet-tin-tuc.edit', $dm->id) }}"
-                                                class="btn btn-warning btn-sm me-1">Edit</a>
+                                                class="btn btn-warning btn-sm me-1">Sửa</a>
                                             {{-- Nút Ẩn (Xóa mềm) --}}
                                             <form action="{{ route('danh-muc-bai-viet-tin-tuc.destroy', $dm->id) }}"
                                                 method="POST" class="d-inline">

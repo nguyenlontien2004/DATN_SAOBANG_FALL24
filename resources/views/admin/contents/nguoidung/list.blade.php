@@ -26,15 +26,18 @@
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách người dùng</div>
                     <div class="thongbao text-center">
                         @if (session('success'))
-                            <span class="text text-success font-weight-bold"
+                            <span class="alert alert-success font-weight-bold"
                                 style="font-size: 1.2rem;">{{ session('success') }}</span>
                         @endif
                     </div>
+                    <a href="{{ route('nguoi-dung.create') }}" class="btn btn-primary">Thêm người dùng</a>
                 </div>
+
+
                 <div class="card-body">
                     <table class="table mt-3">
                         <thead>
@@ -44,8 +47,6 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Hình ảnh</th>
-                                <th scope="col">Mật khẩu</th>
-                                <th scope="col">Ngày đăng ký</th>
                                 <th scope="col">Vai trò</th>
                                 <th scope="col">Trạng thái</th>
                                 <th scope="col">Hành động</th>
@@ -60,18 +61,16 @@
                                     <td>{{ $nd->so_dien_thoai }}</td>
                                     <td>
                                         @if ($nd->hinh_anh)
-                                            <img src="{{ asset('storage/' . $nd->hinh_anh) }}" alt="Hình ảnh" width="50"
-                                                height="50">
+                                            <img src="{{ asset('storage/' . $nd->hinh_anh) }}" alt="Hình ảnh"
+                                                style="width: 100px; height: 100px; object-fit: cover">
                                         @else
                                             Không có hình ảnh
                                         @endif
                                     </td>
-                                    <td>{{ $nd->mat_khau }}</td>
-                                    <td>{{ $nd->created_at }}</td>
                                     <td>
                                         @if ($nd->vaiTros->isNotEmpty())
                                             @foreach ($nd->vaiTros as $vt)
-                                                {{ $vt->ten_vai_tro }}
+                                                <span class="badge badge-info"> {{ $vt->ten_vai_tro }}</span>
                                             @endforeach
                                         @else
                                             Không có vai trò
@@ -96,8 +95,8 @@
                                                         Phục</button>
                                                 </form>
                                                 {{-- Nút xóa vĩnh viễn --}}
-                                                <form action="{{ route('nguoi-dung.forceDelete', $nd->id) }}"
-                                                    method="POST" class="d-inline">
+                                                <form action="{{ route('nguoi-dung.forceDelete', $nd->id) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"
@@ -108,17 +107,17 @@
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 <!-- Nút show -->
                                                 <a href="{{ route('nguoi-dung.show', $nd->id) }}"
-                                                    class="btn btn-info btn-sm me-1">Show</a>
+                                                    class="btn btn-info btn-sm me-1">Chi tiết</a>
                                                 <!-- Nút chỉnh sửa -->
                                                 <a href="{{ route('nguoi-dung.edit', $nd->id) }}"
-                                                    class="btn btn-warning btn-sm me-1">Edit</a>
+                                                    class="btn btn-warning btn-sm me-1">Sửa</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
                                                 <form action="{{ route('nguoi-dung.destroy', $nd->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Bạn có chắc chắn ẩn người dùng tin tức?')">Ẩn</button>
+                                                        onclick="return confirm('Bạn có chắc chắn ẩn người dùng?')">Ẩn</button>
                                                 </form>
                                             </div>
                                         @endif

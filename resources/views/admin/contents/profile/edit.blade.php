@@ -64,8 +64,8 @@
                         <label for="hinh_anh">Hình ảnh</label>
                         <input type="file" name="hinh_anh" class="form-control" id="hinh_anh" />
                         @if ($admin->hinh_anh)
-                            <small>Hình ảnh hiện tại: <img src="{{ asset('storage/' . $admin->hinh_anh) }}" width="100"
-                                    alt="Hình ảnh"></small>
+                            Hình ảnh hiện tại: <img src="{{ asset('storage/' . $admin->hinh_anh) }}" width="100"
+                                alt="Hình ảnh">
                         @endif
                         @error('hinh_anh')
                             <div class="text text-danger">{{ $message }}</div>
