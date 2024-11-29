@@ -116,29 +116,25 @@
 
                     <!-- Nội dung lịch chiếu -->
                     <div class="border p-3 mb-3">
-                        <div class="d-flex justify-content-around mb-2">
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                        <div class="box-data d-inline-flex justify-content-around mb-2" style="width:100%">
+                            @for ($i = 0; $i <= count($listday) - 1; $i++)
+                                @if (Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') == $listday[$i]['date'])
+                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-right-custom active-date"
+                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }} <br> <span
+                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
+                                    </div>
+                                @elseif($i == count($listday) - 1)
+                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-left-custom"
+                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }} <br> <span
+                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
+                                    </div>
+                                @else
+                                    <div class="chooseDate btn-custom1 text-muteds btn-light border-right-custom border-left-custom"
+                                        data-date="{{ $listday[$i]['date'] }}">{{ $listday[$i]['date'] }}<br> <span
+                                            style="font-size: .8265rem;font-weight:400;">{{ $listday[$i]['day'] }}</span>
+                                    </div>
+                                @endif
+                            @endfor
                         </div>
                     </div>
                 </div>
@@ -151,7 +147,7 @@
                     <ul class="list-unstyled">
                         @foreach ($phimDangChieu as $item)
                             <li class="border-bottom pb-3 mb-3">
-                                
+
                                 <div class="d-flex">
 
                                     <div class="me-3">
@@ -313,4 +309,12 @@
             </div>
         </div>
     </div>
+    <script>
+        let currDate = "{{ Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') }}"
+        const idMovie = "{{ $chiTietPhim->id }}"
+        const urlApi = "{{ asset('api/suat-chieu/phim') }}"
+        console.log(urlApi);
+
+    </script>
+    <script src="{{ asset('js/chitietve.js') }}"></script>
 @endsection

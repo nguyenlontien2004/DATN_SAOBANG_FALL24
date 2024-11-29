@@ -59,11 +59,12 @@ class DatVeController extends Controller
             ->find($suatchieu->phongChieu->id);
         //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray());
         $hangghe = new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'));
-        //dd($hangghe->toArray(request()));
+        dd($hangghe->toArray(request()));
         $doAn = DoAn::query()->get();
         //dd($doAn->toArray());
         return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn']));
     }
+
     public function thanhToan($id, $date)
     {
         //dd(session('thong-tin-dat'));
@@ -102,7 +103,7 @@ class DatVeController extends Controller
         //     return $value['idFood'] == 3;
         // });
         // dd(reset($a));
-        return view('user.thanhtoan', compact(['id','idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+        return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
     public function checkViOnline(Request $request)
@@ -206,7 +207,7 @@ class DatVeController extends Controller
             $theloaivi = $request->orderInfo;
         } elseif (isset($request->vnp_OrderInfo)) {
             $theloaivi = json_decode($request->vnp_OrderInfo)->description;
-        }elseif(isset($request->thanhtoan)){
+        } elseif (isset($request->thanhtoan)) {
             $theloaivi = $request->thanhtoan;
         }
         switch ($theloaivi) {
@@ -434,8 +435,7 @@ class DatVeController extends Controller
             'requestType' => $requestType,
             'signature' => $signature
         );
-        $result = $this->execPostRequest($endpoint, json_encode($data));
-        ;
+        $result = $this->execPostRequest($endpoint, json_encode($data));;
         $jsonResult = json_decode($result, true);  // decode json
 
         //Just a example, please check more in there
@@ -448,7 +448,7 @@ class DatVeController extends Controller
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = asset("luu-thong-tin-ve");
-        $vnp_TmnCode = "MOCKDTJC";//Mã website tại VNPAY 
+        $vnp_TmnCode = "MOCKDTJC"; //Mã website tại VNPAY 
         $vnp_HashSecret = "Y0MT8SQNMSCKZZMNFKJY12S3MMCSADXZ"; //Chuỗi bí mật
 
         $vnp_TxnRef = $uuid; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
@@ -539,14 +539,12 @@ class DatVeController extends Controller
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+            $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         $returnData = array(
-            'code' => '00'
-            ,
-            'message' => 'success'
-            ,
+            'code' => '00',
+            'message' => 'success',
             'data' => $vnp_Url
         );
         if ($request->viOline == 'vnpay') {
@@ -566,7 +564,7 @@ class DatVeController extends Controller
             "endpoint" => "https://sb-openapi.zalopay.vn/v2/create",
         ];
         $embeddata = json_encode([
-            "redirecturl" => asset('luu-thong-tin-ve?'.'zlpay_orderid='.$uuid.'&magiamgia='.$request->magiamgia."&thanhtoan=ZALOPAY"), // URL chuyển hướng sau khi thanh toán
+            "redirecturl" => asset('luu-thong-tin-ve?' . 'zlpay_orderid=' . $uuid . '&magiamgia=' . $request->magiamgia . "&thanhtoan=ZALOPAY"), // URL chuyển hướng sau khi thanh toán
         ]);
         $items = '[]';
         $transID = $uuid;
@@ -584,18 +582,18 @@ class DatVeController extends Controller
         $data = $order['app_id'] . "|" . $order['app_trans_id'] . "|" . $order['app_user'] . "|" . $order['amount']
             . "|" . $order['app_time'] . "|" . $order['embed_data'] . "|" . $order['item'];
         $order['mac'] = hash_hmac("sha256", $data, $config['key1']);
-        
+
         $context = stream_context_create([
             "http" => [
                 "header" => "Content-Type: application/x-www-form-urlencoded\r\n",
                 "method" => "POST",
                 "content" => http_build_query($order),
-        
+
             ],
         ]);
         $res = file_get_contents($config["endpoint"], false, $context);
-        $result = json_decode($res,true);
-        if($result['return_code'] == 1){
+        $result = json_decode($res, true);
+        if ($result['return_code'] == 1) {
             return redirect()->to($result['order_url']);
         }
         return back();
@@ -603,14 +601,14 @@ class DatVeController extends Controller
     public function testMail()
     {
         $qrCode = new QrCode('https://example.com'); // Nội dung QR code
-    $qrCode->setSize(300); // Kích thước QR code
-    $qrCode->setMargin(10); // Viền QR code
+        $qrCode->setSize(300); // Kích thước QR code
+        $qrCode->setMargin(10); // Viền QR code
 
-    // Chuyển QR code sang định dạng SVG
-    $writer = new SvgWriter();
-    $result = $writer->write($qrCode);
-    
-     return $result->getString();
+        // Chuyển QR code sang định dạng SVG
+        $writer = new SvgWriter();
+        $result = $writer->write($qrCode);
+
+        return $result->getString();
         //$this->guiThongtinVeMail(57);
     }
 }

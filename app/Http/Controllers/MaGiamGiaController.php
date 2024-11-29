@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MaGiamGiaEvent;
 use App\Models\MaGiamGia;
 use App\Http\Requests\StoreMaGiamGiaRequest;
 use App\Http\Requests\UpdateMaGiamGiaRequest;
@@ -32,7 +33,9 @@ class MaGiamGiaController extends Controller
     {
         $magiamgia = $request->all();
 
-        MaGiamGia::create($magiamgia);
+        $maGiamGia = MaGiamGia::create($magiamgia);
+
+        broadcast(new MaGiamGiaEvent($maGiamGia));
 
         return redirect()->route('ma_giam_gia.index')
             ->with('success', 'Thêm mã giảm giá thành công');
@@ -44,7 +47,7 @@ class MaGiamGiaController extends Controller
     public function show($id)
     {
         $maGiamGia = MaGiamGia::findOrFail($id);
-        
+
         return view('admin.contents.magiamgia.show', compact('maGiamGia'));
     }
 
@@ -79,7 +82,7 @@ class MaGiamGiaController extends Controller
     public function destroy($id)
     {
         $maGiamGia = MaGiamGia::findOrFail($id);
-        
+
         $maGiamGia->delete();
 
         return redirect()->route('ma_giam_gia.index')
