@@ -52,6 +52,9 @@
                                 - Loại:
                                 <strong>
                                     {{-- @if ($dataTicket->detailTicket[0]->seat->the_loai == 'thuong')
+
+                                    @if ($dataTicket->detailTicket[0]->seat->the_loai == 'thuong')
+
                                         Thường
                                     @elseif($dataTicket->detailTicket[0]->seat->the_loai == 'vip')
                                         Vip

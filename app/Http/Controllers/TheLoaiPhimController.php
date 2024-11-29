@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TheLoaiPhim;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use App\Http\Requests\StoreTheLoaiPhimRequest;
-use App\Http\Requests\UpdateTheLoaiPhimRequest;
 
 class TheLoaiPhimController extends Controller
 {
@@ -27,10 +24,16 @@ class TheLoaiPhimController extends Controller
     {
         return view('admin.contents.theLoaiPhims.creater');
     }
-    public function store(StoreTheLoaiPhimRequest $request)
+    public function store(Request $request)
 {
+    $request->validate([
+        'ten_the_loai' => 'required|string|max:255',
+        'trang_thai' => 'required|boolean',
+    ]);
+
     TheLoaiPhim::create([
         'ten_the_loai' => $request->ten_the_loai,
+        'trang_thai' => $request->trang_thai,
     ]);
 
     return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');
@@ -41,8 +44,13 @@ class TheLoaiPhimController extends Controller
         return view('admin.contents.theLoaiPhims.edit',compact('theLoaiPhim'));
     }
 
-    public function update(UpdateTheLoaiPhimRequest $request, TheLoaiPhim $theLoaiPhim)
+    public function update(Request $request, TheLoaiPhim $theLoaiPhim)
     {
+        $request->validate([
+            'ten_the_loai' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
         $theLoaiPhim->update([
             'ten_the_loai' => $request->ten_the_loai,
             'trang_thai' => $request->trang_thai,

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuatChieuController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,5 +20,5 @@ use App\Http\Controllers\SuatChieuController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/phim/{phim_id}/dates', [SuatChieuController::class, 'getPhimDates']);
 
+Route::get('/phim/{phim_id}/dates', [SuatChieuController::class, 'getPhimDates']);

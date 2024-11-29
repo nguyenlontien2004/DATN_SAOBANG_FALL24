@@ -23,7 +23,7 @@ class AuthAdminRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email'],
-            'mat_khau' => ['required']
+            'password' => ['required']
         ];
     }
     public function messages(): array
@@ -32,5 +32,4 @@ class AuthAdminRequest extends FormRequest
             'email.email' => 'Trường email phải là địa chỉ email hợp lệ!',
         ];
     }
-    
 }

@@ -15,7 +15,9 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function index()
     {
-        $anhbanner = AnhBannerQuangCao::withTrashed()->with('banner')->latest('id')->paginate(6);
+        $anhbanner = AnhBannerQuangCao::withTrashed()->with('banner')
+            ->latest('id')
+            ->paginate(6);
         return view('admin.contents.anhbanner.list', compact('anhbanner'));
     }
 
@@ -121,5 +123,9 @@ class AnhBannerQuangCaoController extends Controller
 
         return redirect()->route('anh-banner-quang-cao.index')
             ->with('success', 'Xóa danh mục thành công');
+    }
+
+    public function slide(){
+        
     }
 }

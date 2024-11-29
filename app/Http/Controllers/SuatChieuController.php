@@ -8,8 +8,6 @@ use App\Models\PhongChieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSuatChieuRequest;
-use App\Http\Requests\UpdateSuatChieuRequest;
 
 class SuatChieuController extends Controller
 {
@@ -85,11 +83,20 @@ class SuatChieuController extends Controller
 
         return view('admin.contents.suatChieus.creater', compact('phongChieus', 'phims'));
     }
-    public function store(StoreSuatChieuRequest $request)
+    public function store(Request $request)
     {
+
         $ngay = $request->ngay;
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
+
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'gio_bat_dau' => 'required',
+            'gio_ket_thuc' => 'required',
+            'trang_thai' => 'required|boolean',
+        ]);
 
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
@@ -108,11 +115,21 @@ class SuatChieuController extends Controller
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
 
-    public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
+    public function update(Request $request, SuatChieu $suatChieu)
     {
+
         $ngay = $request->ngay;
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
+
+
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'gio_ket_thuc' => 'required',
+            'gio_bat_dau' => 'required',
+            'trang_thai' => 'required|boolean',
+        ]);
 
         $suatChieu->update([
             'phong_chieu_id' => $request->phong_chieu_id,

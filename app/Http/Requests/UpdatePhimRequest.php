@@ -11,7 +11,7 @@ class UpdatePhimRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -19,7 +19,7 @@ class UpdatePhimRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'ten_phim' => 'required|string|max:255|unique:phims,ten_phim,' . $this->route('phim')->id,

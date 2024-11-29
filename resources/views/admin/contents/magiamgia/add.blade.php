@@ -60,15 +60,21 @@
                         <input type="date" name="ngay_bat_dau" class="form-control" id="ngay_bat_dau" required />
                     </div>
 
+
                     <div class="form-group">
                         <label for="ngay_ket_thuc">Ngày kết thúc</label>
                         <input type="date" name="ngay_ket_thuc" class="form-control" id="ngay_ket_thuc" required />
                     </div>
 
-                    <div class="form-group">
-                        <label for="gia_tri_giam">Giá trị giảm</label>
-                        <input type="number" name="gia_tri_giam" class="form-control" id="gia_tri_giam"
-                            placeholder="Nhập giá trị giảm %" required />
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="gia_tri_giam">Giá trị giảm (%)</label>
+                            <input type="number" name="gia_tri_giam" class="form-control" id="gia_tri_giam"
+                                placeholder="Nhập giá trị giảm %" value="{{ old('gia_tri_giam') }}" />
+                            @error('gia_tri_giam')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="card-footer">

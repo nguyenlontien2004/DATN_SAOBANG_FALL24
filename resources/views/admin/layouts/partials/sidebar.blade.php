@@ -39,7 +39,29 @@
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="../demo1/index.html">
+<<<<<<< HEAD
                                     <span class="sub-item">Dashboard 1</span>
+=======
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="../demo1/index.html">
+                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('doanhthutheorap') }}">
+                                    <span class="sub-item">Số vé bán ra theo rạp</span>
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
                                 </a>
                             </li>
                         </ul>

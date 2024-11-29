@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Rap;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreRapRequest;
-use App\Http\Requests\UpdateRapRequest;
 
 class RapController extends Controller
 {
@@ -28,22 +26,34 @@ class RapController extends Controller
     {
         return view('admin.contents.raps.creater');
     }
-    public function store(StoreRapRequest $request)
-{
-    Rap::create([
-        'ten_rap' => $request->ten_rap,
-        'dia_diem' => $request->dia_diem,
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'ten_rap' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
+        Rap::create([
+            'ten_rap' => $request->ten_rap,
+            'dia_diem' => $request->dia_diem,
+            'trang_thai' => $request->trang_thai,
+        ]);
 
-    return redirect()->route('rap.index')->with('success', 'Rạp đã được tạo thành công.');
-}
-
+        return redirect()->route('rap.index')->with('success', 'Rạp đã được tạo thành công.');
+    }
     public function edit(Rap $rap)
     {
         return view('admin.contents.raps.edit', compact('rap'));
     }
-    public function update(UpdateRapRequest $request, Rap $rap)
+    public function update(Request $request, Rap $rap)
     {
+        $request->validate([
+            'ten_rap' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'trang_thai' => 'required|boolean',
+        ]);
+    
         $rap->update([
             'ten_rap' => $request->ten_rap,
             'dia_diem' => $request->dia_diem,

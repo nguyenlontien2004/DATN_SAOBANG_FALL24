@@ -7,10 +7,10 @@
                 src="https://storage.googleapis.com/a1aa/image/u9y6E0sefgilO0ViSNJkVoITvkptQM6YskJidpWdJi4iLFlTA.jpg" />
             <div class="username">Tên người dùng</div>
             <hr />
-            <a href="#">Thông tin cá nhân</a>
-            <a href="#">Đổi mật khẩu</a>
+            <a href="{{ route('admin.ttadmin') }}">Thông tin cá nhân</a>
+            <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
             <a href="#">Lịch sử đặt vé</a>
-            <a href="#">Cập nhật thông tin cá nhân</a>
+            <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
         </div>
         <div class="content">
             <h1>Đổi mật khẩu</h1>

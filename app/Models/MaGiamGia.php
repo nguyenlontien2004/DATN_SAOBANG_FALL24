@@ -22,4 +22,8 @@ class MaGiamGia extends Model
         'gia_tri_giam',
         'trang_thai'
     ];
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9

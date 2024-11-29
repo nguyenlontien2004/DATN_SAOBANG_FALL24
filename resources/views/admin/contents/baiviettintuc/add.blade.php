@@ -75,4 +75,18 @@
             </div>
         </div>
     </div>
+
+    <!-- <script>
+        ClassicEditor
+            .create(document.querySelector('#noi_dung'), {
+                ckfinder: {
+                    uploadUrl: '?_token= }}'
+                }
+            })
+            .catch(
+                error => {
+                    console.error(error);
+                }
+            )
+    </script> -->
 @endsection

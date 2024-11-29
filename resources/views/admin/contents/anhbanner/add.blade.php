@@ -33,8 +33,8 @@
                     @csrf
                     <div class="form-group">
                         <label for="thu_tu">Thứ tự</label>
-                        <input type="thu_tu" name="thu_tu" class="form-control" id="thu_tu" placeholder="Nhập thứ tự"
-                            required />
+                        <input type="number" name="thu_tu" class="form-control" id="thu_tu"
+                            placeholder="Nhập thứ tự" />
                     </div>
 
                     <div class="form-group">

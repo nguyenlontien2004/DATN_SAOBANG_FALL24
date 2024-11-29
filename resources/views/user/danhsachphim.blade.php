@@ -1,5 +1,28 @@
 @extends('layout.user')
+<style>
+    .bg-secondary {
+        padding: 15px;
+        /* Thêm padding nếu cần để không gian bên trong card */
+        height: 100%;
+        /* Đảm bảo chiều cao của card đầy đủ */
+        overflow: hidden;
+        /* Ẩn phần hình ảnh vượt quá khung */
+    }
 
+    .film-image {
+        max-height: 250px;
+        /* Tăng chiều cao tối đa của hình ảnh */
+        object-fit: cover;
+        /* Giữ tỷ lệ khung hình */
+        width: 100%;
+        /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng */
+    }
+
+    .film-title {
+        font-size: 1.1rem;
+        /* Tăng kích thước chữ tiêu đề một chút */
+    }
+</style>
 @section('content')
     <h3 class="mb-1">Danh sách phim</h3>
 
@@ -22,7 +45,6 @@
             </div>
         </div>
 
-        <!-- Phim 2 -->
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="card h-100">
                 <img src="img/phim1.jfif" class="card-img-top" alt="Phim 2"
@@ -63,7 +85,7 @@
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-4">
-        <nav aria-label="Page navigation example">
+        {{-- <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link" href="#">Previous</a>
@@ -73,6 +95,8 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
-        </nav>
+        </nav> --}}
+
+        <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }}
     </div>
 @endsection

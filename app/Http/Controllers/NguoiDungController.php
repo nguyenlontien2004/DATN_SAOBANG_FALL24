@@ -69,7 +69,7 @@ class NguoiDungController extends Controller
     public function edit(NguoiDung $nguoiDung)
     {
         $vaitro = VaiTro::all();
-
+        
         return  view('admin.contents.nguoidung.edit', compact('nguoiDung', 'vaitro'));
     }
 

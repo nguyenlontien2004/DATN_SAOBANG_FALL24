@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('phims', function (Blueprint $table) {
             $table->id();
             $table->string('ten_phim');
-            $table->string('anh_phim')->nullable();
             $table->text('mo_ta');
             $table->integer('thoi_luong');
             $table->integer('do_tuoi');

@@ -8,40 +8,12 @@
         </div>
 
         <div class="card-body">
-            <form method="GET" action="{{ route('suatChieu.index') }}" class="mb-4">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="phim_id">Lọc theo phim:</label>
-                        <select name="phim_id" id="phim_id" class="form-control">
-                            <option value="">-- Tất cả phim --</option>
-                            @foreach ($phims as $phim)
-                                <option value="{{ $phim->id }}" {{ request('phim_id') == $phim->id ? 'selected' : '' }}>
-                                    {{ $phim->ten_phim }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="phong_chieu_id">Lọc theo phòng chiếu:</label>
-                        <select name="phong_chieu_id" id="phong_chieu_id" class="form-control">
-                            <option value="">-- Tất cả phòng chiếu --</option>
-                            @foreach ($phongChieus as $phongChieu)
-                                <option value="{{ $phongChieu->id }}" {{ request('phong_chieu_id') == $phongChieu->id ? 'selected' : '' }}>
-                                    {{ $phongChieu->ten_phong_chieu }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4 d-flex align-items-end">
-                        <button type="submit" class="btn btn-secondary">Lọc</button>
-                    </div>
-                </div>
-            </form>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Phim</th>
+                        {{-- <th scope="col">Tên Suất Chiếu</th> --}}
                         <th scope="col">Thời Gian Bắt Đầu</th>
                         <th scope="col">Thời Gian Kết Thúc</th>
                         <th scope="col">Phòng Chiếu</th>
@@ -50,14 +22,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($suatChieus as $suatChieu)
+                    @foreach ($suatChieus as $index => $suatChieu)
                         <tr>
-                            <td>{{ $suatChieu->id }}</td> 
+                            <td>{{ $suatChieu->id }}</td>
                             <td>{{ $suatChieu->phim->ten_phim }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}</td>
+
                             <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
-                           
+
                             <td class="text-center">
                                 @if ($suatChieu->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
@@ -71,18 +44,30 @@
                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                        <button type="submit" class="btn btn-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash2" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M14 3a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671L2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2M3.215 4.207l1.493 8.957a1 1 0 0 0 .986.836h4.612a1 1 0 0 0 .986-.836l1.493-8.957C11.69 4.689 9.954 5 8 5s-3.69-.311-4.785-.793" />
+                                            </svg>
+                                        </button>
                                     </form>
                                     <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">Sửa</a>
                                     <a class="btn btn-info" href="{{ route('suatChieu.show', $suatChieu->id) }}">Xem</a>
+                                    {{-- 
+                                    <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd"
+                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg>
+                                    </a> --}}
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center">Không tìm thấy suất chiếu phù hợp</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

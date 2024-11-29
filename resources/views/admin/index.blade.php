@@ -45,6 +45,7 @@
                                 </form>
                             </div>
                         </nav>
+
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                             <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
@@ -262,6 +263,9 @@
                                     </div>
                                 </div>
                             </li>
+              @php
+                                $user = Auth::user();
+                            @endphp
 
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
@@ -309,8 +313,10 @@
                 </nav>
                 <!-- End Navbar -->
             </div>
-
+          <!-- Layout đúng khi sửa -->
             <div class="container">
                 @yield('content')
             </div>
+            </div>
+
         @endsection

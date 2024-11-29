@@ -38,19 +38,19 @@ class SearchController extends Controller
 
         $daoDienResults = DaoDien::where('ten_dao_dien', 'LIKE', "%{$query}%")->get();
         $dienVienResults = DienVien::where('ten_dien_vien', 'LIKE', "%{$query}%")->get();
-        $phimResults=Phim::where('ten_phim','LIKE', "%{$query}%")->get();
-        $rapResults=Rap::where('ten_rap','LIKE', "%{$query}%")->get();
-        $phongchieuResults=PhongChieu::where('ten_phong_chieu','LIKE', "%{$query}%")->get();
-        $theLoaiResults=TheLoaiPhim::where('ten_the_loai','LIKE', "%{$query}%")->get();
-        $nguoiDungResults=NguoiDung::where('ho_ten','LIKE', "%{$query}%")->get();
-        $suatChieuResults = SuatChieu::whereHas('phim', function($subQuery) use ($query) {
+        $phimResults = Phim::where('ten_phim', 'LIKE', "%{$query}%")->get();
+        $rapResults = Rap::where('ten_rap', 'LIKE', "%{$query}%")->get();
+        $phongchieuResults = PhongChieu::where('ten_phong_chieu', 'LIKE', "%{$query}%")->get();
+        $theLoaiResults = TheLoaiPhim::where('ten_the_loai', 'LIKE', "%{$query}%")->get();
+        $nguoiDungResults = NguoiDung::where('ho_ten', 'LIKE', "%{$query}%")->get();
+        $suatChieuResults = SuatChieu::whereHas('phim', function ($subQuery) use ($query) {
             $subQuery->where('ten_phim', 'LIKE', "%{$query}%");
         })->get();
-        $veResults = Ve::whereHas('user', function($subQuery) use ($query) {
+        $veResults = Ve::whereHas('user', function ($subQuery) use ($query) {
             $subQuery->where('ho_ten', 'LIKE', "%{$query}%");
         })->get();
 
         // Trả về view với kết quả tìm kiếm
-        return view('admin.tim-kiem', compact('veResults','suatChieuResults','nguoiDungResults','theLoaiResults','daoDienResults','rapResults','phongchieuResults', 'dienVienResults','phimResults', 'query'));
+        return view('admin.tim-kiem', compact('veResults', 'suatChieuResults', 'nguoiDungResults', 'theLoaiResults', 'daoDienResults', 'rapResults', 'phongchieuResults', 'dienVienResults', 'phimResults', 'query'));
     }
 }
