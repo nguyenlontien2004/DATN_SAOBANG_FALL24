@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('vai_tros', function (Blueprint $table) {
             $table->id();
-            $table->string('ten_vai_tro')->unique();
+            $table->string('ten_vai_tro')->default('member')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

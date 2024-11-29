@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AnhBannerQuangCao;
 use App\Http\Requests\StoreAnhBannerQuangCaoRequest;
 use App\Http\Requests\UpdateAnhBannerQuangCaoRequest;
+use App\Models\BannerQuangCao;
+use Illuminate\Support\Facades\Storage;
 
 class AnhBannerQuangCaoController extends Controller
 {
@@ -13,7 +15,10 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function index()
     {
-        //
+        $anhbanner = AnhBannerQuangCao::withTrashed()->with('banner')
+            ->latest('id')
+            ->paginate(6);
+        return view('admin.contents.anhbanner.list', compact('anhbanner'));
     }
 
     /**
@@ -21,7 +26,9 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function create()
     {
-        //
+        $banner = BannerQuangCao::all();
+
+        return view('admin.contents.anhbanner.add', compact('banner'));
     }
 
     /**
@@ -29,7 +36,20 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function store(StoreAnhBannerQuangCaoRequest $request)
     {
-        //
+        $anhbanner = $request->all();
+
+        if ($request->hasFile('hinh_anh')) {
+            $hinhanh = $request->file('hinh_anh')->store('uploads/anhbanner', 'public');
+        } else {
+            $hinhanh = null;
+        }
+
+        $anhbanner['hinh_anh'] = $hinhanh;
+
+        AnhBannerQuangCao::create($anhbanner);
+
+        return redirect()->route('anh-banner-quang-cao.index')
+            ->with('success', 'Thêm ảnh banner thành công');
     }
 
     /**
@@ -37,7 +57,8 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function show(AnhBannerQuangCao $anhBannerQuangCao)
     {
-        //
+        $vitri = BannerQuangCao::all();
+        return view('admin.contents.anhbanner.show', compact('anhBannerQuangCao', 'vitri'));
     }
 
     /**
@@ -45,7 +66,8 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function edit(AnhBannerQuangCao $anhBannerQuangCao)
     {
-        //
+        $vitri = BannerQuangCao::all();
+        return view('admin.contents.anhbanner.edit', compact('anhBannerQuangCao', 'vitri'));
     }
 
     /**
@@ -53,7 +75,24 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function update(UpdateAnhBannerQuangCaoRequest $request, AnhBannerQuangCao $anhBannerQuangCao)
     {
-        //
+        $anhbanner = $request->all();
+
+        if ($request->hasFile('hinh_anh')) {
+            if ($anhBannerQuangCao->hinhanh) {
+                Storage::disk('public')->delete($anhBannerQuangCao->hinhanh);
+            }
+
+            $hinhanh = $request->file('hinh_anh')->store('uploads/baiviet', 'public');
+        } else {
+            $hinhanh = $anhBannerQuangCao->hinhanh;
+        }
+
+        $anhbanner['hinh_anh'] = $hinhanh;
+
+        $anhBannerQuangCao->update($anhbanner);
+
+        return redirect()->route('anh-banner-quang-cao.index')
+            ->with('success', 'Sửa thành công');
     }
 
     /**
@@ -61,6 +100,32 @@ class AnhBannerQuangCaoController extends Controller
      */
     public function destroy(AnhBannerQuangCao $anhBannerQuangCao)
     {
-        //
+        $anhBannerQuangCao->delete();
+        return redirect()->route('anh-banner-quang-cao.index')
+            ->with('success', 'Ẩn danh mục thành công');
+    }
+
+    public function restore($id)
+    {
+        $anhBannerQuangCao = AnhBannerQuangCao::onlyTrashed()->findOrFail($id);
+
+        $anhBannerQuangCao->restore();
+
+        return redirect()->route('anh-banner-quang-cao.index')
+            ->with('success', 'Khôi phục danh mục thành công');
+    }
+
+    public function forceDelete($id)
+    {
+        $anhBannerQuangCao = AnhBannerQuangCao::onlyTrashed()->findOrFail($id);
+
+        $anhBannerQuangCao->forceDelete();
+
+        return redirect()->route('anh-banner-quang-cao.index')
+            ->with('success', 'Xóa danh mục thành công');
+    }
+
+    public function slide(){
+        
     }
 }

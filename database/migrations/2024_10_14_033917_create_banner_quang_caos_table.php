@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('vi_tri');
             $table->text('mo_ta');
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
