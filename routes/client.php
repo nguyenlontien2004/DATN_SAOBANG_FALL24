@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('dat-ve/{id}/{date}', [DatVeController::class, 'datve']);
 Route::get('thanh-toan/{id}/{date}', [DatVeController::class, 'thanhToan'])->middleware('auth');
 Route::post('online-checkOut', [DatVeController::class, 'checkViOnline'])->middleware('auth')->name('checkViOnline');

@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('ten_phim');
             $table->text('mo_ta');
             $table->integer('thoi_luong');
+            $table->integer('do_tuoi');
+            $table->string('ngon_ngu');
+            $table->decimal('gia_phim', 10, 2);
             $table->integer('luot_xem_phim')->default(0);
             $table->date('ngay_khoi_chieu');
             $table->date('ngay_ket_thuc')->nullable();

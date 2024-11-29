@@ -70,7 +70,7 @@
                     </div>
                 </form>
                 <div class="card-footer">
-                    <a href="{{ route('bai-viet-tin-tuc.index') }}" class="btn btn-danger">Quay lại</a>
+                    <a href="{{ route('bai-viet-tin-tuc.index') }}" class="btn btn-danger">Cancel</a>
                 </div>
             </div>
         </div>

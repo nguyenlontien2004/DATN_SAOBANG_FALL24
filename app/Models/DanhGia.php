@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DanhGia extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
+=======
 
     protected $table = 'danh_gias';
 
@@ -26,4 +28,5 @@ class DanhGia extends Model
     {
         return $this->belongsTo(NguoiDung::class);
     }
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
 }

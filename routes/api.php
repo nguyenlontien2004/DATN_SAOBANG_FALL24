@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\MaGiamGiaController;
+use App\Models\SuatChieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuatChieuController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('add-ma-giam-gia', [MaGiamGiaController::class, 'store']);
+
+Route::get('/phim/{phim_id}/dates', [SuatChieuController::class, 'getPhimDates']);

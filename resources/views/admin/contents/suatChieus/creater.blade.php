@@ -39,24 +39,41 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="ngay" class="form-label">Ngày</label>
+                            <input type="date" class="form-control" id="ngay" name="ngay"
+                                value="{{ old('ngay') }}">
+                        </div>
+                        <div class="col-md-4">
                             <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
-                            <input type="number" class="form-control" id="gio_bat_dau" name="gio_bat_dau" required>
+
+                            <input type="time" class="form-control" id="gio_bat_dau" name="gio_bat_dau"
+                                value="{{ old('gio_bat_dau') }}">
+                            @error('gio_bat_dau')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
                             <input type="number" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc" required>
                         </div>
                     </div>
-
-                    <div class="mb-3">
+                    
+                    <div class="m-3 ">
+                        @error('phim_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    {{-- <div class="mb-3">
                         <label for="trang_thai" class="form-label">Trạng Thái</label>
                         <select class="form-select" id="trang_thai" name="trang_thai" required>
                             <option value="1">Hoạt động</option>
                             <option value="0">Không hoạt động</option>
                         </select>
-                    </div>
+
+                    </div> --}}
 
                     <button type="submit" class="btn btn-primary">Thêm mới Suất Chiếu</button>
                     <a href="{{ route('suatChieu.index') }}" class="btn btn-secondary">Quay lại</a>

@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 
 class RapController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $raps = Rap::orderBy('id', 'desc')->get(); 
-        return view('admin.contents.raps.index', compact('raps')); 
+         // Lấy query tìm kiếm từ request
+    $query = $request->query('query'); 
 
+    // Nếu có query, tìm kiếm theo id, ngược lại lấy toàn bộ danh sách
+    if ($query) {
+        $raps = Rap::where('id', $query)->orderBy('id', 'desc')->get();
+    } else {
+        $raps = Rap::orderBy('id', 'desc')->get();
+    }
+
+    // Trả về view cùng với dữ liệu
+    return view('admin.contents.raps.index', compact('raps'));
     }
     public function create()
     {

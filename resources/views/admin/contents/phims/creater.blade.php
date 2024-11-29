@@ -23,12 +23,38 @@
                         <label for="ten_phim" class="form-label">Tên Phim</label>
                         <input type="text" class="form-control" id="ten_phim" name="ten_phim" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="gia_phim" class="form-label">Gía Phim</label>
+                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
+                            value="{{ old('gia_phim') }}">
+                        @error('gia_phim')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <div class="mb-3">
                         <label for="mo_ta" class="form-label">Mô Tả</label>
                         <textarea class="form-control" id="mo_ta" name="mo_ta"></textarea>
                     </div>
-
+                   <!-- đây nha  phần thiếu-->
+            
+                   
+                   <div class="mb-3 row">
+                        <div class="col-md-4">
+                            <label for="do_tuoi" class="form-label">Độ Tuổi</label>
+                            <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
+                                value="{{ old('do_tuoi') }}">
+                            @error('do_tuoi')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label>
+                            <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
+                                value="{{ old('ngon_ngu') }}">
+                            @error('ngon_ngu')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                     <div class="mb-3 row">
                         <div class="col-md-6">
                             <label for="thoi_luong" class="form-label">Thời Lượng (phút)</label>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PhongChieu;
-use App\Http\Requests\StorePhongChieuRequest;
-use App\Http\Requests\UpdatePhongChieuRequest;
 use App\Models\Rap;
 use App\Models\GheNgoi;
+use App\Models\PhongChieu;
+use Illuminate\Http\Request;
+use App\Http\Requests\StorePhongChieuRequest;
+use App\Http\Requests\UpdatePhongChieuRequest;
 
 class PhongChieuController extends Controller
 {
@@ -14,13 +15,35 @@ class PhongChieuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $list = PhongChieu::query()
-            ->select(['id', 'rap_id', 'ten_phong_chieu', 'trang_thai', 'deleted_at'])
-            ->with('rap:id,ten_rap')->get();
+    // public function index()
+    // {
+    //     $list = PhongChieu::query()
+    //         ->select(['id', 'rap_id', 'ten_phong_chieu', 'trang_thai', 'deleted_at'])
+    //         ->with('rap:id,ten_rap')->get();
 
-        return view(self::PATH_VIEW . __FUNCTION__, compact(['list']));
+    //     return view(self::PATH_VIEW . __FUNCTION__, compact(['list']));
+    // }
+    public function index(Request $request)
+    {
+        // Lấy query từ request
+        $query = $request->query('query');
+
+        // Nếu có query, lọc theo id, ngược lại lấy tất cả
+        if ($query) {
+            $list = PhongChieu::query()
+                ->where('id', $query)
+                ->select(['id', 'rap_id', 'ten_phong_chieu', 'trang_thai', 'deleted_at'])
+                ->with('rap:id,ten_rap')
+                ->get();
+        } else {
+            $list = PhongChieu::query()
+                ->select(['id', 'rap_id', 'ten_phong_chieu', 'trang_thai', 'deleted_at'])
+                ->with('rap:id,ten_rap')
+                ->get();
+        }
+
+        // Trả về view cùng với dữ liệu
+        return view(self::PATH_VIEW . 'index', compact('list'));
     }
     public function listSoftDelete()
     {
@@ -83,11 +106,12 @@ class PhongChieuController extends Controller
         $phongChieu->update($data);
         return back()->with('success', 'Đã thêm một phòng chiếu vào hệ thống rạp');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
-    public function restore($id){
+    public function restore($id)
+    {
         $restore = PhongChieu::query()->onlyTrashed()->find($id);
         $restore->deleted_at = null;
         $restore->save();

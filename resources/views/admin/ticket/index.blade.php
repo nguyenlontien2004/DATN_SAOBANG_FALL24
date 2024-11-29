@@ -64,6 +64,7 @@
                                                             @endforeach
                                                         </strong></span>
                                                     <span>Loại: <strong>
+
                                                             @if ($item->detailTicket[0]->seat->the_loai == 'thuong')
                                                                 Thường
                                                             @elseif($item->detailTicket[0]->seat->the_loai == 'vip')

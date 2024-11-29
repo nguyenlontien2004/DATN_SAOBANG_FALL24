@@ -26,16 +26,14 @@
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header">
                     <div class="card-title">Danh sách ảnh banner quảng cáo</div>
-                    <a href="{{ route('anh-banner-quang-cao.create') }}" class="btn btn-primary">Thêm ảnh banner
-                        quảng cáo</a>
-                </div>
-                <div class="thongbao text-center">
-                    @if (session('success'))
-                        <span class="alert alert-success font-weight-bold"
-                            style="font-size: 1.2rem;">{{ session('success') }}</span>
-                    @endif
+                    <div class="thongbao text-center">
+                        @if (session('success'))
+                            <span class="text text-success font-weight-bold"
+                                style="font-size: 1.2rem;">{{ session('success') }}</span>
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <table class="table mt-3">
@@ -86,7 +84,7 @@
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 <!-- Nút chỉnh sửa -->
                                                 <a href="{{ route('anh-banner-quang-cao.edit', $abn->id) }}"
-                                                    class="btn btn-warning btn-sm me-1">Sửa</a>
+                                                    class="btn btn-warning btn-sm me-1">Edit</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
                                                 <form action="{{ route('anh-banner-quang-cao.destroy', $abn->id) }}"
                                                     method="POST" class="d-inline">

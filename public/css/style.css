@@ -779,6 +779,7 @@ p.add_p1 {
     height: 300px;
     width: 1px;
     left: 50%;
+    top: 0;
     background-color: #e7e8e9;
 }
 
@@ -825,9 +826,9 @@ p.add_p1 {
 
 .container5999 {
     display: flex;
-    /* padding: 20px;
+    padding: 20px;
     max-width: 1200px;
-    margin: auto; */
+    margin: auto;
 }
 .sidebar6669,
 .content {
@@ -837,7 +838,7 @@ p.add_p1 {
     padding: 20px;
 }
 .sidebar6669 {
-    width: 350px;
+    width: 250px;
     margin-right: 20px;
     text-align: center;
 }
@@ -1023,13 +1024,23 @@ h5 {
     border: 1px solid #000000; /* Viền đen khi hover */
 }
 /* Danh sách vé */
-
+.container5999 {
+    display: flex;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
 .sidebar6669,
 .content {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 20px;
+}
+.sidebar6669 {
+    width: 250px;
+    margin-right: 20px;
+    text-align: center;
 }
 .sidebar6669 img {
     width: 100px;
