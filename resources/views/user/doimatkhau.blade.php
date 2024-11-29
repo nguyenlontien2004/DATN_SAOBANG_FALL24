@@ -2,31 +2,68 @@
 
 @section('content')
     <div class="container5999">
+
+        @php
+            $user = Auth::user();
+        @endphp
+
         <div class="sidebar6669">
-            <img alt="Ảnh đại diện người dùng"
-                src="https://storage.googleapis.com/a1aa/image/u9y6E0sefgilO0ViSNJkVoITvkptQM6YskJidpWdJi4iLFlTA.jpg" />
-            <div class="username">Tên người dùng</div>
+            <div class="form-group mb-3 d-flex justify-content-center align-items-center">
+                <img alt="Ảnh đại diện người dùng" src="{{ asset('storage/' . $user->anh_dai_dien) }}"
+                    style="border-radius: 50%; height: 100px; width: 100px; object-fit: cover" />
+            </div>
+            <div class="username">{{ $user->ho_ten }}</div>
             <hr />
-            <a href="{{ route('admin.ttadmin') }}">Thông tin cá nhân</a>
+            <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
             <a href="#">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
+            <a href="" class="text-danger">
+                <form action="{{ route('dangxuat') }}" method="POST">
+                    @csrf
+                    <button type="submit">Đăng xuất</button>
+                </form>
+            </a>
         </div>
+
         <div class="content">
+
             <h1>Đổi mật khẩu</h1>
-            <div class="form-group">
-                <label for="old-password">Mật khẩu cũ</label>
-                <input type="password" id="old-password" placeholder="Nhập mật khẩu cũ" />
-            </div>
-            <div class="form-group">
-                <label for="new-password">Mật khẩu mới</label>
-                <input type="password" id="new-password" placeholder="Nhập mật khẩu mới" />
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">Xác minh</label>
-                <input type="password" id="confirm-password" placeholder="Xác minh mật khẩu mới" />
-            </div>
-            <button class="btn123">Đổi mật khẩu</button>
+
+            <form action="{{ route('capnhatmk') }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="old-password">Mật khẩu cũ</label>
+                    <input type="password" id="old-password" name="mat_khau_cu" value="{{ old('mat_khau_cu') }}"
+                        placeholder="Nhập mật khẩu cũ" />
+                    @error('mat_khau_cu')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Mật khẩu mới</label>
+                    <input type="password" id="new-password" name="mat_khau_moi" value="{{ old('mat_khau_moi') }}"
+                        placeholder="Nhập mật khẩu mới" />
+                    @error('mat_khau_moi')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Xác minh mật khẩu mới</label>
+                    <input type="password" id="confirm-password" name="mat_khau_moi_confirmation"
+                        value="{{ old('mat_khau_moi_confirmation') }}" placeholder="Xác minh mật khẩu mới" />
+                    @error('mat_khau_moi_confirmation')
+                        <div class="text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <button class="btn123">Đổi mật khẩu</button>
+            </form>
         </div>
     </div>
 @endsection

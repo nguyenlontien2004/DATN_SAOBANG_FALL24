@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthAdminRequest;
+use App\Http\Requests\UpdateNguoiDungRequest;
 use App\Models\NguoiDung;
 use App\Models\VaiTro;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,7 +28,7 @@ class AdminController extends Controller
         return view('admin.contents.profile.edit', compact('vaitro', 'admin'));
     }
 
-    public function editThongTin(AuthAdminRequest $request)
+    public function editThongTin(UpdateNguoiDungRequest $request)
     {
 
         $dataNguoiDung = $request->only([
@@ -53,9 +55,11 @@ class AdminController extends Controller
          * @var NguoiDung $nguoiDung
          */
 
+        // dd($dataNguoiDung);
+
         $nguoiDung->update($dataNguoiDung);
 
         return redirect()->route('admin.ttadmin')
-            ->with('sucess', 'Sửa thông tin thành công');
+            ->with('success', 'Sửa thông tin thành công');
     }
 }
