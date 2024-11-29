@@ -12,11 +12,11 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Tên Suất Chiếu</th>
+                        <th scope="col">Phim</th>
+                        {{-- <th scope="col">Tên Suất Chiếu</th> --}}
                         <th scope="col">Thời Gian Bắt Đầu</th>
                         <th scope="col">Thời Gian Kết Thúc</th>
                         <th scope="col">Phòng Chiếu</th>
-                        <th scope="col">Phim</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
@@ -25,11 +25,12 @@
                     @foreach ($suatChieus as $index => $suatChieu)
                         <tr>
                             <td>{{ $suatChieu->id }}</td>
-                            <td>Suất Chiếu {{ $suatChieu->gio_bat_dau }}</td>
-                            <td>{{ $suatChieu->gio_bat_dau }}</td>
-                            <td>{{ $suatChieu->gio_ket_thuc }}</td>
-                            <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
                             <td>{{ $suatChieu->phim->ten_phim }}</td>
+                            <td>{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}</td>
+
+                            <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>
+
                             <td class="text-center">
                                 @if ($suatChieu->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>
@@ -51,6 +52,9 @@
                                             </svg>
                                         </button>
                                     </form>
+                                    <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">Sửa</a>
+                                    <a class="btn btn-info" href="{{ route('suatChieu.show', $suatChieu->id) }}">Xem</a>
+                                    {{-- 
                                     <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -59,7 +63,7 @@
                                             <path fill-rule="evenodd"
                                                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                         </svg>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </td>
                         </tr>

@@ -1,3 +1,8 @@
+<div class="container-fluid ">
+    <div class="d-flex justify-content-between align-items-center">
+        <img src="{{ asset('img/logo.png') }}" alt="Logo" height="60px" class="ms-5">
+        <div class="d-flex align-items-center">
+
 <style>
     /* Container: giảm khoảng cách giữa logo và navbar */
     .container {
@@ -114,6 +119,7 @@
                     </ul>
 
         <div class="d-flex align-items-center mt-3 ms-auto">
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
             <form class="d-flex" method="GET" action="{{ route('timkiem') }}">
                 <input class="form-control me-2" type="search" name="timkiem" placeholder="Tìm kiếm..."
                     aria-label="Search" value="{{ request('timkiem') }}">
@@ -121,22 +127,18 @@
             </form>
             @if (Auth::check())
                 <div class="tt ms-4">
-                    <a href="{{ route('thongtin3') }}">
-                        <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
-                            style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
-                    </a>
+                    <a href="{{ route('user.nguoidung') }}"> <img src="" alt="đại diện"></a>
                 </div>
             @else
                 <ul class="menu d-flex align-items-center mb-0 ms-3">
                     <li class="xam ms-2">
-                        <a class="btn btn-secondary btn-custom" href="{{ route('dangky') }}">Đăng Ký</a>
+                        <a class="btn-dk" href="{{ route('dangky') }}">Đăng Ký</a>
                     </li>
                     <li class="xam ms-2">
-                        <a class="btn btn-secondary btn-custom" href="{{ route('dangnhap') }}">Đăng Nhập</a>
+                        <a class="btn-dk" href="{{ route('login') }}">Đăng Nhập</a>
                     </li>
                 </ul>
             @endif
-
         </div>
     </div>
 </div>

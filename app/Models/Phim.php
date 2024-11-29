@@ -17,6 +17,12 @@ class Phim extends Model
         'ngay_khoi_chieu',
         'ngay_ket_thuc',
         'trailer',
+<<<<<<< HEAD
+        'ngon_ngu',
+        'do_tuoi',
+        'gia_phim',
+=======
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
         'trang_thai',
     ];
 
@@ -39,6 +45,8 @@ class Phim extends Model
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
     }
+<<<<<<< HEAD
+=======
 
     public function binhLuans()
     {
@@ -49,4 +57,5 @@ class Phim extends Model
     {
         return $this->hasMany(DanhGia::class);
     }
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
 }

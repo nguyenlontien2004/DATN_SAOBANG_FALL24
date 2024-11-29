@@ -29,18 +29,20 @@
                     </div>
                     <!-- End Logo Header -->
                 </div>
-
-                <!-- End Logo Header -->
-                   <!-- Layout đúng khi sửa -->
-                   <!-- Navbar Header -->
-            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-                <div class="container-fluid">
-                    <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button type="button" class="btn btn-search pe-1" onclick="search()">
-                                    <i class="fa fa-search search-icon"></i>
-                                </button>
+                <!-- Navbar Header -->
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-search pe-1" onclick="search()">
+                                        <i class="fa fa-search search-icon"></i>
+                                    </button>
+                                </div>
+                                <form action="{{ route('search') }}" method="GET">
+                                    <input type="text" id="searchInput" name="query" placeholder="Tìm kiếm ..."
+                                        class="form-control" value="{{ old('query', $query ?? '') }}" oninput="search()" />
+                                </form>
                             </div>
                         </nav>
 
@@ -261,20 +263,20 @@
                                     </div>
                                 </div>
                             </li>
-
-                            @php
+              @php
                                 $user = Auth::user();
                             @endphp
+
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="{{ asset('storage/' . $user->hinh_anh) }}" alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/profile.jpg') }}"
+                                            alt="..." class="avatar-img rounded-circle" />
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Xin chào, {{ $user->ho_ten }}</span>
-                                        {{-- <span class="fw-bold">{{ Auth::user()->ho_ten }}</span> --}}
+                                        <span class="op-7">Hi,</span>
+                                        <span class="fw-bold">Hizrian</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -282,31 +284,26 @@
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-                                                    <img src="{{ asset('storage/' . $user->hinh_anh) }}"
+                                                    <img src="{{ asset('kaiadmin-lite-1.2.0/assets/img/profile.jpg') }}"
                                                         alt="image profile" class="avatar-img rounded" />
                                                 </div>
                                                 <div class="u-text">
-                                                    <h4>{{ $user->ho_ten }}</h4>
-                                                    <p class="text-muted">{{ $user->email }}</p>
-                                                    {{-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
-                                                        Profile</a> --}}
+                                                    <h4>Hizrian</h4>
+                                                    <p class="text-muted">hello@example.com</p>
+                                                    <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
+                                                        Profile</a>
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ route('admin.ttadmin') }}">Hồ sơ của
-                                                tôi</a>
-                                            {{-- <a class="dropdown-item" href="#">My Balance</a>
+                                            <a class="dropdown-item" href="#">My Profile</a>
+                                            <a class="dropdown-item" href="#">My Balance</a>
                                             <a class="dropdown-item" href="#">Inbox</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Account Setting</a> --}}
+                                            <a class="dropdown-item" href="#">Account Setting</a>
                                             <div class="dropdown-divider"></div>
-                                            <form action="{{ route('admin.dangxuat') }}" method="POST">
-                                                @csrf
-                                                <button class="btn btn-secondary btn-custom ms-2" type="submit">Đăng
-                                                    xuất</button>
-                                            </form>
+                                            <a class="dropdown-item" href="#">Logout</a>
                                         </li>
                                     </div>
                                 </ul>

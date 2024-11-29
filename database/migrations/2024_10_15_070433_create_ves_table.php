@@ -17,9 +17,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ves', function (Blueprint $table) {
+<<<<<<< HEAD
+            $table->id();
+=======
             $table->id(); 
             $table->string('ma_code_ve')->nullable();
             $table->text('qr_code')->nullable();
+>>>>>>> 92d27022c6f51e182da2946bed8af0793dfa03e9
             $table->foreignIdFor(NguoiDung::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(SuatChieu::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(MaGiamGia::class)->nullable()->constrained()->cascadeOnDelete();

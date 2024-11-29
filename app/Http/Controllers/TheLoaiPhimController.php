@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 class TheLoaiPhimController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        $query = $request->query('query');
+
+        // Nếu có query, lọc theo id, ngược lại lấy tất cả
+        if ($query) {
+            $theLoaiPhims = TheLoaiPhim::where('id', $query)->get(); 
+        } else {
+            $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        }
+       
         return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
     }
     public function create()

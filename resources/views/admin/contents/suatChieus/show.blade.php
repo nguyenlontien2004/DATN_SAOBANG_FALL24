@@ -14,13 +14,14 @@
                 Quay lại
             </a>
             <div class="d-flex justify-content-center">
-                <form method="POST" action="{{ route('phim.destroy', $phim->id) }}"
+                <form method="POST" action="{{ route('suatChieu.destroy', $suatChieu->id) }}"
                     onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Xóa</button>
                 </form>
-                <a class="btn btn-warning" href="{{ route('phim.edit', $phim->id) }}">Sửa</a>
+                <a class="btn btn-warning" href="{{ route('suatChieu.edit', $suatChieu->id) }}">Sửa</a>
+
             </div>
         </div>
 
@@ -38,13 +39,14 @@
                     <div class="movie-rating mb-3">
                         <span class="badge bg-warning text-dark">Đánh giá: </span>
                         <span class="fs-4">6.4</span>
-
                     </div>
+
                     <div class="movie-Price mb-3">
-                        <span class="badge bg-info text-dark fs-4 p-2">Giá Phim : {{ $phim->gia_phim }}</span>
+                        <span class="badge bg-info text-dark fs-4 p-2">Giá Phim :
+                            {{ number_format($phim->gia_phim, 0, ',', '.') }} VNĐ</span>
                     </div>
-                    <div class="movie-info">
 
+                    <div class="movie-info">
                         <div class="d-flex justify-content-left mb-2">
                             <div class="mr-5">
                                 <strong>Đạo diễn</strong>
@@ -70,14 +72,21 @@
                         </div>
                         <div class="d-flex justify-content-left mb-2">
                             <div class="mr-5">
-                                <strong>Ngày chiếu</strong>
-                                <p>{{ $phim->ngay_khoi_chieu }}</p>
+                                <strong>Thời Gian Bắt Đầu</strong><br>
+                                <span
+                                    class="badge bg-info text-dark fs-4 p-2">{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}</span>
                             </div>
                             <div class="border-left mx-4" style="height: 50px;"></div>
                             <div>
-                                <strong>Ngày kết thúc</strong>
-                                <p>{{ $phim->ngay_ket_thuc }}</p>
+                                <strong>Thời Gian Kết Thúc</strong><br>
+                                <span
+                                    class="badge bg-danger text-dark fs-4 p-2">{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}</span>
                             </div>
+                        </div>
+                        <div class="movie-Price mb-3">
+                            <strong>Phòng Chiếu</strong> <br>
+                            <span class="badge bg-success text-dark fs-3 "> {{ $phongChieu->ten_phong_chieu }} </span>
+
                         </div>
                         <div class="mb-2">
                             <strong>Thể loại</strong>
@@ -89,34 +98,10 @@
                                 @endforeach
                             </p>
                         </div>
-                        <div class="mb-2">
+                        {{-- <div class="mb-2">
                             <strong>Quốc gia</strong>
                             <p>{{ $phim->quoc_gia }}</p>
-                        </div>
-                        <div class="mb-2">
-                            <strong>Mô Tả</strong>
-                            <div>{!! $phim->mo_ta !!}</div>
-                        </div>
-                        <div class="mb-3">
-                            <span class="badge text-dark fs-4 p-2">
-                                @if ($phim->trang_thai == 1)
-                                    <span class="text-success">* Hoạt động</span>
-                                @else
-                                    <span class="text-danger">x Không hoạt động</span>
-                                @endif
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="movie-buttons">
-                        <button class="btn btn-danger" data-toggle="modal">
-                            <i class="fas fa-play"></i>
-                            Xem trailer
-                        </button>
-                        <button class="btn btn-warning">
-                            <i class="fas fa-star"></i>
-                            Xem review
-                        </button>
+                        </div> --}}
                     </div>
                 </div>
             </div>

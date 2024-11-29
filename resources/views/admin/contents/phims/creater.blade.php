@@ -23,6 +23,14 @@
                         <label for="ten_phim" class="form-label">Tên Phim</label>
                         <input type="text" class="form-control" id="ten_phim" name="ten_phim" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="gia_phim" class="form-label">Gía Phim</label>
+                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
+                            value="{{ old('gia_phim') }}">
+                        @error('gia_phim')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                     <div class="mb-3">
                         <label for="mo_ta" class="form-label">Mô Tả</label>

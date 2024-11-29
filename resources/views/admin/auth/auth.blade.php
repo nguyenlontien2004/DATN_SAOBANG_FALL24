@@ -1,7 +1,8 @@
 <html lang="en"
-    class="wf-publicsans-n3-active wf-publicsans-n4-active wf-publicsans-n5-active wf-publicsans-n6-active wf-publicsans-n7-active wf-fontawesome5solid-n4-active wf-fontawesome5regular-n4-active wf-fontawesome5brands-n4-active wf-simplelineicons-n4-active wf-active">
+  class="wf-publicsans-n3-active wf-publicsans-n4-active wf-publicsans-n5-active wf-publicsans-n6-active wf-publicsans-n7-active wf-fontawesome5solid-n4-active wf-fontawesome5regular-n4-active wf-fontawesome5brands-n4-active wf-simplelineicons-n4-active wf-active">
 
 <head>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login &amp; Register - Kaiadmin Bootstrap 5 Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
@@ -28,10 +29,10 @@
         });
     </script>
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/plugins.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/kaiadmin.min.css') }}">
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/plugins.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/kaiadmin.min.css') }}">
 </head>
 <style>
     .inputAuth {
@@ -48,9 +49,9 @@
     }
 </style>
 
-<body class="login"
-    style="background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/74d734ca-0eab-4cd9-871f-bca01823d872/web/VN-vi-20241021-TRIFECTA-perspective_96a4f47f-aaa1-4b9a-b38b-919c90b66b80_large.jpg');
+<body class="login" style="background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/74d734ca-0eab-4cd9-871f-bca01823d872/web/VN-vi-20241021-TRIFECTA-perspective_96a4f47f-aaa1-4b9a-b38b-919c90b66b80_large.jpg');
   backdrop-filter: brightness(0.5);background-repeat: no-repeat;background-size: cover;background-position: center;">
+
     <div class="wrapper wrapper-login">
         <!-- Đăng nhập tài khoản -->
         <div class="container container-login animated fadeIn"
@@ -182,26 +183,26 @@
     </div>
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 
-    <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/kaiadmin.min.js') }}"></script>
+  <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/popper.min.js') }}"></script>
+  <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/kaiadmin.min.js') }}"></script>
 
 
 </body>
 <script>
-    let iconShowPasLogin = document.querySelector('.show-passwordLogin');
-    let inputpassLogin = document.querySelector('.inputPasLogin')
-    let iconEyeLogin = document.querySelector('.iconEyeLogin')
-    let iconEyeOffLogin = document.querySelector('.iconEyeOffLogin')
-    iconShowPasLogin.addEventListener('click', function() {
-        if (inputpassLogin.getAttribute("type") == 'password') {
-            iconEyeLogin.style.display = 'none'
-            iconEyeOffLogin.style.display = 'block'
-        } else {
-            iconEyeLogin.style.display = 'block'
-            iconEyeOffLogin.style.display = 'none'
-        }
-    })
+  let iconShowPasLogin = document.querySelector('.show-passwordLogin');
+  let inputpassLogin = document.querySelector('.inputPasLogin')
+  let iconEyeLogin = document.querySelector('.iconEyeLogin')
+  let iconEyeOffLogin = document.querySelector('.iconEyeOffLogin')
+  iconShowPasLogin.addEventListener('click', function () {
+    if (inputpassLogin.getAttribute("type") == 'password') {
+      iconEyeLogin.style.display = 'none'
+      iconEyeOffLogin.style.display = 'block'
+    } else {
+      iconEyeLogin.style.display = 'block'
+      iconEyeOffLogin.style.display = 'none'
+    }
+  })
 </script>
 
 </html>

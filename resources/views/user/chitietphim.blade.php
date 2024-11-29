@@ -113,37 +113,36 @@
                             </select>
                         </div>
                     </div>
+                <!-- Nội dung lịch chiếu -->
+                <div class="border p-3 mb-3">
+                    <div class="d-flex justify-content-around mb-2">
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                        <div><button class="btn btn-outline-info">20/9</button></div>
+                    </div>
+                    <div class="border p-2">
+                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                    </div>
+                    <div class="border p-2">
+                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                    </div>
+                    <div class="border p-2">
+                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                    </div>
+                    <div class="border p-2">
+                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
 
-                    <!-- Nội dung lịch chiếu -->
-                    <div class="border p-3 mb-3">
-                        <div class="d-flex justify-content-around mb-2">
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                            <div><button class="btn btn-outline-info">20/9</button></div>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
-                        <div class="border p-2">
-                            <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                            <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                        </div>
                     </div>
                 </div>
             </div>
-
+        </div>
             <!-- Phần phim đang chiếu bên phải -->
             <div class="col-md-4">
                 <div class="border p-3 bg-light rounded">

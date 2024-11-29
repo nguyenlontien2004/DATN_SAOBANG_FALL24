@@ -60,6 +60,12 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Payment and Total Section -->
+            <div class="col-md-6 mb-4">
+                <h5>Phương thức thanh toán</h5>
+                <form>
+                    <div class="d-flex justify-content-start align-items-center gap-3 mb-3">
                         <div class="col-12 mt-4">
                             <div class="table-responsive table-food">
                                 <table>
@@ -117,11 +123,9 @@
                                         <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->so_dien_thoai }}"
                                             id="exampleInputEmail1" disabled>
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -129,6 +133,17 @@
                     <div class="mb-3">
                         <label for="discount-code" class="form-label">Mã giảm giá:</label>
                         <input type="text" class="form-control" id="discount-code" placeholder="Nhập mã giảm giá..." />
+
+                    {{-- </div>
+
+                    <h5 class="total-price">Tổng tiền</h5>
+                    <p>Tổng sản phẩm: 2</p>
+                    <p>Tổng tiền hàng: 15.000.000đ</p>
+                    <p>Thành tiền sau khi áp mã giảm giá: 15.030.000đ</p>
+
+                    <div class="text-center mt-5">
+                        <a href="/" class="btn-custom56"> Mua vé </a>
+                    </div> --}}
                     </div>
                                     </tbody>
                                 </table>

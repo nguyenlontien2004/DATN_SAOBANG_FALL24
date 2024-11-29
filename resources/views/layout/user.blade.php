@@ -18,9 +18,7 @@
     </div>
      --}}
     <main>
-        <div class="container mb-3 mt-4">
-            @yield('content')
-        </div>
+        @yield('content')
     </main>
 
     <!-- Footer -->

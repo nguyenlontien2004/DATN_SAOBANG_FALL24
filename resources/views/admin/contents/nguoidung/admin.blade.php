@@ -19,14 +19,14 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Người dùng</a>
+                    <a href="#">Thông tin admin</a>
                 </li>
             </ul>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Chi tiết người dùng</h4>
+                <h4 class="card-title">Thông tin admin</h4>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -70,8 +70,6 @@
                         @foreach ($nguoiDung->vaiTros as $vt)
                             {{ $vt->ten_vai_tro }}
                         @endforeach
-                    @else
-                        Không có vai trò
                     @endif
                 </div>
             </div>

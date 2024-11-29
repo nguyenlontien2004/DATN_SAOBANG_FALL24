@@ -1,9 +1,5 @@
 @extends('layout.user')
 
-{{-- @section('title')
-    {{ $title }}
-@endsection --}}
-
 @section('content')
     <div class="slide container-fluid">
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -82,8 +78,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
         </section>
     </main>
     <!-- lịch chiếu phim -->
@@ -270,11 +264,11 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="flex mt-2 justify-center">
+        <div class="flex mt-2 justify-center">
             <button class="bg-pink-600 text-white w-52 py-2 rounded-lg">
                 Xem tất cả
             </button>
-        </div> --}}
+        </div>
     </div>
     <!-- banner 2 -->
     @if ($bannerGiua)

@@ -59,8 +59,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
-                        <a href="{{ route('anh-banner-quang-cao.index') }}" class="btn btn-danger">Quay lại</a>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a href="{{ route('anh-banner-quang-cao.index') }}" class="btn btn-danger">Cancel</a>
                     </div>
                 </form>
             </div>

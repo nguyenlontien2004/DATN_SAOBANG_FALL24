@@ -48,18 +48,32 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
-                        <input type="number" class="form-control" id="gio_bat_dau" name="gio_bat_dau"
-                            value="{{ $suatChieu->gio_bat_dau }}" required>
-                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-4">
+                            <label for="ngay" class="form-label">Ngày</label>
+                            <input type="date" class="form-control" id="ngay" name="ngay"
+                                value="{{ old('ngay', isset($suatChieu) ? \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('Y-m-d') : '') }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
+                            <input type="time" class="form-control" id="gio_bat_dau" name="gio_bat_dau"
+                                value="{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}">
+                            @error('gio_bat_dau')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
-                        <input type="number" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc"
-                            value="{{ $suatChieu->gio_ket_thuc }}" required>
-                    </div>
+                        <div class="col-md-4">
+                            <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
+                            <input type="time" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc"
+                                value="{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}">
+                            @error('gio_ket_thuc')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
+                    </div>
+                    {{-- 
                     <div class="mb-3">
                         <label for="trang_thai" class="form-label">Trạng Thái</label>
                         <select class="form-select" id="trang_thai" name="trang_thai" required>
@@ -68,8 +82,7 @@
                             <option value="0" {{ old('trang_thai', $suatChieu->trang_thai) == 0 ? 'selected' : '' }}>
                                 Không hoạt động</option>
                         </select>
-                    </div>
-
+                    </div> --}}
 
                     <button type="submit" class="btn btn-primary">Cập nhật Suất Chiếu</button>
                     <a href="{{ route('suatChieu.index') }}" class="btn btn-secondary">Quay lại</a>
