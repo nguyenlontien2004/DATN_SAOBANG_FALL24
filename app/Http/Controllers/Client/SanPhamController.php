@@ -130,15 +130,15 @@ class SanPhamController extends Controller
 
         $listday = collect();
 
-            for ($i = 0; $i < 6; $i++) {
-                $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
-                $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
-    
-                $listday->push([
-                    'date' => $date->format('d-m'),
-                    'day' => $dayName
-                ]);
-            }
+        for ($i = 0; $i < 6; $i++) {
+            $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
+            $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
+
+            $listday->push([
+                'date' => $date->format('d-m'),
+                'day' => $dayName
+            ]);
+        }
 
         return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhGiaPhim', 'listday'));
     }
@@ -175,8 +175,9 @@ class SanPhamController extends Controller
     public function DatVe()
     {
         $title = "Đặt vé";
-        return view('user.datve', compact('title'));
+        return view('user.vedat', compact('title'));
     }
+    
     function getCustomDayName($dayName)
     {
         switch ($dayName) {
