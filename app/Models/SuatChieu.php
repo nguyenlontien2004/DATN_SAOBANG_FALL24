@@ -36,4 +36,7 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
+    public function rap(){
+        return $this->hasOneThrough(Rap::class,PhongChieu::class,'id','id','phong_chieu_id');
+    }
 }

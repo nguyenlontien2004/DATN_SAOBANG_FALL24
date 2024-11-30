@@ -20,3 +20,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('broadcast-magiamgia', function () {
     return true;
 });
+Broadcast::channel('seat.{id}.{ngay}', function ($id, $ngay) {
+    return true;
+});

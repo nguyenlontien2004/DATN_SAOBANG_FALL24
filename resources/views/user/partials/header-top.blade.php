@@ -125,7 +125,7 @@
             @if (Auth::check())
                 <div class="tt ms-4">
                     <a href="{{ route('thongtin3') }}">
-                        <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
+                        <img src="{{ asset('storage/' . Auth::user()->hinh_anh) }}" alt="đại diện"
                             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                     </a>
                 </div>

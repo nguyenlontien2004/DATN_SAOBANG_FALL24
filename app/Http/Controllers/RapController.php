@@ -9,18 +9,18 @@ class RapController extends Controller
 {
     public function index(Request $request)
     {
-         // Lấy query tìm kiếm từ request
-    $query = $request->query('query'); 
+        // Lấy query tìm kiếm từ request
+        $query = $request->query('query');
 
-    // Nếu có query, tìm kiếm theo id, ngược lại lấy toàn bộ danh sách
-    if ($query) {
-        $raps = Rap::where('id', $query)->orderBy('id', 'desc')->get();
-    } else {
-        $raps = Rap::orderBy('id', 'desc')->get();
-    }
+        // Nếu có query, tìm kiếm theo id, ngược lại lấy toàn bộ danh sách
+        if ($query) {
+            $raps = Rap::where('id', $query)->orderBy('id', 'desc')->get();
+        } else {
+            $raps = Rap::orderBy('id', 'desc')->get();
+        }
 
-    // Trả về view cùng với dữ liệu
-    return view('admin.contents.raps.index', compact('raps'));
+        // Trả về view cùng với dữ liệu
+        return view('admin.contents.raps.index', compact('raps'));
     }
     public function create()
     {
@@ -33,7 +33,7 @@ class RapController extends Controller
             'dia_diem' => 'required|string|max:255',
             'trang_thai' => 'required|boolean',
         ]);
-    
+
         Rap::create([
             'ten_rap' => $request->ten_rap,
             'dia_diem' => $request->dia_diem,
@@ -53,16 +53,16 @@ class RapController extends Controller
             'dia_diem' => 'required|string|max:255',
             'trang_thai' => 'required|boolean',
         ]);
-    
+
         $rap->update([
             'ten_rap' => $request->ten_rap,
             'dia_diem' => $request->dia_diem,
             'trang_thai' => $request->trang_thai,
         ]);
-    
+
         return redirect()->route('rap.index')->with('success', 'Rạp đã được cập nhật thành công.');
     }
-    
+
     public function destroy(Rap $rap)
     {
         $rap->trang_thai = 0;
