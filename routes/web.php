@@ -49,8 +49,6 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::get('/search', [SearchController::class, 'search'])->name('search');
-
 
 Route::prefix('admin')->group(function () {
   // Thống kê doanh thu theo rạp
@@ -147,7 +145,7 @@ Route::prefix('admin')->group(function () {
   Route::get('chi-tiet-ve/{id}', [VeController::class, 'detail'])->name('admin.ticket.detail');
   Route::get('tao-ve-gia-lap/', [VeController::class, 'create'])->name('admin.ticket.create');
 
-  // Route::resources('phims');
+  // Đạo diễn và diễn viên
   Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
   Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
   Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
@@ -156,10 +154,16 @@ Route::prefix('admin')->group(function () {
   Route::resource('phim', PhimController::class);
   Route::resource('dienVien', DienVienController::class);
 
-
+  // Thể loại phim
   Route::resource('theLoaiPhim', TheLoaiPhimController::class);
+
+  //Rạp chiếu
   Route::resource('rap', RapController::class);
+
+  // Suất chiếu
   Route::resource('suatChieu', SuatChieuController::class);
+
+  Route::get('/search', [SearchController::class, 'search'])->name('search');
 });
 
 // Thành viên

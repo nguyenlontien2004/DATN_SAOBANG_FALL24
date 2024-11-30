@@ -39,8 +39,10 @@
                                         <i class="fa fa-search search-icon"></i>
                                     </button>
                                 </div>
-                                <input type="text" placeholder="Search ..." class="form-control" />
-                            </div>
+                                <form action="{{ route('search') }}" method="GET">
+                                    <input type="text" id="searchInput" name="query" placeholder="Tìm kiếm ..."
+                                        class="form-control" value="{{ old('query', $query ?? '') }}" oninput="search()" />
+                                </form>
                         </nav>
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
