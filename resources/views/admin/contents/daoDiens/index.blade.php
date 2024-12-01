@@ -1,14 +1,14 @@
 @extends('admin.index')
 
 @section('content')
-    <div class="card mt-5">
+    <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="card-title">Danh sách Đạo diễn</div>
             <a href="{{ route('daoDien.create') }}" class="btn btn-primary">Thêm mới Đạo diễn</a>
         </div>
 
         <div class="card-body">
-            <table class="table">
+            <table class="table ">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -17,7 +17,6 @@
                         <th scope="col">Năm sinh</th>
                         <th scope="col">Quốc tịch</th>
                         <th scope="col">Gioi Tính</th>
-                        <th scope="col">Tiểu Sử</th>
                         <th scope="col">Trạng Thái</th>
                         <th scope="col">Hành Động</th>
                     </tr>
@@ -38,7 +37,6 @@
                             <td>{{ \Carbon\Carbon::parse($daoDien->nam_sinh)->format('Y-m-d') }}</td>
                             <td>{{ $daoDien->quoc_tich }}</td>
                             <td>{{ $daoDien->gioi_tinh }}</td>
-                            <td>{{ $daoDien->tieu_su }}</td>
                             <td class="text-center">
                                 @if ($daoDien->trang_thai == 1)
                                     <span class="text-success">* Hoạt động</span>

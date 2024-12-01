@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label for="anh_dao_dien" class="form-label">Ảnh Đạo diễn</label>
-                        <input type="file" class="form-control" id="anh_dao_dien" name="anh_dao_dien" accept="image/*">
+                        <input type="file" class="form-control" id="anh_dao_dien" name="anh_dao_dien" accept="image/*" value="{{ old('anh_dao_dien') }}">
                         @error('anh_dao_dien')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -51,7 +51,6 @@
                                 <option value="Nam" {{ old('gioi_tinh') == 'Nam' ? 'selected' : '' }}>Nam</option>
                                 <option value="Nữ" {{ old('gioi_tinh') == 'Nữ' ? 'selected' : '' }}>Nữ</option>
                                 <option value="Khác" {{ old('gioi_tinh') == 'Khác' ? 'selected' : '' }}>Khác</option>
-                                /-strong/-heart:>:o:-((:-h
                             </select>
                             @error('gioi_tinh')
                                 <div class="text-danger">{{ $message }}</div>
@@ -66,18 +65,6 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-                    {{-- <div class="mb-3">
-                        <label for="trang_thai" class="form-label">Trạng Thái</label>
-                        <select class="form-select" id="trang_thai" name="trang_thai" >
-                            <option value="1">Hoạt động</option>
-                            <option value="0">Không hoạt động</option>
-                        </select>
-                        @error('trang_thai')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
-
                     <button type="submit" class="btn btn-primary">Thêm mới Đạo diễn</button>
                     <a href="{{ route('daoDien.index') }}" class="btn btn-secondary">Quay lại</a>
                 </form>
@@ -109,4 +96,4 @@
             height: 300px;
         }
     </style>
-@endsection​23:54/-strong/-heart:>:o:-((:-h Xem trước khi gửiThả Files vào đây để xem lại trước khi gửi
+@endsection
