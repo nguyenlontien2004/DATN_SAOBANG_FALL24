@@ -183,11 +183,6 @@
                                     <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="">
-                                    <span class="sub-item">Món ăn theo vé</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>

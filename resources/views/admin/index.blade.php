@@ -260,18 +260,18 @@
                                     </div>
                                 </div>
                             </li>
-                            @php
+                            {{-- @php
                                 $user = Auth::user();
-                            @endphp
+                            @endphp --}}
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="{{ asset('storage/' . $user->hinh_anh) }}" alt="..."
-                                            class="avatar-img rounded-circle" />
+                                        {{-- <img src="{{ asset('storage/' . $user->hinh_anh) }}" alt="..."
+                                            class="avatar-img rounded-circle" /> --}}
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Xin chào, {{ $user->ho_ten }}</span>
+                                        {{-- <span class="op-7">Xin chào, {{ $user->ho_ten }}</span> --}}
                                         {{-- <span class="fw-bold">{{ Auth::user()->ho_ten }}</span> --}}
                                     </span>
                                 </a>
@@ -279,13 +279,13 @@
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
                                             <div class="user-box">
-                                                <div class="avatar-lg">
+                                                {{-- <div class="avatar-lg">
                                                     <img src="{{ asset('storage/' . $user->hinh_anh) }}"
                                                         alt="image profile" class="avatar-img rounded" />
                                                 </div>
                                                 <div class="u-text">
                                                     <h4>{{ $user->ho_ten }}</h4>
-                                                    <p class="text-muted">{{ $user->email }}</p>
+                                                    <p class="text-muted">{{ $user->email }}</p> --}}
                                                     {{-- <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
                                                         Profile</a> --}}
                                                 </div>

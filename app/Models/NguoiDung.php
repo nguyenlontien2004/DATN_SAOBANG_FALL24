@@ -12,22 +12,22 @@ class NguoiDung extends Authenticatable
     use HasFactory, SoftDeletes, Notifiable;
 
     const TYPE_ADMIN = 'admin';
-
     const TYPE_MEMBER = 'member';
+    const TYPE_NHANVIEN = 'nhanvien'; 
+
 
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
         'password',
-        'hinh_anh',
+        'anh_dai_dien',
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
         'trang_thai'
     ];
 
-    // protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
@@ -37,6 +37,14 @@ class NguoiDung extends Authenticatable
     public function checkAdmin()
     {
         if ($this->role->id == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function checkNhanVien()
+    {
+        if ($this->role->id == 2) {
             return true;
         }
         return false;
@@ -60,5 +68,10 @@ class NguoiDung extends Authenticatable
     public function member()
     {
         return $this->vaiTros()->where('ten_vai_tro', self::TYPE_MEMBER)->exists();
+    }
+
+    public function nhanVien()
+    {
+        return $this->vaiTros()->where('ten_vai_tro', self::TYPE_NHANVIEN)->exists();
     }
 }

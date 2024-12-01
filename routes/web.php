@@ -29,6 +29,10 @@ use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NhanVien\DashboardController as NhanVienDashboardController;
+use App\Http\Controllers\NhanVien\DoAnController as NhanVienDoAnController;
+use App\Http\Controllers\NhanVien\NhanVienController;
+use App\Http\Controllers\NhanVien\ThongTinController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 
@@ -54,7 +58,7 @@ Route::prefix('admin')->group(function () {
   Route::get('/login', [AuthController::class, 'formDanngNhap'])->name('admin.form');
   Route::post('post/login', [AuthController::class, 'dangNhap'])->name('login.admin');
   Route::post('dang-xuat', [AuthController::class, 'dangXuat'])->name('admin.dangxuat');
-  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index')->middleware(['auth', AdminMiddleware::class]);
+  Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.index');
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -149,6 +153,33 @@ Route::prefix('admin')->group(function () {
   Route::resource('rap', RapController::class);
   Route::resource('suatChieu', SuatChieuController::class);
 });
+// Nhân viên 
+// Route không cần middleware
+Route::prefix('nhanvien')->group(function () {
+  Route::get('login', [NhanVienController::class, 'formDangNhap'])->name('nhanvien.form');
+  Route::post('login', [NhanVienController::class, 'dangNhap'])->name('nhanvien.dangnhap.post');
+});
+
+// Route cần middleware
+Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () {
+  Route::post('logout', [NhanVienController::class, 'dangXuat'])->name('nhanvien.dangxuat');
+  Route::get('/', [NhanVienDashboardController::class, 'dashboard'])->name('nhanvien.index');
+
+  // Đồ ăn
+  Route::get('/danh-sach-do-an', [NhanVienDoAnController::class, 'index'])->name('do-an.index');
+  Route::get('/do-an/create', [NhanVienDoAnController::class, 'create'])->name('do-an.create');
+  Route::post('/do-an/store', [NhanVienDoAnController::class, 'store'])->name('do-an.store');
+  Route::get('/do-an/show/{id}', [NhanVienDoAnController::class, 'show'])->name('do-an.show');
+  Route::get('/do-an/{id}/edit', [NhanVienDoAnController::class, 'edit'])->name('do-an.edit');
+  Route::put('/do-an/{id}/update', [NhanVienDoAnController::class, 'update'])->name('do-an.update');
+  Route::delete('/do-an/{id}/destroy', [NhanVienDoAnController::class, 'destroy'])->name('do-an.destroy');
+
+  // Thông tin nhân viên
+  Route::get('/profile', [ThongTinController::class, 'show'])->name('profile.show');
+  Route::get('/do-an/{id}/edit', [ThongTinController::class, 'edit'])->name('profile.edit');
+  Route::put('/do-an/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
+});
+
 
 // Đăng ký
 Route::get('dang-ky', [AuthenController::class, 'formDangKy'])->name('dangky');
