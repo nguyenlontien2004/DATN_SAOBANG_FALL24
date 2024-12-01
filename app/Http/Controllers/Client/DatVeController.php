@@ -59,7 +59,7 @@ class DatVeController extends Controller
             ->find($suatchieu->phongChieu->id);
         //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray());
         $hangghe = new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'));
-        dd($hangghe->toArray(request()));
+        // dd($hangghe->toArray(request()));
         $doAn = DoAn::query()->get();
         //dd($doAn->toArray());
         return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn']));
@@ -103,15 +103,15 @@ class DatVeController extends Controller
         //     return $value['idFood'] == 3;
         // });
         // dd(reset($a));
-        
+
         // return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
-        
+
         $magiamgia = MaGiamGia::query()
-        ->where('so_luong','>',0)
-        ->whereDate('ngay_ket_thuc','>=',date('Y-m-d'))
-        ->get();
+            ->where('so_luong', '>', 0)
+            ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
+            ->get();
         // dd($magiamgia->toArray());
-        return view('user.thanhtoan', compact(['id','idsuauChieu','magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+        return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
     public function checkViOnline(Request $request)
@@ -224,7 +224,8 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->extraData);
-                $macode = $request->orderId . $ve->id + 1;
+                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $macode = $request->orderId . $id;
                 $createVe = $this->createVe($macode, $request->extraData, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->orderInfo);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
@@ -235,7 +236,8 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia(json_decode($request->vnp_OrderInfo)->magiamgia);
-                $macode = $request->vnp_TxnRef . $ve->id + 1;
+                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $macode = $request->vnp_TxnRef . $id;
                 $createVe = $this->createVe($macode, json_decode($request->vnp_OrderInfo)->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->vnp_Amount / 100, json_decode($request->vnp_OrderInfo)->description);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
@@ -246,7 +248,8 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->magiamgia);
-                $macode = $request->zlpay_orderid . $ve->id + 1;
+                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $macode = $request->zlpay_orderid . $id;
                 $createVe = $this->createVe($macode, $request->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->thanhtoan);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
@@ -340,7 +343,7 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'=>function($qr){
+                        'phongChieu' => function ($qr) {
                             $qr->with('rap');
                         }
                     ]);
@@ -366,7 +369,7 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'=>function($qr){
+                        'phongChieu' => function ($qr) {
                             $qr->with('rap');
                         }
                     ]);

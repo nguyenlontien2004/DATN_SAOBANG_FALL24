@@ -39,11 +39,11 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <label for="ngay" class="form-label">Ngày</label>
                             <input type="date" class="form-control" id="ngay" name="ngay"
                                 value="{{ old('ngay') }}">
-                        </div>
+                        </div> --}}
                         <div class="col-md-4">
                             <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
 
@@ -57,10 +57,10 @@
 
                         <div class="col-md-4">
                             <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
-                            <input type="number" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc" required>
+                            <input type="time" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc" required>
                         </div>
                     </div>
-                    
+
                     <div class="m-3 ">
                         @error('phim_id')
                             <div class="text-danger">{{ $message }}</div>

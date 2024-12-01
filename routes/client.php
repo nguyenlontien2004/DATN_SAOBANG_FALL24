@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\DatVeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\DatVeController;
 
 /*
 |--------------------------------------------------------------------------

@@ -16,23 +16,8 @@ use App\Models\Ve;
 
 class SearchController extends Controller
 {
-    // public function search(Request $request)
-    // {
-    //     $query = $request->input('query');
-
-    //     // Tìm kiếm trong bảng daoDiens và dienViens
-    //     $daoDiens = DaoDien::where('ten_dao_dien', 'like', '%'.$query.'%')->get();
-    //     $dienViens = DienVien::where('ten_dien_vien', 'like', '%'.$query.'%')->get();
-
-    //     // Kết hợp kết quả từ cả hai bảng
-    //     $results = $daoDiens->merge($dienViens);
-
-    //     // Trả kết quả về dưới dạng JSON
-    //     return response()->json($results);
-    // }
     public function search(Request $request)
     {
-
         // Lấy từ khóa tìm kiếm từ request
         $query = $request->input('query');
 

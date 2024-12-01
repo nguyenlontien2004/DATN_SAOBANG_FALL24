@@ -86,7 +86,7 @@ class SuatChieuController extends Controller
     public function store(Request $request)
     {
 
-        $ngay = $request->ngay;
+        $ngay = date('Y-m-d');
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
 
@@ -95,7 +95,7 @@ class SuatChieuController extends Controller
             'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required',
             'gio_ket_thuc' => 'required',
-            'trang_thai' => 'required|boolean',
+            // 'trang_thai' => 'required|boolean',
         ]);
 
         SuatChieu::create([

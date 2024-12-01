@@ -5,7 +5,95 @@
 @endsection
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    /*  */
+    .btn-custom1 {
+        background-color: transparent;
+        border: 1px solid transparent;
+        flex: 1 1 auto;
+        display: inline-block;
+        font-size: 17px;
+        font-weight: 400;
+        border-radius: 0.375rem;
+        line-height: 1.3;
+        padding: 0.5rem 0.75rem;
+        text-align: center;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        -webkit-user-select: none;
+        cursor: pointer;
+    }
 
+    .text-muteds {
+        color: #95aac9;
+    }
+
+    .box-data .active-date {
+        background-color: #c7d6ec;
+        border-color: #bdcfe9;
+        color: #283e59;
+    }
+
+    .btn-light {
+        background-color: #edf2f9;
+        border-color: #edf2f9;
+    }
+
+    .border-right-custom {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .border-left-custom {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .btn-somtime {
+        display: inline-flex;
+        flex-direction: column;
+        height: 38px;
+        justify-content: center;
+        line-height: 14px;
+        margin-bottom: 4px;
+        padding: 4px 0;
+        width: auto;
+        border-radius: 0.25rem;
+        font-size: 0.8525rem;
+        line-height: 1.75;
+        font-weight: 600;
+        padding: 0.125rem 0.5rem;
+        background-color: #edf2f9;
+        border-color: #edf2f9;
+        color: #283e59;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.65;
+    }
+
+    .loader {
+        width: 44px;
+        height: 44px;
+        border: 5px solid #969393;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 @section('content')
     <div class="container mt-5">
         <div class="row">
@@ -113,33 +201,9 @@
                             </select>
                         </div>
                     </div>
-                <!-- Nội dung lịch chiếu -->
-                <div class="border p-3 mb-3">
-                    <div class="d-flex justify-content-around mb-2">
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                        <div><button class="btn btn-outline-info">20/9</button></div>
-                    </div>
-                    <div class="border p-2">
-                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                    </div>
-                    <div class="border p-2">
-                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                    </div>
-                    <div class="border p-2">
-                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                    </div>
-                    <div class="border p-2">
-                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+
                     <!-- Nội dung lịch chiếu -->
-                    <div class="border p-3 mb-3">
+                    <div class="p-3 mb-3">
                         <div class="box-data d-inline-flex justify-content-around mb-2" style="width:100%">
                             @for ($i = 0; $i <= count($listday) - 1; $i++)
                                 @if (Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m') == $listday[$i]['date'])
@@ -160,11 +224,30 @@
                                 @endif
                             @endfor
                         </div>
-
+                        <div style="position: relative;padding:5px 0">
+                            <div class="container-booth">
+                                <!-- <div class="border-bottom p-2">
+                                              <div>
+                                                  <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                                                  <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                                              </div>
+                                              <div class="d-flex pt-1 flex-wrap">
+                                                  <a href="">
+                                                      <div class="btn-somtime mr-1">15:30~18:30</div>
+                                                  </a>
+                                                  <a href="">
+                                                      <div class="btn-somtime mr-1">15:30~18:30</div>
+                                                  </a>
+                                              </div>
+                                          </div> -->
+                            </div>
+                            <span class="loader loading-suat"
+                                style="position: absolute;top:3px;left:50%;display:none;"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
             <!-- Phần phim đang chiếu bên phải -->
             <div class="col-md-4">
                 <div class="border p-3 bg-light rounded">
@@ -231,9 +314,6 @@
                         </div>
                         <br>
                     </div>
-                    <br>
-                </div>
-
                 @endforeach
             @endif
             <div class="mt-4">
@@ -286,7 +366,7 @@
             @else
                 @foreach ($chiTietPhim->binhLuans as $item)
                     <div class="d-flex mb-4">
-                        <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện"
+                        <img src="{{ asset('storage/' . Auth::user()->hinh_anh) }}" alt="đại diện"
                             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User"
                             class="rounded-circle me-3" style="width: 40px; height: 40px;" />
                         <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
@@ -342,7 +422,6 @@
         const idMovie = "{{ $chiTietPhim->id }}"
         const urlApi = "{{ asset('api/suat-chieu/phim') }}"
         console.log(urlApi);
-
     </script>
     <script src="{{ asset('js/chitietve.js') }}"></script>
 @endsection
