@@ -1,0 +1,32 @@
+MoMo
+0919100100
+9704 0000 0000 0018
+NGUYEN VAN A
+03/07
+
+VnPay
+9704198526191432198
+NGUYEN VAN A
+07/15
+OTP:123456
+
+Zalopay
+4111111111111111
+NGUYEN VAN A
+01/25
+MÃ CVV:123
+
+ngophuc2842@gmail.com
+Ngohoangphuc@13
+
+- Trước tiện ông chạy lệnh này: php artisan queue:table rồi mấy ông migrate để tạo bảng jod
+ NÓ không ảnh hường gì tới bảng DB đâu còn phần cấu hình file .env thành như này QUEUE_CONNECTION=database
+-Về phần QR 
+Mn cài thư viện này nha  composer require endroid/qr-code
+Không thì composer intall tại nó có trong file composer.json khi pull về á
+-Về gửi mail khi thanh toán thì mấy ông dùng Mailtrap để test nhá tại tôi chưa thử với
+ mail thật lên không biết
+Với lại ông chạy website bằng php serve ý thì khi gửi mail nó mơi nhận link QR code được á
+Với chạy lệnh: php artisan queue:work 
+
+
