@@ -23,7 +23,7 @@ class GheNgoi extends Model
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
-    public function screeningRoom()
+    public function phongChieu()
     {
         return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
     }

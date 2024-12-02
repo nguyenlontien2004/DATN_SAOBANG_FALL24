@@ -1,4 +1,7 @@
 @extends('layout.user')
+@section('title')
+    {{ $title }}
+@endsection
 <style>
     .container5999 {
         display: flex;
@@ -63,7 +66,6 @@
                         <th>STT</th>
                         <th>Tên phim</th>
                         <th>Thời gian chiếu</th>
-                        <th>Ghế</th>
                         <th>Tình trạng</th>
                         <th>Giá vé</th>
                         <th>Hành động</th>
@@ -75,7 +77,6 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $ve->suatChieu->phim->ten_phim }}</td>
                             <td>{{ $ve->suatChieu->gio_bat_dau }}</td>
-                            <td>Chưa có</td>
                             <td>
                                 @if (isset($ve->trang_thai) && $ve->trang_thai == 1)
                                     Đã thanh toán
@@ -85,7 +86,13 @@
                             </td>
                             <td>{{ number_format($ve->tong_tien, 0, ',', '.') }} VNĐ</td>
                             <td>
-                                <button class="btn btn-warning btn-sm">Xem chi tiết</button>
+                                <form action="{{ route('chitietve', $ve->id) }}" method="GET" class="d-inline">
+                                    @csrf
+                                    <a href="">
+                                        <button class="btn btn-warning btn-sm">Xem chi tiết</button>
+                                    </a>
+                                </form>
+                                
                                 @if ($ve->trang_thai != 1)
                                     <form action="{{ route('huyve', $ve->id) }}" method="POST"
                                         onclick="return confirm('Bạn có muốn hủy vé này không?')"

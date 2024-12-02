@@ -165,7 +165,8 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
   //Lịch sử đặt vé
-  Route::get('lich-su-dat-ve}', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
+  Route::get('lich-su-dat-ve', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
+  Route::get('chi-tiet-ve/{id}', [MemberController::class, 'chiTietVe'])->name('chitietve');
   Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
 
 

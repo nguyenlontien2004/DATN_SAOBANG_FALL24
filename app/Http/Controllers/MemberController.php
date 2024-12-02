@@ -77,10 +77,15 @@ class MemberController extends Controller
     }
     public function lichSuDatVe()
     {
-        // Lấy danh sách vé đặt của user hiện tại
-        $userId = Auth::id(); // Lấy ID user hiện tại
+        $title ="Lịch sử đặt vé";
+        $userId = Auth::id();
         $lichSuDatVe = Ve::where('nguoi_dung_id', $userId)->paginate(10); // Phân trang 10 vé mỗi trang
-        return view('user.lichsuvedat', compact('lichSuDatVe'));
+        return view('user.lichsuvedat', compact('title' ,'lichSuDatVe'));
+    }
+    public function chiTietVe(string $id){
+        $title = "Chi tiết vé đặt";
+        $chiTietVe = Ve::findOrFail($id);
+        return view('user.chitietve', compact('title', 'chiTietVe'));
     }
     public function huyVe(Request $request, string $id){
         if($request->isMethod('DELETE')){

@@ -26,12 +26,6 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
-
-    public function screeningRoom()
-    {
-        return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
-    }
-
     public function movie()
     {
         return $this->belongsTo(Phim::class, 'phim_id');

@@ -22,7 +22,7 @@ class PhongChieu extends Model
     {
         return $this->belongsTo(Rap::class);
     }
-    public function ghe_ngoi()
+    public function gheNgois()
     {
         return $this->hasMany(GheNgoi::class, 'phong_chieu_id');
     }
