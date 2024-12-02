@@ -83,7 +83,7 @@ class VeController extends Controller
                         'phongChieu' => function ($query) {
                             $query->select(['id', 'rap_id', 'ten_phong_chieu'])->with('cinema');
                         },
-                        'phim:id,ten_phim,thoi_luong,ngay_khoi_chieu'
+                        'phim:id,ten_phim,anh_phim,thoi_luong,ngay_khoi_chieu'
                     ]);
                 },
                 'chiTietVe' => function ($query) {

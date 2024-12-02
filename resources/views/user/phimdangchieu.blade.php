@@ -30,12 +30,12 @@
     {{ $title }}
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container" style="max-width: 80rem;margin: 0 auto;">
         <br>
         <h1 class="mb-4 fs-1"><strong>Danh sách phim đang chiếu</strong></h1>
 
         <!-- Filter Button -->
-        <div class="d-flex justify-content-end mt-5">
+        <div class="d-flex justify-content-end">
             <button class="btn btn-outline-secondary">
                 <li class="nav-item dropdown list-unstyled">
                     <a class="nav-link dropdown-toggle text-black fs-5" href="#" id="blogPhimDropdown" role="button"

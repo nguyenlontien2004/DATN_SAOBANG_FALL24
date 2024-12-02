@@ -12,6 +12,7 @@ use App\Http\Requests\StorePhimRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePhimRequest;
 use App\Models\MaGiamGia;
+use Illuminate\Support\Facades\DB;
 
 class PhimController extends Controller
 {
@@ -46,23 +47,26 @@ class PhimController extends Controller
 
     public function store(StorePhimRequest $request)
     {
-        $path = $request->file('anh_phim')->store('anh_phim', 'public');
-        $phim = Phim::create(array_merge($request->all(), ['anh_phim' => $path]));
+       DB::beginTransaction();
+       $path = $request->file('anh_phim')->store('anh_phim', 'public');
+       $phim = Phim::create(array_merge($request->all(), ['anh_phim' => $path]));
 
-        if ($request->has('dao_dien_ids')) {
-            $phim->daoDiens()->attach($request->dao_dien_ids);
-        }
+       if ($request->has('dao_dien_ids')) {
+           $phim->daoDiens()->attach($request->dao_dien_ids);
+       }
 
-        if ($request->has('dien_vien_ids')) {
-            foreach ($request->dien_vien_ids as $index => $dienVienId) {
-                $vaiTro = $request->input('vai_tro_dien_vien')[$index] ?? null;
-                $phim->dienViens()->attach($dienVienId, ['vai_tro_dien_vien' => $vaiTro]);
-            }
-        }
+       if ($request->has('dien_vien_ids')) {
+           foreach ($request->dien_vien_ids as $index => $dienVienId) {
+               $vaiTro = $request->input('vai_tro_dien_vien')[0] ?? null;
+               $phim->dienViens()->attach($dienVienId, ['vai_tro_dien_vien' => $vaiTro]);
+           }
+       }
 
-        if ($request->has('the_loai_phim_ids')) {
-            $phim->theLoaiPhims()->attach($request->the_loai_phim_ids);
-        }
+       if ($request->has('the_loai_phim_ids')) {
+           $phim->theLoaiPhims()->attach($request->the_loai_phim_ids);
+       }
+       DB::commit();
+       DB::rollBack();
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được thêm thành công.');
     }

@@ -1,0 +1,65 @@
+$(document).ready(function () {
+    getMovieScreenings()
+    console.log(currDate.split('-').reverse().join('-'));
+    
+    $('.chooseDate').on('click', function () {
+        let date = $(this).attr('data-date')
+        if (currDate == date) return;
+        currDate = date
+        $('.chooseDate').map(function () {
+            $(this).removeClass('active-date')
+        })
+        $(this).addClass('active-date')
+        getMovieScreenings()
+    })
+    function getMovieScreenings() {
+        $('.loading-suat').show()
+        $('.suatchieuphim').html('')
+        $.ajax({
+            url: `${urlApi}/${idRap}/${currDate}`,
+            method: 'get',
+            success: function (data) {
+                console.log(data);
+                if (data.status == 200) {
+                   const html = htmllistphim(data.data)
+                   $('.suatchieuphim').html(html);
+                }
+                $('.loading-suat').hide()
+            },
+            error: function (error) {
+                console.log(error);
+                $('.loading-suat').hide()
+            }
+        })
+    }
+    function htmllistphim(data) {
+        let html = ''
+        $.each(data, function (_,item) {
+            console.log(item);
+
+            html += `<div class="cart-movie mb-2">
+         <div class="row mt-3 mb-3 ms-1 mr-1">
+            <div class="col-2 col-sm-2">
+                <a class="" href="${linkSuatchieu}thanh-vien/chitietphim/${item.id}">
+                    <img class="radius7px" width="95px" src="${urlLink+'/'+item.anh_phim}">
+                </a>
+            </div>
+            <div class="col" style="margin-left: -14px;">
+                <h2 class="mb-1" style="color:#12263f;font-weight: 500;">${item.ten_phim}</h2>
+                <div>
+                    <label style="color:#12263f;font-weight: 500;font-size: 13.5px;">Suất chiếu</label>
+                    <div class="d-flex flex-wrap">`
+             $.each(item.suat_chieus,function(_,val){
+                html+=`<a href="${linkSuatchieu}dat-ve/${val.id}/${currDate.split('-').reverse().join('-')}" class="">
+                <div class="btn-somtime mr-1">${val.gio_bat_dau}~${val.gio_ket_thuc}</div>
+                 </a>`
+             })
+                html+=`</div>
+                </div>
+             </div>
+           </div>
+      </div>`
+        })
+        return html;
+    }
+})

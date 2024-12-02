@@ -362,7 +362,7 @@
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ route('admin.ttadmin') }}">Hồ sơ của
+                                            <a class="dropdown-item" href="{{ route('thong-tin-nguoi-dung') }}">Hồ sơ của
                                                 tôi</a>
                                             {{-- <a class="dropdown-item" href="#">My Balance</a>
                                             <a class="dropdown-item" href="#">Inbox</a>

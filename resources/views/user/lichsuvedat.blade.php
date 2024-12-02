@@ -36,17 +36,28 @@
     }
 </style>
 @section('content')
-    <div class="container5999 d-flex mt-5">
-        <!-- Sidebar -->
+    <div class="container5999">
+    @php
+            $user = Auth::user();
+        @endphp
+
         <div class="sidebar6669">
-            <img alt="Ảnh đại diện người dùng" class="rounded-circle mb-3"
-                src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" style="width: 150px; height: 150px;" />
-            <div class="username text-center font-weight-bold">{{ Auth::user()->ho_ten }}</div>
+            <div class="form-group mb-3 d-flex justify-content-center align-items-center">
+                <img alt="Ảnh đại diện người dùng" src="{{ Auth::user()->anh_dai_dien != "" ? asset('storage/' . Auth::user()->anh_dai_dien) : 'https://cdn.moveek.com/bundles/ornweb/img/no-avatar.png' }}"
+                    style="border-radius: 50%; height: 100px; width: 100px; object-fit: cover" />
+            </div>
+            <div class="username">{{ $user->ho_ten }}</div>
             <hr />
-            <a href="#" class="d-block py-2">Thông tin cá nhân</a>
-            <a href="#" class="d-block py-2">Đổi mật khẩu</a>
-            <a href="#" class="d-block py-2">Lịch sử đặt vé</a>
-            <a href="#" class="d-block py-2">Cập nhật thông tin cá nhân</a>
+            <a href="{{ route('thong-tin-nguoi-dung') }}">Thông tin cá nhân</a>
+            <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
+            <a href="{{ route('lichsudatve') }}">Lịch sử đặt vé</a>
+            <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
+            <a href="" class="text-danger">
+                <form action="{{ route('dangxuat') }}" method="POST">
+                @csrf
+                <button type="submit">Đăng xuất</button>
+            </form> 
+            </a>
         </div>
 
         <!-- Content -->

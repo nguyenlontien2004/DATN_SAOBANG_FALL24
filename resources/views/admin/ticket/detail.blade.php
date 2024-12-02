@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="d-flex my-3 col-md-12 col-sm-12 col-xl-7">
                         <img width="200px" style="filter: drop-shadow(2px 4px 6px black);"
-                            src="https://cdn.moveek.com/storage/media/cache/short/665dc87501b36651649752.jpg"
+                            src="{{ asset('storage/'.$dataTicket->suatChieu->phim->anh_phim) }}"
                             alt="">
                         <div class="ms-4">
                             <h3 class="mb-2">{{ $dataTicket->suatChieu->phim->ten_phim }}</h3>

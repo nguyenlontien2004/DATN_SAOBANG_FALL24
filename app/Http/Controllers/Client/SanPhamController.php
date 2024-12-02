@@ -39,6 +39,7 @@ class SanPhamController extends Controller
         if (Auth::check()) {
             $userId = Auth::user()->id;
         }
+        // phần phúc thêm vào
         $listday = collect();
         for ($i = 0; $i < 6; $i++) {
             $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
@@ -49,7 +50,8 @@ class SanPhamController extends Controller
                 'day' => $dayName
             ]);
         }
-        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
+        $binhluan = BinhLuanPhim::query()->with('NguoiDung')->where('phim_id',$id)->orderBy('created_at','desc')->get();
+        return view('user.chitietphim', compact('title','binhluan', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
 
     }
 

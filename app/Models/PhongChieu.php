@@ -34,4 +34,8 @@ class PhongChieu extends Model
     {
         return $this->hasManyThrough(Ve::class, SuatChieu::class, 'phong_chieu_id', 'suat_chieu_id');
     }
+    public function suatChieu()
+    {
+        return $this->hasMany(SuatChieu::class);
+    }
 }

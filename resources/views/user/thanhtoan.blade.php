@@ -36,7 +36,7 @@
         height: 35px;
     }
 </style>
-<div class="main-content">
+<div class="main-content" style="margin-top: -25px;">
     <div>
         <div class="ticketing-steps" style="border-top: 1px solid #d4d4d4">
             <div class="container-ticket-steps">

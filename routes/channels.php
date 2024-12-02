@@ -19,3 +19,6 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('seat.{id}.{ngay}', function ($id,$ngay) {
     return true;
 });
+Broadcast::channel('binhLuan.phim.{idPhim}', function ($idPhim) {
+    return true;
+});

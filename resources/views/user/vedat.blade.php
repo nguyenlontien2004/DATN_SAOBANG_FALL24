@@ -12,23 +12,24 @@
     .choose-food {
         display: none;
     }
-    .unavailabledrop{
-    /* display: block; */
-    background-color: #cdcdcd;
-    white-space: nowrap;
-    /* height: 20px;
+
+    .unavailabledrop {
+        /* display: block; */
+        background-color: #cdcdcd;
+        white-space: nowrap;
+        /* height: 20px;
     width: 20px; */
-    border-radius: 2px;
-    position: relative;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-image: url('https://cdn.moveek.com/build/images/seat-unavailable.6c1ab33c.png');
-    z-index: 99999;
-    cursor: no-drop;
-    color: #ababab;
-}
+        border-radius: 2px;
+        position: relative;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-image: url('https://cdn.moveek.com/build/images/seat-unavailable.6c1ab33c.png');
+        z-index: 99999;
+        cursor: no-drop;
+        color: #ababab;
+    }
 </style>
-<div class="main-content">
+<div class="main-content" style="margin-top: -25px;">
     <div>
         <div class="ticketing-steps" style="border-top: 1px solid #d4d4d4">
             <div class="container-ticket-steps">
@@ -143,7 +144,12 @@
                                     </div>
                                     <div class="seats-map">
                                         <div class="row-wrapper list-row-seats">
-                                            @foreach ($hangghe->resource as $key => $value)
+                                            @foreach ($hangghe as $key => $value)
+                                                @if (count($value) <= 0)
+                                                    <ul class="seat-row">
+                                                        <li class="empty"></li>
+                                                    </ul>
+                                                @endif
                                                 <ul class="seat-row">
                                                     @for ($i = 0; $i < count($value); $i++)
                                                         @if ($value[$i]['isDoubleChair'] !== null && $i + 1 < count($value))
@@ -284,8 +290,8 @@
     const id = "{{ $id }}"
     const ngay = "{{ $date }}"
     const gia = "{{ $suatchieu->phim->gia }}"
-   const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
-   const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
+    const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
+    const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
     //$('asa').
 </script>
 @vite('resources/js/reatimeGhe.js')

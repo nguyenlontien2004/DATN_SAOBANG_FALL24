@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\DatVeController;
+use App\Http\Controllers\BinhLuanPhimController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,5 @@ Route::get('thong-tin-ve/{id}/{macodeve}',                  [DatVeController::cl
 Route::get('luu-thong-tin-ve',              [DatVeController::class, 'luuThongTinVeMua'])->middleware('auth')->name('luuThongTinVeMua');
 Route::get('check-qrCode/{idVe}',              [DatVeController::class, 'checkqrCode'])->name('checkQrcode');
 Route::get('testMail',              [DatVeController::class, 'testMail']);
+
+Route::post('binh-luan/phim/{idPhim}',              [BinhLuanPhimController::class, 'index']);

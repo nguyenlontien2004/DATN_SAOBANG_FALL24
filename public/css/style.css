@@ -32,7 +32,7 @@ a:hover {
 }
 
 .header-navigation .wrapper {
-    max-width: 76rem;
+    max-width: 78rem;
     min-height: 64px;
     padding-left: 1.3rem;
     padding-right: 1.3rem;
@@ -167,7 +167,6 @@ a:hover {
     height: 2.35rem;
     margin-left: 15px;
     border-radius: 50%;
-    overflow: hidden;
     cursor: pointer;
 }
 

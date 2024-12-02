@@ -14,6 +14,7 @@ class DanhGia extends Model
         'phim_id',
         'diem_danh_gia',
         'noi_dung',
+        'ngay_danh_gia',
     ];
     public function phim()
     {
