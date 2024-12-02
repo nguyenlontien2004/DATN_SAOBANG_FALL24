@@ -33,6 +33,7 @@ use App\Http\Controllers\NhanVien\DashboardController as NhanVienDashboardContro
 use App\Http\Controllers\NhanVien\DoAnController as NhanVienDoAnController;
 use App\Http\Controllers\NhanVien\NhanVienController;
 use App\Http\Controllers\NhanVien\ThongTinController;
+use App\Http\Controllers\NhanVien\VeController as NhanVienVeController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\MemberMiddleware;
 
@@ -178,6 +179,14 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::get('/profile', [ThongTinController::class, 'show'])->name('profile.show');
   Route::get('/do-an/{id}/edit', [ThongTinController::class, 'edit'])->name('profile.edit');
   Route::put('/do-an/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
+
+  // Quản lí vé
+  Route::get('/ve/mua', [NhanVienVeController::class, 'hienThiFormMuaVe'])->name('ve.mua'); // Hiển thị form mua vé
+  Route::post('/ve/mua', [NhanVienVeController::class, 'luuVe'])->name('ve.luu'); // Lưu vé mới
+  Route::get('/ve/chua-thanh-toan', [NhanVienVeController::class, 'danhSachVeChuaThanhToan'])->name('ve.chua-thanh-toan'); // Danh sách vé chưa thanh toán
+  Route::post('/ve/thanh-toan/{ve}', [NhanVienVeController::class, 'thanhToanVaInVe'])->name('ve.thanh-toan'); // Thanh toán và in vé
+  Route::get('/ve/qr/{ve}', [NhanVienVeController::class, 'inMaQR'])->name('ve.qr'); // In mã QR cho vé
+  Route::put('/ve/cap-nhat-trang-thai/{ve}', [NhanVienVeController::class, 'capNhatTrangThaiVe'])->name('ve.cap-nhat-trang-thai'); // Cập nhật trạng thái vé
 });
 
 

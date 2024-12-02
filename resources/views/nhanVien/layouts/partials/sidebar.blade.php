@@ -46,10 +46,25 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="#">
+                    <a data-bs-toggle="collapse" href="#ve">
                         <i class="fas fa-ticket-alt"></i>
                         <p>Quản lý vé</p>
+                        <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="ve">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('ve.chua-thanh-toan') }}">
+                                    <span class="sub-item">Danh sách vé chưa thanh toán</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ve.mua') }}">
+                                    <span class="sub-item">Tạo vé</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>

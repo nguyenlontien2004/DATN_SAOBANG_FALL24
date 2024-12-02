@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="gioi_tinh" class="form-label">Giới tính:</label>
-                                    <<input type="text" id="gioi_tinh" name="gioi_tinh" value="{{ $user->gioi_tinh }}"
+                                    <input type="text" id="gioi_tinh" name="gioi_tinh" value="{{ $user->gioi_tinh }}"
                                         class="form-control" readonly>
                                 </div>
                                 <div class="mb-3">
@@ -54,8 +54,6 @@
                                     <input type="datetime" id="nam_sinh" name="nam_sinh" value="{{ $user->nam_sinh }}"
                                         class="form-control" readonly>
                                 </div>
-
-
                                 <div class="text-center">
                                     <a href="{{ route('profile.edit', $user->id) }}"><button type="submit"
                                             class="btn btn-success">Cập Nhật Thông Tin</button></a>
@@ -64,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- content -->
+            </div>
         </div>
     </div>
 @endsection
