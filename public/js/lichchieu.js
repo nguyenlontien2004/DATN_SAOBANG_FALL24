@@ -1,7 +1,6 @@
 $(document).ready(function () {
-    getMovieScreenings()
-    //console.log(currDate.split('-').reverse().join('-'));
-    
+    console.log(idrap);
+    getMovieScreenings(idrap,currDate)
     $('.chooseDate').on('click', function () {
         let date = $(this).attr('data-date')
         if (currDate == date) return;
@@ -10,19 +9,29 @@ $(document).ready(function () {
             $(this).removeClass('active-date')
         })
         $(this).addClass('active-date')
-        getMovieScreenings()
+        getMovieScreenings(idrap,currDate)
     })
-    function getMovieScreenings() {
+    $('.danhsachrap').on('click', function () {
+        let id = $(this).attr('data-idrap')
+        if (idrap == id) return
+        idrap = id
+        $('.danhsachrap').map(function () {
+            $(this).removeClass('rap-active')
+        })
+        $(this).addClass('rap-active')        
+        getMovieScreenings(idrap,currDate)
+    })
+    function getMovieScreenings(id,ngay) {
         $('.loading-suat').show()
         $('.suatchieuphim').html('')
         $.ajax({
-            url: `${urlApi}/${idRap}/${currDate}`,
+            url: `${urlApi}/${id}/${ngay}`,
             method: 'get',
             success: function (data) {
                 console.log(data);
                 if (data.status == 200) {
-                   const html = htmllistphim(data.data)
-                   $('.suatchieuphim').html(html);
+                    const html = htmllistphim(data.data)
+                    $('.suatchieuphim').html(html);
                 }
                 $('.loading-suat').hide()
             },
@@ -40,7 +49,7 @@ $(document).ready(function () {
             html += `<div class="cart-movie mb-2">
          <div class="row mt-3 mb-3 ms-1 mr-1">
             <div class="col-2 col-sm-2">
-                <a class="" href="${linkSuatchieu}thanh-vien/chitietphim/${item.id}">
+                <a class="" href="${linkWeb}thanh-vien/chitietphim/${item.id}">
                     <img class="radius7px" width="95px" src="${urlLink+'/'+item.anh_phim}">
                 </a>
             </div>
@@ -50,7 +59,7 @@ $(document).ready(function () {
                     <label style="color:#12263f;font-weight: 500;font-size: 13.5px;">Suất chiếu</label>
                     <div class="d-flex flex-wrap">`
              $.each(item.suat_chieus,function(_,val){
-                html+=`<a href="${linkSuatchieu}dat-ve/${val.id}/${currDate.split('-').reverse().join('-')}" class="">
+                html+=`<a href="${linkWeb}dat-ve/${val.id}/${currDate.split('-').reverse().join('-')}" class="">
                 <div class="btn-somtime mr-1">${val.gio_bat_dau}~${val.gio_ket_thuc}</div>
                  </a>`
              })

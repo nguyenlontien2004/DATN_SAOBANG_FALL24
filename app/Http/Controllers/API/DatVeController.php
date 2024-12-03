@@ -22,6 +22,7 @@ class DatVeController extends Controller
                 'suatChieu' => function ($query) use ($formattedDate, $id) {
                     $query->select('suat_chieus.id', 'suat_chieus.phong_chieu_id', DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
                         ->whereHas('phim', function ($query) use ($formattedDate) {
+                            $query->whereDate('ngay_khoi_chieu', '<=', $formattedDate);
                             $query->whereDate('ngay_ket_thuc', '>=', $formattedDate);
                         })
                         ->where('phim_id', $id)->orderBy('gio_bat_dau');

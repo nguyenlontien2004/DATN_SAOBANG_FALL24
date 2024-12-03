@@ -226,9 +226,13 @@ Route::prefix('thanh-vien')->group(function () {
   Route::resource('binhluan', BinhLuanPhimController::class);
   Route::resource('danhgia', DanhGiaController::class);
 
+  // phần phúc code thêm chức năng rạp và lịch chiếu 
   // phần route rạp chiếu
   Route::get('rap', [App\Http\Controllers\Client\RapController::class, 'index'])->name('rap');
   Route::get('rap/{id}', [App\Http\Controllers\Client\RapController::class, 'chitietrap'])->name('chitietrap');
   Route::get('phim/rap/{id}/{ngay}', [App\Http\Controllers\Client\RapController::class, 'suatphimtheorap']);
+  // phần route lịch chiếu
+  Route::get('lich-chieu', [App\Http\Controllers\Client\LichChieuController::class, 'index'])->name('lichchieuphimclient');
+  Route::get('lich-chieu/phim-rap/{id}/{ngay}', [App\Http\Controllers\Client\LichChieuController::class, 'suatphimtheorap']);
 });
 

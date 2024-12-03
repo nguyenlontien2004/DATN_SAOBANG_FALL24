@@ -5,22 +5,16 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Rap;
-use App\Models\Phim;
 use Carbon\Carbon;
+use App\Models\Phim;
 use Illuminate\Support\Facades\DB;
 
-class RapController extends Controller
+class LichChieuController extends Controller
 {
     public function index()
     {
-        $rap = Rap::query()->withCount('phongChieus')->get();
-        return view('user.rapphim', compact(['rap']));
-    }
-    public function chitietrap($id)
-    {
-        $rap = Rap::query()->withCount('phongChieus')->findOrFail($id);
-        $idRap = $id;
-        // dd($rap->toArray());
+        $danhsachrap = Rap::query()
+            ->get();
         $listday = collect();
         for ($i = 0; $i < 6; $i++) {
             $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
@@ -32,12 +26,7 @@ class RapController extends Controller
                 'ngaychuan' => $date->format('Y-m-d')
             ]);
         }
-        $danhsachrap = Rap::query()
-        ->withCount('phongChieus')
-        ->where('id','!=',$id)
-        ->having('phong_chieus_count','>',0)
-        ->get();
-        return view('user.chitietrap', compact(['listday', 'rap', 'idRap','danhsachrap']));
+        return view('user.lichchieu', compact(['danhsachrap', 'listday']));
     }
     public function suatphimtheorap($id, $ngay)
     {
@@ -46,7 +35,6 @@ class RapController extends Controller
                 ->select('id', 'ten_phim', 'do_tuoi', 'anh_phim', 'ngay_khoi_chieu', 'ngay_ket_thuc', 'trailer')
                 ->with([
                     'suatChieus' => function ($query) use ($id) {
-                        //->with(['phongChieu.rap'])
                         $query->select(
                             'suat_chieus.id',
                             'suat_chieus.phim_id',

@@ -31,7 +31,8 @@
             <p class="mb-0 mt-3" style="font-size: 14px;">
                 Xem Lịch chiếu và Mua vé {{ $rap->ten_rap }}- rạp toàn quốc dễ dàng - nhanh chóng tại sao băng. Rạp
                 {{ $rap->ten_rap }}
-                nằm ở {{ $rap->dia_diem }} là rạp chiếu có rất rất nhiều trương trình , nằm trong khu vực đẹp và thuận lời 
+                nằm ở {{ $rap->dia_diem }} là rạp chiếu có rất rất nhiều trương trình , nằm trong khu vực đẹp và thuận
+                lời
                 cho mọi người đến trải nghiệm và hoà mình vào những bộ phim hay và hot .
                 {{ $rap->ten_rap }} có {{ $rap->phong_chieus_count }} phòng chiếu là địa điểm
                 giải trí không thể bỏ qua của các bạn trẻ.
@@ -125,26 +126,17 @@
                     </tbody>
                 </table>
                 <div class="ms-4 mr-4">
-                    <div class="mt-2" style="border-bottom: 0.3px solid #e8e8e8;">
-                        <div class="text-start mt-4 mb-4">
-                            <h1 class="mb-0 text-black" style="font-size: 1.125rem;font-weight: 500;">Beta Mỹ Đình
-                            </h1>
-                            <p class="mb-0 mt-1" style="color:#95aac9;font-size: 12px;font-weight: 500;">
-                                Tầng hầm B1, tòa nhà Golden Palace, Đường Mễ Trì, Phường Mễ Trì, Quận Nam Từ Liêm, Hà
-                                Nội
-                            </p>
+                    @foreach ($danhsachrap as $item)
+                        <div class="mt-2" style="border-bottom: 0.3px solid #e8e8e8;">
+                            <div class="text-start mt-4 mb-4">
+                                <h1 class="mb-0 text-black" style="font-size: 1.125rem;font-weight: 500;">{{ $item->ten_rap }}
+                                </h1>
+                                <p class="mb-0 mt-1" style="color:#95aac9;font-size: 12px;font-weight: 500;">
+                                    {{ $item->dia_diem }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-2" style="border-bottom: 0.3px solid #e8e8e8;">
-                        <div class="text-start mt-4 mb-4">
-                            <h1 class="mb-0 text-black" style="font-size: 1.125rem;font-weight: 500;">Beta Mỹ Đình
-                            </h1>
-                            <p class="mb-0 mt-1" style="color:#95aac9;font-size: 12px;font-weight: 500;">
-                                Tầng hầm B1, tòa nhà Golden Palace, Đường Mễ Trì, Phường Mễ Trì, Quận Nam Từ Liêm, Hà
-                                Nội
-                            </p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
