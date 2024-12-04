@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NguoiDung;
+use App\Models\Rap;
 use App\Models\VaiTro;
+use App\Models\NguoiDung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,9 @@ class AuthenController extends Controller
 {
     public function formDangKy()
     {
-        return view('user.auth.dangky');
+        $title = "Đăng ký";
+        $rap = Rap::all();
+        return view('user.auth.dangky', compact('title', 'rap'));
     }
 
     public function dangKy()
@@ -42,8 +45,9 @@ class AuthenController extends Controller
 
     public function formDangNhap()
     {
-
-        return view('user.auth.dangnhap');
+        $title = "Đăng nhập";
+        $rap = Rap::all();
+        return view('user.auth.dangnhap', compact('title', 'rap'));
     }
 
     public function dangNhap()

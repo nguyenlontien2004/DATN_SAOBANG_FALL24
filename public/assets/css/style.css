@@ -185,3 +185,15 @@ body {
     margin-bottom: 5px;
     border-radius: 5px;
 }
+/* Căn chỉnh dropdown về bên trái và giảm chiều rộng */
+#the_loai {
+    width: auto;  /* Làm cho chiều rộng tự động, phù hợp với nội dung */
+    max-width: 200px; /* Giới hạn chiều rộng tối đa để tránh quá dài */
+    padding: 5px 10px;  /* Thêm khoảng cách trong */
+    font-size: 14px;  /* Cân chỉnh kích thước chữ */
+}
+
+/* Căn chỉnh form-control sang bên trái */
+.d-flex.justify-content-start {
+    margin-left: 20px;  /* Căn lề trái cho khoảng cách */
+}

@@ -1,5 +1,7 @@
 @extends('layout.user')
-
+@section('title')
+    {{ $title }}
+@endsection
 @section('content')
     <div class="container5999">
 
@@ -16,7 +18,7 @@
             <hr />
             <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
-            <a href="#">Lịch sử đặt vé</a>
+            <a href="{{ route('lichsudatve') }}">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
             <a href="" class="text-danger">
                 <form action="{{ route('dangxuat') }}" method="POST">

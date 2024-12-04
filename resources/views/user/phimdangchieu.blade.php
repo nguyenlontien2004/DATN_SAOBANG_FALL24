@@ -25,6 +25,7 @@
     .film-title {
         font-size: 1.1rem; /* Tăng kích thước chữ tiêu đề một chút */
     }
+    
 </style>
 @section('title')
     {{ $title }}
@@ -32,22 +33,16 @@
 @section('content')
     <div class="container">
         <br>
-        <h1 class="mb-4 fs-1"><strong>Danh sách phim đang chiếu</strong></h1>
+        <h1 class="mb-4 fs-2"><strong>Phim đang chiếu</strong></h1>
 
         <!-- Filter Button -->
         <div class="d-flex justify-content-end mt-5">
-            <button class="btn btn-outline-secondary">
-                <li class="nav-item dropdown list-unstyled">
-                    <a class="nav-link dropdown-toggle text-black fs-5" href="#" id="blogPhimDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Thể loại
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="blogPhimDropdown">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
-                        <li><a class="dropdown-item" href="#">Option 2</a></li>
-                    </ul>
-                </li>
-            </button>
+            <select class="form-control" name="the_loai" id="the_loai">
+                <option value="">Chọn thể loại</option>
+                <option value="">Hành động</option>
+                <option value="">Kiếm hiệp</option>
+                <option value="">18+</option>
+            </select>
         </div>
         <br>
         <!-- Movies Grid -->

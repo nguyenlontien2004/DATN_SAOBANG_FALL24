@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ve;
+use App\Models\Rap;
 use App\Models\NguoiDung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\DoiMatKhauRequest;
 
 class MemberController extends Controller
@@ -18,7 +20,9 @@ class MemberController extends Controller
 
     public function formDoiMatKhau()
     {
-        return view('user.doimatkhau');
+        $title = "Đổi mật khẩu";
+        $rap = Rap::all();
+        return view('user.doimatkhau', compact('title', 'rap'));
     }
 
     public function doiMatKhau(DoiMatKhauRequest $doiMatKhauRequest)
@@ -44,45 +48,64 @@ class MemberController extends Controller
     public function thongTin()
     {
         $title = "Thông tin cá nhân";
+        $rap = Rap::all();
         $nguoidung = Auth::user();
 
-        return view('user.thongtintaikhoan', compact('title', 'nguoidung'));
+        return view('user.thongtintaikhoan', compact('title', 'rap', 'nguoidung'));
     }
 
 
     public function formCapNhatThongTin()
     {
         $title = "Cập nhật thông tin cá nhân";
+        $rap = Rap::all();
         $nguoidung = Auth::user();
 
-        return view('user.profile.capnhatthongtin', compact('title', 'nguoidung'));
+        return view('user.profile.capnhatthongtin', compact('title', 'rap', 'nguoidung'));
     }
 
-    public function capNhatThongTin(Request $request)
+    public function capNhatThongTin(Request $request, string $id)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
+        
+        // if ($request->hasFile('anh_dai_dien')) {
+        //     $imagePath = $request->file('anh_dai_dien')->store('profile_images', 'public');
+        //     $user->anh_dai_dien = $imagePath;
+        // }
 
-        if ($request->hasFile('anh_dai_dien')) {
-            $imagePath = $request->file('anh_dai_dien')->store('profile_images', 'public');
-            $user->anh_dai_dien = $imagePath;
+        // $user->ho_ten = $request->input('ho_ten');
+
+        // /**
+        //  * @var Use $user
+        //  */
+
+        // $user->save();
+
+        // return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
+/////////////////////////////////////
+        $user = NguoiDung::findOrFail($id);
+        if($request->isMethod('PUT')){
+            $params = $request->except('_token', '_method');
+            if($request->hasFile('anh_dai_dien')){
+                if($user->anh_dai_dien){
+                    Storage::disk('public')->delete($user->anh_dai_dien);
+                }
+                $params['anh_dai_dien'] = $request->file('anh_dai_dien')->store('profile_images', 'public');
+
+            }else{
+                $params['anh_dai_dien'] = $user->anh_dai_dien;
+            }
+            $user->update($params);
+            return redirect()->back()->with('success', 'Chỉnh sửa thông tin cá nhân thành công');
         }
-
-        $user->ho_ten = $request->input('ho_ten');
-
-        /**
-         * @var Use $user
-         */
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
     }
     public function lichSuDatVe()
     {
         $title ="Lịch sử đặt vé";
+        $rap = Rap::all();
         $userId = Auth::id();
         $lichSuDatVe = Ve::where('nguoi_dung_id', $userId)->paginate(10); // Phân trang 10 vé mỗi trang
-        return view('user.lichsuvedat', compact('title' ,'lichSuDatVe'));
+        return view('user.lichsuvedat', compact('title', 'rap', 'lichSuDatVe'));
     }
     public function chiTietVe(string $id){
         $title = "Chi tiết vé đặt";

@@ -1,5 +1,7 @@
 @extends('layout.user')
-
+@section('title')
+    {{ $title }}
+@endsection
 @section('content')
     <div class="content">
         <div class="contetn_dk">

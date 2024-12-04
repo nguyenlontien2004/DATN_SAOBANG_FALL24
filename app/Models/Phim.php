@@ -41,6 +41,9 @@ class Phim extends Model
     public function danhGias(){
         return $this->hasMany(DanhGia::class);
     }
+    public function User(){
+        return $this->belongsTo(NguoiDung::class);
+    }
 
   
 }

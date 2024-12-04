@@ -9,8 +9,8 @@ class RapController extends Controller
 {
     public function index()
     {
-        $raps = Rap::orderBy('id', 'desc')->get(); 
-        return view('admin.contents.raps.index', compact('raps')); 
+        $rap = Rap::orderBy('id', 'desc')->get(); 
+        return view('user.partials.header-top', compact('rap')); 
 
     }
     public function create()

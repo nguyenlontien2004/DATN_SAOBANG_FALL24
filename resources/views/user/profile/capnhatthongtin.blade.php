@@ -24,7 +24,7 @@
         <div class="content">
             <h1>Cập nhật thông tin</h1>
 
-            <form action="{{ route('capnhatthongtin') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('capnhatthongtin', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -46,9 +46,9 @@
                 <div class="form-group mb-3">
                     <label for="gioi_tinh">Giới tính</label>
                     <select name="gioi_tinh" class="form-control" id="">
-                        <option value="">Chọn giới tính</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nu">Nữ</option>
+                        <option value="" {{ is_null($user->gioi_tinh) ? 'selected' : '' }} disabled>---Chọn giới tính---</option>
+                        <option value="Nam" {{ $user->gioi_tinh === 'Nam' ? 'selected' : '' }}>Nam</option>
+                        <option value="Nu" {{ $user->gioi_tinh === 'Nu' ? 'selected' : '' }}>Nữ</option>
                     </select>
                 </div>
 

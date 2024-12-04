@@ -247,7 +247,7 @@
             <h3>Bình luận người xem</h3><br>
             @foreach ($chiTietPhim->binhLuans as $item)
                 <div class="d-flex mb-4">
-                    <img src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" alt="đại diện" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+                    <img src="{{ Storage::url($item->nguoiDung->anh_dai_dien) }}" alt="đại diện" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
                     <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
                         <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span
                                 class="text-muted"

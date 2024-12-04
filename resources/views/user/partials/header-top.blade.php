@@ -53,6 +53,84 @@
         text-decoration: none;
         /* Bỏ gạch chân cho chữ */
     }
+
+    /* Tổng quát cho dropdown */
+    .nav-item .dropdown-menu {
+        background-color: #ffffff;
+        /* Màu nền menu */
+        border: 1px solid #ddd;
+        /* Viền menu */
+        border-radius: 8px;
+        /* Bo góc */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        /* Hiệu ứng đổ bóng */
+        padding: 0.5rem 0;
+        /* Khoảng cách bên trong */
+        min-width: 200px;
+        /* Chiều rộng tối thiểu */
+    }
+
+    /* Kiểu cho từng item */
+    .nav-item .dropdown-item {
+        padding: 10px 20px;
+        /* Khoảng cách bên trong */
+        font-size: 16px;
+        /* Cỡ chữ */
+        color: #000;
+        /* Màu chữ đen */
+        text-decoration: none;
+        /* Xóa gạch chân */
+        transition: background-color 0.3s, color 0.3s;
+        /* Hiệu ứng hover */
+    }
+
+    /* Hover cho item */
+    .nav-item .dropdown-item:hover {
+        background-color: #f8f9fa;
+        /* Màu nền khi hover */
+        color: #000;
+        /* Màu chữ vẫn đen khi hover */
+    }
+
+    /* Kiểu cho nút dropdown */
+    .nav-item .nav-link {
+        font-size: 18px;
+        /* Cỡ chữ */
+        color: #000;
+        /* Màu chữ đen */
+        font-weight: bold;
+        /* Chữ đậm */
+        text-decoration: none;
+        /* Xóa gạch chân */
+        transition: color 0.3s;
+        /* Hiệu ứng hover */
+    }
+
+    /* Hover cho nút dropdown */
+    .nav-item .nav-link:hover {
+        color: #555;
+        /* Màu xám khi hover */
+    }
+
+    /* Hiển thị dropdown mượt */
+    .nav-item .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    /* Hiển thị dropdown khi hover */
+    .nav-item:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Bo góc cho toàn bộ container */
+    .nav-item {
+        position: relative;
+    }
 </style>
 <div class="container mb-2">
     <div class="d-flex align-items-center">
@@ -82,8 +160,9 @@
                                 Rạp chiếu
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="rapChieuDropdown">
-                                <li><a class="dropdown-item" href="#">Option 1</a></li>
-                                <li><a class="dropdown-item" href="#">Option 2</a></li>
+                                @foreach ($rap as $item)
+                                    <li><a class="dropdown-item" href="#">{{ $item->ten_rap }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <!-- Phim đang chiếu -->
@@ -141,4 +220,3 @@
         </div>
     </div>
 </div>
-

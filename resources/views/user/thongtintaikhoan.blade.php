@@ -45,13 +45,22 @@
             <div class="form-group mb-3">
                 <label for="gioi_tinh">Giới tính</label>
                 <input type="text"
-                    value="{{ $user->gioi_tinh === 'Nam' ? 'Nam' : ($user->gioi_tinh === 'Nu' ? 'Nữ' : '') }}"
+                    value="{{ $user->gioi_tinh === 'Nam' ? 'Nam' : ($user->gioi_tinh === 'Nu' ? 'Nữ' : 'Thông tin chưa được cập nhật') }}"
                     id="gioi_tinh" disabled />
+
             </div>
 
             <div class="form-group mb-3">
                 <label for="dia_chi">Địa chỉ</label>
-                <input type="text" name="dia_chi" id="dia_chi" value="{{ $user->dia_chi }}" disabled />
+                <input type="text" name="dia_chi" id="dia_chi"
+                    value="{{ $user->dia_chi ? $user->dia_chi : 'Thông tin chưa được cập nhật' }}" disabled />
+
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="nam_sinh">Năm sinh</label>
+                <input type="text" name="nam_sinh" id="nam_sinh"
+                    value="{{ date('d/m/Y', strtotime($user->nam_sinh)) }}" disabled />
             </div>
 
             <div class="form-group mb-3">

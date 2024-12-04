@@ -26,6 +26,9 @@
         font-size: 1.1rem; /* Tăng kích thước chữ tiêu đề một chút */
     }
 </style>
+@section('title')
+    {{ $title }}
+@endsection
 @section('content')
     <div class="container">
         <br>
