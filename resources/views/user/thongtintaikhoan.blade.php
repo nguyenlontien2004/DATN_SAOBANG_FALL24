@@ -1,5 +1,7 @@
 @extends('layout.user')
-
+@section('title')
+    {{ $title }}
+@endsection
 @section('content')
     <div class="container5999">
 
@@ -20,11 +22,11 @@
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
             <a href="" class="text-danger">
                 <form action="{{ route('dangxuat') }}" method="POST">
-                @csrf
-                <button type="submit">Đăng xuất</button>
-            </form> 
+                    @csrf
+                    <button type="submit">Đăng xuất</button>
+                </form>
             </a>
-              
+
         </div>
 
         <div class="content">
@@ -37,12 +39,30 @@
 
             <div class="form-group mb-3">
                 <label for="ho_ten">Họ và tên</label>
-                <input type="text" id="ho_ten" value="{{ $user->ho_ten }}" placeholder="Nhập họ tên" />
+                <input type="text" id="ho_ten" value="{{ $user->ho_ten }}" disabled />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="gioi_tinh">Giới tính</label>
+                <input type="text"
+                    value="{{ $user->gioi_tinh === 'Nam' ? 'Nam' : ($user->gioi_tinh === 'Nu' ? 'Nữ' : '') }}"
+                    id="gioi_tinh" disabled />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="dia_chi">Địa chỉ</label>
+                <input type="text" name="dia_chi" id="dia_chi" value="{{ $user->dia_chi }}" disabled />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="so_dien_thoai">Số điện thoại</label>
+                <input type="number" name="so_dien_thoai" value="{{ $user->so_dien_thoai }}" id="so_dien_thoai"
+                    disabled />
             </div>
 
             <div class="form-group mb-3">
                 <label for="email">Email</label>
-                <input type="email" value="{{ $user->email }}" id="email" placeholder="Nhập email" />
+                <input type="email" value="{{ $user->email }}" id="email" disabled />
             </div>
 
             <div class="text-center">

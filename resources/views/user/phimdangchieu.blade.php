@@ -103,7 +103,7 @@
 
 
 
-        {{-- <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }} --}}
+        <br>{{ $phimDangChieu->links('pagination::bootstrap-5') }}
         <br>
     </div>
 @endsection

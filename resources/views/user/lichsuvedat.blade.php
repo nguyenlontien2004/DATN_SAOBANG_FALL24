@@ -46,10 +46,10 @@
                 src="{{ asset('storage/' . Auth::user()->anh_dai_dien) }}" style="width: 150px; height: 150px;" />
             <div class="username text-center font-weight-bold">{{ Auth::user()->ho_ten }}</div>
             <hr />
-            <a href="#" class="d-block py-2">Thông tin cá nhân</a>
-            <a href="#" class="d-block py-2">Đổi mật khẩu</a>
-            <a href="#" class="d-block py-2">Lịch sử đặt vé</a>
-            <a href="#" class="d-block py-2">Cập nhật thông tin cá nhân</a>
+            <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
+            <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
+            <a href="{{ route('lichsudatve') }}">Lịch sử đặt vé</a>
+            <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
         </div>
 
         <!-- Content -->

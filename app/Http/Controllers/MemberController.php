@@ -43,17 +43,19 @@ class MemberController extends Controller
 
     public function thongTin()
     {
+        $title = "Thông tin cá nhân";
         $nguoidung = Auth::user();
 
-        return view('user.thongtintaikhoan', compact('nguoidung'));
+        return view('user.thongtintaikhoan', compact('title', 'nguoidung'));
     }
 
 
     public function formCapNhatThongTin()
     {
+        $title = "Cập nhật thông tin cá nhân";
         $nguoidung = Auth::user();
 
-        return view('user.profile.capnhatthongtin', compact('nguoidung'));
+        return view('user.profile.capnhatthongtin', compact('title', 'nguoidung'));
     }
 
     public function capNhatThongTin(Request $request)
