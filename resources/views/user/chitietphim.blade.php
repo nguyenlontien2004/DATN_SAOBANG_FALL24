@@ -182,7 +182,7 @@
         </div>
 
         <!-- Đánh giá-->
-        @auth
+        
             <br>
             <h3>Danh sách đánh giá:</h3><br>
             @foreach ($chiTietPhim->danhGias as $item)
@@ -201,6 +201,7 @@
                     <br>
                 </div>
                 @endforeach
+                @auth
             <div class="mt-4">
                 <p class="text-muted">
                     <a href="#" onclick="showReviewTab(); return false;">
@@ -211,7 +212,7 @@
             <!-- Form đánh giá ẩn -->
             <div id="reviewTab" style="display: none; margin-top: 20px;">
                 <h4>Đánh giá của bạn</h4>
-                <form action="{{ route('danhgia.store') }}" method="POST">
+                <form action="{{ route('danh-gia.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
                     <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
@@ -265,13 +266,11 @@
             <div class="container my-5">
                 <!-- Nội dung bình luận -->
                 @auth
-                    <form action="{{ route('binhluan.store') }}" method="POST">
+                    <form action="{{ route('binh-luan.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
                         <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
                         <div class="d-flex mt-4">
-                            <img src="user.png" alt="User" class="rounded-circle me-3"
-                                style="width: 40px; height: 40px;" />
                             <div class="flex-grow-1" style="max-width: 500px;">
                                 <textarea class="form-control" name="noi_dung" placeholder="Viết bình luận của bạn..." rows="1"
                                     style="border-radius: 20px; resize: none; overflow: hidden; width: 100%;" oninput="autoResize(this)"></textarea>
