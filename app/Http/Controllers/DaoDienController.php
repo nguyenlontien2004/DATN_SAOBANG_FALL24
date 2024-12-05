@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateDaoDienRequest;
 
 class DaoDienController extends Controller
 {
+    //nhập code thủ công
     public function index()
     {
         $daoDiens = DaoDien::orderBy('id', 'desc')->get();

@@ -6,10 +6,8 @@ document
         filterForm.submit();
     });
 function search() {
-    // Lấy giá trị từ input tìm kiếm
     const query = document.getElementById("searchInput").value.trim();
 
-    // Nếu không có giá trị trong ô tìm kiếm, ẩn kết quả
     if (!query) {
         document.getElementById("searchResults").style.display = "none";
         return;
@@ -29,6 +27,7 @@ function search() {
                 let html = "";
                 results.forEach((result) => {
                     html += `<div>${
+                        
                         result.ten_dao_dien || result.ten_dien_vien
                     }</div>`;
                 });

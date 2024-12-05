@@ -12,6 +12,7 @@ class SuatChieu extends Model
         'ten_suat_chieu',  // Thay thế bằng các trường thực tế của bảng suat_chieus
         'gio_bat_dau',
         'gio_ket_thuc',
+        'date',
         'trang_thai',
         'phong_chieu_id',
         'phim_id',

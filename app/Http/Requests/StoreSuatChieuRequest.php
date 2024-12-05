@@ -20,26 +20,65 @@ class StoreSuatChieuRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    // public function rules()
+    // {
+    //     return [
+    //         'phong_chieu_id' => 'required|exists:phong_chieus,id',
+    //         // 'phim_id' => 'required|exists:phims,id',
+    //         'gio_bat_dau' => 'required|date_format:H:i',
+    //         'date' => 'required|date',
+    //         'gio_ket_thuc' => 'required|date_format:H:i|after:gio_bat_dau',
+    //         'phim_id' => [
+    //             'required',
+    //             'exists:phims,id',
+    //             function ($attribute, $value, $fail) {
+    //                 $existingShow = SuatChieu::where('phim_id', $value)
+    //                     ->where('phong_chieu_id', $this->input('phong_chieu_id')) // Lấy giá trị từ input
+    //                     ->whereDate('date', $this->input('date')) // Kiểm tra ngày
+    //                     ->where(function ($query) {
+    //                         $query->whereBetween('gio_bat_dau', [$this->input('gio_bat_dau'), $this->input('gio_ket_thuc')])
+    //                             ->orWhereBetween('gio_ket_thuc', [$this->input('gio_bat_dau'), $this->input('gio_ket_thuc')])
+    //                             ->orWhere(function ($query) {
+    //                                 $query->where('gio_bat_dau', '<=', $this->input('gio_bat_dau'))
+    //                                     ->where('gio_ket_thuc', '>=', $this->input('gio_ket_thuc'));
+    //                             });
+    //                     })
+    //                     ->exists();
+
+    //                 if ($existingShow) {
+    //                     $fail('Không thể thêm suất chiếu mới. Một suất chiếu đã tồn tại trong khoảng thời gian đã chọn.');
+    //                 }
+    //             }
+    //         ],
+    //     ];
+    // }
     public function rules()
     {
         return [
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
-            // 'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required|date_format:H:i',
+            'date' => 'required|date',
             'gio_ket_thuc' => 'required|date_format:H:i|after:gio_bat_dau',
             'phim_id' => [
                 'required',
                 'exists:phims,id',
                 function ($attribute, $value, $fail) {
-                    $existingShow = SuatChieu::where('phim_id', $value)
-                        ->where('phong_chieu_id', $this->phong_chieu_id)
-                        ->whereBetween('gio_bat_dau', [$this->gio_bat_dau, $this->gio_ket_thuc])
+                    $existingShow = SuatChieu::where('phong_chieu_id', $this->input('phong_chieu_id'))
+                        ->whereDate('date', $this->input('date'))
+                        ->where(function ($query) {
+                            $query->whereBetween('gio_bat_dau', [$this->input('gio_bat_dau'), $this->input('gio_ket_thuc')])
+                                ->orWhereBetween('gio_ket_thuc', [$this->input('gio_bat_dau'), $this->input('gio_ket_thuc')])
+                                ->orWhere(function ($query) {
+                                    $query->where('gio_bat_dau', '<=', $this->input('gio_bat_dau'))
+                                        ->where('gio_ket_thuc', '>=', $this->input('gio_ket_thuc'));
+                                });
+                        })
                         ->exists();
 
                     if ($existingShow) {
-                        $fail('Không thể thêm suất chiếu mới. Một suất chiếu cho phim này trong phòng đã chọn đang diễn ra trong khoảng thời gian đã chỉ định.');
+                        $fail('Không thể thêm suất chiếu mới. Một suất chiếu đã tồn tại trong khoảng thời gian đã chọn.');
                     }
-                },
+                }
             ],
         ];
     }

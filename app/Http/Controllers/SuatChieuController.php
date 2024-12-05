@@ -87,15 +87,16 @@ class SuatChieuController extends Controller
     }
     public function store(StoreSuatChieuRequest $request)
     {
-        $ngay = $request->ngay;
-        $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
-        $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
+        // $ngay = date('Y-m-d');
+        // $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
+        // $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
 
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
-            'gio_ket_thuc' => $timestamp_ket_thuc,
-            'gio_bat_dau' => $timestamp_bat_dau,
+            'gio_ket_thuc' =>$request->gio_ket_thuc,
+            'gio_bat_dau' =>$request->gio_bat_dau,
+            'date'=>$request->date,
         ]);
 
         return redirect()->route('suatChieu.index')->with('success', 'Thêm suất chiếu thành công!');
@@ -110,7 +111,7 @@ class SuatChieuController extends Controller
 
     public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
     {
-        $ngay = $request->ngay;
+        $ngay = date('Y-m-d');
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
 
