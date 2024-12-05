@@ -41,6 +41,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Ngày suất chiếu</th>
                         <th scope="col">Thời Gian Bắt Đầu</th>
                         <th scope="col">Thời Gian Kết Thúc</th>
                         <th scope="col">Phòng Chiếu</th>
@@ -52,7 +53,8 @@
                 <tbody>
                     @forelse ($suatChieus as $suatChieu)
                         <tr>
-                            <td>{{ $suatChieu->id }}</td>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $suatChieu->ngay }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_bat_dau)->format('H:i') }}</td>
                             <td>{{ \Carbon\Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i') }}</td>
                             <td>{{ $suatChieu->phongChieu->ten_phong_chieu }}</td>

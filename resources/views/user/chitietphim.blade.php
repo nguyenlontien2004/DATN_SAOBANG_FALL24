@@ -88,7 +88,6 @@
     <div id="videoModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-
                 <div class="modal-body" style="padding:0px">
                     <iframe id="video" src="" frameborder="0" allowfullscreen
                         style="width: 100%; height: 60vh;"></iframe>
@@ -270,12 +269,13 @@
                 <h5 class="text-dark fw-bold mb-3">Phim đang chiếu</h5>
                 <ul class="list-unstyled">
                     @foreach ($phimDangChieu as $item)
+                        @if ($chiTietPhim->id !== $item->id)
                         <li class="border-bottom pb-3 mb-3">
                             <div class="d-flex align-items-start">
                                 <div class="me-3">
                                     <!-- Hình ảnh của video -->
                                     <img alt="Video Thumbnail" class="img-fluid rounded film-image"
-                                        src="{{ asset('storage/' . $chiTietPhim->anh_phim) }}"
+                                        src="{{ asset('storage/' . $item->anh_phim) }}"
                                         style="cursor: pointer; width: 65px; height: auto;" />
                                 </div>
                                 <div class="flex-grow-1">
@@ -296,6 +296,7 @@
                                 </div>
                             </div>
                         </li>
+                        @endif
                     @endforeach
                 </ul>
 

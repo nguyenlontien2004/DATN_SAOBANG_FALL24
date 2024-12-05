@@ -10,6 +10,7 @@ class SuatChieu extends Model
     use HasFactory;
     protected $fillable = [
         'ten_suat_chieu',  // Thay thế bằng các trường thực tế của bảng suat_chieus
+        'ngay',
         'gio_bat_dau',
         'gio_ket_thuc',
         'trang_thai',

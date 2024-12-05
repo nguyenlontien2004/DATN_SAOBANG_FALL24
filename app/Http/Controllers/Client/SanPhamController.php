@@ -12,6 +12,9 @@ use App\Models\PhimVaTheLoai;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
 use App\Models\Ve;
+use App\Models\Rap;
+use App\Models\AnhBannerQuangCao;
+use App\Models\BannerQuangCao;
 use Illuminate\Support\Facades\Auth;
 
 class SanPhamController extends Controller
@@ -22,8 +25,38 @@ class SanPhamController extends Controller
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
+        //dd($phimDangChieu->toArray());
         $danhSachPhim = Phim::query()->paginate(1);
-        return view('user.trangchu', compact('title', 'phimDangChieu', 'danhSachPhim'));
+        $bannerDau = BannerQuangCao::with([
+            'anhBanners' => function ($query) {
+                $query->orderBy('thu_tu');
+            }
+        ])
+            ->where('vi_tri', 'header')
+            ->get();
+        $bannerGiua = BannerQuangCao::with([
+            'anhBanners' => function ($query) {
+                $query->orderBy('thu_tu');
+            }
+        ])
+            ->where('vi_tri', 'giữa')
+            ->first();
+        // sds
+        $listday = collect();
+        for ($i = 0; $i < 6; $i++) {
+            $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
+            $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
+
+            $listday->push([
+                'date' => $date->format('d-m'),
+                'day' => $dayName,
+                'ngaychuan' => $date->format('Y-m-d')
+            ]);
+        }
+        $danhsachrap = Rap::query()
+        ->get();
+
+        return view('user.trangchu', compact('title','danhsachrap','listday', 'phimDangChieu', 'danhSachPhim', 'bannerDau', 'bannerGiua'));
     }
     public function ChiTietPhim(string $id)
     {
@@ -50,8 +83,8 @@ class SanPhamController extends Controller
                 'day' => $dayName
             ]);
         }
-        $binhluan = BinhLuanPhim::query()->with('NguoiDung')->where('phim_id',$id)->orderBy('created_at','desc')->get();
-        return view('user.chitietphim', compact('title','binhluan', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
+        $binhluan = BinhLuanPhim::query()->with('NguoiDung')->where('phim_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('user.chitietphim', compact('title', 'binhluan', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
 
     }
 

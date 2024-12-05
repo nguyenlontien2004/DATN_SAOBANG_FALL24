@@ -35,7 +35,7 @@
                     @method('PUT')
                     <div class="form-group">
                         <label for="thu_tu">Thứ tự</label>
-                        <input type="thu_tu" name="thu_tu" class="form-control" id="thu_tu" placeholder="Nhập thứ tự"
+                        <input type="thu_tu" name="thu_tu" value="{{ $anhBannerQuangCao->thu_tu }}" class="form-control" id="thu_tu" placeholder="Nhập thứ tự"
                             required />
                     </div>
 

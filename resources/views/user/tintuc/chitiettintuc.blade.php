@@ -1,6 +1,7 @@
 @extends('layout.user')
 
 @section('content')
+<div class="container mt-5" style="max-width: 80rem;margin: 0 auto;">
     <div class="row">
         <!-- Tin tức content -->
         <div class="col-md-8 news-content bg-light">
@@ -33,16 +34,14 @@
                     <a href="{{ route('tintuc.show', $lq->id) }}" class="text-decoration-none">
                         <ul class="list-unstyled">
                             <li class="mb-3">
-                                <div class="row" style="max-height: 100px">
-                                    <div class="col-md-2">
+                                <div class="row" style="max-height: auto;">
+                                    <div class="col-md-4 pr-0">
                                         <img src="{{ asset('storage/' . $lq->hinh_anh) }}" alt="News Thumbnail"
-                                            style="width: 64px; height: 100%; object-fit: cover;" />
+                                            style="width: 100%; height: auto; object-fit: cover;border-radius: 7px;" />
                                     </div>
-                                    <div class="col-md-10">
+                                    <div class="col-md-8">
                                         <h5 class="h6 mb-1">{{ $lq->tieu_de }}</h5>
-                                        <p class="small text-muted mb-0">
-                                            {{ $lq->tom_tat }}
-                                        </p>
+                                      
                                     </div>
                                 </div>
                             </li>
@@ -53,4 +52,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

@@ -248,7 +248,7 @@
                     <div class="container-ticket-information">
                         <div class="content-ticket-information">
                             <p>{{ $suatchieu->phim->ten_phim }}</p>
-                            <strong>{{ $suatchieu->rap?->ten_rap }}</strong>
+                            <strong>{{ $suatchieu->phongChieu->rap->ten_rap }}</strong>
                             <p>Suất <strong>{{ $suatchieu->gio_bat_dau . '~' . $suatchieu->gio_ket_thuc }}</strong> Ngày
                                 <strong>{{ $date }}</strong>
                             </p>

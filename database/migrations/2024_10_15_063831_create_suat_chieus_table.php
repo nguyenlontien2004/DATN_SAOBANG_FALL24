@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(PhongChieu::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Phim::class)->constrained()->cascadeOnDelete();
-          
             $table->timestamp('gio_bat_dau');
             $table->timestamp('gio_ket_thuc');
+            $table->date('ngay')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });

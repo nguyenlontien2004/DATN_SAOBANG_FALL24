@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAnhBannerQuangCaoRequest;
 use App\Http\Requests\UpdateAnhBannerQuangCaoRequest;
 use App\Models\BannerQuangCao;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class AnhBannerQuangCaoController extends Controller
 {
@@ -71,18 +72,18 @@ class AnhBannerQuangCaoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnhBannerQuangCaoRequest $request, AnhBannerQuangCao $anhBannerQuangCao)
+    public function update(Request $request, AnhBannerQuangCao $anhBannerQuangCao)
     {
         $anhbanner = $request->all();
 
         if ($request->hasFile('hinh_anh')) {
-            if ($anhBannerQuangCao->hinhanh) {
-                Storage::disk('public')->delete($anhBannerQuangCao->hinhanh);
+            if ($anhBannerQuangCao->hinh_anh) {
+                Storage::disk('public')->delete($anhBannerQuangCao->hinh_anh);
             }
 
             $hinhanh = $request->file('hinh_anh')->store('uploads/baiviet', 'public');
         } else {
-            $hinhanh = $anhBannerQuangCao->hinhanh;
+            $hinhanh = $anhBannerQuangCao->hinh_anh;
         }
 
         $anhbanner['hinh_anh'] = $hinhanh;

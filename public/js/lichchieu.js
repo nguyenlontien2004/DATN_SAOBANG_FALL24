@@ -50,7 +50,7 @@ $(document).ready(function () {
          <div class="row mt-3 mb-3 ms-1 mr-1">
             <div class="col-2 col-sm-2">
                 <a class="" href="${linkWeb}thanh-vien/chitietphim/${item.id}">
-                    <img class="radius7px" width="95px" src="${urlLink+'/'+item.anh_phim}">
+                    <img class="radius7px" width="95px" src="${urlLink+'/'+item.anh_phim}" style="border-radius: 5px;">
                 </a>
             </div>
             <div class="col" style="margin-left: -14px;">
@@ -59,7 +59,8 @@ $(document).ready(function () {
                     <label style="color:#12263f;font-weight: 500;font-size: 13.5px;">Suất chiếu</label>
                     <div class="d-flex flex-wrap">`
              $.each(item.suat_chieus,function(_,val){
-                html+=`<a href="${linkWeb}dat-ve/${val.id}/${currDate.split('-').reverse().join('-')}" class="">
+                let link = linkWeb+'dat-ve/'+val.id+'/'+currDate.split('-').reverse().join('-');
+                html+=`<a href="${!val.suat_chieu_trong_ngay ? link : ''}" class="${val.suat_chieu_trong_ngay ? 'disabled' : ''}">
                 <div class="btn-somtime mr-1">${val.gio_bat_dau}~${val.gio_ket_thuc}</div>
                  </a>`
              })
@@ -69,6 +70,6 @@ $(document).ready(function () {
            </div>
       </div>`
         })
-        return html;
+        return html;///${val.id}/${currDate.split('-').reverse().join('-')}
     }
 })

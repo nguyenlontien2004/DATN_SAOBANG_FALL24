@@ -10,9 +10,24 @@ use App\Http\Requests\UpdateTheLoaiPhimRequest;
 
 class TheLoaiPhimController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+    //     return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
+    // }
+    public function index(Request $request)
     {
-        $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        $query = $request->query('query');
+
+        // Nếu có query, lọc theo id, ngược lại lấy tất cả
+        if ($query) {
+            $theLoaiPhims = TheLoaiPhim::where('id', $query)
+            ->orWhere('ten_the_loai', 'LIKE', '%' . $query . '%')
+            ->get(); 
+        } else {
+            $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        }
+       
         return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
     }
     public function create()

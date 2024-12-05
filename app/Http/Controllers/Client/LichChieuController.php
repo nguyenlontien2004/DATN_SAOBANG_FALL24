@@ -34,7 +34,7 @@ class LichChieuController extends Controller
             $phim = Phim::query()
                 ->select('id', 'ten_phim', 'do_tuoi', 'anh_phim', 'ngay_khoi_chieu', 'ngay_ket_thuc', 'trailer')
                 ->with([
-                    'suatChieus' => function ($query) use ($id) {
+                    'suatChieus' => function ($query) use ($id,$ngay) {
                         $query->select(
                             'suat_chieus.id',
                             'suat_chieus.phim_id',
@@ -44,17 +44,16 @@ class LichChieuController extends Controller
                         )
                             ->whereHas('phongChieu.rap', function ($qr) use ($id) {
                             $qr->where('id', $id);
-                        });
+                        })->where('ngay', $ngay)->orderBy('gio_bat_dau');
                     }
                 ])
-                ->whereDate('ngay_khoi_chieu', '<=', $ngay)
-                ->whereDate('ngay_ket_thuc', '>=', $ngay)
                 ->whereHas('suatChieus', function ($query) use ($id) {
                     $query->whereHas('phongChieu.rap', function ($qr) use ($id) {
                         $qr->where('id', $id);
                     });
                 })
                 ->get();
+            $phim = $this->checkSuatchieucuangayhientai($phim,$ngay);
             return response()->json([
                 'data' => $phim,
                 'status' => 200,
@@ -67,6 +66,47 @@ class LichChieuController extends Controller
                 'msg' => 'error',
             ], 500);
         }
+    }
+    public function checkSuatchieucuangayhientai($phim, $getDateUrl)
+    {
+        $array = [];
+        $date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
+        foreach ($phim as $value) {
+            $arraySc = [];
+            foreach ($value->suatChieus as $val) {
+                $check = true;
+                if ($date == $getDateUrl) {
+                    if ($val->gio_bat_dau > $currentTime) {
+                        $check = false;
+                    } else {
+                        $check = true;
+                    }
+                } else if ($getDateUrl > $date) {
+                    $check = false;
+                }
+                //$date == $getDateUrl  && $val->gio_ket_thuc < $currentTime && $val->gio_bat_dau > $currentTime ? false : true
+                $arraySc[] = [
+                    'id' => $val->id,
+                    'phong_chieu_id' => $val->phong_chieu_id,
+                    'gio_bat_dau' => $val->gio_bat_dau,
+                    'gio_ket_thuc' => $val->gio_ket_thuc,
+                    'suat_chieu_trong_ngay' => $check
+                ];
+            }
+            if (count($value->suatChieus) > 0) {
+                $array[] = [
+                    'id' => $value->id,
+                    'ten_phim' => $value->ten_phim,
+                    'do_tuoi' => $value->do_tuoi,
+                    'anh_phim' => $value->anh_phim,
+                    'trailer' => $value->trailer,
+                    'suat_chieus' => $arraySc
+                ];
+            }
+        }
+
+        return $array;
     }
     function getCustomDayName($dayName)
     {

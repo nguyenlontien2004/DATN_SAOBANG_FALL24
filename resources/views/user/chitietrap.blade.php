@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-<div class="container mb-4" style="max-width: 80rem;margin: 0 auto;margin-top:4.239rem;">
+<div class="container mb-5" style="max-width: 80rem;margin: 0 auto;margin-top:4.239rem;">
     <div class="row">
         <div class="col-md-8">
             <div class="box-data d-inline-flex justify-content-around mb-2" style="width:100%">
@@ -129,8 +129,11 @@
                     @foreach ($danhsachrap as $item)
                         <div class="mt-2" style="border-bottom: 0.3px solid #e8e8e8;">
                             <div class="text-start mt-4 mb-4">
-                                <h1 class="mb-0 text-black" style="font-size: 1.125rem;font-weight: 500;">{{ $item->ten_rap }}
-                                </h1>
+                                <a href="{{ route('chitietrap', $item->id) }}" style="text-decoration: none;">
+                                    <h1 class="mb-0 text-black" style="font-size: 1.125rem;font-weight: 500;">
+                                        {{ $item->ten_rap }}
+                                    </h1>
+                                </a>
                                 <p class="mb-0 mt-1" style="color:#95aac9;font-size: 12px;font-weight: 500;">
                                     {{ $item->dia_diem }}
                                 </p>

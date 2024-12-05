@@ -29,7 +29,7 @@
                 <h4 class="card-title">Sửa bài viết tin tức</h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('bai-viet-tin-tuc.update', $baiVietTinTuc->id) }}" method="POST">
+                <form action="{{ route('bai-viet-tin-tuc.update', $baiVietTinTuc->id) }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -50,7 +50,7 @@
 
                     <div class="form-group">
                         <label for="hinh_anh">Hình ảnh</label>
-                        <input type="file" name="hinh_anh" class="form-control" id="hinh_anh" required />
+                        <input type="file" name="hinh_anh" class="form-control" />
 
                         <h5>Ảnh trước đó:</h5><br>
                         <img src="{{ asset('storage/' . $baiVietTinTuc->hinh_anh) }}" width="100" alt=""> <br>
@@ -81,4 +81,18 @@
             </div>
         </div>
     </div>
+    <style>
+        .ck-editor__editable_inline {
+            height: 200px;
+        }
+    </style>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#noi_dung'))
+            .catch(
+                error => {
+                    console.error(error);
+                }
+            )
+    </script>
 @endsection

@@ -136,7 +136,7 @@
                 {{-- <a href="#" class="mr">
                     Đăng ký
                 </a> --}}
-        <div class="form-action pt-2">
+        <!-- <div class="form-action pt-2">
           <a href="#" style="color: white;">HOẶC</a>
         </div>
         <div class="form-action pt-3">
@@ -170,7 +170,7 @@
               alt="">
             <span>Đăng nhập bằng facebook</span>
           </a>
-        </div>
+        </div> -->
         <!-- <div class="login-account">
           <span class="msg">Bạn chưa có tài khoản ?</span>
           <a href="#" id="show-signup" class="link">Đăng ký</a>

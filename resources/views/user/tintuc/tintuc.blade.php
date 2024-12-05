@@ -1,6 +1,7 @@
 @extends('layout.user')
 
 @section('content')
+<div class="container mt-5" style="max-width: 80rem;margin: 0 auto;">
     <div class=" mb-3">
         <h2 class="h5">Tin tức</h2>
     </div>
@@ -32,4 +33,5 @@
     </div>
 
     {{ $baiviet->links() }}
+</div>
 @endsection

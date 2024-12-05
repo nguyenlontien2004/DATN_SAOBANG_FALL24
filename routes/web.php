@@ -206,7 +206,7 @@ Route::prefix('thanh-vien')->group(function () {
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
   //Lịch sử đặt vé
   Route::get('lich-su-dat-ve', [MemberController::class, 'lichSuDatVe'])->name('lichsudatve');
-  Route::delete('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
+  Route::post('huy-ve/{id}', [MemberController::class, 'huyVe'])->name('huyve');
 
 
   Route::get('/forgot-password', [PasswordResetController::class, 'formForgotPass'])->name('forgot.password');

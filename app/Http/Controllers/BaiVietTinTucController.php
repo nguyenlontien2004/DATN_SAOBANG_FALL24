@@ -77,15 +77,14 @@ class BaiVietTinTucController extends Controller
     public function update(UpdateBaiVietTinTucRequest $request, BaiVietTinTuc $baiVietTinTuc)
     {
         $baiviet = $request->all();
-
         if ($request->hasFile('hinh_anh')) {
-            if ($baiVietTinTuc->hinhanh) {
-                Storage::disk('public')->delete($baiVietTinTuc->hinhanh);
+            if ($baiVietTinTuc->hinh_anh) {
+                Storage::disk('public')->delete($baiVietTinTuc->hinh_anh);
             }
 
             $hinhanh = $request->file('hinh_anh')->store('uploads/baiviet', 'public');
         } else {
-            $hinhanh = $baiVietTinTuc->hinhanh;
+            $hinhanh = $baiVietTinTuc->hinh_anh;
         }
 
         $baiviet['hinh_anh'] = $hinhanh;

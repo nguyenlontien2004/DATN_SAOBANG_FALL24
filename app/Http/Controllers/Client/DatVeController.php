@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use App\Events\OrderSuccess;
+use App\Models\NguoiDung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Endroid\QrCode\Writer\SvgWriter;
@@ -35,8 +36,9 @@ class DatVeController extends Controller
             ->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
             ->with([
                 'phim:id,ten_phim,gia',
-                'phongChieu:id,ten_phong_chieu,rap_id',
-                'rap'
+                'phongChieu'=>function($qr){
+                    $qr->with('rap');
+                },
             ])
             ->find($id);
         //dd($suatchieu->toArray());
@@ -49,6 +51,7 @@ class DatVeController extends Controller
                             'chitietve' => function ($q) use ($formattedDate, $id) {
                                 $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
                                     ->whereDate('ngay_ve_mo', '=', $formattedDate)
+                                    ->where('ves.deleted_at','=',null)
                                     ->where('suat_chieu_id', $id);
                             }
                         ])
@@ -104,11 +107,11 @@ class DatVeController extends Controller
         // });
         // dd(reset($a));
         $magiamgia = MaGiamGia::query()
-        ->where('so_luong','>',0)
-        ->whereDate('ngay_ket_thuc','>=',date('Y-m-d'))
-        ->get();
-        // dd($magiamgia->toArray());
-        return view('user.thanhtoan', compact(['id','idsuauChieu','magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+            ->where('so_luong', '>', 0)
+            ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
+            ->get();
+
+        return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
     public function checkViOnline(Request $request)
@@ -123,13 +126,15 @@ class DatVeController extends Controller
                 return $this->vnpay($request, $uuid);
             case 'zalopay':
                 return $this->zalopay($request, $uuid);
+            case 'xu':
+                return $this->thanhtoanxu($request, $uuid);
             default:
                 return true;
         }
     }
     public function luuThongTinVeMua(Request $request)
     {
-        // dd($request->all());
+       // dd($request->all(),session('thong-tin-dat'));
         try {
             $thongtinVeluu = session('thong-tin-dat');
             $ve = Ve::query()->orderBy('id', 'desc')->get()->first();
@@ -213,8 +218,10 @@ class DatVeController extends Controller
             $theloaivi = $request->orderInfo;
         } elseif (isset($request->vnp_OrderInfo)) {
             $theloaivi = json_decode($request->vnp_OrderInfo)->description;
-        }elseif(isset($request->thanhtoan)){
+        } elseif (isset($request->thanhtoan)) {
             $theloaivi = $request->thanhtoan;
+        } elseif(isset($request->thanhtoanxu)){
+            $theloaivi = $request->thanhtoanxu;
         }
         switch ($theloaivi) {
             case 'MoMo':
@@ -222,7 +229,7 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->extraData);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->orderId . $id;
                 $createVe = $this->createVe($macode, $request->extraData, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->orderInfo);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
@@ -234,7 +241,7 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia(json_decode($request->vnp_OrderInfo)->magiamgia);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->vnp_TxnRef . $id;
                 $createVe = $this->createVe($macode, json_decode($request->vnp_OrderInfo)->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->vnp_Amount / 100, json_decode($request->vnp_OrderInfo)->description);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
@@ -246,12 +253,25 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->magiamgia);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->zlpay_orderid . $id;
                 $createVe = $this->createVe($macode, $request->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->thanhtoan);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
                 $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
+                return $createVe;
+            case 'XU':
+                $this->checkMagiamgia($request->magiamgia);
+                $id = isset($ve) ? $ve?->id + 1 : 1;
+                $macode = $request->xu_orderid . $id;
+                $createVe = $this->createVe($macode,$request->magiamgia,$thongtinVeluu['idSuatChieu'],$date,$request->amount,$request->thanhtoanxu);
+                $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
+                $this->thanhtoanVe($createVe->id);
+                $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
+                $tongGiaMuaVe = (int) $request->amount / 1000;
+                $user = NguoiDung::query()->find(Auth::user()->id);
+                $user->gold = $user->gold - $tongGiaMuaVe;
+                $user->save();
                 return $createVe;
             default:
                 return true;
@@ -328,14 +348,15 @@ class DatVeController extends Controller
             $ma->save();
         }
     }
-    public function checkDoan($thongtinVeluu){
-         if(!empty($thongtinVeluu['doan'])){
+    public function checkDoan($thongtinVeluu)
+    {
+        if (!empty($thongtinVeluu['doan'])) {
             foreach ($thongtinVeluu['doan'] as $key => $value) {
                 $doan = DoAn::query()->find($value['idFood']);
                 $doan->luot_mua = $doan->luot_mua + $value['soluong'];
                 $doan->save();
             }
-         }
+        }
     }
     public function checkqrCode($id)
     {
@@ -350,7 +371,7 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'=>function($qr){
+                        'phongChieu' => function ($qr) {
                             $qr->with('rap');
                         }
                     ]);
@@ -376,7 +397,7 @@ class DatVeController extends Controller
                     ->with([
                         'phim',
                         'rap',
-                        'phongChieu'=>function($qr){
+                        'phongChieu' => function ($qr) {
                             $qr->with('rap');
                         }
                     ]);
@@ -587,7 +608,7 @@ class DatVeController extends Controller
             "endpoint" => "https://sb-openapi.zalopay.vn/v2/create",
         ];
         $embeddata = json_encode([
-            "redirecturl" => asset('luu-thong-tin-ve?'.'zlpay_orderid='.$uuid.'&magiamgia='.$request->magiamgia."&thanhtoan=ZALOPAY"), // URL chuyển hướng sau khi thanh toán
+            "redirecturl" => asset('luu-thong-tin-ve?' . 'zlpay_orderid=' . $uuid . '&magiamgia=' . $request->magiamgia . "&thanhtoan=ZALOPAY"), // URL chuyển hướng sau khi thanh toán
         ]);
         $items = '[]';
         $transID = $uuid;
@@ -605,33 +626,44 @@ class DatVeController extends Controller
         $data = $order['app_id'] . "|" . $order['app_trans_id'] . "|" . $order['app_user'] . "|" . $order['amount']
             . "|" . $order['app_time'] . "|" . $order['embed_data'] . "|" . $order['item'];
         $order['mac'] = hash_hmac("sha256", $data, $config['key1']);
-        
+
         $context = stream_context_create([
             "http" => [
                 "header" => "Content-Type: application/x-www-form-urlencoded\r\n",
                 "method" => "POST",
                 "content" => http_build_query($order),
-        
+
             ],
         ]);
         $res = file_get_contents($config["endpoint"], false, $context);
-        $result = json_decode($res,true);
-        if($result['return_code'] == 1){
+        $result = json_decode($res, true);
+        if ($result['return_code'] == 1) {
             return redirect()->to($result['order_url']);
         }
         return back();
     }
+    public function thanhtoanxu($request, $uuid)
+    {
+        $tongxucuakhach = Auth::user()->gold;
+        $tongGiaMuaVe = $request->tongGia / 1000;
+        if ($tongxucuakhach < $tongGiaMuaVe) {
+            return back()->with('errorOrder', 'Tổng số xu trong tài khoản không đủ để thực hiện thanh toán');
+        }
+       
+        $urluutt = asset('luu-thong-tin-ve?'.'amount='. $request->tongGia .'&xu_orderid='.$uuid.'&magiamgia=' . $request->magiamgia . "&thanhtoanxu=XU");
+        return redirect()->to($urluutt);
+    }
     public function testMail()
     {
         $qrCode = new QrCode('https://example.com'); // Nội dung QR code
-    $qrCode->setSize(300); // Kích thước QR code
-    $qrCode->setMargin(10); // Viền QR code
+        $qrCode->setSize(300); // Kích thước QR code
+        $qrCode->setMargin(10); // Viền QR code
 
-    // Chuyển QR code sang định dạng SVG
-    $writer = new SvgWriter();
-    $result = $writer->write($qrCode);
-    
-     return $result->getString();
+        // Chuyển QR code sang định dạng SVG
+        $writer = new SvgWriter();
+        $result = $writer->write($qrCode);
+
+        return $result->getString();
         //$this->guiThongtinVeMail(57);
     }
 }

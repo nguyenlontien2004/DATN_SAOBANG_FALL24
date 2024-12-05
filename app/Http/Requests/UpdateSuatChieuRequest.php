@@ -25,7 +25,7 @@ class UpdateSuatChieuRequest extends FormRequest
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required|date_format:H:i',
-            'gio_ket_thuc' => 'required|date_format:H:i|after:gio_bat_dau',
+            'gio_ket_thuc' => 'required|date_format:H:i',//|after:gio_bat_dau
             'trang_thai' => 'required|boolean',
         ];
     }

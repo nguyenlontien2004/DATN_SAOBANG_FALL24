@@ -38,8 +38,7 @@
                     </div>
                     <div class="form-group">
                         <label for="noi_dung">Nội dung bài viết</label>
-                        <textarea name="noi_dung" class="form-control" id="noi_dung" rows="5" placeholder="Nhập nội dung bài viết"
-                            required></textarea>
+                        <textarea name="noi_dung" class="form-control" id="noi_dung" rows="5" placeholder="Nhập nội dung bài viết"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="tom_tat">Tóm tắt</label>
@@ -75,18 +74,18 @@
             </div>
         </div>
     </div>
-
-    <!-- <script>
+    <style>
+        .ck-editor__editable_inline {
+            height: 200px;
+        }
+    </style>
+    <script>
         ClassicEditor
-            .create(document.querySelector('#noi_dung'), {
-                ckfinder: {
-                    uploadUrl: '?_token= }}'
-                }
-            })
+            .create(document.querySelector('#noi_dung'))
             .catch(
                 error => {
                     console.error(error);
                 }
             )
-    </script> -->
+    </script>
 @endsection

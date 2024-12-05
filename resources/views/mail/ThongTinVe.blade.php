@@ -149,8 +149,11 @@
            @elseif($ve['phuong_thuc_thanh_toan'] == 'VNPAY')
            <img width="40px" src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg"
            alt="">
-           @else
+           @elseif($ve['phuong_thuc_thanh_toan'] == 'ZALOPAY')
            <img width="40px" src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png"
+           alt="">
+           @else
+           <img width="40px" style="border-radius: 4px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSfoJMilWmJVz7FRP88J1cQ_Vhkdpqr0HVjQ&s"
            alt="">
            @endif
             <div

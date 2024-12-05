@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="container-seat">
-            <form action="{{ route('checkViOnline') }}" method="post">
+            <form action="{{ route('checkViOnline') }}" class="formthanhtoan" method="post">
                 @csrf
                 <input type="number" class="tongtien" style="display: none;" name="tongGia" value="{{ $tong }}">
                 <input type="text" class="magiamgia" style="display: none;" name="magiamgia" value="">
@@ -345,6 +345,22 @@
                                         <p class="ms-3" style="font-size: 14px;font-weight:500;">ZaloPay(Thẻ tín dụng)</p>
                                     </div>
                                 </div>
+                                <div class="ms-4 mr-4 mb-3 thanhtoanquavi" style="cursor: pointer;">
+                                    <div class="d-flex mt-2 ms-3 mb-2 mr-2 align-items-center"
+                                        style="font-family: 'Cerebri Sans', sans-serif;">
+                                        <input type="radio" class="viOline" style="display: none;" name="viOline"  value="xu">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" class="mr-2 icon-check"
+                                            height="20" style="color: #f05050;" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                            stroke-linejoin="round" class="lucide lucide-circle-check-big">
+                                            <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+                                            <path d="m9 11 3 3L22 4" />
+                                        </svg>
+                                        <img width="30px" style="border-radius: 4px;"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSfoJMilWmJVz7FRP88J1cQ_Vhkdpqr0HVjQ&s" alt="">
+                                        <p class="ms-3" style="font-size: 14px;font-weight:500;">Thanh toán qua xu</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="container-ticket-information">
@@ -394,12 +410,26 @@
         </div>
     </div>
 </div>
+
 <script>
  const id = "{{ $idsuauChieu }}"
  const ngay = "{{ $date }}"
  const urlApiMaGiamGia = "{{ asset('/api/ma-giam-gia') }}"
  const tongGia = "{{ $tong }}"
- const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}" 
+ const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
+ let errorMessage = "{{ session('errorOrder') }}"
+ setTimeout(() => {
+    if (errorMessage) {
+        alert(errorMessage);
+    }
+ }, 1000);
+
+//  $('.formthanhtoan').on('submit',function(e){
+//       e.preventDefault()
+//       let vi = $('.viOline').val()
+//       console.log(vi);
+      
+//     })
 </script>
 <!-- @vite('resources/js/reatimeGhe.js') -->
 <script src="{{ asset('js/thanhtoan.js') }}"></script>

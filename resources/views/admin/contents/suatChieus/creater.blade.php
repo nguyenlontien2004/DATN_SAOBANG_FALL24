@@ -40,7 +40,12 @@
                     </div>
                     
                     <div class="mb-3 row">
-                        <div class="col-md-6">
+                    <div class="col-md-4">
+                            <label for="ngay" class="form-label">Ngày</label>
+                            <input type="date" class="form-control" id="ngay" name="ngay"
+                                value="{{ old('ngay') }}">
+                        </div>
+                        <div class="col-md-4">
                             <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
 
                             <input type="time" class="form-control" id="gio_bat_dau" name="gio_bat_dau"
@@ -51,7 +56,7 @@
 
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="gio_ket_thuc" class="form-label">Giờ Kết Thúc</label>
                             <input type="time" class="form-control" id="gio_ket_thuc" name="gio_ket_thuc" required>
                         </div>

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('tong_tien');
             $table->string('phuong_thuc_thanh_toan')->nullable();
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
             
         });

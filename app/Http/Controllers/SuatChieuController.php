@@ -47,6 +47,7 @@ class SuatChieuController extends Controller
         $request->validate([
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'phim_id' => 'required|exists:phims,id',
+            'ngay' => 'required',
             'gio_bat_dau' => 'required',
             'gio_ket_thuc' => 'required',
         ]);
@@ -54,6 +55,7 @@ class SuatChieuController extends Controller
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
+            'ngay' => $request->ngay,
             'gio_ket_thuc' => $timestamp_ket_thuc,
             'gio_bat_dau' => $timestamp_bat_dau,
         ]);
@@ -77,6 +79,7 @@ class SuatChieuController extends Controller
         $request->validate([
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'phim_id' => 'required|exists:phims,id',
+            'ngay' => 'required',
             'gio_ket_thuc' => 'required',
             'gio_bat_dau' => 'required',
         ]);
@@ -84,6 +87,7 @@ class SuatChieuController extends Controller
         $suatChieu->update([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
+            'ngay' => $request->ngay,
             'gio_bat_dau' => $timestamp_bat_dau,
             'gio_ket_thuc' => $timestamp_ket_thuc,
             'trang_thai' => $request->trang_thai,
