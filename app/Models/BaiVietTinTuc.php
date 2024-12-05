@@ -18,7 +18,6 @@ class BaiVietTinTuc extends Model
         'hinh_anh',
         'luot_xem',
         'ngay_dang',
-        'trang_thai'
     ];
 
     public function danhMuc()

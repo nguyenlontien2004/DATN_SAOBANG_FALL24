@@ -33,8 +33,13 @@
                     @csrf
                     <div class="form-group">
                         <label for="ten_danh_muc">Tên danh mục</label>
-                        <input type="ten_danh_muc" name="ten_danh_muc" class="form-control" id="ten_danh_muc"
-                            placeholder="Nhập tên danh mục" required />
+                        <input type="ten_danh_muc" name="ten_danh_muc" value="{{ old('ten_danh_muc') }}"
+                            class="form-control" id="ten_danh_muc" placeholder="Nhập tên danh mục" required />
+
+                        @error('ten_danh_muc')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success">Submit</button>
                             <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}" class="btn btn-danger">Cancel</a>

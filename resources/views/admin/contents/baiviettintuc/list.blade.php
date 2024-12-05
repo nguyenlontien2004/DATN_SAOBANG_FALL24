@@ -28,13 +28,13 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách bài viết tin tức</div>
+                    <div class="thongbao text-center">
+                        @if (session('success'))
+                            <span class="alert alert-success font-weight-bold"
+                                style="font-size: 1.2rem;">{{ session('success') }}</span>
+                        @endif
+                    </div>
                     <a href="{{ route('bai-viet-tin-tuc.create') }}" class="btn btn-primary">Thêm bài viết tin tức</a>
-                </div>
-                <div class="thongbao text-center">
-                    @if (session('success'))
-                        <span class="alert alert-success font-weight-bold"
-                            style="font-size: 1.2rem;">{{ session('success') }}</span>
-                    @endif
                 </div>
                 <div class="card-body">
                     <table class="table mt-3">

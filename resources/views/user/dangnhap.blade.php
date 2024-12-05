@@ -8,10 +8,9 @@
                 <div class="content_form">
                     <div class="form mb-4">
                         <div class="content_dn">
-                            <h3 class="title_dn1">Bạn đã có tài khoản trên Funny-Family</h3>
+                            <h3 class="title_dn1">Bạn đã có tài khoản trên Sao Băng</h3>
                             <p class="add_p1">
-                                Nếu bạn đã có tài khoản, hãy đăng nhập để tích lũy điểm thành viên và nhận được những ưu đãi
-                                tốt hơn!
+                                Nếu bạn đã có tài khoản, hãy đăng nhập để săn những bộ phim hot nhất của năm ngay thôi nào.
                             </p>
                             <form action="{{ route('dangnhap') }}" method="POST">
                                 @csrf
@@ -42,10 +41,10 @@
                     </div>
                     <div class="form">
                         <div class="content_dn">
-                            <h3 class="title_dn1">Khách hàng mới của Funny-Family</h3>
+                            <h3 class="title_dn1">Khách hàng mới của Sao Băng</h3>
                             <div class="ct_dnp2">
                                 <p class="add_p1">
-                                    Nếu bạn chưa có tài khoản trên hệ thống của cửa hàng Funny-Family, mời bạn chọn vào nút
+                                    Nếu bạn chưa có tài khoản trên hệ thống của cửa hàng Sao Băng, mời bạn chọn vào nút
                                     đăng ký để trở thành thành viên mới.
                                 </p>
                                 <p class="add_p1">

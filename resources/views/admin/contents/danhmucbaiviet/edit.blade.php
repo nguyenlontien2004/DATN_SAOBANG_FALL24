@@ -32,10 +32,10 @@
                     <div class="form-group">
                         <label for="ten_danh_muc">Tên danh mục</label>
                         <input type="ten_danh_muc" class="form-control" name="ten_danh_muc" id="ten_danh_muc"
-                            value="{{ $danhMucBaiVietTinTuc->ten_danh_muc }}" required />
+                            value="{{ old('ten_danh_muc', $danhMucBaiVietTinTuc->ten_danh_muc) }}" />
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                            <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}" class="btn btn-danger">Cancel</a>
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                            <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}" class="btn btn-danger">Quay lại</a>
                         </div>
                 </form>
             </div>

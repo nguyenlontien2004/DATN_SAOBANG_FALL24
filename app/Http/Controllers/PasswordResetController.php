@@ -67,8 +67,10 @@ class PasswordResetController extends Controller
         ]);
 
         $reset = DB::table('password_reset_tokens')->where([
+            
             ['email', $request->email],
             ['token', $request->token],
+            
         ])->first();
 
         if (!$reset) {

@@ -146,7 +146,7 @@
                             @endforeach
                         </select>
 
-                        @error('vaitros')
+                        @error('vai_tros')
                             <div class="text text-danger">
                                 {{ $message }}
                             </div>

@@ -1,5 +1,6 @@
 @extends('admin.index')
 
+
 @section('content')
     <div class="container mt-5">
         <div class="card">
@@ -19,17 +20,20 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
                         <label for="anh_dien_vien" class="form-label">Ảnh Diễn Viên</label>
                         <input type="file" class="form-control" id="anh_dien_vien" name="anh_dien_vien" accept="image/*">
                         <img src="{{ Storage::url($dienVien->anh_dien_vien) }}" alt="Product Image" width="100px"
                             height="auto">
 
+
                         <small class="form-text text-muted">Để trống nếu không muốn thay đổi ảnh.</small>
                         @error('anh_dien_vien')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
 
                     <div class="mb-3">
                         <label for="nam_sinh" class="form-label">Năm sinh</label>
@@ -39,6 +43,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
 
                     <div class="row mb-3">
                         <div class="col">
@@ -62,6 +67,7 @@
                         </div>
                     </div>
 
+
                     <div class="mb-3">
                         <label for="tieu_su" class="form-label">Tiểu Sử</label>
                         <textarea class="form-control" id="tieu_su" name="tieu_su">{{ old('tieu_su', $dienVien->tieu_su) }}</textarea>
@@ -70,6 +76,7 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
                         <label for="trang_thai" class="form-label">Trạng Thái</label>
                         <select class="form-select" id="trang_thai" name="trang_thai">
@@ -77,6 +84,7 @@
                             <option value="0" {{ !$dienVien->trang_thai ? 'selected' : '' }}>Không hoạt động</option>
                         </select>
                     </div>
+
 
                     <button type="submit" class="btn btn-primary">Cập nhật Diễn Viên</button>
                     <a href="{{ route('dienVien.index') }}" class="btn btn-secondary">Quay lại</a>
@@ -88,6 +96,7 @@
 @section('script-libs')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 @endsection
+
 
 @section('scripts')
     <script>
@@ -102,6 +111,7 @@
             });
     </script>
 @endsection
+
 
 @section('styles')
     <style>

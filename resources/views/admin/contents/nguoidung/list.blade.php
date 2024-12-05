@@ -87,7 +87,7 @@
                                         @if ($nd->trashed())
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 {{-- Nút khôi phục --}}
-                                                <form action="{{ route('nguoi-dung.restore', $nd->id) }}" method="POST"
+                                                <form action="{{ route('nguoi-dung.restore', $nd) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success btn-sm me-1"
@@ -95,7 +95,7 @@
                                                         Phục</button>
                                                 </form>
                                                 {{-- Nút xóa vĩnh viễn --}}
-                                                <form action="{{ route('nguoi-dung.forceDelete', $nd->id) }}" method="POST"
+                                                <form action="{{ route('nguoi-dung.forceDelete', $nd) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -106,13 +106,13 @@
                                         @else
                                             <div class="btn-group" role="group" aria-label="Hành động">
                                                 <!-- Nút show -->
-                                                <a href="{{ route('nguoi-dung.show', $nd->id) }}"
+                                                <a href="{{ route('nguoi-dung.show', $nd) }}"
                                                     class="btn btn-info btn-sm me-1">Chi tiết</a>
                                                 <!-- Nút chỉnh sửa -->
-                                                <a href="{{ route('nguoi-dung.edit', $nd->id) }}"
+                                                <a href="{{ route('nguoi-dung.edit', $nd) }}"
                                                     class="btn btn-warning btn-sm me-1">Sửa</a>
                                                 {{-- Nút Ẩn (Xóa mềm) --}}
-                                                <form action="{{ route('nguoi-dung.destroy', $nd->id) }}" method="POST"
+                                                <form action="{{ route('nguoi-dung.destroy', $nd) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

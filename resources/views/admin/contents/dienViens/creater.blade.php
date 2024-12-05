@@ -1,5 +1,6 @@
 @extends('admin.index')
 
+
 @section('content')
     <div class="container mt-5">
         <div class="card">
@@ -18,6 +19,7 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
                         <label for="anh_dien_vien" class="form-label">Ảnh Diễn Viên</label>
                         <input type="file" class="form-control" id="anh_dien_vien" name="anh_dien_vien" accept="image/*"
@@ -27,6 +29,7 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
                         <label for="nam_sinh" class="form-label">Năm sinh</label>
                         <input type="date" class="form-control" id="nam_sinh" name="nam_sinh"
@@ -35,6 +38,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
 
                     <div class="row mb-3">
                         <div class="col">
@@ -59,6 +63,7 @@
                         </div>
                     </div>
 
+
                     <div class="mb-3">
                         <label for="tieu_su" class="form-label">Tiểu Sử</label>
                         <textarea type="text" class="form-control" id="tieu_su" name="tieu_su">{{ old('tieu_su') }}</textarea>
@@ -77,6 +82,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 @endsection
 
+
 @section('scripts')
     <script>
         ClassicEditor
@@ -90,6 +96,7 @@
             });
     </script>
 @endsection
+
 
 @section('styles')
     <style>

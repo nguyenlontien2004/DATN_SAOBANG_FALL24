@@ -19,10 +19,20 @@ class UpdateDanhMucBaiVietTinTucRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         'ten_danh_muc' => 'required|string|max:255|unique:danh_muc_bai_viet_tin_tucs,ten_danh_muc,' . $this->route('danh_muc_bai_viet_tin_tuc'),
+    //     ];
+    // }
+
+    // public function message()
+    // {
+    //     return [
+    //         'ten_danh_muc.required' => 'Vui lòng nhập tên danh mục.',
+    //         'ten_danh_muc.string' => 'Tên danh mục phải là một chuỗi.',
+    //         'ten_danh_muc.max' => 'Tên danh mục không được vượt quá 255 ký tự.',
+    //         'ten_danh_muc.unique' => 'Tên danh mục này đã tồn tại.',
+    //     ];
+    // }
 }
