@@ -74,9 +74,4 @@ class SanPhamController extends Controller
         $phimDangChieu = Phim::whereRelation('suatChieus', 'ngay', '>=', $today)->paginate(1);
         return view('user.phimdangchieu', compact('title', 'rap', 'phimDangChieu'));
     }
-    public function DatVe()
-    {
-        $title = "Đặt vé";
-        return view('user.datve', compact('title'));
-    }
 }

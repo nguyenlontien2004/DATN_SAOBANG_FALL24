@@ -182,44 +182,58 @@
         </div>
 
         <!-- Đánh giá-->
-        
-            <br>
-            <h3>Danh sách đánh giá:</h3><br>
-            @foreach ($chiTietPhim->danhGias as $item)
+
+        <br>
+        <h3>Danh sách đánh giá:</h3><br>
+        @foreach ($chiTietPhim->danhGias as $item)
             <div class="list-group-item">
                 <div class="d-flex w-100 mb-2">
                     <h5 class="mb-1"><strong>{{ $item->NguoiDung->ho_ten ?? 'Người dùng ẩn danh' }}</strong></h5>
                     <small class="ml-2">{{ $item->created_at->format('d/m/Y') }}</small>
-                </div>                  
-                    <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
-                    <div class="d-flex">
-                        Điểm đánh giá:
-                        @for ($i = 1; $i <= 5; $i++)
-                            <i class="fa fa-star {{ $i <= $item->diem_danh_gia ? 'text-warning' : 'text-muted' }}"></i>
-                        @endfor
-                    </div>
-                    <br>
                 </div>
-                @endforeach
-                @auth
+                <p class="mb-1">Nội dung đánh giá: {{ $item->noi_dung }}</p>
+                <div class="d-flex">
+                    Điểm đánh giá:
+                    @for ($i = 1; $i <= 5; $i++)
+                        <i class="fa fa-star {{ $i <= $item->diem_danh_gia ? 'text-warning' : 'text-muted' }}"></i>
+                    @endfor
+                </div>
+                <br>
+            </div>
+        @endforeach
+        @auth
             <div class="mt-4">
                 <p class="text-muted">
                     <a href="#" onclick="showReviewTab(); return false;">
-                        <h2><strong>Viết bài đánh giá</strong></h2>
+                        <h2><strong>Viết bài đánh giá</strong></h2> <br>
                     </a>
                 </p>
             </div>
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <!-- Form đánh giá ẩn -->
             <div id="reviewTab" style="display: none; margin-top: 20px;">
                 <h4>Đánh giá của bạn</h4>
                 <form action="{{ route('danh-gia.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
+                    <input type="hidden" name="suat_chieu_id" value="{{ $chiTietPhim->suatChieus->first()->id }}">
                     <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
+
                     <div class="mb-3">
                         <label for="content" class="form-label">Nội dung:</label>
                         <textarea name="noi_dung" id="content" class="form-control" required></textarea>
                     </div>
+
                     <div class="mb-3">
                         <label for="rating" class="form-label">Điểm đánh giá:</label>
                         <div id="stars">
@@ -231,6 +245,7 @@
                         </div>
                         <input type="hidden" name="diem_danh_gia" id="rating" value="">
                     </div>
+
                     <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
                 </form>
             </div>
@@ -248,7 +263,9 @@
             <h3>Bình luận người xem</h3><br>
             @foreach ($chiTietPhim->binhLuans as $item)
                 <div class="d-flex mb-4">
-                    <img src="{{ Storage::url($item->nguoiDung->anh_dai_dien) }}" alt="đại diện" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User" class="rounded-circle me-3" style="width: 40px; height: 40px;" />
+                    <img src="{{ Storage::url($item->nguoiDung->anh_dai_dien) }}" alt="đại diện"
+                        style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User"
+                        class="rounded-circle me-3" style="width: 40px; height: 40px;" />
                     <div style="background-color: #f0f2f5; border-radius: 18px; padding: 10px 15px; max-width: 600px;">
                         <h6 class="mb-1" style="font-weight: bold;">{{ $item->NguoiDung->ho_ten }} <span
                                 class="text-muted"
