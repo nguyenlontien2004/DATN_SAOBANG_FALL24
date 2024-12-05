@@ -33,14 +33,24 @@
                     @csrf
                     <div class="form-group">
                         <label for="thu_tu">Thứ tự</label>
-                        <input type="number" name="thu_tu" class="form-control" id="thu_tu"
+                        <input type="number" name="thu_tu" class="form-control" id="thu_tu" value="{{ old('thu_tu') }}"
                             placeholder="Nhập thứ tự" />
+
+                        @error('thu_tu')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="hinh_anh">Hình ảnh</label>
-                        <input type="file" name="hinh_anh" class="form-control" id="hinh_anh" required />
+                        <input type="file" name="hinh_anh" value="{{ old('hinh_anh') }}" class="form-control"
+                            id="hinh_anh" />
+
+                        @error('hinh_anh')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
 
                     <div class="form-group">
                         <label for="banner_quang_cao_id">Vị trí banner quảng cáo </label>
@@ -50,6 +60,11 @@
                                 <option value="{{ $bn->id }}">{{ $bn->vi_tri }}</option>
                             @endforeach
                         </select>
+                        @error('banner_quang_cao_id')
+                            <div class="text text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="card-footer">

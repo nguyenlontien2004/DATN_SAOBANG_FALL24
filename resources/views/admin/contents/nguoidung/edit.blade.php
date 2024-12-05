@@ -117,7 +117,7 @@
                         <label for="vai_tros">Vai trò</label>
                         <select name="vai_tros[]" class="form-control" id="vai_tros" multiple required>
                             @foreach ($vaitro as $id => $ten_vai_tro)
-                                <option @selected(in_array($id, old('vai_tros', $nguoidungvt))) value="{{ $id }}">
+                                <option @selected(in_array($id, $nguoidungvt)) value="{{ $id }}">
                                     {{ $ten_vai_tro }}
                                 </option>
                             @endforeach

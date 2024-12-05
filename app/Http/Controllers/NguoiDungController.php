@@ -83,7 +83,9 @@ class NguoiDungController extends Controller
     public function edit(NguoiDung $nguoiDung)
     {
         $nguoiDung->load('vaiTros');
+
         $nguoidungvt = $nguoiDung->vaiTros->pluck('id')->all();
+
         $vaitro = VaiTro::pluck('ten_vai_tro', 'id');
 
 
@@ -98,8 +100,9 @@ class NguoiDungController extends Controller
         // dd($request->all());
         // try {
         //     DB::transaction(function () use ($request, $nguoiDung) {
+        // only(['ho_ten', 'email', 'so_dien_thoai', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
 
-        $nguoidung = $request->only(['ho_ten', 'email', 'so_dien_thoai', 'gioi_tinh', 'dia_chi', 'nam_sinh']);
+        $nguoidung = $request->all();
 
         if ($request->hasFile('hinh_anh')) {
             $hinhanh = $request->file('hinh_anh')->store('uploads/nguoidung', 'public');

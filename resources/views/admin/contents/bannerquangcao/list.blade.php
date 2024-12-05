@@ -29,15 +29,16 @@
 
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách vị trí banner quảng cáo</div>
+                    <div class="thongbao text-center">
+                        @if (session('success'))
+                            <span class="alert alert-success font-weight-bold"
+                                style="font-size: 1.2rem;">{{ session('success') }}</span>
+                        @endif
+                    </div>
                     <a href="{{ route('banner-quang-cao.create') }}" class="btn btn-primary">Thêm vị trí banner
                         quảng cáo</a>
                 </div>
-                <div class="thongbao text-center">
-                    @if (session('success'))
-                        <span class="alert alert-success font-weight-bold"
-                            style="font-size: 1.2rem;">{{ session('success') }}</span>
-                    @endif
-                </div>
+
 
                 <div class="card-body">
                     <table class="table mt-3">

@@ -34,7 +34,7 @@ class MaGiamGiaEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('broadcast-magiamgia'),
+            new Channel('broadcast-magiamgia'),
         ];
     }
 }

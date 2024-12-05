@@ -26,14 +26,16 @@
         </div>
         <div class="row">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách ảnh banner quảng cáo</div>
                     <div class="thongbao text-center">
                         @if (session('success'))
-                            <span class="text text-success font-weight-bold"
+                            <span class="alert alert-success font-weight-bold"
                                 style="font-size: 1.2rem;">{{ session('success') }}</span>
                         @endif
                     </div>
+                    <a href="{{ route('anh-banner-quang-cao.create') }}" class="btn btn-primary">Thêm ảnh banner quảng
+                        cáo</a>
                 </div>
                 <div class="card-body">
                     <table class="table mt-3">

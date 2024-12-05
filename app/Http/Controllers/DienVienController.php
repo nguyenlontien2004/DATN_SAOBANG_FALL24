@@ -11,12 +11,32 @@ use App\Http\Requests\UpdateDienVienRequest;
 
 class DienVienController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dienViens = DienVien::orderBy('id', 'desc')->get();
+        $query = $request->query('query');
+
+        // Khởi tạo truy vấn với model DienVien
+        $dienViens = DienVien::query();
+
+
+        // Nếu có truy vấn tìm kiếm
+        if ($query) {
+            // Tìm theo id hoặc theo tên diễn viên
+            $dienViens->where(function ($q) use ($query) {
+                $q->where('id', $query)
+                    ->orWhere('ten_dien_vien', 'LIKE', '%' . $query . '%');
+            });
+        }
+
+
+        // Lấy danh sách diễn viên với phân trang
+        $dienViens = $dienViens->orderBy('id', 'desc')->paginate(5);
+
+
+        // Trả về view với danh sách diễn viên
         return view('admin.contents.dienViens.index', compact('dienViens'));
     }
-    
+
     public function create()
     {
         return view('admin.contents.dienViens.creater');

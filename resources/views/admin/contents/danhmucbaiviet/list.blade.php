@@ -27,15 +27,16 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="card-title">Danh sách danh mục bài viết tin tức</div>
+                    <div class="thongbao text-center">
+                        @if (session('success'))
+                            <span class="alert alert-success font-weight-bold"
+                                style="font-size: 1.2rem;">{{ session('success') }}</span>
+                        @endif
+                    </div>
                     <a href="{{ route('danh-muc-bai-viet-tin-tuc.create') }}" class="btn btn-primary">Thêm danh mục bài viết
                         tin tức</a>
                 </div>
-                <div class="thongbao text-center">
-                    @if (session('success'))
-                        <span class="alert alert-success font-weight-bold"
-                            style="font-size: 1.2rem;">{{ session('success') }}</span>
-                    @endif
-                </div>
+
                 <table class="table mt-3">
                     <thead>
                         <tr>

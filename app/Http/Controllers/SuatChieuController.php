@@ -8,6 +8,8 @@ use App\Models\PhongChieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSuatChieuRequest;
+use App\Http\Requests\UpdateSuatChieuRequest;
 
 class SuatChieuController extends Controller
 {
@@ -44,22 +46,6 @@ class SuatChieuController extends Controller
     }
     public function show($id)
     {
-        // Lấy thông tin về suất chiếu và phim liên quan
-        // $phongChieus = PhongChieu::where('trang_thai', 1)->get();
-        // $suatChieu = SuatChieu::with('phim') // Quan hệ với bảng Phim
-        //                        ->where('id', $id)
-        //                        ->first();
-
-        // // Nếu không tìm thấy suất chiếu
-        // if (!$suatChieu) {
-        //     return redirect()->back()->with('error', 'Không tìm thấy suất chiếu.');
-        // }
-
-        // // Lấy phim thông qua quan hệ đã định nghĩa
-        // $phim = $suatChieu->phim;
-
-        // return view('admin.contents.suatChieus.show', compact('phongChieus', 'suatChieu', 'phim'));
-        // Lấy thông tin về suất chiếu và phim liên quan
         $suatChieu = SuatChieu::with('phim', 'phongChieu') // Quan hệ với bảng Phim và PhongChieu
             ->where('id', $id)
             ->first();
@@ -83,20 +69,11 @@ class SuatChieuController extends Controller
 
         return view('admin.contents.suatChieus.creater', compact('phongChieus', 'phims'));
     }
-    public function store(Request $request)
+    public function store(StoreSuatChieuRequest $request)
     {
-
         $ngay = date('Y-m-d');
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
-
-        $request->validate([
-            'phong_chieu_id' => 'required|exists:phong_chieus,id',
-            'phim_id' => 'required|exists:phims,id',
-            'gio_bat_dau' => 'required',
-            'gio_ket_thuc' => 'required',
-            // 'trang_thai' => 'required|boolean',
-        ]);
 
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
@@ -115,21 +92,11 @@ class SuatChieuController extends Controller
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
 
-    public function update(Request $request, SuatChieu $suatChieu)
+    public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
     {
-
-        $ngay = $request->ngay;
+        $ngay = date('Y-m-d');
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
         $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
-
-
-        $request->validate([
-            'phong_chieu_id' => 'required|exists:phong_chieus,id',
-            'phim_id' => 'required|exists:phims,id',
-            'gio_ket_thuc' => 'required',
-            'gio_bat_dau' => 'required',
-            'trang_thai' => 'required|boolean',
-        ]);
 
         $suatChieu->update([
             'phong_chieu_id' => $request->phong_chieu_id,
