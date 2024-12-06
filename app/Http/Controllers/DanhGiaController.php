@@ -8,6 +8,7 @@ use App\Models\Phim;
 use App\Models\DanhGia;
 use App\Http\Requests\StoreDanhGiaRequest;
 use App\Http\Requests\UpdateDanhGiaRequest;
+use App\Models\SuatChieu;
 
 class DanhGiaController extends Controller
 {
@@ -33,27 +34,30 @@ class DanhGiaController extends Controller
      */
     public function store(StoreDanhGiaRequest $request)
     {
-        $userId = auth()->id();
+        $userId = auth()->id(); // Lấy id người dùng hiện tại
         $phimId = $request->input('phim_id');
-        $suatChieuId = $request->input('suat_chieu_id');
+        // $suatChieuId = $request->input('suat_chieu_id'); // Nếu bạn muốn lọc theo suất chiếu cụ thể
+        $phim = Phim::findOrFail($phimId); // Lấy phim theo ID
+       $suatChieus = SuatChieu::where('phim_id', $phimId)->whereHas('ves', function ($query) use($userId) {
+            $query->where('nguoi_dung_id', '=', $userId);
+        })->get();
 
-        $phim = Phim::findOrFail($phimId);
-        $suatChieu = $phim->suatChieus()->findOrFail($suatChieuId);
-
-        $ngay = $suatChieu->ngay;
-        $gioKetThuc = $suatChieu->gio_ket_thuc;
-
-        $thoiGianKetThuc = Carbon::createFromFormat('Y-m-d H:i:s', $ngay . ' ' . substr($gioKetThuc, 11));
-
-        $ve = Ve::where('nguoi_dung_id', $userId)
-            ->where('suat_chieu_id', $suatChieu->id)
-            ->first();
-
-        if (!$ve) {
+        // Đưa ra kết quả cuối cùng
+        // dd($suatChieus);
+        if ($suatChieus->isEmpty()) {
             return redirect()->route('chitietphim', $phimId)->with('error', 'Bạn cần mua vé trước khi đánh giá.');
         }
+        // dd($suatChieus);
+        $suatChieuDaKetThuc = $suatChieus->filter(function ($suatChieu) {
+            // dd($suatChieu);
+            $ngay = $suatChieu->ngay;
+            $gioKetThuc = $suatChieu->gio_ket_thuc;
+            $thoiGianKetThuc = Carbon::createFromFormat('Y-m-d H:i:s', $ngay . ' ' . substr($gioKetThuc, 11));
 
-        if (Carbon::now()->lessThan($thoiGianKetThuc)) {
+            return Carbon::now()->greaterThan($thoiGianKetThuc);
+        });
+
+        if ($suatChieuDaKetThuc->isEmpty()) {
             return redirect()->route('chitietphim', $phimId)->with('error', 'Bạn chỉ có thể đánh giá sau khi suất chiếu kết thúc.');
         }
 
@@ -68,7 +72,6 @@ class DanhGiaController extends Controller
             'noi_dung' => $request->input('noi_dung'),
             'diem_danh_gia' => $request->input('diem_danh_gia'),
         ]);
-
         return redirect()->route('chitietphim', $phimId)->with('success', 'Đánh giá của bạn đã được gửi!');
     }
 

@@ -38,12 +38,13 @@
         <!-- Filter Button -->
         <div class="d-flex justify-content-end mt-5">
             <select class="form-control" name="the_loai" id="the_loai">
-                <option value="">Chọn thể loại</option>
-                <option value="">Hành động</option>
-                <option value="">Kiếm hiệp</option>
-                <option value="">18+</option>
+                <option class="text-center" value="">-- Chọn thể loại --</option>
+                @foreach ($theLoai as $theLoai)
+                    <option class="text-center" value="{{ $theLoai->id }}">{{ $theLoai->ten_the_loai }}</option>
+                @endforeach
             </select>
         </div>
+        
         <br>
         <!-- Movies Grid -->
 

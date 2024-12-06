@@ -18,9 +18,9 @@ class VeSeeder extends Seeder
         DB::table('ves')->insert([
             [
                 'nguoi_dung_id' => 1, // ID người dùng
-                'suat_chieu_id' => 3, // ID suất chiếu
+                'suat_chieu_id' => 7, // ID suất chiếu
                 'ngay_thanh_toan' => Carbon::now(), // Ngày thanh toán
-                'tong_tien' => 170000, // Tổng tiền
+                'tong_tien' => 215000, // Tổng tiền
                 'phuong_thuc_thanh_toan' => 'VNPAY', // Phương thức thanh toán
                 'trang_thai' => '4', // Trạng thái của vé
                 'created_at' => Carbon::now(), // Thời gian tạo

@@ -44,6 +44,8 @@ class Phim extends Model
     public function User(){
         return $this->belongsTo(NguoiDung::class);
     }
-
+    public function ve(){
+        return $this->hasManyThrough(Ve::class, SuatChieu::class, 'suat_chieu_id', 'phim_id');
+    }
   
 }

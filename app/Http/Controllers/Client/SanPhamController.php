@@ -32,6 +32,7 @@ class SanPhamController extends Controller
         $rap = Rap::all();
         $title = "Chi tiết phim";
         $chiTietPhim = Phim::findOrFail($id);
+        //dd($chiTietPhim->suatChieus->first()->id);
         $chiTietPhim->increment('luot_xem_phim');
         $danhGiaPhim = DanhGia::findOrFail($id);
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
@@ -70,8 +71,8 @@ class SanPhamController extends Controller
         $title = "Phim đang chiếu";
         $rap = Rap::all();
         $today = Carbon::now()->toDateString();
-
+        $theLoai = TheLoaiPhim::all();
         $phimDangChieu = Phim::whereRelation('suatChieus', 'ngay', '>=', $today)->paginate(1);
-        return view('user.phimdangchieu', compact('title', 'rap', 'phimDangChieu'));
+        return view('user.phimdangchieu', compact('title', 'rap', 'phimDangChieu', 'theLoai'));
     }
 }

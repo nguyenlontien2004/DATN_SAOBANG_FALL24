@@ -223,10 +223,10 @@
             <!-- Form đánh giá ẩn -->
             <div id="reviewTab" style="display: none; margin-top: 20px;">
                 <h4>Đánh giá của bạn</h4>
+                {{-- <p>Route URL: {{ route('danh-gia.store') }}</p> --}}
                 <form action="{{ route('danh-gia.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
-                    <input type="hidden" name="suat_chieu_id" value="{{ $chiTietPhim->suatChieus->first()->id }}">
                     <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
 
                     <div class="mb-3">
