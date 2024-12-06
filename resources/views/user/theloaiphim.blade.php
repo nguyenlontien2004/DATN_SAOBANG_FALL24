@@ -43,7 +43,7 @@
 @section('content')
     <div class="container">
         <br>
-        <h1 class="mb-4 fs-2"><strong>Phim đang chiếu</strong></h1>
+        <h3 class="ml-3 mb-4 fs-4"><strong>Thể loại: {{ $theLoaiPhim->ten_the_loai }}</strong></h3>
 
         <!-- Filter Button -->
         <li class="nav-item dropdownn">
@@ -64,7 +64,7 @@
         <!-- Movies Grid -->
 
         <div class="d-flex flex-wrap justify-content-between">
-            @foreach ($phimDangChieu as $item)
+            @foreach ($phims as $item)
                 <div class="col-md-3 mb-3"> <!-- Sử dụng col-md-3 để chia thành 4 cột -->
                     <div class="bg-secondary text-white rounded-lg h-100 d-flex flex-column" style="max-width: 300px;">
                         <div class="film-card position-relative flex-grow-1">
@@ -114,7 +114,7 @@
 
 
 
-        <br>{{ $phimDangChieu->links('pagination::bootstrap-5') }}
+        {{-- <br>{{ $phimDangChieu->links('pagination::bootstrap-5') }} --}}
         <br>
     </div>
 @endsection

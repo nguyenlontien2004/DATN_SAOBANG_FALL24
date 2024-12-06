@@ -75,4 +75,14 @@ class SanPhamController extends Controller
         $phimDangChieu = Phim::whereRelation('suatChieus', 'ngay', '>=', $today)->paginate(1);
         return view('user.phimdangchieu', compact('title', 'rap', 'phimDangChieu', 'theLoai'));
     }
+    public function locPhim(Request $request, string $id)
+    {
+        $title = "Đây là trang thể loại phim";
+        $rap = Rap::all();
+        $theLoai = TheLoaiPhim::all();
+        $theLoaiPhim = TheLoaiPhim::findOrFail($id);
+        $phims = Phim::where('the_loai_id', $id)->get();
+        return view('user.theloaiphim', compact('title', 'rap', 'theLoai', 'theLoaiPhim', 'phims'));
+    }
+    
 }

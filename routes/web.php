@@ -167,6 +167,9 @@ Route::prefix('trang-chu')->group(function () {
   Route::get('dat-ve', [SanPhamController::class, 'DatVe'])->name('datve');
   Route::resource('binh-luan', BinhLuanPhimController::class);
   Route::resource('danh-gia', DanhGiaController::class);
+  Route::get('loc-phim/{id}', [SanPhamController::class, 'locPhim'])->name('locphim');
+ 
+
 
   Route::get('doi-mat-khau', [MemberController::class, 'formDoiMatKhau'])->name('doimatkhau');
   Route::post('doi-mat-khau', [MemberController::class, 'doiMatKhau'])->name('capnhatmk');
