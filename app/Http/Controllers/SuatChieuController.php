@@ -87,20 +87,21 @@ class SuatChieuController extends Controller
     }
     public function store(StoreSuatChieuRequest $request)
     {
-        // $ngay = date('Y-m-d');
-        // $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
-        // $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
-
+        $phim = Phim::findOrFail($request->phim_id);
+        $thoiLuong = $phim->thoi_luong;
+        $ngay = $request->date;
+        $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
+        $timestamp_ket_thuc = $timestamp_bat_dau->copy()->addMinutes($thoiLuong);
         SuatChieu::create([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
-            'gio_ket_thuc' =>$request->gio_ket_thuc,
-            'gio_bat_dau' =>$request->gio_bat_dau,
-            'date'=>$request->date,
+            'gio_bat_dau' => $timestamp_bat_dau,
+            'gio_ket_thuc' => $timestamp_ket_thuc,
+            'date' => $ngay,
         ]);
-
         return redirect()->route('suatChieu.index')->with('success', 'Thêm suất chiếu thành công!');
     }
+
 
     public function edit(SuatChieu $suatChieu)
     {
@@ -108,22 +109,25 @@ class SuatChieuController extends Controller
         $phims = Phim::where('trang_thai', 1)->get();
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
-
     public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
     {
-        $ngay = date('Y-m-d');
+        $phim = Phim::findOrFail($request->phim_id);
+        $thoiLuong = $phim->thoi_luong;
+        $ngay = $request->date;
         $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
-        $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
-
+        $timestamp_ket_thuc = $timestamp_bat_dau->copy()->addMinutes($thoiLuong);
         $suatChieu->update([
             'phong_chieu_id' => $request->phong_chieu_id,
             'phim_id' => $request->phim_id,
             'gio_bat_dau' => $timestamp_bat_dau,
             'gio_ket_thuc' => $timestamp_ket_thuc,
-            'trang_thai' => $request->trang_thai,
+            'date' => $ngay,
         ]);
         return redirect()->route('suatChieu.index')->with('success', 'Cập nhật suất chiếu thành công!');
     }
+
+
+
     public function destroy(SuatChieu $suatChieu)
     {
         $suatChieu->trang_thai = 0;

@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SuatChieu extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'ten_suat_chieu',  // Thay thế bằng các trường thực tế của bảng suat_chieus
+    protected $fillable = [ 
         'gio_bat_dau',
         'gio_ket_thuc',
         'date',
