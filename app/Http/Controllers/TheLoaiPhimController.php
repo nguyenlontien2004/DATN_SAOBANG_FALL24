@@ -16,9 +16,11 @@ class TheLoaiPhimController extends Controller
 
         // Nếu có query, lọc theo id, ngược lại lấy tất cả
         if ($query) {
-            $theLoaiPhims = TheLoaiPhim::where('id', $query)->get(); 
+            $theLoaiPhims = TheLoaiPhim::where('id', $query)
+            ->orWhere('ten_the_loai', 'LIKE', '%' . $query . '%')
+            ->paginate(5); 
         } else {
-            $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+            $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->paginate(5); 
         }
        
         return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
@@ -31,6 +33,8 @@ class TheLoaiPhimController extends Controller
 {
     TheLoaiPhim::create([
         'ten_the_loai' => $request->ten_the_loai,
+        'deleted_at' => null,
+       
     ]);
 
     return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');
@@ -51,11 +55,32 @@ class TheLoaiPhimController extends Controller
         return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được cập nhật thành công!');
     }
     
-    public function destroy(TheLoaiPhim $theLoaiPhim)
+    public function listSoftDelete()
     {
-        $theLoaiPhim->trang_thai = 0;
-        $theLoaiPhim->save(); 
-        return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được xóa thành công!');
+        $theLoaiPhims = TheLoaiPhim::onlyTrashed()->paginate(5);
+        return view('admin.contents.theLoaiPhims.listSoftDelete', compact('theLoaiPhims'));
+    }
+    public function softDelete($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::findOrFail($id);
+        $theLoaiPhim->delete();
+        return redirect()->route('theLoaiPhim.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::onlyTrashed()->findOrFail($id);
+        $theLoaiPhim->restore();
+
+        return redirect()->route('theLoaiPhim.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::onlyTrashed()->findOrFail($id);
+        $theLoaiPhim->forceDelete();
+
+        return redirect()->route('theLoaiPhim.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
     }
     
 }

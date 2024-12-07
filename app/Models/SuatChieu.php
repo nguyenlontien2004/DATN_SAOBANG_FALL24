@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SuatChieu extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [ 
         'gio_bat_dau',
         'gio_ket_thuc',
@@ -15,7 +16,8 @@ class SuatChieu extends Model
         'trang_thai',
         'phong_chieu_id',
         'phim_id',
-    ];
+        'deleted_at'
+    ];protected $dates = ['deleted_at'];
 
     public function phongChieu()
     {

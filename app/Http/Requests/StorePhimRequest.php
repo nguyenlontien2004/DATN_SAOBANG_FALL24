@@ -24,14 +24,12 @@ class StorePhimRequest extends FormRequest
         return [
             'ten_phim' => 'required|string|max:255|unique:phims,ten_phim',
             'anh_phim' => 'required|mimes:jpeg,png,jpg,gif,svg',
-            'do_tuoi' => 'required|integer|min:0|max:100', // Độ tuổi yêu cầu phải là số nguyên trong khoảng 0-100
+            'do_tuoi' => 'required|integer|min:0|max:100',
             'luot_xem_phim' => 'integer',
             'ngon_ngu' => 'required|string|max:255',
             'gia_phim' => 'required|numeric|min:0',
             'mo_ta' => 'nullable|string',
             'thoi_luong' => 'required|integer',
-            'ngay_khoi_chieu' => 'required|date',
-            'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_khoi_chieu',
             'dao_dien_ids' => 'required|array',
             'dao_dien_ids.*' => 'exists:dao_diens,id',
             'dien_vien_ids' => 'required|array',
@@ -70,11 +68,6 @@ class StorePhimRequest extends FormRequest
             'ngon_ngu.required' => 'Ngôn ngữ lượt xem là bắt buộc.',
 
             'luot_xem_phim.integer' => 'Lượt xem phải là một số nguyên.',
-            'ngay_khoi_chieu.required' => 'Ngày khởi chiếu là bắt buộc.',
-            'ngay_khoi_chieu.date' => 'Ngày khởi chiếu phải là một ngày hợp lệ.',
-            'ngay_ket_thuc.required' => 'Ngày kết thúc là bắt buộc.',
-            'ngay_ket_thuc.date' => 'Ngày kết thúc phải là một ngày hợp lệ.',
-            'ngay_ket_thuc.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày khởi chiếu.',
             'dao_dien_ids.required' => 'Danh sách đạo diễn là bắt buộc.',
             'dao_dien_ids.array' => 'Danh sách đạo diễn phải là một mảng.',
             'dao_dien_ids.*.exists' => 'Đạo diễn được chọn không hợp lệ.',

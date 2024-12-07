@@ -3,6 +3,8 @@
 use App\Models\SuatChieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VeController;
+use App\Http\Controllers\PhimController;
 use App\Http\Controllers\SuatChieuController;
 
 /*
@@ -20,4 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/phim/{phim_id}/dates', [SuatChieuController::class, 'getPhimDates']);
-
+Route::get('/check-qrCode/{id}', [VeController::class, 'checkQrCode']);

@@ -29,6 +29,8 @@
     </script>
 
     <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('css/rapCss.css') }}">
+
     <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/kaiadmin.min.css') }}" />

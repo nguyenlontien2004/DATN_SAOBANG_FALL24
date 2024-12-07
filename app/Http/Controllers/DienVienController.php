@@ -11,9 +11,18 @@ use App\Http\Requests\UpdateDienVienRequest;
 
 class DienVienController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dienViens = DienVien::orderBy('id', 'desc')->get();
+        $query = $request->query('query');
+        $dienViens = DienVien::query();
+        if ($query) {
+            // Tìm theo id hoặc theo tên diễn viên
+            $dienViens->where(function($q) use ($query) {
+                $q->where('id', $query)
+                  ->orWhere('ten_dien_vien', 'LIKE', '%' . $query . '%');
+            });
+        }
+        $dienViens = $dienViens->orderBy('id', 'desc')->paginate(5);
         return view('admin.contents.dienViens.index', compact('dienViens'));
     }
     public function show($id)

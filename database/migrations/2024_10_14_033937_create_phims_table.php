@@ -21,10 +21,9 @@ return new class extends Migration
             $table->string('ngon_ngu');
             $table->decimal('gia_phim', 10, 2);
             $table->integer('luot_xem_phim')->default(0);
-            $table->date('ngay_khoi_chieu');
-            $table->date('ngay_ket_thuc')->nullable();
             $table->string('trailer')->nullable();
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

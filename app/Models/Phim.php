@@ -2,26 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Phim extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'ten_phim',
         'mo_ta',
         'anh_phim',
         'thoi_luong',
         'luot_xem_phim',
-        'ngay_khoi_chieu',
-        'ngay_ket_thuc',
         'trailer',
         'ngon_ngu',
         'do_tuoi',
         'gia_phim',
         'trang_thai',
+        'deleted_at',
     ];
+    protected $dates = ['deleted_at']; 
     public function daoDiens()
     {
         return $this->belongsToMany(DaoDien::class, 'phim_va_dao_diens', 'phim_id', 'dao_dien_id');

@@ -10,10 +10,17 @@ use App\Http\Requests\UpdateDaoDienRequest;
 
 class DaoDienController extends Controller
 {
-    //nhập code thủ công
-    public function index()
+    public function index(Request $request)
     {
-        $daoDiens = DaoDien::orderBy('id', 'desc')->get();
+        $query = $request->query('query');
+        $daoDiens = DaoDien::query();
+        if ($query) {
+            $daoDiens->where(function ($q) use ($query) {
+                $q->where('id', $query)
+                    ->orWhere('ten_dao_dien', 'LIKE', '%' . $query . '%');
+            });
+        }
+        $daoDiens = $daoDiens->orderBy('id', 'desc')->paginate(5);
         return view('admin.contents.daoDiens.index', compact('daoDiens'));
     }
     public function create()

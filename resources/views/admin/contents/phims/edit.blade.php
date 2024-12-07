@@ -7,7 +7,7 @@
                 <h5 class="card-title">Chỉnh sửa Phim</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('phim.update', $phim->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('phim.update', $phim->id) }}" method="POST" enctype="multipart/form-data" class="m-3">
                     @csrf
                     @method('PUT')
 
@@ -35,13 +35,23 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="gia_phim" class="form-label">Gía Phim</label>
-                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
-                            value="{{ old('gia_phim') }}">
-                        @error('gia_phim')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-3 row">
+                        <div class="col-md-4">
+                            <label for="gia_phim" class="form-label">Gía Phim</label>
+                            <input type="number" class="form-control" id="gia_phim" name="gia_phim"
+                                value="{{ old('gia_phim',$phim->gia_phim) }}">
+                            @error('gia_phim')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <label for="thoi_luong" class="form-label">Thời Lượng (phút)</label>
+                            <input type="number" class="form-control" id="thoi_luong" name="thoi_luong"
+                                value="{{ old('thoi_luong', $phim->thoi_luong) }}">
+                            @error('thoi_luong')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="mo_ta" class="form-label">Mô Tả</label>
@@ -78,33 +88,6 @@
                                 value="{{ old('luot_xem_phim', $phim->luot_xem_phim) }}">
 
                             @error('luot_xem_phim')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <div class="col-md-4">
-                            <label for="thoi_luong" class="form-label">Thời Lượng (phút)</label>
-                            <input type="number" class="form-control" id="thoi_luong" name="thoi_luong"
-                                value="{{ old('thoi_luong', $phim->thoi_luong) }}">
-                            @error('thoi_luong')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="ngay_khoi_chieu" class="form-label">Ngày Khởi Chiếu</label>
-                            <input type="date" class="form-control" id="ngay_khoi_chieu" name="ngay_khoi_chieu"
-                                value="{{ old('ngay_khoi_chieu', $phim->ngay_khoi_chieu) }}">
-                            @error('ngay_khoi_chieu')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
-                                value="{{ old('ngay_ket_thuc', $phim->ngay_ket_thuc) }}">
-                            @error('ngay_ket_thuc')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

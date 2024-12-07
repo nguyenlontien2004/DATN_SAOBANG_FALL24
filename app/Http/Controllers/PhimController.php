@@ -17,19 +17,22 @@ class PhimController extends Controller
     public function index(Request $request)
     {
         $theLoaiId = $request->input('the_loai');
+        $searchQuery = $request->input('query'); 
         $phims = Phim::with('daoDiens', 'dienViens', 'theLoaiPhims')
             ->when($theLoaiId, function ($query, $theLoaiId) {
                 $query->whereHas('theLoaiPhims', function ($query) use ($theLoaiId) {
                     $query->where('id', $theLoaiId);
                 });
             })
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $query->where('ten_phim', 'LIKE', '%' . $searchQuery . '%');
+            })
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(5);
         $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
 
-        return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId'));
+        return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId', 'searchQuery'));
     }
-
     public function show($id)
     {
         $phim = Phim::with('daoDiens', 'dienViens', 'theLoaiPhims')->findOrFail($id);
@@ -111,10 +114,38 @@ class PhimController extends Controller
         return redirect()->route('phim.index')->with('success', 'Phim đã được cập nhật thành công.');
     }
 
-    public function destroy(Phim $phim)
+    // public function destroy(Phim $phim)
+    // {
+    //     $phim->trang_thai = 0;
+    //     $phim->save();
+    //     return redirect()->route('phim.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
+    // }
+    public function listSoftDelete()
     {
-        $phim->trang_thai = 0;
-        $phim->save();
-        return redirect()->route('phim.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
+        $phims = Phim::onlyTrashed()->paginate(5);
+        return view('admin.contents.phims.listSoftDelete', compact('phims'));
     }
+    public function softDelete($id)
+    {
+        $phim = Phim::findOrFail($id);
+        $phim->delete();
+        return redirect()->route('phim.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $phim = Phim::onlyTrashed()->findOrFail($id);
+        $phim->restore();
+
+        return redirect()->route('phim.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id)
+    {
+        $phim = Phim::onlyTrashed()->findOrFail($id);
+        $phim->forceDelete();
+
+        return redirect()->route('phim.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
+    
 }

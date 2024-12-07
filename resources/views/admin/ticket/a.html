@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quét mã QR</title>
+</head>
+<body>
+    <h1>Quét mã QR</h1>
+    <button id="openCameraButton">Mở Camera</button>
+    <input type="file" id="uploadImage" accept="image/*">
+    <video id="video" style="display: none;" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <p>Kết quả: <span id="qrResult">Chưa có kết quả</span></p>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr"></script>
+    <script>
+    const openCameraButton = document.getElementById('openCameraButton');
+        const uploadImage = document.getElementById('uploadImage');
+        const video = document.getElementById('video');
+        const qrResult = document.getElementById('qrResult');
+        const canvas = document.getElementById('canvas');
+        
+        openCameraButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+                video.style.display = 'block';
+                video.srcObject = stream;
+        
+                video.addEventListener('play', () => {
+                    const context = canvas.getContext('2d');
+                    setInterval(() => {
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                        const code = jsQR(imageData.data, canvas.width, canvas.height);
+                        if (code) {
+                            qrResult.textContent = code.data;
+                            stream.getTracks().forEach((track) => track.stop());
+                            video.style.display = 'none';
+                        }
+                    }, 500);
+                });
+            } catch (error) {
+                alert("Không thể mở camera. Vui lòng kiểm tra quyền truy cập!");
+                console.error(error);
+            }
+        });
+        
+        uploadImage.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = new Image();
+                    img.onload = () => {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+        
+                        const context = canvas.getContext('2d');
+                        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
+                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                        const code = jsQR(imageData.data, canvas.width, canvas.height);
+                        if (code) {
+                            qrResult.textContent = code.data;
+                        } else {
+                            qrResult.textContent = "Không tìm thấy mã QR!";
+                        }
+                    };
+                    img.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        </script>
+</body>
+</html>

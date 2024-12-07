@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Phim;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VeController;
-use App\Http\Controllers\DoAnController;
 
+use App\Http\Controllers\RapController;
+use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VaiTroController;
@@ -12,15 +14,16 @@ use App\Http\Controllers\GheNgoiController;
 use App\Http\Controllers\DienVienController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\PhongChieuController;
+use App\Http\Controllers\TheLoaiPhimController;
 use App\Http\Controllers\BaiVietTinTucController;
 use App\Http\Controllers\BannerQuangCaoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
 use App\Http\Controllers\VaiTroVaNguoiDungController;
 use App\Http\Controllers\DanhMucBaiVietTinTucController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +42,11 @@ Route::get('/', function () {
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::prefix('admin')->group(function () {
-    // route auth admin
-    Route::get('/login',                                   [AuthController::class,'login']);
-    Route::post('post/login',                              [AuthController::class,'postLogin'])->name('login');
-    
-    Route::get('/',                                        [DashboardController::class, 'dashboard']);
+  // route auth admin
+  Route::get('/login',                                   [AuthController::class, 'login']);
+  Route::post('post/login',                              [AuthController::class, 'postLogin'])->name('login');
+
+  Route::get('/',                                        [DashboardController::class, 'dashboard']);
 
   // Bài viết tin tức
   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
@@ -124,15 +127,31 @@ Route::prefix('admin')->group(function () {
   // Route::resources('phims');
   Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
   Route::resource('phim', App\Http\Controllers\PhimController::class);
+
   Route::get('/api/phim/{id}/ngay-chieu', [PhimController::class, 'layNgayChieu']);
-
+  Route::post('phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
-  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
-  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
-  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
+  Route::post('dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
 
-  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
+  Route::post('daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
+
+  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class)->except(['show']);
+  Route::delete('theLoaiPhim/{id}/soft-delete', [TheLoaiPhimController::class, 'softDelete'])->name('theLoaiPhim.softDelete');
+  Route::get('/theLoaiPhim/listSoftDelete', [TheLoaiPhimController::class, 'listSoftDelete'])->name('theLoaiPhim.listSoftDelete');
+  Route::patch('/theLoaiPhim/restore/{id}', [TheLoaiPhimController::class, 'restore'])->name('theLoaiPhim.restore');
+  Route::delete('/theLoaiPhim/force-delete/{id}', [TheLoaiPhimController::class, 'forceDelete'])->name('theLoaiPhim.forceDelete');
+
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
-});
 
+  Route::get('/check-qrCode/{id}', [VeController::class, 'checkQrCode']);
+});
+Route::delete('phim/{id}/soft-delete', [PhimController::class, 'softDelete'])->name('phim.softDelete');
+// Route::get('/phim/listSoftDelete', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');
+Route::patch('/phim/restore/{id}', [PhimController::class, 'restore'])->name('phim.restore');
+Route::delete('/phim/force-delete/{id}', [PhimController::class, 'forceDelete'])->name('phim.forceDelete');
+Route::delete('suatChieu/{id}/soft-delete', [SuatChieuController::class, 'softDelete'])->name('suatChieu.softDelete');
+Route::get('/suatChieu/listSoftDelete', [SuatChieuController::class, 'listSoftDelete'])->name('suatChieu.listSoftDelete');
+Route::patch('/suatChieu/restore/{id}', [SuatChieuController::class, 'restore'])->name('suatChieu.restore');
+Route::delete('/suatChieu/force-delete/{id}', [SuatChieuController::class, 'forceDelete'])->name('suatChieu.forceDelete');
+Route::get('/phim/listSoftDelete', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');

@@ -30,4 +30,8 @@ class PhongChieu extends Model
     {
         return $this->belongsTo(Rap::class, 'rap_id');
     }
+    public function suatChieus()
+{
+    return $this->hasMany(SuatChieu::class, 'phong_chieu_id');
+}
 }

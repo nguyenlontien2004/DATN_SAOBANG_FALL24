@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('dia_diem');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

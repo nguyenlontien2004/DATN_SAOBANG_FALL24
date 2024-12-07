@@ -1,0 +1,18 @@
+.room-box {
+    width: 100%;
+    color: black;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px; 
+}
+.room{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

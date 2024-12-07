@@ -109,6 +109,7 @@ class SuatChieuController extends Controller
         $phims = Phim::where('trang_thai', 1)->get();
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
+
     public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
     {
         $phim = Phim::findOrFail($request->phim_id);
@@ -128,10 +129,37 @@ class SuatChieuController extends Controller
 
 
 
-    public function destroy(SuatChieu $suatChieu)
+    // public function destroy(SuatChieu $suatChieu)
+    // {
+    //     $suatChieu->trang_thai = 0;
+    //     $suatChieu->save();
+    //     return redirect()->route('suatChieu.index')->with('success', 'Thể loại đã được xóa thành công!');
+    // }
+    public function listSoftDelete()
     {
-        $suatChieu->trang_thai = 0;
-        $suatChieu->save();
-        return redirect()->route('suatChieu.index')->with('success', 'Thể loại đã được xóa thành công!');
+        $suatChieus = SuatChieu::onlyTrashed()->with(['phim', 'phongChieu.rap'])->paginate(5);
+        return view('admin.contents.suatChieus.listSoftDelete', compact('suatChieus'));
     }
+    public function softDelete($id)
+    {
+        $suatChieu = SuatChieu::findOrFail($id);
+        $suatChieu->delete();
+        return redirect()->route('suatChieu.index')->with('success', 'Xóa mềm thành công!');
+    }
+    
+    // Khôi phục
+    public function restore($id)
+    {
+        $suatChieu = SuatChieu::onlyTrashed()->findOrFail($id);
+        $suatChieu->restore();
+        return redirect()->route('suatchieu.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    
+    public function forceDelete($id)
+    {
+        $suatChieu = SuatChieu::onlyTrashed()->findOrFail($id);
+        $suatChieu->forceDelete();
+        return redirect()->route('suatchieu.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
+    
 }
