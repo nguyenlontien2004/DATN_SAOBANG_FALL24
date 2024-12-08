@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBaiVietTinTucRequest;
 use App\Http\Requests\UpdateBaiVietTinTucRequest;
 use App\Models\DanhMucBaiVietTinTuc;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 
 class BaiVietTinTucController extends Controller
@@ -126,11 +127,20 @@ class BaiVietTinTucController extends Controller
             ->with('success', 'Xóa bài viết thành công');
     }
 
-    public function hienThi()
+    public function hienThi(Request $request)
     {
-        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(15);
+        $danhmuc = $request->get('danh_muc_bai_viet_tin_tuc_id');
 
-        return view('user.tintuc.tintuc', compact('baiviet'));
+        if ($danhmuc) {
+            $baiviet = BaiVietTinTuc::where('danh_muc_bai_viet_tin_tuc_id', $danhmuc)
+                ->paginate(10);
+        } else {
+            $baiviet = BaiVietTinTuc::query()->paginate(10);
+        }
+
+        $danhmuc = DanhMucBaiVietTinTuc::all();
+
+        return view('user.tintuc.tintuc', compact('baiviet', 'danhmuc'));
     }
 
     public function showTinTuc($id)

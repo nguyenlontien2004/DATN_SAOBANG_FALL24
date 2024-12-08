@@ -27,6 +27,11 @@ class SuatChieu extends Model
         return $this->belongsTo(Phim::class, 'phim_id');
     }
 
+    public function ves()
+    {
+        return $this->hasMany(Ve::class, 'suat_chieu_id');
+    }
+
     public function screeningRoom()
     {
         return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
@@ -36,7 +41,8 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
-    public function rap(){
-        return $this->hasOneThrough(Rap::class,PhongChieu::class,'id','id','phong_chieu_id');
+    public function rap()
+    {
+        return $this->hasOneThrough(Rap::class, PhongChieu::class, 'id', 'id', 'phong_chieu_id');
     }
 }

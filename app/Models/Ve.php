@@ -11,6 +11,7 @@ class Ve extends Model
 
     //    public function discountCode()
     protected $fillable = [
+        'so_luong_ve',
         'nguoi_dung_id',
         'ma_code_ve',
         'qr_code',
@@ -36,6 +37,11 @@ class Ve extends Model
     public function detailTicket()
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
+    }
+
+    public function phim()
+    {
+        return $this->belongsTo(Phim::class);
     }
 
     public function showtime()

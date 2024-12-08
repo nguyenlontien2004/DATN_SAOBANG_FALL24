@@ -98,14 +98,14 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <label for="gia_tri_giam">Tìm kiếm phim</label>
-                            <input type="number" name="gia_tri_giam" class="form-control" id="gia_tri_giam"
-                                placeholder="Nhập giá trị giảm %" value="{{ old('gia_tri_giam') }}" />
+                            <select class="js-example-placeholder-multiple js-states form-control"
+                                multiple="multiple"></select>
                             @error('gia_tri_giam')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> --}}
+                        </div>
                     </div>
 
                     <div class="card-footer">
@@ -115,7 +115,10 @@
                 </form>
             </div>
         </div>
-
-
     </div>
+    <script>
+        $(".js-example-placeholder-multiple").select2({
+            placeholder: "Chọn phim"
+        });
+    </script>
 @endsection

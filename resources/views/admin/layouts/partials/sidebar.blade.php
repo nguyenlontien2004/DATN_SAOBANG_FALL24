@@ -38,7 +38,7 @@
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="../demo1/index.html">
+                                <a href="{{ route('thongke.vesbanra') }}">
                                     <span class="sub-item">Số vé bán ra theo phim</span>
                                 </a>
                             </li>

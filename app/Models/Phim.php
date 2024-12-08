@@ -19,6 +19,7 @@ class Phim extends Model
         'trailer',
         'ngon_ngu',
         'do_tuoi',
+        'anh_phim',
         'gia_phim',
         'trang_thai',
     ];
@@ -26,6 +27,11 @@ class Phim extends Model
     public function daoDiens()
     {
         return $this->belongsToMany(DaoDien::class, 'phim_va_dao_diens', 'phim_id', 'dao_dien_id');
+    }
+
+    public function ves()
+    {
+        return $this->hasMany(Ve::class, 'phim_id');
     }
 
     public function dienViens()
@@ -42,7 +48,6 @@ class Phim extends Model
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
     }
-
 
     public function binhLuans()
     {

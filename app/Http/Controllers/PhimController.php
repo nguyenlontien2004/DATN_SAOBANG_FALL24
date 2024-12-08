@@ -66,6 +66,7 @@ class PhimController extends Controller
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được thêm thành công.');
     }
+    
     public function upload(Request $request)
     {
         if ($request->hasFile('upload')) {
@@ -78,6 +79,7 @@ class PhimController extends Controller
             return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
         }
     }
+    
     public function edit(Phim $phim)
     {
         $daoDiens = DaoDien::where('trang_thai', 1)->get();
@@ -85,6 +87,7 @@ class PhimController extends Controller
         $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
         return view('admin.contents.phims.edit', compact('phim', 'daoDiens', 'dienViens', 'theLoaiPhims'));
     }
+    
     public function update(UpdatePhimRequest $request, Phim $phim)
     {
         if ($request->hasFile('anh_phim')) {
@@ -95,10 +98,9 @@ class PhimController extends Controller
             $phim->anh_phim = $path;
         }
 
-        $phim->update($request->except('anh_phim')); // Không cập nhật ảnh phim từ request
+        $phim->update($request->except('anh_phim'));
 
         $phim->daoDiens()->sync($request->dao_dien_ids);
-
 
         $phim->dienViens()->detach();
         foreach ($request->dien_vien_ids as $index => $dienVienId) {

@@ -27,10 +27,12 @@ use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenController;
 use App\Http\Controllers\BinhLuanPhimController;
+use App\Http\Controllers\Client\LocController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TheLoaiPhimController;
+use App\Http\Controllers\ThongKeController;
 use App\Http\Middleware\AdminMiddleware;
 use GuzzleHttp\Client;
 
@@ -164,6 +166,9 @@ Route::prefix('admin')->group(function () {
   Route::resource('suatChieu', SuatChieuController::class);
 
   Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+  // Thống kê
+  Route::get('/thong-ke-ve-ban-ra', [ThongKeController::class, 'thongKeVeBanRaTheoPhim'])->name('thongke.vesbanra');
 });
 
 // Thành viên
@@ -206,7 +211,9 @@ Route::prefix('thanh-vien')->group(function () {
 
   // Tin tức
   Route::get('tin-tuc', [BaiVietTinTucController::class, 'hienThi'])->name('tintuc.hienthi');
-  Route::get('tin-tuc{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
+  Route::get('tin-tuc/{id}', [BaiVietTinTucController::class, 'showTinTuc'])->name('tintuc.show');
+  // Route::get('/tin-tuc/loctin/', [LocController::class, 'locTinTuc'])->name('tintuc.locdm');
+
   // ->middleware(['auth', MemberMiddleware::class])
   // Sản phẩm
   Route::get('/', [SanPhamController::class, 'SanPhamHome'])->name('trangchu.member');

@@ -37,4 +37,13 @@ class MaGiamGiaEvent implements ShouldBroadcast
             new Channel('broadcast-magiamgia'),
         ];
     }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'ma_giam_gia' => $this->magiamgia->ma_giam_gia,
+            'mo_ta' => $this->magiamgia->mo_ta,
+            'gia_tri_giam' => $this->magiamgia->gia_tri_giam,
+        ];
+    }
 }

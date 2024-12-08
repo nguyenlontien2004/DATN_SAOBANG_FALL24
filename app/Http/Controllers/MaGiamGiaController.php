@@ -35,7 +35,7 @@ class MaGiamGiaController extends Controller
 
         $maGiamGia = MaGiamGia::create($magiamgia);
 
-        broadcast(new MaGiamGiaEvent($maGiamGia));
+        broadcast(new MaGiamGiaEvent($maGiamGia))->toOthers();
 
         return redirect()->route('ma_giam_gia.index')
             ->with('success', 'Thêm mã giảm giá thành công');
