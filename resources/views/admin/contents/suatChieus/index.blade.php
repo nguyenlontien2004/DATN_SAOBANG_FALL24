@@ -8,7 +8,7 @@
                 <span class="px-2">/</span>
                 <a href="{{ route('suatChieu.create') }}">Thêm mới suất chiếu</a>
                 <span class="px-2">/</span>
-                <a href="{{ route('suatchieu.listSoftDelete') }}">Các mục đã xoá mềm</a>
+                {{-- <a href="{{ route('suatchieu.listSoftDelete') }}">Các mục đã xoá mềm</a> --}}
             </div>
             <div>
                 <form action="{{ route('suatChieu.index') }}" method="GET" class="form-inline d-flex align-items-center">
@@ -83,13 +83,13 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
-                                        <form action="{{ route('suatchieu.softDelete', $suatChieu->id) }}" method="POST"
+                                        {{-- <form action="{{ route('suatchieu.softDelete', $suatChieu->id) }}" method="POST"
                                             style="display:inline-block;"
                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm">Xóa </button>
-                                        </form>
+                                        </form> --}}
                                         <a class="btn btn-warning btn-sm"
                                             href="{{ route('suatChieu.edit', $suatChieu->id) }}">Sửa</a>
                                         <a class="btn btn-info btn-sm"

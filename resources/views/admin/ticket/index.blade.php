@@ -1,7 +1,7 @@
 @extends('admin.index')
 
 @section('content')
-    <div class="page-inner">
+    <div class=" m-3 page-inner">
         <div class="page-header">
             <ul class="breadcrumbs">
                 <li class="nav-home">
@@ -19,12 +19,21 @@
         </div>
 
         <div>
-            <h1>Quét mã QR</h1>
-            <button id="openCameraButton">Mở Camera</button>
-            <input type="file" id="uploadImage" accept="image/*">
-            <video id="video" style="display: none;" autoplay></video>
-            <canvas id="canvas" style="display: none;"></canvas>
-            <p>Kết quả: <span id="qrResult">Chưa có kết quả</span></p>
+            <h1 class="text-center my-4">Quét mã QR</h1>
+            <div class="text-center mb-3">
+                <button id="openCameraButton" class="btn btn-primary">
+                    <i class="fa fa-camera"></i> Mở Camera
+                </button>
+            </div>
+            
+            <div class="card mx-auto" style="max-width: 600px;">
+                <div class="card-body text-center">
+                    <video id="video" class="img-fluid border" style="display: none;" autoplay></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <p class="mt-3">Kết quả: <span id="qrResult" class="font-weight-bold text-primary">Chưa có kết quả</span></p>
+                </div>
+            </div>
+            
             <script src="https://cdn.jsdelivr.net/npm/jsqr"></script>
             <script>
                 document.getElementById("openCameraButton").addEventListener("click", async () => {

@@ -125,15 +125,32 @@ Route::prefix('admin')->group(function () {
   Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
 
   // Route::resources('phims');
-  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
-  Route::resource('phim', App\Http\Controllers\PhimController::class);
 
-  Route::get('/api/phim/{id}/ngay-chieu', [PhimController::class, 'layNgayChieu']);
+  Route::resource('phim', App\Http\Controllers\PhimController::class);
   Route::post('phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::get('/api/phim/{id}/ngay-chieu', [PhimController::class, 'layNgayChieu']);
+  Route::delete('phim/{id}/soft-delete', [PhimController::class, 'softDelete'])->name('phim.softDelete');
+  Route::get('/phim/listSoftDelete', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');
+  Route::patch('/phim/restore/{id}', [PhimController::class, 'restore'])->name('phim.restore');
+  Route::delete('/phim/force-delete/{id}', [PhimController::class, 'forceDelete'])->name('phim.forceDelete');
+
+  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
+  Route::post('daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
+  Route::delete('daoDien/{id}/soft-delete', [DaoDienController::class, 'softDelete'])->name('daoDien.softDelete');
+  Route::get('/daoDien/listSoftDelete', [DaoDienController::class, 'listSoftDelete'])->name('daoDien.listSoftDelete');
+  Route::patch('/daoDien/restore/{id}', [DaoDienController::class, 'restore'])->name('daoDien.restore');
+  Route::delete('/daoDien/force-delete/{id}', [DaoDienController::class, 'forceDelete'])->name('daoDien.forceDelete');
+
+
+
   Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
   Route::post('dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::delete('dienVien/{id}/soft-delete', [DienVienController::class, 'softDelete'])->name('dienVien.softDelete');
+  Route::get('/dienVien/listSoftDelete', [DienVienController::class, 'listSoftDelete'])->name('dienVien.listSoftDelete');
+  Route::patch('/dienVien/restore/{id}', [DienVienController::class, 'restore'])->name('dienVien.restore');
+  Route::delete('/dienVien/force-delete/{id}', [DienVienController::class, 'forceDelete'])->name('dienVien.forceDelete');
 
-  Route::post('daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
+
 
   Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class)->except(['show']);
   Route::delete('theLoaiPhim/{id}/soft-delete', [TheLoaiPhimController::class, 'softDelete'])->name('theLoaiPhim.softDelete');
@@ -143,15 +160,10 @@ Route::prefix('admin')->group(function () {
 
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
+  Route::delete('suatChieu/{id}/soft-delete', [SuatChieuController::class, 'softDelete'])->name('suatChieu.softDelete');
+  Route::get('/suatChieu/listSoftDelete', [SuatChieuController::class, 'listSoftDelete'])->name('suatChieu.listSoftDelete');
+  Route::patch('/suatChieu/restore/{id}', [SuatChieuController::class, 'restore'])->name('suatChieu.restore');
+  Route::delete('/suatChieu/force-delete/{id}', [SuatChieuController::class, 'forceDelete'])->name('suatChieu.forceDelete');
 
   Route::get('/check-qrCode/{id}', [VeController::class, 'checkQrCode']);
 });
-Route::delete('phim/{id}/soft-delete', [PhimController::class, 'softDelete'])->name('phim.softDelete');
-// Route::get('/phim/listSoftDelete', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');
-Route::patch('/phim/restore/{id}', [PhimController::class, 'restore'])->name('phim.restore');
-Route::delete('/phim/force-delete/{id}', [PhimController::class, 'forceDelete'])->name('phim.forceDelete');
-Route::delete('suatChieu/{id}/soft-delete', [SuatChieuController::class, 'softDelete'])->name('suatChieu.softDelete');
-Route::get('/suatChieu/listSoftDelete', [SuatChieuController::class, 'listSoftDelete'])->name('suatChieu.listSoftDelete');
-Route::patch('/suatChieu/restore/{id}', [SuatChieuController::class, 'restore'])->name('suatChieu.restore');
-Route::delete('/suatChieu/force-delete/{id}', [SuatChieuController::class, 'forceDelete'])->name('suatChieu.forceDelete');
-Route::get('/phim/listSoftDelete', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');

@@ -86,6 +86,7 @@
                                     <a class="btn btn-warning btn-sm" href="{{ route('phim.edit', $phim->id) }}">
                                         Sửa
                                     </a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('phim.show', $phim->id) }}">Xem</a>
                                 </td>
                             </tr>
                         @empty

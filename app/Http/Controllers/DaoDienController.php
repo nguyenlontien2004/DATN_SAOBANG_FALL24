@@ -80,10 +80,38 @@ class DaoDienController extends Controller
 
         return redirect()->route('daoDien.index')->with('success', 'Cập nhật Đạo diễn thành công!');
     }
-    public function destroy(DaoDien $daoDien)
+    // public function destroy(DaoDien $daoDien)
+    // {
+    //     $daoDien->trang_thai = 0;
+    //     $daoDien->save();
+    //     return redirect()->route('daoDien.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
+    // }
+    public function listSoftDelete()
     {
-        $daoDien->trang_thai = 0;
-        $daoDien->save();
-        return redirect()->route('daoDien.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
+        // $daoDiens = DaoDien::onlyTrashed()->paginate(5);
+        // return view('admin.contents.daoDiens.listSoftDelete', compact('daoDiens'));
+        return view('admin.contents.daoDiens.listSoftDelete');
+    }
+    public function softDelete($id)
+    {
+        $daoDien = DaoDien::findOrFail($id);
+        $daoDien->delete();
+        return redirect()->route('daoDien.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $daoDien = DaoDien::onlyTrashed()->findOrFail($id);
+        $daoDien->restore();
+
+        return redirect()->route('daoDien.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id)
+    {
+        $daoDien = DaoDien::onlyTrashed()->findOrFail($id);
+        $daoDien->forceDelete();
+
+        return redirect()->route('daoDien.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
     }
 }

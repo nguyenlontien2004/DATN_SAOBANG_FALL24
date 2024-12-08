@@ -8,7 +8,8 @@
                 <span class="px-2">/</span>
                 <a href="{{ route('daoDien.create') }}">Thêm mới Đạo diễn</a>
                 <span class="px-2">/</span>
-                <a href="#">Các mục đã xoá mềm</a>
+                {{-- <a href="{{ route('daodien.listSoftDelete') }}">Các mục đã xoá mềm</a> --}}
+                <a href="{{ url('/admin/daoDien/listSoftDelete') }}">Các mục đã xoá mềm</a>
             </div>
             <div>
                 <form action="{{ route('daoDien.index') }}" method="GET" class="form-inline d-flex align-items-center">
@@ -62,14 +63,21 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
-                                        <form method="POST" action="{{ route('daoDien.destroy', $daoDien->id) }}"
+                                        {{-- <form method="POST" action="{{ route('daoDien.destroy', $daoDien->id) }}"
                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">
                                                 Xóa
                                             </button>
-                                        </form>
+                                        </form> --}}
+                                        {{-- <form action="{{ route('daodien.softDelete', $daoDien->id) }}" method="POST"
+                                            style="display:inline-block;"
+                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">Xóa </button>
+                                        </form> --}}
                                         <a class="btn btn-warning" href="{{ route('daoDien.edit', $daoDien->id) }}">
                                             Sửa
                                         </a>

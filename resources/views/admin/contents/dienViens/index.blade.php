@@ -58,13 +58,20 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
-                                        <form method="POST" action="{{ route('dienVien.destroy', $dienVien->id) }}"
+                                        {{-- <form method="POST" action="{{ route('dienVien.destroy', $dienVien->id) }}"
                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">
                                                 Xóa
                                             </button>
+                                        </form> --}}
+                                        <form action="{{ route('dienVien.softDelete', $dienVien->id) }}" method="POST"
+                                            style="display:inline-block;"
+                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">Xóa </button>
                                         </form>
                                         <a class="btn btn-warning" href="{{ route('dienVien.edit', $dienVien->id) }}">
                                             Sửa
