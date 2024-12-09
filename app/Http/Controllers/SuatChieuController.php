@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ve;
 use App\Models\Phim;
 use App\Models\SuatChieu;
 use App\Models\PhongChieu;
@@ -105,6 +106,10 @@ class SuatChieuController extends Controller
 
     public function edit(SuatChieu $suatChieu)
     {
+        $veDaBan = Ve::where('suat_chieu_id', $suatChieu->id)->where('ngay_ve_mo', $suatChieu->ngay)->exists();
+        if ($veDaBan) {
+            return redirect()->route('suatChieu.index')->with('error', 'Không thể cập nhật suất chiếu vì đã có vé được bán cho suất chiếu này.');
+        }
         $phongChieus = PhongChieu::where('trang_thai', 1)->get();
         $phims = Phim::where('trang_thai', 1)->get();
         return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
