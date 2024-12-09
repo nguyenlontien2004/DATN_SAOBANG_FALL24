@@ -27,7 +27,12 @@ class StoreSuatChieuRequest extends FormRequest
         return [
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
             'gio_bat_dau' => 'required|date_format:H:i',
-            'date' => 'required|date|after_or_equal:today',
+            'date' => ['required', 'date', function ($attribute, $value, $fail) {
+                $phim = Phim::find($this->input('phim_id'));
+                if ($phim && Carbon::parse($value)->lt(Carbon::parse($phim->ngay_khoi_chieu))) {
+                    $fail('Ngày chiếu không được trước ngày khởi chiếu của phim.');
+                }
+            },],
             'phim_id' => [
                 'required',
                 'exists:phims,id',
@@ -45,8 +50,8 @@ class StoreSuatChieuRequest extends FormRequest
                         ->whereDate('date', $this->input('date'))
                         ->where(function ($query) use ($gioBatDauMoi, $gioKetThucMoi) {
                             $query->where(function ($subQuery) use ($gioBatDauMoi, $gioKetThucMoi) {
-                                $subQuery->whereTime('gio_bat_dau', '<', $gioKetThucMoi->format('H:i')) 
-                                    ->whereTime('gio_ket_thuc', '>', $gioBatDauMoi->format('H:i')); 
+                                $subQuery->whereTime('gio_bat_dau', '<', $gioKetThucMoi->format('H:i'))
+                                    ->whereTime('gio_ket_thuc', '>', $gioBatDauMoi->format('H:i'));
                             });
                         })
                         ->exists();
