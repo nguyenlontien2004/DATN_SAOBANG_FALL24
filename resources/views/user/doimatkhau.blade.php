@@ -9,14 +9,15 @@
 
         <div class="sidebar6669">
             <div class="form-group mb-3 d-flex justify-content-center align-items-center">
-                <img alt="Ảnh đại diện người dùng" src="{{ asset('storage/' . $user->anh_dai_dien) }}"
+                <img alt="Ảnh đại diện người dùng"
+                    src="{{ Auth::user()->anh_dai_dien != '' ? asset('storage/' . Auth::user()->anh_dai_dien) : 'https://cdn.moveek.com/bundles/ornweb/img/no-avatar.png' }}"
                     style="border-radius: 50%; height: 100px; width: 100px; object-fit: cover" />
             </div>
-            <div class="username">{{ $user->ho_ten }}</div>
+            <div class="username">{{ $user->ho_ten }} <span>{{ Auth::user()->gold }} xu</span></div>
             <hr />
-            <a href="{{ route('thongtin3') }}">Thông tin cá nhân</a>
+            <a href="{{ route('thong-tin-nguoi-dung') }}">Thông tin cá nhân</a>
             <a href="{{ route('doimatkhau') }}">Đổi mật khẩu</a>
-            <a href="#">Lịch sử đặt vé</a>
+            <a href="{{ route('lichsudatve') }}">Lịch sử đặt vé</a>
             <a href="{{ route('formcapnhat') }}">Cập nhật thông tin cá nhân</a>
             <a href="" class="text-danger">
                 <form action="{{ route('dangxuat') }}" method="POST">
@@ -27,9 +28,13 @@
         </div>
 
         <div class="content">
-
             <h1>Đổi mật khẩu</h1>
-
+            <div class="thongbao text-center">
+                @if (session('success'))
+                    <span class="alert alert-success font-weight-bold"
+                        style="font-size: 1.2rem;">{{ session('success') }}</span>
+                @endif
+            </div>
             <form action="{{ route('capnhatmk') }}" method="post">
                 @csrf
                 <div class="form-group">
@@ -65,5 +70,6 @@
                 <button class="btn123">Đổi mật khẩu</button>
             </form>
         </div>
+
     </div>
 @endsection
