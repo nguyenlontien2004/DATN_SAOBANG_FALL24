@@ -38,4 +38,9 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
+    public function ve()
+{
+    return $this->hasMany(Ve::class, 'suat_chieu_id');
+}
+
 }
