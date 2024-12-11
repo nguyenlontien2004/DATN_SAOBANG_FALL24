@@ -110,10 +110,10 @@
                     <div class="user-action" style="overflow: none !important;">
                         @if (Auth::check())
                             <div>
-                                <a href="{{ route('thong-tin-nguoi-dung') }}">
+                                {{-- <a href="{{ route('thong-tin-nguoi-dung') }}">
                                     <img src="{{ Auth::user()->anh_dai_dien != '' ? asset('storage/' . Auth::user()->anh_dai_dien) : 'https://cdn.moveek.com/bundles/ornweb/img/no-avatar.png' }}"
                                         alt="đại diện" style="border-radius: 50%; object-fit: cover;">
-                                </a>
+                                </a> --}}
                             </div>
                         @else
                             <div class="dropdown">

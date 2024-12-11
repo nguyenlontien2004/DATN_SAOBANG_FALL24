@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenController;
 use App\Http\Controllers\BinhLuanPhimController;
+use App\Http\Controllers\Client\LichChieuController;
 use App\Http\Controllers\Client\LocController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\DanhGiaController;
@@ -206,7 +207,7 @@ Route::prefix('thanh-vien')->group(function () {
   Route::post('/reset-password', [PasswordResetController::class, 'resetPass'])->name('resetpass');
 
   // Xem và cập nhập thông tin cá nhân
-  Route::get('thong-tin-ca-nhan3', [MemberController::class, 'thongTin'])->name('thongtin3');
+  Route::get('thong-tin-ca-nhan', [MemberController::class, 'thongTin'])->name('thong-tin-nguoi-dung');
   Route::get('thong-tin-ca-nhan', [MemberController::class, 'formCapNhatThongTin'])->name('formcapnhat');
   Route::put('cap-nhat-thong-tin-ca-nhan', [MemberController::class, 'capNhatThongTin'])->name('capnhatthongtin');
 
@@ -239,4 +240,13 @@ Route::prefix('thanh-vien')->group(function () {
 
   // Đánh giá
   Route::resource('danhgia', DanhGiaController::class);
+
+  // phần phúc code thêm chức năng rạp và lịch chiếu 
+  // phần route rạp chiếu
+  Route::get('rap', [RapController::class, 'index'])->name('rap');
+  Route::get('rap/{id}', [RapController::class, 'chitietrap'])->name('chitietrap');
+  Route::get('phim/rap/{id}/{ngay}', [RapController::class, 'suatphimtheorap']);
+  // phần route lịch chiếu
+  Route::get('lich-chieu', [LichChieuController::class, 'index'])->name('lichchieuphimclient');
+  Route::get('lich-chieu/phim-rap/{id}/{ngay}', [LichChieuController::class, 'suatphimtheorap']);
 });

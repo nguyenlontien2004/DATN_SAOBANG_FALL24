@@ -13,13 +13,18 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+//     return (int) $user->id === (int) $id;
+// });
 
 Broadcast::channel('broadcast-magiamgia', function () {
     return true;
 });
+
 Broadcast::channel('seat.{id}.{ngay}', function ($id, $ngay) {
+    return true;
+});
+
+Broadcast::channel('binhLuan.phim.{idPhim}', function ($idPhim) {
     return true;
 });
