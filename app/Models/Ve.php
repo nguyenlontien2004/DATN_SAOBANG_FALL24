@@ -9,7 +9,6 @@ class Ve extends Model
 {
     use HasFactory;
 
-    //    public function discountCode()
     protected $fillable = [
         'so_luong_ve',
         'nguoi_dung_id',
@@ -22,6 +21,7 @@ class Ve extends Model
         'ngay_dat',
         'tong_tien',
         'ngay_thanh_toan',
+        'tong_tien_an',
         'phuong_thuc_thanh_toan',
         'trang_thai'
     ];
@@ -30,10 +30,12 @@ class Ve extends Model
     {
         return $this->belongsTo(NguoiDung::class, 'nguoi_dung_id');
     }
+
     public function chiTietVe()
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
     }
+
     public function detailTicket()
     {
         return $this->hasMany(ChiTietVe::class, 've_id');
@@ -48,16 +50,30 @@ class Ve extends Model
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
     }
+
     public function maGiamGia()
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
     }
+
     public function discountCode()
     {
         return $this->belongsTo(MaGiamGia::class, 'ma_giam_gia_id');
     }
+
     public function suatChieu()
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
+    }
+
+    public function gheNgoi()
+    {
+        return $this->belongsTo(GheNgoi::class, 'ghe_ngoi_id');
+    }
+
+    public function doAns()
+    {
+        return $this->belongsToMany(Doan::class, 'chi_tiet_ve', 've_id', 'doan_id')
+            ->withPivot('so_luong');
     }
 }

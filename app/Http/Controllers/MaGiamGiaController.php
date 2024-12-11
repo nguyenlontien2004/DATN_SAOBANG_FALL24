@@ -6,6 +6,7 @@ use App\Events\MaGiamGiaEvent;
 use App\Models\MaGiamGia;
 use App\Http\Requests\StoreMaGiamGiaRequest;
 use App\Http\Requests\UpdateMaGiamGiaRequest;
+use App\Models\Phim;
 
 class MaGiamGiaController extends Controller
 {
@@ -23,7 +24,9 @@ class MaGiamGiaController extends Controller
      */
     public function create()
     {
-        return view('admin.contents.magiamgia.add');
+        $phim = Phim::select('id', 'ten_phim')->get();
+
+        return view('admin.contents.magiamgia.add', compact('phim'));
     }
 
     /**
@@ -31,9 +34,14 @@ class MaGiamGiaController extends Controller
      */
     public function store(StoreMaGiamGiaRequest $request)
     {
+
         $magiamgia = $request->all();
 
         $maGiamGia = MaGiamGia::create($magiamgia);
+
+        if (empty($request->phim_id)) {
+            $maGiamGia['phim_id'] = null;
+        }
 
         broadcast(new MaGiamGiaEvent($maGiamGia))->toOthers();
 

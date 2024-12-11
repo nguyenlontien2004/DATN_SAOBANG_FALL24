@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Phim;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('ma_giam_gias', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Phim::class)->constrained()->cascadeOnDelete();
             $table->string('ten_ma_giam_gia')->unique();
             $table->string('ma_giam_gia');
             $table->integer('so_luong');

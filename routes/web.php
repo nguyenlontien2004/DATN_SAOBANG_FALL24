@@ -169,6 +169,7 @@ Route::prefix('admin')->group(function () {
 
   // Thống kê
   Route::get('/thong-ke-ve-ban-ra', [ThongKeController::class, 'thongKeVeBanRaTheoPhim'])->name('thongke.vesbanra');
+  Route::get('/thong-ke-tong-doanh-thu-rap', [ThongKeController::class, 'thongTongDoanhThuRap'])->name('thongke.rap');
 });
 
 // Thành viên

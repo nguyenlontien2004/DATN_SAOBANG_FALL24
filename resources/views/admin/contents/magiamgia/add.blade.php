@@ -100,8 +100,12 @@
                         </div>
                         <div class="col-md-6">
                             <label for="gia_tri_giam">Tìm kiếm phim</label>
-                            <select class="js-example-placeholder-multiple js-states form-control"
-                                multiple="multiple"></select>
+                            <select class="js-example-placeholder-multiple js-states form-control" name="phim_id[]"
+                                multiple>
+                                @foreach ($phim as $phi)
+                                    <option value="{{ $phi->id }}">{{ $phi->ten_phim }}</option>
+                                @endforeach
+                            </select>
                             @error('gia_tri_giam')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

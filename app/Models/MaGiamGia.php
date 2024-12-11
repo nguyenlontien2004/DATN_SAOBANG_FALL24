@@ -11,6 +11,7 @@ class MaGiamGia extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'phim_id',
         'ten_ma_giam_gia',
         'ma_giam_gia',
         'so_luong',
@@ -20,4 +21,8 @@ class MaGiamGia extends Model
         'gia_tri_giam',
         'trang_thai'
     ];
+
+    // public function phims(){
+    //     return $this->belongsToMany(Phim::)
+    // }
 }

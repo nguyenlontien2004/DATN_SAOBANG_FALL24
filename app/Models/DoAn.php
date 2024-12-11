@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DoAn extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'ten_do_an',
         'gia',
@@ -16,4 +17,10 @@ class DoAn extends Model
         'luot_mua',
         'trang_thai'
     ];
+
+    public function ves()
+    {
+        return $this->belongsToMany(Ve::class, 'doan_ve', 'doan_id', 've_id')
+            ->withPivot('so_luong');
+    }
 }

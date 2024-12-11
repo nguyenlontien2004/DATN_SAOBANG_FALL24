@@ -20,49 +20,47 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Thống kê vé bán ra theo phim</a>
+                    <a href="#">Thống kê tổng doanh thu theo rạp</a>
                 </li>
             </ul>
         </div>
         <div class="row">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="card-title">Thống kê vé bán ra theo phim</div>
+                    <div class="card-title">Thống kê tổng doanh thu theo rạp</div>
                 </div>
 
                 <div class="card-body">
-                    <div class="container py-3">
-                        <form action="{{ route('thongke.vesbanra') }}" method="GET" class="row g-3">
-                            <div class="col-md-3">
-                                <label for="bat_dau" class="form-label">Từ ngày</label>
-                                <input type="date" name="bat_dau" id="bat_dau" class="form-control"
-                                    value="{{ request('bat_dau') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <label for="ket_thuc" class="form-label">Đến ngày</label>
-                                <input type="date" name="ket_thuc" id="ket_thuc" class="form-control"
-                                    value="{{ request('ket_thuc') }}">
-                            </div>
-                            <div class="col-md-6 d-flex align-items-end">
-                                <div class="btn-group w-100" role="group">
-                                    <button type="submit" name="loc" value="nam" class="btn btn-info">Lọc theo
-                                        năm</button>
-                                    <button type="submit" name="loc" value="quý" class="btn btn-info">Lọc theo
-                                        quý</button>
-                                    <button type="submit" name="loc" value="thang" class="btn btn-info">Lọc theo
-                                        tháng</button>
-                                    <button type="submit" class="btn btn-primary">Lọc</button>
+                    <div class="form-control">
+                        <form action="{{ route('thongke.vesbanra') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="bat_dau">Từ ngày</label>
+                                    <input type="date" name="bat_dau" id="bat_dau" class="form-control"
+                                        value="{{ request('bat_dau') }}">
                                 </div>
+                                <div class="col-md-3">
+                                    <label for="ket_thuc">Đến ngày</label>
+                                    <input type="date" name="ket_thuc" id="ket_thuc" class="form-control"
+                                        value="{{ request('ket_thuc') }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="ket_thuc">Đến ngày</label>
+                                    <input type="date" name="ket_thuc" id="ket_thuc" class="form-control"
+                                        value="{{ request('ket_thuc') }}">
+                                </div>
+                                <button type="submit">Lọc theo năm</button>
+                                <button type="submit">Lọc theo quý</button>
+                                <button type="submit">Lọc theo tháng</button>
                             </div>
                         </form>
                     </div>
-
                     <table class="table mt-3">
                         <thead>
                             <tr>
                                 <th>STT</th>
                                 <th>Tên Phim</th>
-                                <th>Số Ghế (Vé)</th>
+                                <th>Số Ghế</th>
                                 <th>Tiền Đồ Ăn</th>
                                 <th>Tổng Tiền (Vé)</th>
                             </tr>
@@ -71,13 +69,13 @@
                             @php
                                 $tongDoanhThu = 0;
                             @endphp
-                            @foreach ($phimVes as $index => $pv)
+                            @foreach ($chiNhanh as $index => $cn)
                                 @php
                                     $tongTien = 0;
                                     $soLuongGhe = 0;
                                     $tongTienDoAn = 0;
 
-                                    foreach ($pv->suatChieus as $sc) {
+                                    foreach ($cn->suatChieus as $sc) {
                                         // $tongSoVe += $sc->ves->count();
                                         $tongTien += $sc->ves->sum('tong_tien');
                                         $tongTienDoAn += $sc->ves->sum('tong_tien_an');
@@ -91,7 +89,7 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $pv->ten_phim }}</td>
+                                    <td>{{ $cn->ten_rap }}</td>
                                     <td>{{ $soLuongGhe }}</td>
                                     <td>{{ number_format($tongTienDoAn) }}đ</td>
                                     <td>{{ number_format($tongTien) }}đ</td>
@@ -100,7 +98,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4">Tổng Doanh Thu</th>
+                                <th colspan="3">Tổng Doanh Thu</th>
                                 <th>{{ number_format($tongDoanhThu) }}đ</th>
                             </tr>
                         </tfoot>
