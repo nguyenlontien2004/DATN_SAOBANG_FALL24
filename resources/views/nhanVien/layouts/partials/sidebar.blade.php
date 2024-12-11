@@ -30,7 +30,7 @@
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
                 <li class="nav-item">
-                    <a href="">
+                    <a href="{{ route('theLoaiPhim.index') }}">
                         <i class="fas fa-layer-group"></i>
                         <p>Danh sách thể loại</p>
                     </a>
@@ -44,12 +44,12 @@
                     <div class="collapse" id="sidebarLayouts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="{{ route('dienVien.index') }}">
                                     <span class="sub-item">Quản lý diễn viên</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('daoDien.index') }}">
                                     <span class="sub-item">Quản lý Đạo diễn</span>
                                 </a>
                             </li>
@@ -65,27 +65,27 @@
                     <div class="collapse" id="forms">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="{{ route('phim.index') }}">
                                     <span class="sub-item">Quản lý phim</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('rap.index') }}">
                                     <span class="sub-item">Quản lý rạp chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('admin.phongChieu') }}">
                                     <span class="sub-item">Quản lý phòng chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('suatChieu.index') }}">
                                     <span class="sub-item">Quản lý suất chiếu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('admin.chitietsuatchieu') }}">
                                     <span class="sub-item">Chi tiết suất chiếu</span>
                                 </a>
                             </li>
@@ -108,9 +108,9 @@
                         </ul>
                     </div>
                 </li>
-
+{{-- {{ route('ve.danh-sach-ve') }} --}}
                 <li class="nav-item">
-                    <a href="{{ route('ve.danh-sach-ve') }}">
+                    <a href="{{ route('admin.ticket.index') }}">
                         <i class="fas fa-ticket-alt"></i>
                         <p>Quản lý vé</p>
                     </a>
@@ -124,12 +124,12 @@
                     <div class="collapse" id="charts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}">
                                     <span class="sub-item">Danh sách danh mục bài viết tin tức</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('bai-viet-tin-tuc.index') }}">
                                     <span class="sub-item">Danh sách bài viết tin tức</span>
                                 </a>
                             </li>
@@ -145,12 +145,12 @@
                     <div class="collapse" id="banner">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="{{ route('banner-quang-cao.index') }}">
                                     <span class="sub-item">Danh sách vị trí banner quảng cáo</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route('anh-banner-quang-cao.index') }}">
                                     <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
                                 </a>
                             </li>
@@ -158,7 +158,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="">
+                    <a href="{{ route('ma_giam_gia.index') }}">
                         <i class="fas fa-tags"></i>
                         <p>Mã giảm giá</p>
                     </a>

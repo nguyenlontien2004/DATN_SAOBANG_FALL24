@@ -6,7 +6,11 @@ use App\Http\Controllers\VeController;
 use App\Http\Controllers\RapController;
 use App\Http\Controllers\DoAnController;
 use App\Http\Controllers\PhimController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\MemberMiddleware;
 use App\Http\Controllers\AuthenController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\VaiTroController;
 use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DaoDienController;
@@ -20,22 +24,19 @@ use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\TheLoaiPhimController;
 use App\Http\Controllers\BinhLuanPhimController;
 use App\Http\Controllers\BaiVietTinTucController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\BannerQuangCaoController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AnhBannerQuangCaoController;
-use App\Http\Controllers\DanhMucBaiVietTinTucController;
-use App\Http\Controllers\VaiTroVaNguoiDungController;
-use App\Http\Controllers\PasswordResetController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\NhanVien\DashboardController as NhanVienDashboardController;
-use App\Http\Controllers\NhanVien\DoAnController as NhanVienDoAnController;
 use App\Http\Controllers\NhanVien\NhanVienController;
 use App\Http\Controllers\NhanVien\ThongTinController;
+use App\Http\Controllers\VaiTroVaNguoiDungController;
+use App\Http\Controllers\DanhMucBaiVietTinTucController;
+use App\Http\Controllers\Admin\ChiTietLichChieuController;
 use App\Http\Controllers\NhanVien\VeController as NhanVienVeController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\MemberMiddleware;
+use App\Http\Controllers\NhanVien\DoAnController as NhanVienDoAnController;
+use App\Http\Controllers\NhanVien\DashboardController as NhanVienDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -248,6 +249,10 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::resource('rap', App\Http\Controllers\RapController::class);
   Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
 
+  /// Phần chi tiết suất chiếu
+  Route::get('chi-tiet-suat-chieu/',    [ChiTietLichChieuController::class, 'index'])->name('admin.chitietsuatchieu');
+  Route::get('phim/phong-chieu/{id}',    [App\Http\Controllers\Admin\ChiTietLichChieuController::class, 'phongchieutheophim'])->name('admin.suatchieutheophim');
+  Route::get('suat-chieu/phim/{idphim}/phong-chieu/{idphongchieu}',    [App\Http\Controllers\Admin\ChiTietLichChieuController::class, 'suatchieutheophongvaphim']);
   });
 
 
