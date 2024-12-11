@@ -187,6 +187,8 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::post('/ve/thanh-toan/{ve}', [NhanVienVeController::class, 'thanhToanVaInVe'])->name('ve.thanh-toan'); // Thanh toán và in vé
   Route::get('/ve/qr/{ve}', [NhanVienVeController::class, 'inMaQR'])->name('ve.qr'); // In mã QR cho vé
   Route::put('/ve/cap-nhat-trang-thai/{ve}', [NhanVienVeController::class, 'capNhatTrangThaiVe'])->name('ve.cap-nhat-trang-thai'); // Cập nhật trạng thái vé
+
+  Route::get('/check-qrCode/{id}', [NhanVienVeController::class, 'checkQrCode']);
 });
 
 
