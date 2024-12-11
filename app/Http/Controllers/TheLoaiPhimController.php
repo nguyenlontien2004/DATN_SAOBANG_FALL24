@@ -4,20 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\TheLoaiPhim;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use App\Http\Requests\StoreTheLoaiPhimRequest;
+use App\Http\Requests\UpdateTheLoaiPhimRequest;
 
 class TheLoaiPhimController extends Controller
 {
-    // public function index(Request $request)
+    // public function index()
     // {
-    //     $query = $request->query('query');
-
-    //     // Nếu có query, lọc theo id, ngược lại lấy tất cả
-    //     if ($query) {
-    //         $theLoaiPhims = TheLoaiPhim::where('id', $query)->get(); 
-    //     } else {
-    //         $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
-    //     }
-
+    //     $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
     //     return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
     // }
     public function index(Request $request)
@@ -35,22 +30,14 @@ class TheLoaiPhimController extends Controller
 
         return view('admin.contents.theLoaiPhims.index', compact('theLoaiPhims'));
     }
-
     public function create()
     {
         return view('admin.contents.theLoaiPhims.creater');
     }
-
-    public function store(Request $request)
+    public function store(StoreTheLoaiPhimRequest $request)
     {
-        $request->validate([
-            'ten_the_loai' => 'required|string|max:255',
-            'trang_thai' => 'required|boolean',
-        ]);
-
         TheLoaiPhim::create([
             'ten_the_loai' => $request->ten_the_loai,
-            'trang_thai' => $request->trang_thai,
         ]);
 
         return redirect()->route('theLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');
@@ -61,13 +48,8 @@ class TheLoaiPhimController extends Controller
         return view('admin.contents.theLoaiPhims.edit', compact('theLoaiPhim'));
     }
 
-    public function update(Request $request, TheLoaiPhim $theLoaiPhim)
+    public function update(UpdateTheLoaiPhimRequest $request, TheLoaiPhim $theLoaiPhim)
     {
-        $request->validate([
-            'ten_the_loai' => 'required|string|max:255',
-            'trang_thai' => 'required|boolean',
-        ]);
-
         $theLoaiPhim->update([
             'ten_the_loai' => $request->ten_the_loai,
             'trang_thai' => $request->trang_thai,

@@ -73,7 +73,7 @@ class Ve extends Model
 
     public function doAns()
     {
-        return $this->belongsToMany(Doan::class, 'chi_tiet_ve', 've_id', 'doan_id')
-            ->withPivot('so_luong');
+        return $this->belongsToMany(Doan::class, 'do_an_va_chi_tiet_ves', 've_id', 'do_an_ids')
+            ->withPivot('so_luong_do_an');
     }
 }

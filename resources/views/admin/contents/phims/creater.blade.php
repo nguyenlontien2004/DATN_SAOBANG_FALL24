@@ -26,15 +26,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="gia_phim" class="form-label">Gía Phim</label>
-                        <input type="number" class="form-control" id="gia_phim" name="gia_phim"
-                            value="{{ old('gia_phim') }}">
-                        @error('gia_phim')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-
+                    <!-- đây nha  phần thiếu-->
                     <div class="mb-3 row">
                         <div class="col-md-4">
                             <label for="do_tuoi" class="form-label">Độ Tuổi</label>
@@ -54,8 +46,8 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="luot_xem_phim" class="form-label">Lượt Xem</label>/-strong/-heart:>:o:-((:-h <input
-                                type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
+                            <label for="luot_xem_phim" class="form-label">Lượt Xem</label>
+                            <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
                                 value="{{ old('luot_xem_phim') }}">
                             @error('luot_xem_phim')
                                 <div class="text-danger">{{ $message }}</div>

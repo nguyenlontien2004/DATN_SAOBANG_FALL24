@@ -12,7 +12,7 @@ class ThongKeController extends Controller
     public function thongKeVeBanRaTheoPhim(Request $request)
     {
         $phimVes = Phim::with([
-            'suatChieus.ves.detailTicket',
+            'suatChieus.ves.detailTicket.gheNgoi',
             'suatChieus.ves.doAns'
         ]);
 

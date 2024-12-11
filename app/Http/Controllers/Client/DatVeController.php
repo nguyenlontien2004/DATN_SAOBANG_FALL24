@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use App\Events\OrderSuccess;
+use App\Models\NguoiDung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Endroid\QrCode\Writer\SvgWriter;
@@ -35,8 +36,9 @@ class DatVeController extends Controller
             ->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
             ->with([
                 'phim:id,ten_phim,gia',
-                'phongChieu:id,ten_phong_chieu,rap_id',
-                'rap'
+                'phongChieu' => function ($qr) {
+                    $qr->with('rap');
+                },
             ])
             ->find($id);
         //dd($suatchieu->toArray());
@@ -49,6 +51,7 @@ class DatVeController extends Controller
                             'chitietve' => function ($q) use ($formattedDate, $id) {
                                 $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
                                     ->whereDate('ngay_ve_mo', '=', $formattedDate)
+                                    ->where('ves.deleted_at', '=', null)
                                     ->where('suat_chieu_id', $id);
                             }
                         ])
@@ -59,15 +62,15 @@ class DatVeController extends Controller
             ->find($suatchieu->phongChieu->id);
         //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray());
         $hangghe = new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'));
-        // dd($hangghe->toArray(request()));
+        $hangghe = $hangghe->toArray(request());
+        //dd($hangghe);
         $doAn = DoAn::query()->get();
         //dd($doAn->toArray());
         return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn']));
     }
-
     public function thanhToan($id, $date)
     {
-        //dd(session('thong-tin-dat'));
+        // dd(session('thong-tin-dat'));
         $idsuauChieu = $id;
         $tong = session('thong-tin-dat')['tong'];
         $listIdGhe = array_column(session('thong-tin-dat')['hangghe'], 'id');
@@ -103,14 +106,11 @@ class DatVeController extends Controller
         //     return $value['idFood'] == 3;
         // });
         // dd(reset($a));
-
-        // return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
-
         $magiamgia = MaGiamGia::query()
             ->where('so_luong', '>', 0)
             ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
             ->get();
-        // dd($magiamgia->toArray());
+
         return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
 
@@ -126,13 +126,15 @@ class DatVeController extends Controller
                 return $this->vnpay($request, $uuid);
             case 'zalopay':
                 return $this->zalopay($request, $uuid);
+            case 'xu':
+                return $this->thanhtoanxu($request, $uuid);
             default:
                 return true;
         }
     }
     public function luuThongTinVeMua(Request $request)
     {
-        // dd($request->all());
+        // dd($request->all(),session('thong-tin-dat'));
         try {
             $thongtinVeluu = session('thong-tin-dat');
             $ve = Ve::query()->orderBy('id', 'desc')->get()->first();
@@ -147,6 +149,7 @@ class DatVeController extends Controller
             //     $ma->save();
             // }
             $createVe = $this->checkRequestThanhtoanOn($request, $ve, $thongtinVeluu, $date);
+            $this->checkDoan(session('thong-tin-dat'));
             // $macode = $request->orderId . $ve->id + 1;
             // $createVe = $this->createVe($macode, $request->extraData, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->orderInfo);
             // $this->checkMagiamgia($request->extraData);
@@ -217,6 +220,8 @@ class DatVeController extends Controller
             $theloaivi = json_decode($request->vnp_OrderInfo)->description;
         } elseif (isset($request->thanhtoan)) {
             $theloaivi = $request->thanhtoan;
+        } elseif (isset($request->thanhtoanxu)) {
+            $theloaivi = $request->thanhtoanxu;
         }
         switch ($theloaivi) {
             case 'MoMo':
@@ -224,7 +229,7 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->extraData);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->orderId . $id;
                 $createVe = $this->createVe($macode, $request->extraData, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->orderInfo);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
@@ -236,7 +241,7 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia(json_decode($request->vnp_OrderInfo)->magiamgia);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->vnp_TxnRef . $id;
                 $createVe = $this->createVe($macode, json_decode($request->vnp_OrderInfo)->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->vnp_Amount / 100, json_decode($request->vnp_OrderInfo)->description);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
@@ -248,12 +253,25 @@ class DatVeController extends Controller
                     return abort('404', 'Không thể thực hiện được giao dịch');
                 }
                 $this->checkMagiamgia($request->magiamgia);
-                $id = isset($ve) ? $ve?->id + 1 :  1;
+                $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->zlpay_orderid . $id;
                 $createVe = $this->createVe($macode, $request->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->thanhtoan);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
                 $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
+                return $createVe;
+            case 'XU':
+                $this->checkMagiamgia($request->magiamgia);
+                $id = isset($ve) ? $ve?->id + 1 : 1;
+                $macode = $request->xu_orderid . $id;
+                $createVe = $this->createVe($macode, $request->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->thanhtoanxu);
+                $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
+                $this->thanhtoanVe($createVe->id);
+                $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
+                $tongGiaMuaVe = (int) $request->amount / 1000;
+                $user = NguoiDung::query()->find(Auth::user()->id);
+                $user->gold = $user->gold - $tongGiaMuaVe;
+                $user->save();
                 return $createVe;
             default:
                 return true;
@@ -328,6 +346,16 @@ class DatVeController extends Controller
             $ma = MaGiamGia::query()->find($idMagiam);
             $ma->so_luong = $ma->so_luong - 1;
             $ma->save();
+        }
+    }
+    public function checkDoan($thongtinVeluu)
+    {
+        if (!empty($thongtinVeluu['doan'])) {
+            foreach ($thongtinVeluu['doan'] as $key => $value) {
+                $doan = DoAn::query()->find($value['idFood']);
+                $doan->luot_mua = $doan->luot_mua + $value['soluong'];
+                $doan->save();
+            }
         }
     }
     public function checkqrCode($id)
@@ -610,6 +638,17 @@ class DatVeController extends Controller
             return redirect()->to($result['order_url']);
         }
         return back();
+    }
+    public function thanhtoanxu($request, $uuid)
+    {
+        $tongxucuakhach = Auth::user()->gold;
+        $tongGiaMuaVe = $request->tongGia / 1000;
+        if ($tongxucuakhach < $tongGiaMuaVe) {
+            return back()->with('errorOrder', 'Tổng số xu trong tài khoản không đủ để thực hiện thanh toán');
+        }
+
+        $urluutt = asset('luu-thong-tin-ve?' . 'amount=' . $request->tongGia . '&xu_orderid=' . $uuid . '&magiamgia=' . $request->magiamgia . "&thanhtoanxu=XU");
+        return redirect()->to($urluutt);
     }
     public function testMail()
     {

@@ -20,14 +20,22 @@ class GheNgoi extends Model
         'isDoubleChair',
         'trang_thai',
     ];
+
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
+
     public function screeningRoom()
     {
         return $this->belongsTo(PhongChieu::class, 'phong_chieu_id');
     }
+
     public function chitietve()
+    {
+        return $this->hasMany(ChiTietVe::class, 'ghe_ngoi_id');
+    }
+
+    public function chiTietVes()
     {
         return $this->hasMany(ChiTietVe::class, 'ghe_ngoi_id');
     }

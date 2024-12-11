@@ -38,12 +38,13 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="mb-3 row">
-                        {{-- <div class="col-md-4">
+                        <div class="col-md-4">
                             <label for="ngay" class="form-label">Ngày</label>
                             <input type="date" class="form-control" id="ngay" name="ngay"
                                 value="{{ old('ngay') }}">
-                        </div> --}}
+                        </div>
                         <div class="col-md-4">
                             <label for="gio_bat_dau" class="form-label">Giờ Bắt Đầu</label>
 

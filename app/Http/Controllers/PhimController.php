@@ -3,121 +3,101 @@
 namespace App\Http\Controllers;
 
 use App\Models\Phim;
-use App\Models\DaoDien;
-use App\Models\DienVien;
-use App\Models\TheLoaiPhim;
+use App\Models\SuatChieu;
+use App\Models\PhongChieu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePhimRequest;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdatePhimRequest;
+use App\Http\Requests\StoreSuatChieuRequest;
+use App\Http\Requests\UpdateSuatChieuRequest;
+use Illuminate\Support\Carbon;
 
-
-class PhimController extends Controller
+class SuatChieuController extends Controller
 {
     public function index(Request $request)
     {
-        $theLoaiId = $request->input('the_loai');
-        $phims = Phim::with('daoDiens', 'dienViens', 'theLoaiPhims')
-            ->when($theLoaiId, function ($query, $theLoaiId) {
-                $query->whereHas('theLoaiPhims', function ($query) use ($theLoaiId) {
-                    $query->where('id', $theLoaiId);
-                });
-            })
-            ->orderBy('id', 'desc')
-            ->get();
-        $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
+        $query = SuatChieu::with(['phongChieu', 'phim']);
+        if ($request->filled('phim_id')) {
+            $query->where('phim_id', $request->phim_id);
+        }
+        if ($request->filled('phong_chieu_id')) {
+            $query->where('phong_chieu_id', $request->phong_chieu_id);
+        }
 
-        return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId'));
-    }
+        $suatChieus = $query->orderBy('id', 'desc')->get();
 
-    public function show($id)
-    {
-        $phim = Phim::with('daoDiens', 'dienViens', 'theLoaiPhims')->findOrFail($id);
-        return view('admin.contents.phims.show', compact('phim'));
+        $phims = Phim::where('trang_thai', 1)->get();
+        $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+        return view('admin.contents.suatChieus.index', compact('suatChieus', 'phims', 'phongChieus'));
     }
     public function create()
     {
-        $daoDiens = DaoDien::where('trang_thai', 1)->get();
-        $dienViens = DienVien::where('trang_thai', 1)->get();
-        $theLoais = TheLoaiPhim::where('trang_thai', 1)->get();
-        return view('admin.contents.phims.creater', compact('daoDiens', 'dienViens', 'theLoais'));
+        $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+        $phims = Phim::where('trang_thai', 1)->get();
+
+        return view('admin.contents.suatChieus.creater', compact('phongChieus', 'phims'));
     }
 
-    public function store(StorePhimRequest $request)
+    public function store(Request $request)
     {
-        $path = $request->file('anh_phim')->store('anh_phim', 'public');
-        $phim = Phim::create(array_merge($request->all(), ['anh_phim' => $path]));
 
-        if ($request->has('dao_dien_ids')) {
-            $phim->daoDiens()->attach($request->dao_dien_ids);
-        }
+        $ngay = date('Y-m-d');
+        $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
+        $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
 
-        if ($request->has('dien_vien_ids')) {
-            foreach ($request->dien_vien_ids as $index => $dienVienId) {
-                $vaiTro = $request->input('vai_tro_dien_vien')[$index] ?? null;
-                $phim->dienViens()->attach($dienVienId, ['vai_tro_dien_vien' => $vaiTro]);
-            }
-        }
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'ngay' => 'required',
+            'gio_bat_dau' => 'required',
+            'gio_ket_thuc' => 'required',
+        ]);
 
-        if ($request->has('the_loai_phim_ids')) {
-            $phim->theLoaiPhims()->attach($request->the_loai_phim_ids);
-        }
+        SuatChieu::create([
+            'phong_chieu_id' => $request->phong_chieu_id,
+            'phim_id' => $request->phim_id,
+            'ngay' => $request->ngay,
+            'gio_ket_thuc' => $timestamp_ket_thuc,
+            'gio_bat_dau' => $timestamp_bat_dau,
+        ]);
 
-        return redirect()->route('phim.index')->with('success', 'Phim đã được thêm thành công.');
+        return redirect()->route('suatChieu.index')->with('success', 'Thêm suất chiếu thành công!');
     }
-    
-    public function upload(Request $request)
+    public function edit(SuatChieu $suatChieu)
     {
-        if ($request->hasFile('upload')) {
-            $originName = $request->file('upload')->getClientOriginalName();
-            $fileName = pathinfo($originName, PATHINFO_FILENAME);
-            $extension = $request->file('upload')->getClientOriginalExtension();
-            $fileName = $fileName . '_' . time() . '.' . $extension;
-            $path = $request->file('upload')->storeAs('anh_phim', $fileName, 'public');
-            $url = Storage::url($path);
-            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
-        }
-    }
-    
-    public function edit(Phim $phim)
-    {
-        $daoDiens = DaoDien::where('trang_thai', 1)->get();
-        $dienViens = DienVien::where('trang_thai', 1)->get();
-        $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
-        return view('admin.contents.phims.edit', compact('phim', 'daoDiens', 'dienViens', 'theLoaiPhims'));
-    }
-    
-    public function update(UpdatePhimRequest $request, Phim $phim)
-    {
-        if ($request->hasFile('anh_phim')) {
-            if ($phim->anh_phim && file_exists(public_path('storage/' . $phim->anh_phim))) {
-                unlink(public_path('storage/' . $phim->anh_phim));
-            }
-            $path = $request->file('anh_phim')->store('anh_phim', 'public');
-            $phim->anh_phim = $path;
-        }
-
-        $phim->update($request->except('anh_phim'));
-
-        $phim->daoDiens()->sync($request->dao_dien_ids);
-
-        $phim->dienViens()->detach();
-        foreach ($request->dien_vien_ids as $index => $dienVienId) {
-            $vaiTro = $request->input('vai_tro_dien_vien')[$index] ?? null;
-            $phim->dienViens()->attach($dienVienId, ['vai_tro_dien_vien' => $vaiTro]);
-        }
-
-        $phim->theLoaiPhims()->sync($request->the_loai_phim_ids);
-
-
-        return redirect()->route('phim.index')->with('success', 'Phim đã được cập nhật thành công.');
+        $phongChieus = PhongChieu::where('trang_thai', 1)->get();
+        $phims = Phim::where('trang_thai', 1)->get();
+        return view('admin.contents.suatChieus.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
 
-    public function destroy(Phim $phim)
+    public function update(UpdateSuatChieuRequest $request, SuatChieu $suatChieu)
     {
-        $phim->trang_thai = 0;
-        $phim->save();
-        return redirect()->route('phim.index')->with('success', 'Đạo Diễn đã được xóa thành công.');
+        $ngay = date('Y-m-d');
+        $timestamp_bat_dau = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_bat_dau);
+        $timestamp_ket_thuc = Carbon::createFromFormat('Y-m-d H:i', $ngay . ' ' . $request->gio_ket_thuc);
+
+
+        $request->validate([
+            'phong_chieu_id' => 'required|exists:phong_chieus,id',
+            'phim_id' => 'required|exists:phims,id',
+            'ngay' => 'required',
+            'gio_ket_thuc' => 'required',
+            'gio_bat_dau' => 'required',
+        ]);
+
+        $suatChieu->update([
+            'phong_chieu_id' => $request->phong_chieu_id,
+            'phim_id' => $request->phim_id,
+            'ngay' => $request->ngay,
+            'gio_bat_dau' => $timestamp_bat_dau,
+            'gio_ket_thuc' => $timestamp_ket_thuc,
+            'trang_thai' => $request->trang_thai,
+        ]);
+        return redirect()->route('suatChieu.index')->with('success', 'Cập nhật suất chiếu thành công!');
+    }
+    public function destroy(SuatChieu $suatChieu)
+    {
+        $suatChieu->trang_thai = 0;
+        $suatChieu->save();
+        return redirect()->route('suatChieu.index')->with('success', 'Thể loại đã được xóa thành công!');
     }
 }

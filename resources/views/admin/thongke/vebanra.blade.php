@@ -45,11 +45,11 @@
                             </div>
                             <div class="col-md-6 d-flex align-items-end">
                                 <div class="btn-group w-100" role="group">
-                                    <button type="submit" name="loc" value="nam" class="btn btn-info">Lọc theo
+                                    <button type="submit" name="loc" value="nam" class="btn btn-info me-2">Lọc theo
                                         năm</button>
-                                    <button type="submit" name="loc" value="quý" class="btn btn-info">Lọc theo
+                                    <button type="submit" name="loc" value="quý" class="btn btn-info me-2">Lọc theo
                                         quý</button>
-                                    <button type="submit" name="loc" value="thang" class="btn btn-info">Lọc theo
+                                    <button type="submit" name="loc" value="thang" class="btn btn-info me-2">Lọc theo
                                         tháng</button>
                                     <button type="submit" class="btn btn-primary">Lọc</button>
                                 </div>
@@ -81,7 +81,7 @@
                                         // $tongSoVe += $sc->ves->count();
                                         $tongTien += $sc->ves->sum('tong_tien');
                                         $tongTienDoAn += $sc->ves->sum('tong_tien_an');
-                                        foreach ($dc->ves as $ve) {
+                                        foreach ($sc->ves as $ve) {
                                             $soLuongGhe += $ve->chiTietVes->sum('so_luong_ghe_ngoi');
                                         }
                                     }

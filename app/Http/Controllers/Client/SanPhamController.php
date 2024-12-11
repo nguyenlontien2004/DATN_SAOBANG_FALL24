@@ -6,16 +6,27 @@ use Carbon\Carbon;
 use App\Models\Phim;
 use App\Models\DanhGia;
 use App\Models\TheLoaiPhim;
+use App\Models\BinhLuanPhim;
 use Illuminate\Http\Request;
+use App\Models\PhimVaTheLoai;
+use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
-use App\Models\BannerQuangCao;
 use App\Models\Ve;
+use App\Models\Rap;
+use App\Models\AnhBannerQuangCao;
+use App\Models\BannerQuangCao;
 use Illuminate\Support\Facades\Auth;
 
 class SanPhamController extends Controller
 {
     public function SanPhamHome()
     {
+        $title = "Trang chủ";
+        $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
+            ->where('ngay_ket_thuc', '>=', Carbon::now())
+            ->get();
+        //dd($phimDangChieu->toArray());
+        $danhSachPhim = Phim::query()->paginate(1);
         $bannerDau = BannerQuangCao::with([
             'anhBanners' => function ($query) {
                 $query->orderBy('thu_tu');
@@ -23,7 +34,6 @@ class SanPhamController extends Controller
         ])
             ->where('vi_tri', 'header')
             ->get();
-
         $bannerGiua = BannerQuangCao::with([
             'anhBanners' => function ($query) {
                 $query->orderBy('thu_tu');
@@ -31,47 +41,39 @@ class SanPhamController extends Controller
         ])
             ->where('vi_tri', 'giữa')
             ->first();
+        // sds
+        $listday = collect();
+        for ($i = 0; $i < 6; $i++) {
+            $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
+            $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
 
-        $title = "Trang chủ";
-
-        $phimSapChieu = Phim::where('ngay_khoi_chieu', '>', Carbon::now())
+            $listday->push([
+                'date' => $date->format('d-m'),
+                'day' => $dayName,
+                'ngaychuan' => $date->format('Y-m-d')
+            ]);
+        }
+        $danhsachrap = Rap::query()
             ->get();
-            
-        // dd($phimSapChieu);
 
-        $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
-            ->where('ngay_ket_thuc', '>=', Carbon::now())
-            ->get();
-
-        $danhSachPhim = Phim::query()->paginate(1);
-
-        return view('user.trangchu', compact('title', 'phimDangChieu', 'danhSachPhim', 'bannerDau', 'bannerGiua', 'phimSapChieu'));
+        return view('user.trangchu', compact('title', 'danhsachrap', 'listday', 'phimDangChieu', 'danhSachPhim', 'bannerDau', 'bannerGiua'));
     }
-
     public function ChiTietPhim(string $id)
     {
         $title = "Chi tiết phim";
-
-        $chiTietPhim = Phim::with(['danhGias', 'binhLuans'])->findOrFail($id);
-
+        $chiTietPhim = Phim::findOrFail($id);
         $chiTietPhim->increment('luot_xem_phim');
-
-        // $danhGiaPhim = DanhGia::findOrFail($id);
-
-        $danhGiaPhim = DanhGia::where('phim_id', $id)->get();
-
+        //$danhGiaPhim = DanhGia::findOrFail($id);
+        $danhSachDanhGia = DanhGia::query()->get();
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
-
         $userId = null;
-
         if (Auth::check()) {
             $userId = Auth::user()->id;
         }
-
+        // phần phúc thêm vào
         $listday = collect();
-
         for ($i = 0; $i < 6; $i++) {
             $date = Carbon::now('Asia/Ho_Chi_Minh')->addDays($i);
             $dayName = $this->getCustomDayName($date->locale('vi')->dayName);
@@ -81,8 +83,8 @@ class SanPhamController extends Controller
                 'day' => $dayName
             ]);
         }
-
-        return view('user.chitietphim', compact('title', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhGiaPhim', 'listday'));
+        $binhluan = BinhLuanPhim::query()->with('NguoiDung')->where('phim_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('user.chitietphim', compact('title', 'binhluan', 'chiTietPhim', 'phimDangChieu', 'userId', 'danhSachDanhGia', 'listday'));
     }
 
     public function TimKiemPhim(Request $request)
@@ -117,9 +119,8 @@ class SanPhamController extends Controller
     public function DatVe()
     {
         $title = "Đặt vé";
-        return view('user.vedat', compact('title'));
+        return view('user.datve', compact('title'));
     }
-
     function getCustomDayName($dayName)
     {
         switch ($dayName) {
