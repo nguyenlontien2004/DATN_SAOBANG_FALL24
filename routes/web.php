@@ -183,13 +183,72 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   // Quản lí vé
   Route::get('/ve/mua', [NhanVienVeController::class, 'hienThiFormMuaVe'])->name('ve.mua'); // Hiển thị form mua vé
   Route::post('/ve/mua', [NhanVienVeController::class, 'luuVe'])->name('ve.luu'); // Lưu vé mới
-  Route::get('/ve/chua-thanh-toan', [NhanVienVeController::class, 'danhSachVeChuaThanhToan'])->name('ve.chua-thanh-toan'); // Danh sách vé chưa thanh toán
-  Route::post('/ve/thanh-toan/{ve}', [NhanVienVeController::class, 'thanhToanVaInVe'])->name('ve.thanh-toan'); // Thanh toán và in vé
-  Route::get('/ve/qr/{ve}', [NhanVienVeController::class, 'inMaQR'])->name('ve.qr'); // In mã QR cho vé
+  Route::get('/ve/chua-thanh-toan', [NhanVienVeController::class, 'danhSachVe'])->name('ve.danh-sach-ve'); // Danh sách vé chưa thanh toán
   Route::put('/ve/cap-nhat-trang-thai/{ve}', [NhanVienVeController::class, 'capNhatTrangThaiVe'])->name('ve.cap-nhat-trang-thai'); // Cập nhật trạng thái vé
-
   Route::get('/check-qrCode/{id}', [NhanVienVeController::class, 'checkQrCode']);
-});
+
+
+   // Bài viết tin tức
+   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
+   Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
+   Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
+ 
+   // Danh mục bài viết tin tức
+   Route::resource('danh-muc-bai-viet-tin-tuc', DanhMucBaiVietTinTucController::class);
+   Route::post('admin/danh-muc-bai-viet-tin-tuc/{id}/restore', [DanhMucBaiVietTinTucController::class, 'restore'])->name('danh-muc-bai-viet-tin-tuc.restore');
+   Route::delete('admin/danh-muc-bai-viet-tin-tuc/{id}/force-delete', [DanhMucBaiVietTinTucController::class, 'forceDelete'])->name('danh-muc-bai-viet-tin-tuc.forDelete');
+ 
+   // Vị trí banner quảng cáo
+   Route::resource('banner-quang-cao', BannerQuangCaoController::class);
+   Route::post('admin/banner-quang-cao/{id}/restore', [BannerQuangCaoController::class, 'restore'])->name('banner-quang-cao.restore');
+   Route::delete('admin/banner-quang-cao/{id}/force-delete', [BannerQuangCaoController::class, 'forceDelete'])->name('banner-quang-cao.forDelete');
+ 
+   // Ảnh banner quảng cáo
+   Route::resource('anh-banner-quang-cao', AnhBannerQuangCaoController::class);
+   Route::post('admin/anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
+   Route::delete('admin/anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
+ 
+   // Mã giảm giá
+   Route::resource('ma_giam_gia', MaGiamGiaController::class);
+   Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
+   Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
+
+   //start route phòng chiếu 
+  Route::get('danh-sach-phong-chieu', [PhongChieuController::class, 'index'])->name('admin.phongChieu');
+  Route::get('them-phong-chieu', [PhongChieuController::class, 'create'])->name('admin.themphongChieu');
+  Route::post('them-phong-chieu', [PhongChieuController::class, 'store'])->name('admin.storephongChieu');
+  Route::get('sua-phong-chieu/{id}', [PhongChieuController::class, 'edit'])->name('admin.editphongChieu');
+  Route::post('updata-phong-chieu/{id}', [PhongChieuController::class, 'update'])->name('admin.updataphongChieu');
+  Route::get('softDelete-phong-chieu/{id}', [PhongChieuController::class, 'delete'])->name('admin.softDeletehongChieu');
+  Route::get('danh-sach-phong-chieu-an', [PhongChieuController::class, 'listSoftDelete'])->name('admin.listSoftDeletehongChieu');
+  Route::get('restore-phong-chieu/{id}', [PhongChieuController::class, 'restore'])->name('admin.restorePhongchieu');
+  Route::get('phong-chieu/quan-ly-ghe/{id}', [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
+
+  // route thêm ghế cho phòng chiếu
+  Route::get('get/ghe/phong-chieu/{id}',                 [GheNgoiController::class, 'index'])->name('admin.showSeats');
+  Route::post('post/them-ghe/phong-chieu/{id}',          [GheNgoiController::class, 'store'])->name('admin.storeGhe');
+  Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
+  Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
+  Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
+
+  // route vé 
+  Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
+  Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
+  Route::get('tao-ve-gia-lap/',                          [VeController::class, 'create'])->name('admin.ticket.create');
+
+  // Route::resources('phims');
+  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
+  Route::resource('phim', App\Http\Controllers\PhimController::class);
+  Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
+  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
+  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
+  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
+
+  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
+  Route::resource('rap', App\Http\Controllers\RapController::class);
+  Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
+
+  });
 
 
 // Đăng ký

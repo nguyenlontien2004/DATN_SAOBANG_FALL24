@@ -30,6 +30,69 @@
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
                 <li class="nav-item">
+                    <a href="">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Danh sách thể loại</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <i class="fas fa-theater-masks"></i>
+                        <p>Diễn viên & Đạo diễn</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý diễn viên</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý Đạo diễn</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#forms">
+                        <i class="fas fa-film"></i>
+                        <p>Quản lý phim</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="forms">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý phim</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý rạp chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý phòng chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Quản lý suất chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Chi tiết suất chiếu</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">
                         <i class="fas fa-utensils"></i>
                         <p>Quản lý đồ ăn</p>
@@ -45,26 +108,60 @@
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#ve">
+                    <a href="{{ route('ve.danh-sach-ve') }}">
                         <i class="fas fa-ticket-alt"></i>
                         <p>Quản lý vé</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#charts">
+                        <i class="fas fa-newspaper"></i>
+                        <p>Bài viết tin tức</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="ve">
+                    <div class="collapse" id="charts">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('ve.chua-thanh-toan') }}">
-                                    <span class="sub-item">Danh sách vé chưa thanh toán</span>
+                                <a href="">
+                                    <span class="sub-item">Danh sách danh mục bài viết tin tức</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('ve.mua') }}">
-                                    <span class="sub-item">Tạo vé</span>
+                                <a href="">
+                                    <span class="sub-item">Danh sách bài viết tin tức</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#banner">
+                        <i class="fas fa-flag"></i>
+                        <p>Banner quảng cáo</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="banner">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Danh sách vị trí banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="">
+                        <i class="fas fa-tags"></i>
+                        <p>Mã giảm giá</p>
+                    </a>
                 </li>
             </ul>
         </div>

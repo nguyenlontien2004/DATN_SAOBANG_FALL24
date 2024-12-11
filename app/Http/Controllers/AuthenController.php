@@ -18,7 +18,7 @@ class AuthenController extends Controller
     {
         $data = request()->validate([
             'ho_ten' => 'required',
-            'nam_sinh' => 'required',
+            //'nam_sinh' => 'required',
             'so_dien_thoai' => 'required',
             'email' => 'required|email|unique:nguoi_dungs',
             'password' => 'required|confirmed',
@@ -36,7 +36,7 @@ class AuthenController extends Controller
 
         request()->session()->regenerate();
 
-        return redirect()->route('trangchu.member');
+        return redirect()->back();
     }
 
     public function formDangNhap()
@@ -57,7 +57,6 @@ class AuthenController extends Controller
             request()->session()->regenerate();
 
             $user = Auth::user();
-
             /**
              * @var NguoiDung $user
              */
