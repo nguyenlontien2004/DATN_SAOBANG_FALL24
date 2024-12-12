@@ -46,11 +46,11 @@
                             <div class="col-md-3">
                                 <label for="quy" class="form-label">Lọc theo quý</label>
                                 <select class="form-control" name="loc" id="loc" onchange="this.form.submit()">
-                                    <option value="" {{ request('loc' == '' ? 'selected' : '') }}>Chọn quý</option>
-                                    <option value="1" {{ request('loc' == '1' ? 'selected' : '') }}> Quý 1</option>
-                                    <option value="2" {{ request('loc' == '2' ? 'selected' : '') }}> Quý 2</option>
-                                    <option value="3" {{ request('loc' == '3' ? 'selected' : '') }}> Quý 3</option>
-                                    <option value="4" {{ request('loc' == '4' ? 'selected' : '') }}> Quý 4</option>
+                                    <option value="" {{ request('loc') == '' ? 'selected' : '' }}>Chọn quý</option>
+                                    <option value="1" {{ request('loc') == '1' ? 'selected' : '' }}> Quý 1</option>
+                                    <option value="2" {{ request('loc') == '2' ? 'selected' : '' }}> Quý 2</option>
+                                    <option value="3" {{ request('loc') == '3' ? 'selected' : '' }}> Quý 3</option>
+                                    <option value="4" {{ request('loc') == '4' ? 'selected' : '' }}> Quý 4</option>
                                 </select>
                             </div>
                             <div class="col-md-5 d-flex align-items-end">
@@ -73,8 +73,9 @@
                                 <th>STT</th>
                                 <th>Tên Phim</th>
                                 <th>Số Ghế (Vé)</th>
-                                <th>Tiền Đồ Ăn</th>
                                 <th>Tổng Tiền (Vé)</th>
+                                <th>Tiền Đồ Ăn</th>
+                                <th>Tiền Phim (Rạp)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,14 +86,17 @@
                                 @php
                                     $tongTien = 0;
                                     $soLuongGhe = 0;
+                                    $tienPhim = 0;
                                     $tongTienDoAn = 0;
 
                                     foreach ($pv->suatChieus as $sc) {
                                         // $tongSoVe += $sc->ves->count();
                                         $tongTien += $sc->ves->sum('tong_tien');
                                         $tongTienDoAn += $sc->ves->sum('tong_tien_an');
+                                        $tienPhim += $sc->sum('gia');
+
                                         foreach ($sc->ves as $ve) {
-                                            $soLuongGhe += $ve->detailTicket->sum('so_luong_ghe_ngoi');
+                                            $soLuongGhe += $ve->detailTicket->distinct('ghe_ngoi_id')->count();
                                         }
                                     }
 
@@ -103,6 +107,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $pv->ten_phim }}</td>
                                     <td>{{ $soLuongGhe }}</td>
+                                    <td>{{ number_format($tienPhim) }}đ</td>
                                     <td>{{ number_format($tongTienDoAn) }}đ</td>
                                     <td>{{ number_format($tongTien) }}đ</td>
                                 </tr>
@@ -110,7 +115,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4">Tổng Doanh Thu</th>
+                                <th colspan="5">Tổng Doanh Thu</th>
                                 <th>{{ number_format($tongDoanhThu) }}đ</th>
                             </tr>
                         </tfoot>

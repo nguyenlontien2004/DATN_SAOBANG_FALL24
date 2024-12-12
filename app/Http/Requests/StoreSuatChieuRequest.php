@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
+use App\Models\Phim;
 use App\Models\SuatChieu;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,25 +26,46 @@ class StoreSuatChieuRequest extends FormRequest
     {
         return [
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
-            // 'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required|date_format:H:i',
-            'gio_ket_thuc' => 'required|date_format:H:i|after:gio_bat_dau',
+            'gia' => 'required',
+            'ngay' => ['required', 'date', function ($attribute, $value, $fail) {
+                $phim = Phim::find($this->input('phim_id'));
+                if ($phim && Carbon::parse($value)->lt(Carbon::parse($phim->ngay_khoi_chieu))) {
+                    $fail('Ngày chiếu không được trước ngày khởi chiếu của phim.');
+                }
+            },],
             'phim_id' => [
                 'required',
                 'exists:phims,id',
                 function ($attribute, $value, $fail) {
-                    $existingShow = SuatChieu::where('phim_id', $value)
-                        ->where('phong_chieu_id', $this->phong_chieu_id)
-                        ->whereBetween('gio_bat_dau', [$this->gio_bat_dau, $this->gio_ket_thuc])
+                    $phim = Phim::find($this->input('phim_id'));
+                    if (!$phim) {
+                        $fail('Phim không tồn tại.');
+                        return;
+                    }
+
+                    $gioBatDauMoi = Carbon::createFromFormat('H:i', $this->input('gio_bat_dau'));
+                    $gioKetThucMoi = $gioBatDauMoi->copy()->addMinutes($phim->thoi_luong);
+
+                    $existingShow = SuatChieu::where('phong_chieu_id', $this->input('phong_chieu_id'))
+                        ->whereDate('ngay', $this->input('ngay'))
+                        ->where(function ($query) use ($gioBatDauMoi, $gioKetThucMoi) {
+                            $query->where(function ($subQuery) use ($gioBatDauMoi, $gioKetThucMoi) {
+                                $subQuery->whereTime('gio_bat_dau', '<', $gioKetThucMoi->format('H:i'))
+                                    ->whereTime('gio_ket_thuc', '>', $gioBatDauMoi->format('H:i'));
+                            });
+                        })
                         ->exists();
 
                     if ($existingShow) {
-                        $fail('Không thể thêm suất chiếu mới. Một suất chiếu cho phim này trong phòng đã chọn đang diễn ra trong khoảng thời gian đã chỉ định.');
+                        $fail('Không thể thêm suất chiếu mới. Một suất chiếu đã tồn tại trong khoảng thời gian đã chọn.');
                     }
                 },
             ],
         ];
     }
+
+
 
     public function messages()
     {
@@ -55,12 +78,8 @@ class StoreSuatChieuRequest extends FormRequest
 
             'gio_bat_dau.required' => 'Bạn cần nhập Giờ bắt đầu.',
             'gio_bat_dau.date_format' => 'Giờ bắt đầu phải có định dạng là H:i.',
+            'after_or_equal' => 'Không được thêm ngày chiếu cũ hơn ngày hiện tại..',
 
-            'gio_ket_thuc.required' => 'Bạn cần nhập Giờ kết thúc.',
-            'gio_ket_thuc.date_format' => 'Giờ kết thúc phải có định dạng là H:i.',
-
-            'gio_bat_dau.before' => 'Giờ bắt đầu phải trước Giờ kết thúc.',
-            'gio_ket_thuc.after' => 'Giờ kết thúc phải sau Giờ bắt đầu.',
         ];
     }
 }

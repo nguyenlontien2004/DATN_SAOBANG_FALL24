@@ -21,8 +21,8 @@ class ThongKeController extends Controller
 
         if ($request->has('bat_dau') && $request->has('ket_thuc')) {
 
-            $bd = Carbon::parse($request->bat_dau);
-            $kt = Carbon::parse($request->ket_thuc);
+            $bd = Carbon::parse($request->bat_dau)->startOfDay();
+            $kt = Carbon::parse($request->ket_thuc)->endOfDay();
 
             $phimVes->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
@@ -68,13 +68,62 @@ class ThongKeController extends Controller
         return view('admin.thongke.vebanra', compact('phimVes', 'bd', 'kt'));
     }
 
-    public function thongTongDoanhThuRap()
+    public function thongTongDoanhThuRap(Request $request)
     {
         $chiNhanh = Rap::with([
-            'phongs.suatChieu.ves.detailTicket',
-            'phongs.suatChieu.ves.doAns'
-        ])->get();
+            'phongChieus.suatChieu.ves.detailTicket',
+            'phongChieus.suatChieu.ves.doAns'
+        ]);
 
-        return view('admin.thongke.thongketong', compact('chiNhanh'));
+        $bd = null;
+        $kt = null;
+
+        if ($request->has('bat_dau') && $request->has('ket_thuc')) {
+
+            $bd = Carbon::parse($request->bat_dau)->startOfDay();
+            $kt = Carbon::parse($request->ket_thuc)->endOfDay();
+
+            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        if ($request->loc === 'nam') {
+
+            $namHienTai = Carbon::now()->year;
+            $bd = Carbon::createFromDate($namHienTai, 1, 1)->startOfDay();
+            $kt = Carbon::now()->endOfDay();
+
+            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        if (in_array($request->loc, ['1', '2', '3', '4'])) {
+
+            $quy = (int)$request->loc;
+            $thangHienTai = $quy * 3 - 2;
+            $quyHienTai = ceil($thangHienTai / 3);
+            $bd = Carbon::createFromDate(Carbon::now()->year, $thangHienTai, 1)->startOfMonth()->startOfDay();
+            $kt = Carbon::createFromDate(Carbon::now()->year, $quy * 3, 1)->endOfMonth()->endOfDay();
+
+            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        if ($request->loc === 'thang') {
+
+            $bd = Carbon::now()->startOfMonth()->startOfDay();
+            $kt = Carbon::now()->endOfMonth()->endOfDay();
+
+            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        $chiNhanh = $chiNhanh->get();
+
+        return view('admin.thongke.thongketong', compact('chiNhanh', 'bd', 'kt'));
     }
 }

@@ -27,11 +27,13 @@ use App\Http\Controllers\Admin\ThongKeDoanhThuRapController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenController;
 use App\Http\Controllers\BinhLuanPhimController;
+use App\Http\Controllers\ChiTietLichChieuController;
 use App\Http\Controllers\Client\LichChieuController;
 use App\Http\Controllers\Client\LocController;
 use App\Http\Controllers\Client\SanPhamController;
 use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\NgheSiController;
 use App\Http\Controllers\TheLoaiPhimController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Middleware\AdminMiddleware;
@@ -154,8 +156,14 @@ Route::prefix('admin')->group(function () {
   Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
   Route::get('/api/phim/{id}/ngay-chieu', [PhimController::class, 'layNgayChieu']);
   Route::resource('daoDien', DaoDienController::class);
+
+  // Phim
   Route::resource('phim', PhimController::class);
   Route::resource('dienVien', DienVienController::class);
+  Route::delete('phim/{id}/soft-delete', [PhimController::class, 'softDelete'])->name('phim.softDelete');
+  Route::get('/phim/listSoftDelete/list', [PhimController::class, 'listSoftDelete'])->name('phim.listSoftDelete');
+  Route::patch('/phim/restore/{id}', [PhimController::class, 'restore'])->name('phim.restore');
+  Route::delete('/phim/force-delete/{id}', [PhimController::class, 'forceDelete'])->name('phim.forceDelete');
 
   // Thể loại phim
   Route::resource('theLoaiPhim', TheLoaiPhimController::class);
@@ -167,6 +175,11 @@ Route::prefix('admin')->group(function () {
   Route::resource('suatChieu', SuatChieuController::class);
 
   Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+  /// Phần chi tiết suất chiếu
+  Route::get('chi-tiet-suat-chieu/', [ChiTietLichChieuController::class, 'index'])->name('admin.chitietsuatchieu');
+  Route::get('phim/phong-chieu/{id}', [ChiTietLichChieuController::class, 'phongchieutheophim'])->name('admin.suatchieutheophim');
+  Route::get('suat-chieu/phim/{idphim}/phong-chieu/{idphongchieu}', [ChiTietLichChieuController::class, 'suatchieutheophongvaphim']);
 
   // Thống kê
   Route::get('/thong-ke-ve-ban-ra', [ThongKeController::class, 'thongKeVeBanRaTheoPhim'])->name('thongke.vesbanra');
@@ -231,22 +244,24 @@ Route::prefix('thanh-vien')->group(function () {
   Route::get('chitietphim/{id}', [SanPhamController::class, 'ChiTietPhim'])->name('chitietphim');
   Route::get('danhsachphim', [SanPhamController::class, 'DanhSachPhim'])->name('danhsachphim');
   Route::get('phimdangchieu', [SanPhamController::class, 'PhimDangChieu'])->name('phimdangchieu');
+  Route::resource('binhluan', BinhLuanPhimController::class);
+  Route::resource('danh-gia', DanhGiaController::class);
 
   // Đặt vé
   Route::get('datve', [SanPhamController::class, 'DatVe'])->name('datve');
 
-  // Bình luận
-  Route::resource('binhluan', BinhLuanPhimController::class);
-
-  // Đánh giá
-  Route::resource('danhgia', DanhGiaController::class);
-
   // phần phúc code thêm chức năng rạp và lịch chiếu 
+
   // phần route rạp chiếu
   Route::get('rap', [RapController::class, 'index'])->name('rap');
   Route::get('rap/{id}', [RapController::class, 'chitietrap'])->name('chitietrap');
   Route::get('phim/rap/{id}/{ngay}', [RapController::class, 'suatphimtheorap']);
+
   // phần route lịch chiếu
   Route::get('lich-chieu', [LichChieuController::class, 'index'])->name('lichchieuphimclient');
   Route::get('lich-chieu/phim-rap/{id}/{ngay}', [LichChieuController::class, 'suatphimtheorap']);
+
+  // Thông tin diễn viên đạo diễn
+  Route::get('dien-vien/{id}', [NgheSiController::class, 'index'])->name('thongtin.dienvien');
+  Route::get('dao-vien/{id}', [NgheSiController::class, 'daodien'])->name('thongtin.daodien');
 });

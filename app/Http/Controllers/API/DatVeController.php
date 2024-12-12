@@ -21,13 +21,12 @@ class DatVeController extends Controller
             ->with([
                 'suatChieu' => function ($query) use ($formattedDate, $id) {
                     $query->select('suat_chieus.id', 'suat_chieus.phong_chieu_id', DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
-                        ->whereHas('phim', function ($query) use ($formattedDate) {
-                            $query->whereDate('ngay_ket_thuc', '>=', $formattedDate);
-                        })
+                        ->whereDate('ngay', $formattedDate)
                         ->where('phim_id', $id)->orderBy('gio_bat_dau');
                 }
             ])->get();
         $rapvaSuatchieu = $this->checkSuatchieucuangayhientai($rapvaSuatchieu, $formattedDate);
+
         return response()->json([
             'status' => 200,
             'msg' => 'success',
@@ -42,12 +41,27 @@ class DatVeController extends Controller
         foreach ($rapvaSuatchieu as $value) {
             $arraySc = [];
             foreach ($value->suatChieu as $val) {
+                $check = true;
+                if ($date == $getDateUrl) {
+                    //$val->gio_ket_thuc > $currentTime && 
+                    $gioBatDau = \Carbon\Carbon::createFromFormat('H:i', $val->gio_bat_dau);
+                    $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+                    //dd($gioBatDauTru15Phut , $currentTime); 
+                    if ($gioBatDauTru15Phut >= $currentTime) {
+                        $check = false;
+                    } else {
+                        $check = true;
+                    }
+                } else if ($getDateUrl > $date) {
+                    $check = false;
+                }
+                //$date == $getDateUrl  && $val->gio_ket_thuc < $currentTime && $val->gio_bat_dau > $currentTime ? false : true
                 $arraySc[] = [
                     'id' => $val->id,
                     'phong_chieu_id' => $val->phong_chieu_id,
                     'gio_bat_dau' => $val->gio_bat_dau,
                     'gio_ket_thuc' => $val->gio_ket_thuc,
-                    'suat_chieu_trong_ngay' => $date == $getDateUrl && $val->gio_ket_thuc < $currentTime ? true : false
+                    'suat_chieu_trong_ngay' => $check
                 ];
             }
             $array[] = [

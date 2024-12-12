@@ -8,6 +8,83 @@ $(document).ready(function () {
     let tongVe = 0
     let page = 0
 
+    
+    let countdownInterval;
+    let timeve = 0;
+    
+    checksuatchieu()
+    
+   function checksuatchieu(){
+    let countdownTime = 7 * 60; // 10 phút (giây)
+    const idsuat = id
+    const getidsuat = localStorage.getItem('idsuatchieu')
+    const expiryTime = localStorage.getItem('timeve')
+
+    if (getidsuat == null) {        
+      localStorage.setItem('idsuatchieu', id)
+      localStorage.setItem('timeve', countdownTime);
+      timeve = countdownTime
+    } else {
+      if (getidsuat == idsuat) {
+          localStorage.setItem('timeve', expiryTime);
+          timeve = expiryTime
+      } else {
+        localStorage.setItem('idsuatchieu', idsuat)
+        localStorage.setItem('timeve', countdownTime);
+        timeve = countdownTime
+      }
+    }
+   
+   }
+
+    checktimemua()
+    function checktimemua() {
+        if (timeve <= 0) {
+            localStorage.removeItem('timeve');
+            localStorage.removeItem('idsuatchieu');
+        } else {
+            initializeCountdown()
+        }
+    }
+    function initializeCountdown() {
+        clearInterval(countdownInterval);
+
+        if (timeve <= 0) {
+            alert("Hết thời gian!");
+            window.location.href = '/';
+            return;
+        }
+        // Hiển thị thời gian còn lại
+        updateTimerDisplay(timeve);
+
+        countdownInterval = setInterval(function () {
+            timeve--;
+            if (timeve <= 0) {
+                clearInterval(countdownInterval);
+                alert("Hết thời gian!");
+                dataidRemove = dataSeatRemove
+                dataSeatRemove = []
+                postData()
+                localStorage.removeItem('timeve');
+                localStorage.removeItem('idsuatchieu');
+                window.location.href = '/';
+            } else {
+                localStorage.setItem('timeve', timeve);
+                updateTimerDisplay(timeve);
+            }
+        }, 1000);
+    }
+    // Hiển thị thời gian còn lại lên giao diện
+    function updateTimerDisplay(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        document.getElementById('timer').innerText = `${minutes}:${secs < 10 ? '0' + secs : secs}`;
+    }
+
+
+
+
+    //============================================= 
     $('.list-row-seats').on('click', '.seats', function () {
         if ($(this).hasClass('takenSeat') || $(this).hasClass('unavailabledrop')) return
         let typeSeat = $(this).attr('data-type');
@@ -96,15 +173,19 @@ $(document).ready(function () {
             $(this).removeClass('text-danger')
         })
         $('.chonDoAn').addClass('text-danger')
-        if (page == 1) {  
+        if (page == 1) {
             // console.log('hàng ghế:', dataHang);
             // console.log('Đồ ăn:', dataFood);
             // console.log('Tổng:' + tonggia);
+            if(kiemtrahansuatchieu == false){
+                alert('Suất chiếu này đã hết hạn mời bạn chọn các suất chiếu khác!')
+                return;
+            }
             fetApiredirect_url()
         }
         page = 1
     })
-    function fetApiredirect_url(){
+    function fetApiredirect_url() {
         dataFood = dataFood.filter(item => item.soluong > 0)
         $('.loading-chuyen-trang').show()
         $.ajax({
@@ -115,10 +196,10 @@ $(document).ready(function () {
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            data: JSON.stringify({ 'idSuatChieu':id,'ngayvemo':ngay,'hangghe': dataHang, 'doan': dataFood, 'tong': tonggia }),
+            data: JSON.stringify({ 'idSuatChieu': id, 'ngayvemo': ngay, 'hangghe': dataHang, 'doan': dataFood, 'tong': tonggia }),
             success: function (data) {
-                if(data.status == 200){
-                    window.location.replace(data.redirect_url)
+                if (data.status == 200) {
+                    window.location.href = data.redirect_url
                 }
                 $('.loading-chuyen-trang').hide()
             },

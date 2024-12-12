@@ -2,6 +2,8 @@ import './bootstrap';
 $(document).ready(function () {
     Echo.channel(`seat.${id}.${ngay}`)
         .listen('RealtimeSeat', (e) => {
+            //console.log(e);
+            
             if (e.idRemove !== null) {
                 e.idRemove.map(function (value) {
                     $(`#${value.idCheck}`).removeClass('unavailabledrop')

@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
+use App\Models\Phim;
+use App\Models\SuatChieu;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSuatChieuRequest extends FormRequest
@@ -23,10 +26,38 @@ class UpdateSuatChieuRequest extends FormRequest
     {
         return [
             'phong_chieu_id' => 'required|exists:phong_chieus,id',
-            'phim_id' => 'required|exists:phims,id',
             'gio_bat_dau' => 'required|date_format:H:i',
-            'gio_ket_thuc' => 'required|date_format:H:i|after:gio_bat_dau',
-            'trang_thai' => 'required|boolean',
+            'ngay' => 'required|date|after_or_equal:today',
+            'gia' => 'required',
+            'phim_id' => [
+                'required',
+                'exists:phims,id',
+                function ($attribute, $value, $fail) {
+                    $phim = Phim::find($this->input('phim_id'));
+                    if (!$phim) {
+                        $fail('Phim không tồn tại.');
+                        return;
+                    }
+
+                    $gioBatDauMoi = Carbon::createFromFormat('H:i', $this->input('gio_bat_dau'));
+                    $gioKetThucMoi = $gioBatDauMoi->copy()->addMinutes($phim->thoi_luong);
+
+                    $existingShow = SuatChieu::where('phong_chieu_id', $this->input('phong_chieu_id'))
+                        ->whereDate('ngay', $this->input('ngay'))
+                        ->where('id', '!=', $this->route('suatChieu')->id) // Bỏ qua suất chiếu hiện tại
+                        ->where(function ($query) use ($gioBatDauMoi, $gioKetThucMoi) {
+                            $query->where(function ($subQuery) use ($gioBatDauMoi, $gioKetThucMoi) {
+                                $subQuery->whereTime('gio_bat_dau', '<', $gioKetThucMoi->format('H:i'))
+                                    ->whereTime('gio_ket_thuc', '>', $gioBatDauMoi->format('H:i'));
+                            });
+                        })
+                        ->exists();
+
+                    if ($existingShow) {
+                        $fail('Không thể cập nhật suất chiếu. Một suất chiếu đã tồn tại trong khoảng thời gian đã chọn.');
+                    }
+                },
+            ],
         ];
     }
 
@@ -41,15 +72,9 @@ class UpdateSuatChieuRequest extends FormRequest
 
             'gio_bat_dau.required' => 'Bạn cần nhập Giờ bắt đầu.',
             'gio_bat_dau.date_format' => 'Giờ bắt đầu phải có định dạng là H:i.',
-
-            'gio_ket_thuc.required' => 'Bạn cần nhập Giờ kết thúc.',
-            'gio_ket_thuc.date_format' => 'Giờ kết thúc phải có định dạng là H:i.',
-
-            'gio_bat_dau.before' => 'Giờ bắt đầu phải trước Giờ kết thúc.',
-            'gio_ket_thuc.after' => 'Giờ kết thúc phải sau Giờ bắt đầu.',
-
-            'trang_thai.required' => 'Trạng thái là bắt buộc.',
-
+            'ngay.required' => 'Bạn cần nhập Ngày chiếu phim.',
+            'ngay.date' => 'Ngày chiếu phim phải có định dạng hợp lệ.',
+            'ngay.after_or_equal' => 'Không được thêm ngày chiếu cũ hơn ngày hiện tại.',
         ];
     }
 }

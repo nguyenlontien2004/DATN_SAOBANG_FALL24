@@ -39,7 +39,13 @@
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('thongke.vesbanra') }}">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                    <span class="sub-item">Tổng doanh thu theo phim</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('thongke.rap') }}">
+                                    <span class="sub-item">Tổng doanh thu theo rạp</span>
                                 </a>
                             </li>
 
@@ -50,14 +56,8 @@
                             </li>
 
                             <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                <a href="{{ route('doanhthutheorap') }}">
+                                    <span class="sub-item">Số vé bán ra theo rạp</span>
                                 </a>
                             </li>
                         </ul>
@@ -146,6 +146,11 @@
                                     <span class="sub-item">Quản lý suất chiếu</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.chitietsuatchieu') }}">
+                                    <span class="sub-item">Chi tiết suất chiếu</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -161,20 +166,6 @@
                         <p>Người dùng & vai trò</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="role">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('admin.role.index') }}">
-                                    <span class="sub-item">Vai trò</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.roleAndUser.index') }}">
-                                    <span class="sub-item">Phân quyền</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">

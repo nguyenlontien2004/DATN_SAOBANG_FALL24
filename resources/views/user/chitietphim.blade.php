@@ -47,7 +47,9 @@
                 <p>
                     <strong>Diễn viên chính:</strong>
                     @foreach ($chiTietPhim->dienViens as $dienVien)
-                        {{ $dienVien->ten_dien_vien }}@if (!$loop->last)
+                        <a href="{{ route('thongtin.dienvien', $dienVien->id) }}"
+                            style="text-decoration: none;">{{ $dienVien->ten_dien_vien }}</a>
+                        @if (!$loop->last)
                             ,
                         @endif
                     @endforeach
@@ -55,7 +57,9 @@
                 <p>
                     <strong>Đạo diễn chính:</strong>
                     @foreach ($chiTietPhim->daoDiens as $daoDien)
-                        {{ $daoDien->ten_dao_dien }}@if (!$loop->last)
+                        <a href="{{ route('thongtin.daodien', $dienVien->id) }}"
+                            style="text-decoration: none;">{{ $daoDien->ten_dao_dien }}</a>
+                        @if (!$loop->last)
                             ,
                         @endif
                     @endforeach
@@ -74,10 +78,7 @@
                             <i class="fas fa-play"></i>
                             <span>Xem trailer</span>
                         </a>
-                        <a href="#" class="button123 review">
-                            <i class="fas fa-star"></i>
-                            <span>Xem review</span>
-                        </a>
+
                         <!-- Phần này cũng vậy có chức năng thêm yêu thích đâu mà cần input này -->
                     </div>
                 </div>
@@ -124,21 +125,21 @@
                                 @endfor
                             </div>
                             <div style="position: relative;padding:5px 0">
-                                <div class="container-booth">
+                                <div class="container-booth box-lichchieu">
                                     <!-- <div class="border-bottom p-2">
-                                <div>
-                                    <p><strong>CGV:</strong> Beta Đan Phượng</p>
-                                    <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
-                                </div>
-                                <div class="d-flex pt-1 flex-wrap">
-                                    <a href="">
-                                        <div class="btn-somtime mr-1">15:30~18:30</div>
-                                    </a>
-                                    <a href="">
-                                        <div class="btn-somtime mr-1">15:30~18:30</div>
-                                    </a>
-                                </div>
-                            </div> -->
+                                    <div>
+                                        <p><strong>CGV:</strong> Beta Đan Phượng</p>
+                                        <p>Tầng 2, Tòa nhà HHA, Khu đô thị XPHomes...</p>
+                                    </div>
+                                    <div class="d-flex pt-1 flex-wrap">
+                                        <a href="">
+                                            <div class="btn-somtime mr-1">15:30~18:30</div>
+                                        </a>
+                                        <a href="">
+                                            <div class="btn-somtime mr-1">15:30~18:30</div>
+                                        </a>
+                                    </div>
+                                </div> -->
                                 </div>
                                 <span class="loader loading-suat"
                                     style="position: absolute;top:3px;left:50%;display:none;"></span>
@@ -180,9 +181,75 @@
 
                                     </div>
                                 @endforeach
+                                <!--  -->
+                                @auth
+                                    <div class="mt-4">
+                                        <p class="text-muted">
+                                            <a href="#" onclick="showReviewTab(); return false;">
+                                                <h2><strong>Viết bài đánh giá</strong></h2> <br>
+                                            </a>
+                                        </p>
+                                    </div>
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+                                    @if (session('gioihandanhgia'))
+                                        <div class="alert alert-danger">
+                                            {{ session('gioihandanhgia') }}
+                                        </div>
+                                    @endif
 
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    <!-- Form đánh giá ẩn -->
+                                    <small>
 
+                                        @error('diem_danh_gia')
+                                            <small id="emailHelp2" class="fs-6 text-danger">Đánh giá tổi thiểu là một sao!</small>
+                                        @enderror
+                                    </small>
+                                    <div id="reviewTab" style="display: none; margin-top: 20px;">
+                                        <h4>Đánh giá của bạn</h4>
+                                        <form action="{{ route('danh-gia.store') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="phim_id" value="{{ $chiTietPhim->id }}">
+                                            <input type="hidden" name="nguoi_dung_id" value="{{ $userId }}">
 
+                                            <div class="mb-3">
+                                                <label for="content" class="form-label">Nội dung:</label>
+                                                <textarea name="noi_dung" id="content" class="form-control" required></textarea>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="rating" class="form-label">Điểm đánh giá:</label>
+                                                <div id="stars">
+                                                    <span class="fa fa-star" data-value="1" onclick="setRating(1)"></span>
+                                                    <span class="fa fa-star" data-value="2" onclick="setRating(2)"></span>
+                                                    <span class="fa fa-star" data-value="3" onclick="setRating(3)"></span>
+                                                    <span class="fa fa-star" data-value="4" onclick="setRating(4)"></span>
+                                                    <span class="fa fa-star" data-value="5" onclick="setRating(5)"></span>
+                                                </div>
+                                                <input type="hidden" name="diem_danh_gia" id="rating" value="0">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                        </form>
+                                    </div>
+                                    <br>
+                                @else
+                                    <!-- Thông báo khi chưa đăng nhập -->
+                                    <div class="mt-4">
+                                        <p class="text-muted">Bạn cần <a href="{{ route('dangnhap') }}"><strong>đăng
+                                                    nhập</strong></a> để đánh giá.
+                                        </p>
+                                    </div>
+                                @endauth
+                                <!--  -->
                             </div>
                             <div style="display: none;position: relative;" class="binhluan mt-2">
                                 <div class="container my-1 container-binhluan">
@@ -207,15 +274,15 @@
                                             </div>
                                             <div>
                                                 <p class="mb-1 ms-1 mt-1" style="font-size: 16px; color: #333;">
-                                                    {{ $item->noi_dung }}
+                                                    {!! $item->noi_dung !!}
                                                 </p>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                                 <!-- <div style="position: absolute;width: 100%;height: 100%;top: 0;">
-                                    <span class="loader"></span>
-                                </div> -->
+                                        <span class="loader"></span>
+                                    </div> -->
 
                                 <div class="container my-2">
                                     <!-- Nội dung bình luận -->
@@ -293,9 +360,9 @@
                                                     @endif
                                                 @endforeach
                                             </p>
-                                            <p class="mb-0 text-warning">
+                                            <!-- <p class="mb-0 text-warning">
                                                 <i class="fas fa-star"></i> 6.3
-                                            </p>
+                                            </p> -->
                                         </div>
                                     </div>
                                 </li>
@@ -316,7 +383,7 @@
         const urlBinhLuan = "{{ asset('binh-luan/phim/') }}"
         //$('asa').
     </script>
-    @vite('resources/js/reatimeComment.js')
+    {{-- @vite('resources/js/reatimeComment.js') --}}
     <script src="{{ asset('js/chitietve.js') }}"></script>
     <script src="{{ asset('js/binhluan.js') }}"></script>
 @endsection

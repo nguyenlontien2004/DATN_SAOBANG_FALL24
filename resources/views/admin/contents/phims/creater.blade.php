@@ -28,54 +28,52 @@
                     </div>
                     <!-- đây nha  phần thiếu-->
                     <div class="mb-3 row">
-                        <div class="col-md-4">
-                            <label for="do_tuoi" class="form-label">Độ Tuổi</label>
-                            <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
-                                value="{{ old('do_tuoi') }}">
+                        <div class="col-md-6">
+                            <!-- <label for="do_tuoi" class="form-label">Độ Tuổi</label> -->
+                            <input hidden type="number" class="form-control" id="do_tuoi" name="do_tuoi" value="0">
                             @error('do_tuoi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label>
-                            <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
-                                value="{{ old('ngon_ngu') }}">
+                        <div class="col-md-6">
+                            <!-- <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label> -->
+                            <input hidden type="text" class="form-control" id="ngon_ngu" name="ngon_ngu" value="vi">
                             @error('ngon_ngu')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="luot_xem_phim" class="form-label">Lượt Xem</label>
-                            <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
-                                value="{{ old('luot_xem_phim') }}">
-                            @error('luot_xem_phim')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="thoi_luong" class="form-label">Thời Lượng (phút)</label>
                             <input type="number" class="form-control" id="thoi_luong" name="thoi_luong"
                                 value="{{ old('thoi_luong') }}">
                             @error('thoi_luong')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
+
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="ngay_khoi_chieu" class="form-label">Ngày Khởi Chiếu</label>
                             <input type="date" class="form-control" id="ngay_khoi_chieu" name="ngay_khoi_chieu"
-                                value="{{ old('ngay_khoi_chieu') }}">
+                                value="">
                             @error('ngay_khoi_chieu')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <!-- <label for="luot_xem_phim" class="form-label">Lượt Xem</label> -->
+                        <input hidden type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
+                            value="0">
+                        @error('luot_xem_phim')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                         <div class="col-md-4">
-                            <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
-                                value="{{ old('ngay_ket_thuc') }}">
+                            <!-- <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label> -->
+                            <input type="date" hidden class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
+                                value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             @error('ngay_ket_thuc')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -159,18 +157,12 @@
                             @enderror
                         </div>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="trang_thai" class="form-label">Trạng Thái</label>
-                        <select class="form-select" id="trang_thai" name="trang_thai">
-                            <option value="1">Hoạt động</option>
-                            <option value="0">Không hoạt động</option>
-                        </select>
-                    </div> --}}
                     <button type="submit" class="btn btn-primary">Thêm mới Phim</button>
                     <a href="{{ route('phim.index') }}" class="btn btn-secondary">Quay lại</a>
                 </form>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 @section('script-libs')
