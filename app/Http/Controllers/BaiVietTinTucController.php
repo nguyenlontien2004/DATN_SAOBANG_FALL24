@@ -148,10 +148,19 @@ class BaiVietTinTucController extends Controller
         ]);
     }
 
-    public function hienThi()
+    public function hienThi(Request $request)
     {
-        $baiviet = BaiVietTinTuc::with('danhMuc')->paginate(15);
-        return view('user.tintuc.tintuc', compact('baiviet'));
+
+        $baiviet = [];
+        $danhmuc = DanhMucBaiVietTinTuc::query()->get();
+        $tendanhmuc = null;
+        $baiviet = BaiVietTinTuc::query()->orderBy('ngay_dang')->limit(10)->get();
+        if ($request->input('danh-muc')) {
+            $tendanhmuc = DanhMucBaiVietTinTuc::query()->find($request->input('danh-muc'));
+            $baiviet = BaiVietTinTuc::query()->where('danh_muc_bai_viet_tin_tuc_id', $request->input('danh-muc'))->get();
+        }
+        
+        return view('user.tintuc.tintuc', compact('baiviet', 'danhmuc','tendanhmuc'));
     }
 
     public function showTinTuc($id)

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('anh_dao_dien')->nullable();
             $table->text('tieu_su')->nullable();
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

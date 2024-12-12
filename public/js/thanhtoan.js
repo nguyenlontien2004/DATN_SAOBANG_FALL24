@@ -2,28 +2,56 @@ $(document).ready(function () {
     let dataidRemove = [];
     let countdownTime = 5 * 60; // 5 phút
     //{ 'data': dataSeatRemove, 'idRemove': dataidRemove }
-    $.each($('.dataghechon'), function () {     
+    let countdownInterval;
+    let timeve = localStorage.getItem('timeve');
+
+    $.each($('.dataghechon'), function () {
         dataidRemove.push({ 'idCheck': $(this).attr('id'), 'type': $(this).attr('data-type') });
     })
-    
-    const timer = setInterval(() => {
-        const minutes = Math.floor(countdownTime / 60);
-        const seconds = countdownTime % 60;
 
-        $('.demthoigian').html(`0${minutes}:${seconds < 10 ? '0' : ''}${seconds}`)
-
-        if (countdownTime < 0) {
-            clearInterval(timer);
-            alert("Hết thời gian giữ vé!");
-            postData()
-            window.location.replace('/thanh-vien/')
+    checktimemua()
+    function checktimemua() {
+        if (timeve <= 0) {
+            localStorage.removeItem('timeve');
+            localStorage.removeItem('idsuatchieu');
+        } else {
+            initializeCountdown()
         }
-        countdownTime--;
-        if (countdownTime < 0) {
-            $('.demthoigian').html(`00:00`)
-        }
-    }, 1000);
+    }
+    function initializeCountdown() {
+        clearInterval(countdownInterval);
 
+        if (timeve <= 0) {
+            alert("Hết thời gian!");
+            window.location.href = '/';
+            return;
+        }
+        // Hiển thị thời gian còn lại
+        updateTimerDisplay(timeve);
+
+        countdownInterval = setInterval(function () {
+            timeve--;
+            if (timeve <= 0) {
+                clearInterval(countdownInterval);
+                alert("Hết thời gian!");
+                postData()
+                localStorage.removeItem('timeve');
+                localStorage.removeItem('idsuatchieu');
+                window.location.href = '/';
+            } else {
+                localStorage.setItem('timeve', timeve);
+                updateTimerDisplay(timeve);
+            }
+        }, 1000);
+    }
+    // Hiển thị thời gian còn lại lên giao diện
+    function updateTimerDisplay(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        $('.demthoigian').html(`${minutes}:${secs < 10 ? '0' + secs : secs}`);
+    }
+
+    // =======================================================================================
     function postData() {
         $.ajax({
             url: `${urlaApiGhe}/${id}/${ngay}`,
@@ -40,6 +68,8 @@ $(document).ready(function () {
             }
         })
     }
+    console.log(+tongGia-(+$('.tongtienan').val()));
+    
 
     $('.thanhtoanquavi').on('click', function () {
         $(this).find('.viOline').prop('checked', true)
@@ -50,7 +80,7 @@ $(document).ready(function () {
     })
     $('.btn-magiamgia').on('click', function () {
         let macode = $('.inputtextmagiamgia').val()
-
+        
         if (macode == "" || $('.magiamgia').val() !== "") return
         $.ajax({
             url: `${urlApiMaGiamGia}`,
@@ -58,8 +88,10 @@ $(document).ready(function () {
             data: { 'macode': macode },
             success: function (data) {
                 if (data?.data) {
-                    let giagiam = +tongGia * (1 - Number(data.data.gia_tri_giam) / 100)
-                    giagiam = Math.floor(giagiam / 1000) * 1000
+                    let tongdoan = +$('.tongtienan').val();
+                    let tongve =  +tongGia - tongdoan
+                    let giagiam = +tongve * (1 - Number(data.data.gia_tri_giam) / 100)
+                    giagiam = Math.floor(giagiam / 1000) * 1000 + tongdoan
                     $('.magiamgia').val(data.data.id)
                     $('.tongtien').val(giagiam)
                     $('.inputtextmagiamgia').prop('disabled', true)
@@ -75,5 +107,10 @@ $(document).ready(function () {
                 console.log(error);
             }
         })
+    })
+    $('.btn-submitthanhtoan').on('click',function(e){
+       // e.preventDefault()
+        localStorage.removeItem('idsuatchieu');
+        localStorage.removeItem('timeve');
     })
 })

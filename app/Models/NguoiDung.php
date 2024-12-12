@@ -15,12 +15,13 @@ class NguoiDung extends Authenticatable
 
     const TYPE_MEMBER = 'member';
 
-    const TYPE_NHANVIEN = 'Nhân viên';
+    const TYPE_NHANVIEN = 'nhanvien'; 
 
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
+        'anh_dai_dien',
         'password',
         'hinh_anh',
         'gioi_tinh',

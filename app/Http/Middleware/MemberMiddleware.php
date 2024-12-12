@@ -22,6 +22,6 @@ class MemberMiddleware
          * @var NguoiDung $member
          */
 
-        return $member->member() ? $next($request) : abort(403);
+        return $member->member() || $member->nhanVien() ? $next($request) : abort(403);
     }
 }

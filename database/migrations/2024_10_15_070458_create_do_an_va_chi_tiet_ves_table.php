@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Ve::class)->constrained()->cascadeOnDelete();
             $table->integer('so_luong_do_an');
             $table->primary(['do_an_id', 've_id']);
+            $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });
     }

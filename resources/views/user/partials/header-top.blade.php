@@ -59,11 +59,11 @@
     }
 </style>
 <div class="container mb-2">
-    <div class="header-navigation">
+    <div class="header-navigation" style="border-bottom: none">
         <div class="wrapper" style="max-width: 80rem;">
             <div class="nav-link">
-                <a href="{{ route('trangchu.member') }}" class="logo">
-                    <img src="	https://homepage.momocdn.net/fileuploads/svg/momo-file-240411162904.svg" />
+                <a href="{{ route('trangchu.member') }}" class="logo" style="width: 4.25rem;height: 4.25rem;">
+                    <img src="{{ asset('storage/logo/5b4662d9-6a89-4608-a897-b138afa2975a-removebg-preview.png') }}" />
                 </a>
                 <a class="img-book-tocket" style="text-decoration: none;">
                     <img src="https://homepage.momocdn.net/img/momo-amazone-s3-api-240808153440-638587280804204391.svg"
@@ -76,8 +76,8 @@
                 <div class="container-link-page">
                     <nav>
                         <div class="d-flex">
-                            <li><a href="{{ route('lichchieuphimclient') }}">Lịch chiếu</a></li>
-                            <li><a class="d-flex align-items-center" href="{{ route('rap') }}">Rạp <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            <li><a class="d-flex align-items-center" href="{{ route('lichchieuphimclient') }}">Lịch chiếu</a></li>
+                                    <li><a class="d-flex align-items-center" href="{{ route('rap') }}">Rạp <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
                                         class="lucide lucide-chevron-down">
@@ -86,7 +86,6 @@
                             <li><a href="{{ route('phimdangchieu') }}">Phim chiếu</a></li>
                             <li><a href="{{ route('danhsachphim') }}">Danh sách phim</a></li>
                             <li><a href="{{ route('tintuc.hienthi') }}">Tin tức</a></li>
-                            <li><a href="">Block phim</a></li>
                         </div>
                     </nav>
                 </div>

@@ -64,15 +64,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-left mb-2">
-                            <div class="mr-5">
-                                <strong>Ngày chiếu</strong>
-                                <p>{{ $phim->ngay_khoi_chieu }}</p>
-                            </div>
-                            <div class="border-left mx-4" style="height: 50px;"></div>
-                            <div>
-                                <strong>Ngày kết thúc</strong>
-                                <p>{{ $phim->ngay_ket_thuc }}</p>
-                            </div>
+                          
                         </div>
                         <div class="mb-2">
                             <strong>Thể loại</strong>

@@ -1,109 +1,80 @@
 @extends('layout.user')
+@section('title')
+{{ $title }}
+@endsection
 <style>
-    .film-card {
-        margin-bottom: 15px;
-        /* Điều chỉnh khoảng cách giữa các card */
-    }
-
-    .bg-secondary {
-        padding: 15px;
-        /* Thêm padding nếu cần để không gian bên trong card */
-        height: 100%;
-        /* Đảm bảo chiều cao của card đầy đủ */
-        overflow: hidden; /* Ẩn phần hình ảnh vượt quá khung */
-    }
-
-    .film-image {
-        max-height: 250px;
-        /* Tăng chiều cao tối đa của hình ảnh */
-        object-fit: cover;
-        /* Giữ tỷ lệ khung hình */
-        width: 100%;
-        /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng */
-    }
-
-    .film-title {
-        font-size: 1.1rem; /* Tăng kích thước chữ tiêu đề một chút */
+    .form-select:focus {
+        border-color: none;
+        outline: 0;
+        box-shadow: none !important;
     }
 </style>
-@section('title')
-    {{ $title }}
-@endsection
 @section('content')
-    <div class="container" style="max-width: 80rem;margin: 0 auto;">
-        <br>
-        <h1 class="mb-4 fs-1"><strong>Danh sách phim đang chiếu</strong></h1>
+<div class="container" style="max-width: 80rem;margin: 0 auto;">
+    <div class="d-flex align-items-center mb-4" style="justify-content: space-between;">
+        <p class="" style="font-size: 25px;font-weight: 400;">Phim đang chiếu</p>
+        <form id="loctheloai" action="{{ route('phimdangchieu') }}" class="ms-4" method="get">
+            <select class="form-select" name="the-loai" aria-label="Default select example" 
+            onchange="document.getElementById('loctheloai').submit();">
+                <option value="" selected>Lọc theo thể loại</option>
+                <option value="all" >Tất cả thể loại</option>
+                @foreach ($theloai as $item)
+                   <option value="{{ $item->id }}">{{ $item->ten_the_loai }}</option>
+                @endforeach
+            </select>
+        </form>
+    </div>
+    <!-- Movies Grid -->
 
-        <!-- Filter Button -->
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-secondary">
-                <li class="nav-item dropdown list-unstyled">
-                    <a class="nav-link dropdown-toggle text-black fs-5" href="#" id="blogPhimDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Thể loại
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="blogPhimDropdown">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
-                        <li><a class="dropdown-item" href="#">Option 2</a></li>
-                    </ul>
-                </li>
-            </button>
-        </div>
-        <br>
-        <!-- Movies Grid -->
+    <div class="grid grid-cols-4 gap-4">
+        @foreach ($phimDangChieu as $item)
+                @php
+                    $idyoutube = (str_replace("https://www.youtube.com/watch?v=", "", $item->trailer));
+                    $embedUrl = "https://www.youtube.com/embed/" . $idyoutube;
+                   @endphp
+                <div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+                    <div class="film-card position-relative">
+                        <!-- Hình ảnh của video -->
+                        <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
+                            src="{{ asset('storage/' . $item->anh_phim) }}" onclick="playVideo('{{ $embedUrl }}')"
+                            style="cursor: pointer; filter: contrast(105%);height:410px;" />
+                        <a style="text-decoration: none;" href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
 
-        <div class="d-flex flex-wrap justify-content-between">
-            @foreach ($phimDangChieu as $item)
-                <div class="col-md-3 mb-3"> <!-- Sử dụng col-md-3 để chia thành 4 cột -->
-                    <div class="bg-secondary text-white rounded-lg h-100 d-flex flex-column" style="max-width: 300px;">
-                        <div class="film-card position-relative flex-grow-1">
-                            <!-- Hình ảnh của video -->
-                            <img alt="Video Thumbnail" class="film-image rounded-lg mb-4"
-                                src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
-                                onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
-                                style="cursor: pointer; width: 100%;" />
-                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
-                                <h3 class="text-lg font-bold film-title">
-                                    {{ $item->ten_phim }}
-                                </h3>
-                            </a>
-                            <p class="film-genre">
-                                @foreach ($item->theLoaiPhims as $theLoaiPhim)
-                                    {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
-                                        ,
-                                    @endif
-                                @endforeach
-                            </p>
-                            <p class="text-yellow-500">
-                                <i class="fas fa-star"></i> 6.3
-                            </p>
-                        </div>
+                            <h3 class="text-lg font-bold film-title">
+                                {{ $item->ten_phim }}
+                            </h3>
+                        </a>
+                        <p class="film-genre">
+                            @foreach ($item->theLoaiPhims as $theLoaiPhim)
+                                {{ $theLoaiPhim->ten_the_loai }}@if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        </p>
+                        <!-- <p class="text-yellow-500">
+                                                                                                    <i class="fas fa-star"></i> 6.3
+                                                                                                </p> -->
                     </div>
                 </div>
-            @endforeach
+        @endforeach
+    </div>
 
-            <!-- Modal cho video -->
-            <div id="videoModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" onclick="closeModal()">
-                                <span>&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <iframe id="video" src="" frameborder="0" allowfullscreen
-                                style="width: 100%; height: 60vh;"></iframe>
-                        </div>
-                    </div>
+    <!-- Modal cho video -->
+    <div id="videoModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="padding:0px">
+                    <iframe id="video" src="" frameborder="0" allowfullscreen
+                        style="width: 100%; height: 60vh;"></iframe>
                 </div>
             </div>
         </div>
-
-
-
-
-        {{-- <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }} --}}
-        <br>
     </div>
+
+
+
+
+    {{-- <br>{{ $danhSachPhim->links('pagination::bootstrap-5') }} --}}
+    <br>
+</div>
 @endsection

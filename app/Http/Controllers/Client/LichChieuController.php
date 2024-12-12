@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Rap;
 use Carbon\Carbon;
 use App\Models\Phim;
+use App\Models\PhongChieu;
 use Illuminate\Support\Facades\DB;
 
 class LichChieuController extends Controller

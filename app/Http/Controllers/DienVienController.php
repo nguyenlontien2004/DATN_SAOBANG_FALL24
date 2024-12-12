@@ -73,6 +73,26 @@ class DienVienController extends Controller
 
         return redirect()->route('dienVien.index')->with('success', 'Cập nhật Diễn Viên thành công!');
     }
+    public function listSoftDelete()
+    {
+        $dienViens = DienVien::onlyTrashed()->paginate(5);
+        return view('admin.contents.dienViens.listSoftDelete', compact('dienViens'));
+    }
+    public function softDelete($id)
+    {
+        $dienVien = DienVien::findOrFail($id);
+        $dienVien->delete();
+        return redirect()->route('dienVien.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $dienVien = DienVien::onlyTrashed()->findOrFail($id);
+        $dienVien->restore();
+
+        return redirect()->route('dienVien.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
     public function destroy(DienVien $dienVien)
     {
         $dienVien->trang_thai = 0;

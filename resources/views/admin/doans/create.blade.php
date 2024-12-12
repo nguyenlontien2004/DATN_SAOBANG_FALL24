@@ -76,10 +76,10 @@
 
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
-                                                    <label for="luot_mua" class="form-label">Lượt mua</label>
-                                                    <input type="number" name="luot_mua" id="luot_mua"
+                                                    <label for="luot_mua"  class="form-label">Lượt mua</label>
+                                                    <input type="number" hidden name="luot_mua" id="luot_mua"
                                                         class="form-control @error('luot_mua') is-invalid @enderror"
-                                                        value="{{ old('luot_mua') }}" placeholder="Nhập lượt mua">
+                                                        value="0" placeholder="Nhập lượt mua">
                                                     @error('luot_mua')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror

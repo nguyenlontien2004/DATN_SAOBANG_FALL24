@@ -8,7 +8,7 @@
                 <span class="px-2">/</span>
                 <a href="{{ route('theLoaiPhim.create') }}">Thêm mới Thể loại phim</a>
                 <span class="px-2">/</span>
-                <a href="#">Các mục đã xoá mềm</a>
+                <a href="{{ route('theLoaiPhim.listSoftDelete') }}">Các mục đã xoá mềm</a>
             </div>
             <div>
                 <form class="form-inline d-flex align-items-center" action="{{ route('theLoaiPhim.index') }}" method="GET">
@@ -44,14 +44,15 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
-                                        <form method="POST" action="{{ route('theLoaiPhim.destroy', $theLoai->id) }}"
+                                    <form action="{{ route('theLoaiPhim.softDelete', $theLoai->id) }}" method="POST"
+                                            style="display:inline-block;"
                                             onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                Xóa
-                                            </button> </form>
-                                        <a class="btn btn-warning" href="{{ route('theLoaiPhim.edit', $theLoai->id) }}">
+                                            <button class="btn btn-danger btn-sm">Xóa </button>
+                                        </form>
+                                        <a class="btn btn-warning btn-sm"
+                                            href="{{ route('theLoaiPhim.edit', $theLoai->id) }}">
                                             Sửa
                                         </a>
                                     </div>

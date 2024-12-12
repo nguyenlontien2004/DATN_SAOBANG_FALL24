@@ -24,7 +24,7 @@ class DatVeController extends Controller
                         ->whereDate('ngay',$formattedDate)
                         ->where('phim_id', $id)->orderBy('gio_bat_dau');
                 }
-            ])->get();
+            ])->get();  
         $rapvaSuatchieu = $this->checkSuatchieucuangayhientai($rapvaSuatchieu, $formattedDate);
 
         return response()->json([
@@ -44,7 +44,10 @@ class DatVeController extends Controller
                 $check = true;
                 if($date == $getDateUrl ){
                     //$val->gio_ket_thuc > $currentTime && 
-                    if($val->gio_bat_dau > $currentTime){
+                    $gioBatDau = \Carbon\Carbon::createFromFormat('H:i', $val->gio_bat_dau);
+                    $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+                    //dd($gioBatDauTru15Phut , $currentTime); 
+                    if($gioBatDauTru15Phut >= $currentTime){
                         $check = false;
                     }else{
                         $check = true;

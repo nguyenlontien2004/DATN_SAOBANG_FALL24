@@ -18,6 +18,12 @@ class PhongChieu extends Model
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
+    // protected $appends = ['grouped_ghe_ngoi'];
+
+    // public function getGroupedGheNgoiAttribute()
+    // {
+    //     return $this->ghe_ngoi->groupBy('hang_ghe');
+    // }
     public function rap()
     {
         return $this->belongsTo(Rap::class);

@@ -32,7 +32,7 @@
                             <form action="{{ route('resetpass') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="token" value="{{ $token }}">
-                                <input type="email" name="email" class="form-controll" placeholder="Nhập email">
+                                <input type="email"  class="form-control mb-3" id="exampleFormControlInput1" name="email" placeholder="Nhập email">
                                 <input type="password" name="password" placeholder="Nhập mật khẩu mới">
                                 <input type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu mới">
                                 <button type="submit">Đặt lại mật khẩu</button>

@@ -12,6 +12,7 @@ class DoAnVaChiTietVe extends Model
         'do_an_id',
         've_id',
         'so_luong_do_an',
+        'trang_thai',
     ];
     public function detailTicket()
     {

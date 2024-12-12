@@ -256,10 +256,16 @@
                                     class="so-hieu-hang-ghe">...</strong></p>
                         </div>
                     </div>
-                    <div class="container-total-oldel-ticket">
+                    <div class="container-total-oldel-ticket d-flex">
                         <div class="content-total-oldel-ticket">
                             <p class="text-total">Tổng đơn hàng</p>
                             <span class="total">0</span>&nbsp;₫
+                        </div>
+                        <div class="content-total-oldel-ticket">
+                            <div id="countdown-timer">
+                            <p class="text-total">Thời gian mua vé</p>
+                           <span id="timer"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="flow-actions sticky-footer-bars">
@@ -289,9 +295,12 @@
 <script>
     const id = "{{ $id }}"
     const ngay = "{{ $date }}"
-    const gia = "{{ $suatchieu->phim->gia }}"
+    const gia = "{{ $suatchieu->gia }}"
     const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
     const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
+    const kiemtrahansuatchieu = Boolean("{{ $isHan }}")
+    console.log(kiemtrahansuatchieu);
+    
     //$('asa').
 </script>
 @vite('resources/js/reatimeGhe.js')

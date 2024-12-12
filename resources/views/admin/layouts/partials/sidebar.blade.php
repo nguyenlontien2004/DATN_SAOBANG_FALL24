@@ -38,8 +38,8 @@
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                <a href="{{ route('thongke.vesbanra') }}">
+                                    <span class="sub-item">Tổng doanh thu theo phim</span>
                                 </a>
                             </li>
 
@@ -144,6 +144,11 @@
                             <li>
                                 <a href="{{ route('suatChieu.index') }}">
                                     <span class="sub-item">Quản lý suất chiếu</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.chitietsuatchieu') }}">
+                                    <span class="sub-item">Chi tiết suất chiếu</span>
                                 </a>
                             </li>
                         </ul>

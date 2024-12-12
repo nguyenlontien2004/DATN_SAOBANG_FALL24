@@ -31,17 +31,32 @@ class DatVeController extends Controller
 {
     function datve($id, $date)
     {
+        $isHan = true;
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
         $formattedDate = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
         $suatchieu = SuatChieu::query()
-            ->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
+            ->select('id', 'phong_chieu_id', 'ngay', 'gia', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
             ->with([
-                'phim:id,ten_phim,gia',
-                'phongChieu'=>function($qr){
+                'phim:id,ten_phim',
+                'phongChieu' => function ($qr) {
                     $qr->with('rap');
                 },
             ])
             ->find($id);
-        //dd($suatchieu->toArray());
+        if ($curdate == $suatchieu->ngay) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $suatchieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+            if ($gioBatDauTru15Phut < $currentTime) {
+                $isHan = false;
+            }
+            // dd($curdate,$suatchieu->ngay,$gioBatDau,$gioBatDauTru15Phut);
+        } elseif ($curdate > $suatchieu->ngay) {
+            $isHan = false;
+        } else {
+            $isHan = true;
+        }
+
         $ghePhongChieu = PhongChieu::query()
             ->select(['id'])
             ->with([
@@ -51,7 +66,7 @@ class DatVeController extends Controller
                             'chitietve' => function ($q) use ($formattedDate, $id) {
                                 $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
                                     ->whereDate('ngay_ve_mo', '=', $formattedDate)
-                                    ->where('ves.deleted_at','=',null)
+                                    ->where('ves.deleted_at', '=', null)
                                     ->where('suat_chieu_id', $id);
                             }
                         ])
@@ -60,20 +75,26 @@ class DatVeController extends Controller
                 }
             ])
             ->find($suatchieu->phongChieu->id);
-        //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray());
+
         $hangghe = new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'));
         $hangghe = $hangghe->toArray(request());
-        //dd($hangghe);
+
         $doAn = DoAn::query()->get();
         //dd($doAn->toArray());
-        return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn']));
+        return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn', 'isHan']));
     }
     public function thanhToan($id, $date)
     {
-        // dd(session('thong-tin-dat'));
+        //dd(session('thong-tin-dat'));
+        $tongtienan = 0;
         $idsuauChieu = $id;
         $tong = session('thong-tin-dat')['tong'];
         $listIdGhe = array_column(session('thong-tin-dat')['hangghe'], 'id');
+
+        foreach (session('thong-tin-dat')['doan'] as $key => $value) {
+            $tongtienan += $value['soluong'] * $value['gia'];
+        }
+        //dd($tongtienan,dd(session('thong-tin-dat')));
 
         $ghe = GheNgoi::query()
             ->select('id', 'hang_ghe', 'the_loai', 'so_hieu_ghe', 'isDoubleChair')
@@ -83,7 +104,7 @@ class DatVeController extends Controller
             ->get()->groupBy('the_loai');
 
         $suatChieu = SuatChieu::query()->with([
-            'phim:id,ten_phim,gia'
+            'phim:id,ten_phim'
         ])->find($id);
 
         // foreach ($ghe as $key => $value) {
@@ -111,11 +132,42 @@ class DatVeController extends Controller
             ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
             ->get();
 
-        return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+        return view('user.thanhtoan', compact(['id', 'tongtienan', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+    }
+
+    function kiemtraghedamuacuaSC()
+    {
+        $suatchieu = SuatChieu::query()
+            ->find(session('thong-tin-dat')['idSuatChieu']);
+
+        $ve = Ve::query()->select('id', 'suat_chieu_id')
+            ->with([
+                'chiTietVe:id,ve_id,ghe_ngoi_id'
+            ])
+
+            ->where('suat_chieu_id', $suatchieu->id)->get();
+        $datVeIds = collect($ve)->flatMap(function ($ve) {
+            return collect($ve['chiTietVe'])->pluck('ghe_ngoi_id');
+        })->toArray();
+
+        $trungNhau = collect(session('thong-tin-dat')['hangghe'])->filter(function ($ghe) use ($datVeIds) {
+            return in_array($ghe['id'], $datVeIds);
+        });
+        if ($trungNhau->isEmpty()) {
+            // dd($datVeIds,$ve->toArray(),session('thong-tin-dat'),$trungNhau);
+            return false;
+        }
+        return true;
     }
 
     public function checkViOnline(Request $request)
     {
+        $check = $this->kiemtraghedamuacuaSC();
+        if ($check) {
+            return back()->with('suatchieudacoghe', 'Ghế bạn chọn đã có người mua trước đó mời ban quay lại chọn ghế khác!');
+        }
+        //dd($check);
+
         $uuid = Str::uuid();
         $uuid = substr(str_replace('-', '', $uuid), 0, 22);
 
@@ -134,7 +186,7 @@ class DatVeController extends Controller
     }
     public function luuThongTinVeMua(Request $request)
     {
-       // dd($request->all(),session('thong-tin-dat'));
+        // dd($request->all(),session('thong-tin-dat'));
         try {
             $thongtinVeluu = session('thong-tin-dat');
             $ve = Ve::query()->orderBy('id', 'desc')->get()->first();
@@ -220,7 +272,7 @@ class DatVeController extends Controller
             $theloaivi = json_decode($request->vnp_OrderInfo)->description;
         } elseif (isset($request->thanhtoan)) {
             $theloaivi = $request->thanhtoan;
-        } elseif(isset($request->thanhtoanxu)){
+        } elseif (isset($request->thanhtoanxu)) {
             $theloaivi = $request->thanhtoanxu;
         }
         switch ($theloaivi) {
@@ -264,7 +316,7 @@ class DatVeController extends Controller
                 $this->checkMagiamgia($request->magiamgia);
                 $id = isset($ve) ? $ve?->id + 1 : 1;
                 $macode = $request->xu_orderid . $id;
-                $createVe = $this->createVe($macode,$request->magiamgia,$thongtinVeluu['idSuatChieu'],$date,$request->amount,$request->thanhtoanxu);
+                $createVe = $this->createVe($macode, $request->magiamgia, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->thanhtoanxu);
                 $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
                 $this->thanhtoanVe($createVe->id);
                 $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
@@ -279,6 +331,10 @@ class DatVeController extends Controller
     }
     public function createVe($macode, $idMagiam, $suatChieuId, $date, $tongTien, $phuongthuc)
     {
+        $tongtienan = 0;
+        foreach (session('thong-tin-dat')['doan'] as $key => $value) {
+            $tongtienan += $value['soluong'] * $value['gia'];
+        }
         //$thongtinVeluu['idSuatChieu'],$request->orderId . $ve->id + 1,$request->extraData,$request->amount,$request->orderInfo
         $createVe = Ve::query()->create([
             'ma_code_ve' => $macode,
@@ -288,6 +344,7 @@ class DatVeController extends Controller
             'ngay_thanh_toan' => date("Y-m-d"),
             'ngay_ve_mo' => $date,
             'tong_tien' => $tongTien,
+            'tong_tien_an' => $tongtienan,
             'phuong_thuc_thanh_toan' => $phuongthuc
         ]);
 
@@ -390,7 +447,7 @@ class DatVeController extends Controller
 
     public function thongtinve($id, $macodeve)
     {
-        $ve = Ve::query()->with([
+        $ve = Ve::query()->withTrashed()->with([
             'chiTietVe',
             'suatChieu' => function ($query) {
                 $query->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
@@ -649,8 +706,8 @@ class DatVeController extends Controller
         if ($tongxucuakhach < $tongGiaMuaVe) {
             return back()->with('errorOrder', 'Tổng số xu trong tài khoản không đủ để thực hiện thanh toán');
         }
-       
-        $urluutt = asset('luu-thong-tin-ve?'.'amount='. $request->tongGia .'&xu_orderid='.$uuid.'&magiamgia=' . $request->magiamgia . "&thanhtoanxu=XU");
+
+        $urluutt = asset('luu-thong-tin-ve?' . 'amount=' . $request->tongGia . '&xu_orderid=' . $uuid . '&magiamgia=' . $request->magiamgia . "&thanhtoanxu=XU");
         return redirect()->to($urluutt);
     }
     public function testMail()

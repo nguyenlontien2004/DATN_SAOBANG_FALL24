@@ -21,11 +21,25 @@ class BinhLuanPhimController extends Controller
  
         $idNguoidung = $request->idnguoidung;
         $nguoidung = NguoiDung::query()->find($idNguoidung);
+        $date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $checkBinhLuan = BinhLuanPhim::query()
+        ->where('phim_id',$idPhim)
+        ->where('nguoi_dung_id',$nguoidung->id)
+        ->whereDate('ngay_binh_luan',$date)
+        ->get();
+
+        if(count($checkBinhLuan) >= 5){
+            return response()->json([
+                'msg' => 'Bạn đã đạt đến giới hạn bình luận trong ngày. Vui lòng góp ý vào ngày mai.',
+                'status' => 403
+            ], 200);
+        }
+
         $binhluan = BinhLuanPhim::query()->create([
             'nguoi_dung_id' => $idNguoidung,
             'phim_id' => $idPhim,
-            'noi_dung' => $request->noidung,
-            'ngay_binh_luan' => date('Y:m:d')
+            'noi_dung' => htmlspecialchars($request->noidung,ENT_QUOTES, 'UTF-8'),
+            'ngay_binh_luan' => $date
         ]);
         
         $ngaybinhluan = $binhluan->created_at->locale('vi')->diffForHumans();
@@ -33,7 +47,7 @@ class BinhLuanPhimController extends Controller
         broadcast(new RealtimeComment(
             $nguoidung->ho_ten,
             $idPhim,
-            $request->noidung,
+            htmlspecialchars($request->noidung,ENT_QUOTES, 'UTF-8'),
             asset('storage/'.$nguoidung->anh_dai_dien),
             $ngaybinhluan,
             $request->idnguoidung

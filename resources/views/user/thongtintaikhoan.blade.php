@@ -1,7 +1,7 @@
 @extends('layout.user')
 
 @section('content')
-    <div class="container5999">
+    <div class="container5999" style="max-width:85%; margin:0 auto;">
 
         @php
             $user = Auth::user();

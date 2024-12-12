@@ -20,7 +20,9 @@ return new class extends Migration
             $table->timestamp('gio_bat_dau');
             $table->timestamp('gio_ket_thuc');
             $table->date('ngay')->nullable();
+            $table->integer('gia')->nullable();
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

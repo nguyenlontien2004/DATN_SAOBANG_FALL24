@@ -116,8 +116,10 @@
         <div class="container-seat">
             <form action="{{ route('checkViOnline') }}" class="formthanhtoan" method="post">
                 @csrf
-                <input type="number" class="tongtien" style="display: none;" name="tongGia" value="{{ $tong }}">
-                <input type="text" class="magiamgia" style="display: none;" name="magiamgia" value="">
+                <!-- style="display: none;" -->
+                <input type="number" class="tongtien"  name="tongGia" value="{{ $tong }}">
+                <input type="text" class="magiamgia"  name="magiamgia" value="">
+                <input type="text" class="tongtienan"   value="{{ $tongtienan }}">
                 <div class="mb-3"></div>
                 <div class="row">
                     <div class="col-lg-8 col-12">
@@ -169,11 +171,11 @@
                                                 </td>
                                                 <td>
                                                     @if ($key == 'thuong')
-                                                        {{ number_format($suatChieu->phim->gia * count($value), 0, ',', '.')}}
+                                                        {{ number_format($suatChieu->gia * count($value), 0, ',', '.')}}
                                                     @elseif($key == 'vip')
-                                                        {{ number_format($suatChieu->phim->gia * count($value) + 10000 * count($value), 0, ',', '.') }}
+                                                        {{ number_format($suatChieu->gia * count($value) + 10000 * count($value), 0, ',', '.') }}
                                                     @else
-                                                        {{ number_format(($suatChieu->phim->gia) * (count($value)) + ((count($value) / 2) * 15000), 0, ',', '.') }}
+                                                        {{ number_format(($suatChieu->gia) * (count($value)) + ((count($value) / 2) * 15000), 0, ',', '.') }}
                                                     @endif
                                                     &nbsp;₫
                                                 </td>
@@ -200,7 +202,7 @@
                                                 $soluong
                                                                                         }}
                                                                                     </td>
-                                                                                    <td>
+                                                                                    <td class="tongtienan" data-tongtienan="{{ $item->gia * $soluong }}">
                                                                                         {{ number_format($item->gia * $soluong, 0, ',', '.') }}
                                                                                         &nbsp;₫
                                                                                     </td>
@@ -397,7 +399,7 @@
                         <div class="flow-actions sticky-footer-bars">
                             <div class="flow-actions sticky-footer-bars">
                                 <div class="row">
-                                    <div class="col-12"><button type="submit" class="action-next btn btn-lg btn-dark btn-block"><span
+                                    <div class="col-12"><button type="submit" class="btn-submitthanhtoan action-next btn btn-lg btn-dark btn-block"><span
                                                 data-v-0c8aac4d="" class="d-md-none">0&nbsp;₫ |</span>
                                             Thanh toán
                                         </button></div>
@@ -418,9 +420,15 @@
  const tongGia = "{{ $tong }}"
  const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
  let errorMessage = "{{ session('errorOrder') }}"
+ let dacoghechon = "{{ session('suatchieudacoghe') }}"
  setTimeout(() => {
     if (errorMessage) {
         alert(errorMessage);
+    }
+ }, 1000);
+ setTimeout(() => {
+    if (dacoghechon) {
+        alert(dacoghechon);
     }
  }, 1000);
 

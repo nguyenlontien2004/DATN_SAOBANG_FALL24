@@ -44,20 +44,20 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-4">
-                            <label for="do_tuoi" class="form-label">Độ Tuổi</label>
+                            <!-- <label for="do_tuoi" class="form-label">Độ Tuổi</label> -->
                             {{-- <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
                                 value="{{ old('do_tuoi') }}"> --}}
-                            <input type="number" class="form-control" id="do_tuoi" name="do_tuoi"
+                            <input hidden type="number" class="form-control" id="do_tuoi" name="do_tuoi"
                                 value="{{ old('do_tuoi', $phim->do_tuoi) }}">
                             @error('do_tuoi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md-4">
-                            <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label>
+                            <!-- <label for="ngon_ngu" class="form-label">Ngôn Ngữ</label> -->
                             {{-- <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
                                 value="{{ old('ngon_ngu') }}"> --}}
-                            <input type="text" class="form-control" id="ngon_ngu" name="ngon_ngu"
+                            <input type="text" hidden class="form-control" id="ngon_ngu" name="ngon_ngu"
                                 value="{{ old('ngon_ngu', $phim->ngon_ngu) }}">
 
                             @error('ngon_ngu')
@@ -66,10 +66,10 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="luot_xem_phim" class="form-label">Lượt Xem</label>
+                            <!-- <label for="luot_xem_phim" class="form-label">Lượt Xem</label> -->
                             {{-- <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
                                 value="{{ old('luot_xem_phim') }}"> --}}
-                            <input type="number" class="form-control" id="luot_xem_phim" name="luot_xem_phim"
+                            <input type="number" hidden class="form-control" id="luot_xem_phim" name="luot_xem_phim"
                                 value="{{ old('luot_xem_phim', $phim->luot_xem_phim) }}">
 
                             @error('luot_xem_phim')
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="thoi_luong" class="form-label">Thời Lượng (phút)</label>
                             <input type="number" class="form-control" id="thoi_luong" name="thoi_luong"
                                 value="{{ old('thoi_luong', $phim->thoi_luong) }}">
@@ -87,7 +87,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="ngay_khoi_chieu" class="form-label">Ngày Khởi Chiếu</label>
                             <input type="date" class="form-control" id="ngay_khoi_chieu" name="ngay_khoi_chieu"
                                 value="{{ old('ngay_khoi_chieu', $phim->ngay_khoi_chieu) }}">
@@ -96,8 +96,8 @@
                             @enderror
                         </div>
                         <div class="col-md-4">
-                            <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
+                            <!-- <label for="ngay_ket_thuc" class="form-label">Ngày Kết Thúc</label> -->
+                            <input hidden type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
                                 value="{{ old('ngay_ket_thuc', $phim->ngay_ket_thuc) }}">
                             @error('ngay_ket_thuc')
                                 <div class="text-danger">{{ $message }}</div>

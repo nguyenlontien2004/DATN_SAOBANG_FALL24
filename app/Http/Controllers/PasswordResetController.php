@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\Forgotpass;
 
 class PasswordResetController extends Controller
 {
@@ -36,11 +37,13 @@ class PasswordResetController extends Controller
         );
 
         $link = route('reset.pass', ['token' => $token]);
+        $email = $request->email;
 
-        Mail::send('user.mail.resetpass', ['link' => $link], function ($message) use ($request) {
-            $message->to($request->email)
-                ->subject('Reset Pass');
-        });
+        Forgotpass::dispatch($link,$email);
+        // Mail::send('user.mail.resetpass', ['link' => $link], function ($message) use ($request) {
+        //     $message->to($request->email)
+        //         ->subject('Reset Pass');
+        // });
 
         return back()->with('message', 'link đã được gửi tới bạn');
     }

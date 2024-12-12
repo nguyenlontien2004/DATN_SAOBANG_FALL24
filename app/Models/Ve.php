@@ -21,6 +21,7 @@ class Ve extends Model
         'do_an_id',
         'ngay_dat',
         'tong_tien',
+        'tong_tien_an',
         'ngay_thanh_toan',
         'phuong_thuc_thanh_toan',
         'trang_thai'
@@ -47,4 +48,23 @@ class Ve extends Model
     {
         return $this->belongsTo(SuatChieu::class, 'suat_chieu_id');
     }
+    //////
+    public function detailTicket()
+    {
+        return $this->hasMany(ChiTietVe::class, 've_id');
+    }
+    public function gheNgoi()
+    {
+        return $this->belongsTo(GheNgoi::class, 'ghe_ngoi_id');
+    }
+
+    public function doAns()
+    {
+        return $this->belongsToMany(Doan::class, 'do_an_va_chi_tiet_ves', 've_id', 'do_an_id')
+            ->withPivot('so_luong_do_an');
+    }
+    public function doanvave(){
+        return $this->hasMany(DoAnVaChiTietVe::class,'ve_id');
+    }
+   
 }

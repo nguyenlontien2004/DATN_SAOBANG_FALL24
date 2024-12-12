@@ -19,17 +19,21 @@ class PhimController extends Controller
     public function index(Request $request)
     {
         $theLoaiId = $request->input('the_loai');
+        $searchQuery = $request->input('query'); 
         $phims = Phim::with('daoDiens', 'dienViens', 'theLoaiPhims')
             ->when($theLoaiId, function ($query, $theLoaiId) {
                 $query->whereHas('theLoaiPhims', function ($query) use ($theLoaiId) {
                     $query->where('id', $theLoaiId);
                 });
             })
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $query->where('ten_phim', 'LIKE', '%' . $searchQuery . '%');
+            })
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(5);
         $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
 
-        return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId'));
+        return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId', 'searchQuery'));
     }
 
     public function show($id)
@@ -45,12 +49,12 @@ class PhimController extends Controller
         return view('admin.contents.phims.creater', compact('daoDiens', 'dienViens', 'theLoais'));
     }
 
-    public function store(StorePhimRequest $request)
+    //StorePhimRequest
+    public function store(Request $request)
     {
        DB::beginTransaction();
        $path = $request->file('anh_phim')->store('anh_phim', 'public');
        $phim = Phim::create(array_merge($request->all(), ['anh_phim' => $path]));
-
        if ($request->has('dao_dien_ids')) {
            $phim->daoDiens()->attach($request->dao_dien_ids);
        }
@@ -106,7 +110,7 @@ class PhimController extends Controller
 
         $phim->dienViens()->detach();
         foreach ($request->dien_vien_ids as $index => $dienVienId) {
-            $vaiTro = $request->input('vai_tro_dien_vien')[$index] ?? null;
+            $vaiTro = $request->input('vai_tro_dien_vien')[0] ?? null;
             $phim->dienViens()->attach($dienVienId, ['vai_tro_dien_vien' => $vaiTro]);
         }
 
@@ -121,7 +125,33 @@ class PhimController extends Controller
     // {
     //     return $this->hasMany(MaGiamGia::class);
     // }
+    public function listSoftDelete()
+    {
+        $phims = Phim::onlyTrashed()->paginate(5);
+        return view('admin.contents.phims.listSoftDelete', compact('phims'));
+    }
+    public function softDelete($id)
+    {
+        $phim = Phim::findOrFail($id);
+        $phim->delete();
+        return redirect()->route('phim.index')->with('success', 'Xóa mềm thành công!');
+    }
 
+    // Khôi phục
+    public function restore($id)
+    {
+        $phim = Phim::onlyTrashed()->findOrFail($id);
+        $phim->restore();
+
+        return redirect()->route('phim.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id)
+    {
+        $phim = Phim::onlyTrashed()->findOrFail($id);
+        $phim->forceDelete();
+
+        return redirect()->route('phim.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
     public function destroy(Phim $phim)
     {
         $phim->trang_thai = 0;

@@ -3,9 +3,22 @@
 @section('content')
     <div class="card container mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <div class="card-title">Danh sách Đạo Diễn</div>
-            <a href="{{  route('daoDien.create') }}" class="btn btn-primary">Thêm mới Diễn Viên</a>
+        <div class="d-flex align-items-center">
+                <div class="card-title">Danh sách Đạo diễn</div>
+                <span class="px-2">/</span>
+                <a href="{{ route('daoDien.create') }}">Thêm mới Đạo diễn</a>
+                <span class="px-2">/</span>
+                <a href="{{ route('admin.daoDien.listSoftDelete') }}">Các mục đã xoá mềm</a>
+            </div>
+            <div>
+                <form action="{{ route('daoDien.index') }}" method="GET" class="form-inline d-flex align-items-center">
+                    <label for="search" class="me-3 mb-0">Lọc:</label>
+                    <input type="text" value="{{ request('query') }}" class="form-control" id="query" name="query"
+                        style="min-width: 200px;" name="search" placeholder="">
+                </form>
+            </div>
         </div>
+
         <div class="card-body">
             <table class="table ">
                 <thead>
@@ -45,7 +58,7 @@
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
-                                    <form method="POST" action="{{ route('daoDien.destroy', $daoDien->id) }}"
+                                    <form method="POST" action="{{ route('daoDien.softDelete', $daoDien->id) }}"
                                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
                                         @csrf
                                         @method('DELETE')

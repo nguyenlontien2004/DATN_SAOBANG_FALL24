@@ -171,7 +171,7 @@
                     {!! $ve['qr_code'] !!}
                 </div>
                 <p class="mt-4 text-sm" style="margin-top: 5px;margin-bottom: 5px;">
-                    Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn
+                    Vui lòng đưa mã Qr này đến quầy để nhân viên kiểm tra vé
                 </p>
             </div>
             <div class="divider mx-4"></div>

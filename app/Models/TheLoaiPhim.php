@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TheLoaiPhim extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $fillable = [
         'ten_the_loai',
         'trang_thai',

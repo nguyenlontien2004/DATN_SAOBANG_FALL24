@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <p class="mt-4 text-sm">
-                            Vui lòng đưa mã Qr này đến quầy vé để nhận vé của bạn
+                            Vui lòng đưa mã Qr này đến quầy vé để kiểm tra vé
                         </p>
                     </div>
                     <div class="divider mx-4"></div>
@@ -159,4 +159,8 @@
         </div>
     </div>
 </div>
+<script>
+    // localStorage.removeItem('timeve');
+    // localStorage.removeItem('idsuatchieu');
+</script>
 @endsection

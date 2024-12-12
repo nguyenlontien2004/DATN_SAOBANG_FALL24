@@ -55,8 +55,7 @@
                 <table class="mb-0">
                     <thead>
                         <tr>
-                            <th style="color:black;font-size:12.5px;font-weight:600;background-color: #edf2f9;">Rạp
-                                chiếu
+                            <th style="color:black;font-size:12.5px;font-weight:600;background-color: #edf2f9;">Danh sách rạp Sao Băng
                             </th>
                             <th style="background-color: #edf2f9;"></th>
                             <th style="background-color: #edf2f9;"></th>

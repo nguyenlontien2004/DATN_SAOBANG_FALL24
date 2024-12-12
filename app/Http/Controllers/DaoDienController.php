@@ -10,9 +10,17 @@ use App\Http\Requests\UpdateDaoDienRequest;
 
 class DaoDienController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $daoDiens = DaoDien::orderBy('id', 'desc')->get();
+        $query = $request->query('query');
+        $daoDiens = DaoDien::query();
+        if ($query) {
+            $daoDiens->where(function ($q) use ($query) {
+                $q->where('id', $query)
+                    ->orWhere('ten_dao_dien', 'LIKE', '%' . $query . '%');
+            });
+        }
+        $daoDiens = $daoDiens->orderBy('id', 'desc')->paginate(5);
         return view('admin.contents.daoDiens.index', compact('daoDiens'));
     }
     public function create()
@@ -71,6 +79,28 @@ class DaoDienController extends Controller
         $daoDien->save();
 
         return redirect()->route('daoDien.index')->with('success', 'Cập nhật Đạo diễn thành công!');
+    }
+    public function listSoftDelete()
+    {
+        $daoDiens = DaoDien::onlyTrashed()->paginate(5);
+
+        // return view('admin.contents.daoDiens.listSoftDelete', compact('daoDiens'));
+        return view('admin.contents.daoDiens.listSoftDelete',compact(['daoDiens']));
+    }
+    public function softDelete($id)
+    {
+        $daoDien = DaoDien::findOrFail($id);
+        $daoDien->delete();
+        return redirect()->route('daoDien.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $daoDien = DaoDien::onlyTrashed()->findOrFail($id);
+        $daoDien->restore();
+
+        return redirect()->route('admin.daoDien.listSoftDelete')->with('success', 'Khôi phục thành công!');
     }
     public function destroy(DaoDien $daoDien)
     {

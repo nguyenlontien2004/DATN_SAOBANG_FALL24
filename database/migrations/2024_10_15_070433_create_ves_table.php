@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date('ngay_thanh_toan');
             $table->date('ngay_ve_mo')->nullable();
             $table->integer('tong_tien');
+            $table->integer('tong_tien_an')->nullable();
             $table->string('phuong_thuc_thanh_toan')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->softDeletes();

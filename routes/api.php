@@ -21,3 +21,4 @@ Route::get('suat-chieu/phim/{id}/{date}',                     [DatVeController::
 Route::post('ghe/suat-chieu/{id}/{ngay}',                     [DatVeController::class,'idghe']);
 Route::post('ma-giam-gia',                                    [DatVeController::class,'magiamgia']);
 Route::middleware('web')->post('post/thanh-toan/{id}/{ngay}',                    [DatVeController::class,'chuyenquatrangthanhtoan']);
+//Route::get('/check-qrCode/{id}', [App\Http\Controllers\NhanVien\KiemTraVeController::class, 'checkQrCode']);

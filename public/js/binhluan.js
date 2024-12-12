@@ -38,8 +38,12 @@ $(document).ready(function(){
             data:{'noidung':noidung,'idnguoidung':idnguoidung},
             success: function (data) {
                 if(data.status == 200){
-                    let content = htmlComment(anh,ten,curtime,noidung)
-                    $('.container-binhluan').prepend(content)
+                    let dataFromServer = noidung
+                    const escapedData = $("<div>").text(dataFromServer).html();
+                    let content = htmlComment(anh,ten,curtime,escapedData)
+                    $('.container-binhluan').prepend(`<p>${content}</p>`)
+                }else if(data.status == 403){
+                    alert(data.msg)
                 }else{
                     alert('Lỗi không thể gửi bình luận!')
                 }

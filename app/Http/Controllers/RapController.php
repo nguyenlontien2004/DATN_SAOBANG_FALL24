@@ -43,7 +43,18 @@ class RapController extends Controller
     
         return redirect()->route('rap.index')->with('success', 'Rạp đã được cập nhật thành công.');
     }
-    
+    public function softDelete($id)
+    {
+        $rap =Rap::findOrFail($id);
+        $rap->delete();
+        return redirect()->route('rap.index')->with('success', 'Xóa mềm thành công!');
+    }
+    public function restore($id)
+    {
+        $rap =Rap::onlyTrashed()->findOrFail($id);
+        $rap->restore();
+        return redirect()->route('rap.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
     public function destroy(Rap $rap)
     {
         $rap->trang_thai = 0;

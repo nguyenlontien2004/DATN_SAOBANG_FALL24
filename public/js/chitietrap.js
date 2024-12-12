@@ -19,7 +19,7 @@ $(document).ready(function () {
             url: `${urlApi}/${idRap}/${currDate}`,
             method: 'get',
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 if (data.status == 200) {
                    const html = htmllistphim(data.data)
                    $('.suatchieuphim').html(html);
