@@ -78,7 +78,7 @@ $(document).ready(function () {
     function updateTimerDisplay(seconds) {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        document.getElementById('timer').innerText = `${minutes}:${secs < 10 ? '0' + secs : secs}`;
+        // document.getElementById('timer').innerText = `${minutes}:${secs < 10 ? '0' + secs : secs}`;
     }
 
 

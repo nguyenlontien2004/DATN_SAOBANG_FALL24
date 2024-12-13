@@ -18,7 +18,7 @@
             background-color: #cdcdcd;
             white-space: nowrap;
             /* height: 20px;
-            width: 20px; */
+                                width: 20px; */
             border-radius: 2px;
             position: relative;
             background-position: 50%;
@@ -144,7 +144,12 @@
                                         </div>
                                         <div class="seats-map">
                                             <div class="row-wrapper list-row-seats">
-                                                @foreach ($hangghe->resource as $key => $value)
+                                                @foreach ($hangghe as $key => $value)
+                                                    @if (count($value) <= 0)
+                                                        <ul class="seat-row">
+                                                            <li class="empty"></li>
+                                                        </ul>
+                                                    @endif
                                                     <ul class="seat-row">
                                                         @for ($i = 0; $i < count($value); $i++)
                                                             @if ($value[$i]['isDoubleChair'] !== null && $i + 1 < count($value))
@@ -289,10 +294,10 @@
     <script>
         const id = "{{ $id }}"
         const ngay = "{{ $date }}"
-        const gia = "{{ $suatchieu->phim->gia }}"
+        const gia = "{{ $suatchieu->gia }}"
         const urlaApiThanhToan = "{{ asset('/api/post/thanh-toan/') }}"
         const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
-        //$('asa').
+        const kiemtrahansuatchieu = Boolean("{{ $isHan }}")
     </script>
     @vite('resources/js/reatimeGhe.js')
     <script src="{{ asset('js/reatimeGhe.js') }}"></script>

@@ -24,7 +24,7 @@ class ThongKeController extends Controller
             $bd = Carbon::parse($request->bat_dau)->startOfDay();
             $kt = Carbon::parse($request->ket_thuc)->endOfDay();
 
-            $phimVes->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $phimVes->with('suatChieus.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
@@ -35,7 +35,7 @@ class ThongKeController extends Controller
             $bd = Carbon::createFromDate($namHienTai, 1, 1)->startOfDay();
             $kt = Carbon::now()->endOfDay();
 
-            $phimVes->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $phimVes->with('suatChieus.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
@@ -48,7 +48,7 @@ class ThongKeController extends Controller
             $bd = Carbon::createFromDate(Carbon::now()->year, $thangHienTai, 1)->startOfMonth()->startOfDay();
             $kt = Carbon::createFromDate(Carbon::now()->year, $quy * 3, 1)->endOfMonth()->endOfDay();
 
-            $phimVes->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $phimVes->with('suatChieus.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
@@ -58,7 +58,16 @@ class ThongKeController extends Controller
             $bd = Carbon::now()->startOfMonth()->startOfDay();
             $kt = Carbon::now()->endOfMonth()->endOfDay();
 
-            $phimVes->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $phimVes->with('suatChieus.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        if ($request->loc === 'tuan') {
+            $bd = Carbon::now()->startOfWeek()->startOfDay();
+            $kt = Carbon::now()->endOfWeek()->endOfDay();
+
+            $phimVes->with('suatChieus.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
@@ -79,45 +88,49 @@ class ThongKeController extends Controller
         $kt = null;
 
         if ($request->has('bat_dau') && $request->has('ket_thuc')) {
-
             $bd = Carbon::parse($request->bat_dau)->startOfDay();
             $kt = Carbon::parse($request->ket_thuc)->endOfDay();
 
-            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $chiNhanh->with('phongChieus.suatChieu.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
 
         if ($request->loc === 'nam') {
-
             $namHienTai = Carbon::now()->year;
             $bd = Carbon::createFromDate($namHienTai, 1, 1)->startOfDay();
             $kt = Carbon::now()->endOfDay();
 
-            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $chiNhanh->with('phongChieus.suatChieu.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
 
         if (in_array($request->loc, ['1', '2', '3', '4'])) {
-
             $quy = (int)$request->loc;
-            $thangHienTai = $quy * 3 - 2;
-            $quyHienTai = ceil($thangHienTai / 3);
-            $bd = Carbon::createFromDate(Carbon::now()->year, $thangHienTai, 1)->startOfMonth()->startOfDay();
-            $kt = Carbon::createFromDate(Carbon::now()->year, $quy * 3, 1)->endOfMonth()->endOfDay();
+            $thangBatDau = $quy * 3 - 2;
+            $bd = Carbon::createFromDate(Carbon::now()->year, $thangBatDau, 1)->startOfMonth()->startOfDay();
+            $kt = Carbon::createFromDate(Carbon::now()->year, $thangBatDau + 2, 1)->endOfMonth()->endOfDay();
 
-            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $chiNhanh->with('phongChieus.suatChieu.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }
 
         if ($request->loc === 'thang') {
-
             $bd = Carbon::now()->startOfMonth()->startOfDay();
             $kt = Carbon::now()->endOfMonth()->endOfDay();
 
-            $chiNhanh->whereHas('suatChieus.ves', function ($query) use ($bd, $kt) {
+            $chiNhanh->with('phongChieus.suatChieu.ves', function ($query) use ($bd, $kt) {
+                $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
+            });
+        }
+
+        if ($request->loc === 'tuan') {
+            $bd = Carbon::now()->startOfWeek()->startOfDay();
+            $kt = Carbon::now()->endOfWeek()->endOfDay();
+
+            $chiNhanh->with('phongChieus.suatChieu.ves', function ($query) use ($bd, $kt) {
                 $query->whereBetween('ngay_thanh_toan', [$bd, $kt]);
             });
         }

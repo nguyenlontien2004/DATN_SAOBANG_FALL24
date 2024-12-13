@@ -53,7 +53,9 @@ class PhimController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+        
         $path = $request->file('anh_phim')->store('anh_phim', 'public');
+
         $phim = Phim::create(array_merge($request->all(), ['anh_phim' => $path]));
         if ($request->has('dao_dien_ids')) {
             $phim->daoDiens()->attach($request->dao_dien_ids);
@@ -70,6 +72,7 @@ class PhimController extends Controller
             $phim->theLoaiPhims()->attach($request->the_loai_phim_ids);
         }
         DB::commit();
+        
         DB::rollBack();
 
         return redirect()->route('phim.index')->with('success', 'Phim đã được thêm thành công.');

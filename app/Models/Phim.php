@@ -20,7 +20,6 @@ class Phim extends Model
         'ngon_ngu',
         'do_tuoi',
         'anh_phim',
-        'gia_phim',
         'trang_thai',
     ];
 

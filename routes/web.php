@@ -171,8 +171,12 @@ Route::prefix('admin')->group(function () {
   //Rạp chiếu
   Route::resource('rap', RapController::class);
 
-  // Suất chiếu
-  Route::resource('suatChieu', SuatChieuController::class);
+  //  suất chiếu
+  Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
+  Route::delete('suatChieu/{id}/soft-delete', [SuatChieuController::class, 'softDelete'])->name('admin.suatChieu.softDelete');
+  Route::get('/suatChieu/listSoftDelete/list', [SuatChieuController::class, 'listSoftDelete'])->name('admin.suatChieu.listSoftDelete');
+  Route::patch('/suatChieu/restore/{id}', [SuatChieuController::class, 'restore'])->name('admin.suatChieu.restore');
+  Route::delete('/suatChieu/force-delete/{id}', [SuatChieuController::class, 'forceDelete'])->name('admin.suatChieu.forceDelete');
 
   Route::get('/search', [SearchController::class, 'search'])->name('search');
 
@@ -180,6 +184,11 @@ Route::prefix('admin')->group(function () {
   Route::get('chi-tiet-suat-chieu/', [ChiTietLichChieuController::class, 'index'])->name('admin.chitietsuatchieu');
   Route::get('phim/phong-chieu/{id}', [ChiTietLichChieuController::class, 'phongchieutheophim'])->name('admin.suatchieutheophim');
   Route::get('suat-chieu/phim/{idphim}/phong-chieu/{idphongchieu}', [ChiTietLichChieuController::class, 'suatchieutheophongvaphim']);
+
+  // Phần huy vé
+  Route::get('admin/huy-ve/{id}', [VeController::class, 'huyveAdmin'])->name('admin.huyvend');
+  // huỷ suất chiếu
+  Route::post('admin/huy-suat-chieu/{id}', [SuatChieuController::class, 'huysuatchieu'])->name('admin.huysuatchieu');
 
   // Thống kê
   Route::get('/thong-ke-ve-ban-ra', [ThongKeController::class, 'thongKeVeBanRaTheoPhim'])->name('thongke.vesbanra');

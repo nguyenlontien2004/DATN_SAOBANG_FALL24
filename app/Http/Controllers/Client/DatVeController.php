@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Http\Controllers\Client;
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -27,21 +29,38 @@ use Illuminate\Support\Facades\Http;
 use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Color\Color;
 
+
 class DatVeController extends Controller
 {
     function datve($id, $date)
     {
+        $isHan = true;
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
         $formattedDate = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
         $suatchieu = SuatChieu::query()
-            ->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
+            ->select('id', 'phong_chieu_id', 'ngay', 'gia', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
             ->with([
-                'phim:id,ten_phim,gia',
+                'phim:id,ten_phim',
                 'phongChieu' => function ($qr) {
                     $qr->with('rap');
                 },
             ])
             ->find($id);
-        //dd($suatchieu->toArray());
+        if ($curdate == $suatchieu->ngay) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $suatchieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+            if ($gioBatDauTru15Phut < $currentTime) {
+                $isHan = false;
+            }
+            // dd($curdate,$suatchieu->ngay,$gioBatDau,$gioBatDauTru15Phut);
+        } elseif ($curdate > $suatchieu->ngay) {
+            $isHan = false;
+        } else {
+            $isHan = true;
+        }
+
+
         $ghePhongChieu = PhongChieu::query()
             ->select(['id'])
             ->with([
@@ -60,20 +79,30 @@ class DatVeController extends Controller
                 }
             ])
             ->find($suatchieu->phongChieu->id);
-        //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray());
+
+
         $hangghe = new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'));
         $hangghe = $hangghe->toArray(request());
-        //dd($hangghe);
+
+
         $doAn = DoAn::query()->get();
         //dd($doAn->toArray());
-        return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn']));
+        return view('user.vedat', compact(['suatchieu', 'id', 'date', 'hangghe', 'doAn', 'isHan']));
     }
     public function thanhToan($id, $date)
     {
-        // dd(session('thong-tin-dat'));
+        //dd(session('thong-tin-dat'));
+        $tongtienan = 0;
         $idsuauChieu = $id;
         $tong = session('thong-tin-dat')['tong'];
         $listIdGhe = array_column(session('thong-tin-dat')['hangghe'], 'id');
+
+
+        foreach (session('thong-tin-dat')['doan'] as $key => $value) {
+            $tongtienan += $value['soluong'] * $value['gia'];
+        }
+        //dd($tongtienan,dd(session('thong-tin-dat')));
+
 
         $ghe = GheNgoi::query()
             ->select('id', 'hang_ghe', 'the_loai', 'so_hieu_ghe', 'isDoubleChair')
@@ -82,12 +111,14 @@ class DatVeController extends Controller
             ->orderBy('so_hieu_ghe')
             ->get()->groupBy('the_loai');
 
+
         $suatChieu = SuatChieu::query()->with([
-            'phim:id,ten_phim,gia'
+            'phim:id,ten_phim'
         ])->find($id);
 
+
         // foreach ($ghe as $key => $value) {
-        //     for ($i=0; $i < count($value); $i++) { 
+        //     for ($i=0; $i < count($value); $i++) {
         //        if($key=='thuong'){
         //           $tong+=$suatChieu->phim->gia;
         //        }elseif($key=='vip'){
@@ -111,13 +142,51 @@ class DatVeController extends Controller
             ->whereDate('ngay_ket_thuc', '>=', date('Y-m-d'))
             ->get();
 
-        return view('user.thanhtoan', compact(['id', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
+
+        return view('user.thanhtoan', compact(['id', 'tongtienan', 'idsuauChieu', 'magiamgia', 'date', 'ghe', 'suatChieu', 'tong', 'doAn', 'dataSoluongDoAn']));
     }
+
+
+    function kiemtraghedamuacuaSC()
+    {
+        $suatchieu = SuatChieu::query()
+            ->find(session('thong-tin-dat')['idSuatChieu']);
+
+
+        $ve = Ve::query()->select('id', 'suat_chieu_id')
+            ->with([
+                'chiTietVe:id,ve_id,ghe_ngoi_id'
+            ])
+            ->where('ngay_ve_mo', $suatchieu->ngay)
+            ->where('suat_chieu_id', $suatchieu->id)->get();
+        $datVeIds = collect($ve)->flatMap(function ($ve) {
+            return collect($ve['chiTietVe'])->pluck('ghe_ngoi_id');
+        })->toArray();
+
+
+        $trungNhau = collect(session('thong-tin-dat')['hangghe'])->filter(function ($ghe) use ($datVeIds) {
+            return in_array($ghe['id'], $datVeIds);
+        });
+        if ($trungNhau->isEmpty()) {
+            // dd($datVeIds,$ve->toArray(),session('thong-tin-dat'),$trungNhau);
+            return false;
+        }
+        return true;
+    }
+
 
     public function checkViOnline(Request $request)
     {
+        $check = $this->kiemtraghedamuacuaSC();
+        if ($check) {
+            return back()->with('suatchieudacoghe', 'Ghế bạn chọn đã có người mua trước đó mời ban quay lại chọn ghế khác!');
+        }
+        //dd($check);
+
+
         $uuid = Str::uuid();
         $uuid = substr(str_replace('-', '', $uuid), 0, 22);
+
 
         switch ($request->viOline) {
             case 'momo':
@@ -135,81 +204,24 @@ class DatVeController extends Controller
     public function luuThongTinVeMua(Request $request)
     {
         // dd($request->all(),session('thong-tin-dat'));
-        try {
-            $thongtinVeluu = session('thong-tin-dat');
-            $ve = Ve::query()->orderBy('id', 'desc')->get()->first();
-            $formattedDate = Carbon::createFromFormat('d-m-Y', $thongtinVeluu['ngayvemo'])->format('Y-m-d');
-            $date = Carbon::parse($formattedDate);
-            //dd(date("Y/m/d"),$date);
-            //dd($request->extraData);  
-            DB::beginTransaction();
-            // if (!empty($request->extraData)) {
-            //     $ma = MaGiamGia::query()->find($request->extraData);
-            //     $ma->so_luong = $ma->so_luong - 1;
-            //     $ma->save();
-            // }
-            $createVe = $this->checkRequestThanhtoanOn($request, $ve, $thongtinVeluu, $date);
-            $this->checkDoan(session('thong-tin-dat'));
-            // $macode = $request->orderId . $ve->id + 1;
-            // $createVe = $this->createVe($macode, $request->extraData, $thongtinVeluu['idSuatChieu'], $date, $request->amount, $request->orderInfo);
-            // $this->checkMagiamgia($request->extraData);
-            // $this->ChiTietVeMua($thongtinVeluu, $createVe->id);
-            // $this->thanhtoanVe($createVe->id);
-            // $this->DoAnVaChiTietVeMua($thongtinVeluu, $createVe->id);
-            // $createVe = Ve::query()->create([
-            //     'ma_code_ve' => $request->orderId . $ve->id + 1,
-            //     'nguoi_dung_id' => 1,
-            //     'suat_chieu_id' => $thongtinVeluu['idSuatChieu'],
-            //     'ma_giam_gia_id' => $request->extraData,
-            //     'ngay_thanh_toan' => date("Y-m-d"),
-            //     'ngay_ve_mo' => $date,
-            //     'tong_tien' => $request->amount,
-            //     'phuong_thuc_thanh_toan' => $request->orderInfo
-            // ]);
-
-            // $qrCodeData = asset('check-qrCode/' . $createVe->id);
-            // $qrCode = new QrCode($qrCodeData);
-            // $writer = new PngWriter();
-            // $fileName = 'qrcode_' . time() . '.png';
-            // $path = 'qrcodes/' . $fileName;
-            // Storage::disk('public')->put($path, $writer->write($qrCode)->getString());
-
-            // $createVe->qr_code = $path;
-            // $createVe->save();
-
-
-            // ThanhToan::query()->create([
-            //     'nguoi_dung_id' => 1,
-            //     've_id' => $createVe->id,
-            //     'ngay_thanh_toan' => date("Y-m-d")
-            // ]);
-
-
-            // foreach ($thongtinVeluu['hangghe'] as $value) {
-            //     ChiTietVe::query()->create([
-            //         've_id' => $createVe->id,
-            //         'ghe_ngoi_id' => $value['id'],
-            //         'so_luong_ghe_ngoi' => 1,
-            //     ]);
-            // }
-
-
-            // foreach ($thongtinVeluu['doan'] as $value) {
-            //     DoAnVaChiTietVe::query()->create([
-            //         'do_an_id' => $value['idFood'],
-            //         've_id' => $createVe->id,
-            //         'so_luong_do_an' => $value['soluong'],
-            //     ]);
-            // }
-            DB::commit();
-
-            $this->guiThongtinVeMail($createVe->id);
-            return redirect()->route('thongtinve', [$createVe->id, $createVe->ma_code_ve]);
-            //dd($request->all(), $ve->toArray(), $thongtinVeluu);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return redirect('/');
-        }
+        // try {
+        $thongtinVeluu = session('thong-tin-dat');
+        $ve = Ve::query()->orderBy('id', 'desc')->get()->first();
+        $formattedDate = Carbon::createFromFormat('d-m-Y', $thongtinVeluu['ngayvemo'])->format('Y-m-d');
+        $date = Carbon::parse($formattedDate);
+        //dd(date("Y/m/d"),$date);
+        //dd($request->extraData);  
+        DB::beginTransaction();
+        $createVe = $this->checkRequestThanhtoanOn($request, $ve, $thongtinVeluu, $date);
+        $this->checkDoan(session('thong-tin-dat'));
+        DB::commit();
+        $this->guiThongtinVeMail($createVe->id);
+        return redirect()->route('thongtinve', [$createVe->id, $createVe->ma_code_ve]);
+        //dd($request->all(), $ve->toArray(), $thongtinVeluu);
+        // } catch (\Throwable $th) {
+        //     DB::rollBack();
+        //     return redirect('/');
+        // }
     }
     public function checkRequestThanhtoanOn($request, $ve, $thongtinVeluu, $date)
     {
@@ -279,6 +291,10 @@ class DatVeController extends Controller
     }
     public function createVe($macode, $idMagiam, $suatChieuId, $date, $tongTien, $phuongthuc)
     {
+        $tongtienan = 0;
+        foreach (session('thong-tin-dat')['doan'] as $key => $value) {
+            $tongtienan += $value['soluong'] * $value['gia'];
+        }
         //$thongtinVeluu['idSuatChieu'],$request->orderId . $ve->id + 1,$request->extraData,$request->amount,$request->orderInfo
         $createVe = Ve::query()->create([
             'ma_code_ve' => $macode,
@@ -288,8 +304,10 @@ class DatVeController extends Controller
             'ngay_thanh_toan' => date("Y-m-d"),
             'ngay_ve_mo' => $date,
             'tong_tien' => $tongTien,
+            'tong_tien_an' => $tongtienan,
             'phuong_thuc_thanh_toan' => $phuongthuc
         ]);
+
 
         $qrCodeData = asset('check-qrCode/' . $createVe->id);
         $qrCode = new QrCode($qrCodeData);
@@ -303,6 +321,7 @@ class DatVeController extends Controller
         // Chuyển QR code sang định dạng SVG
         $writer = new SvgWriter();
         $result = $writer->write($qrCode);
+
 
         $createVe->qr_code = $result->getString();
         $createVe->save();
@@ -385,12 +404,14 @@ class DatVeController extends Controller
         $urlCode = asset('storage/' . $ve->qr_code);
         $emaiUser = Auth::user()->email;
 
+
         OrderSuccess::dispatch($ve->toArray(), $food->toArray(), $ghe->toArray(), $urlCode, $emaiUser);
     }
 
+
     public function thongtinve($id, $macodeve)
     {
-        $ve = Ve::query()->with([
+        $ve = Ve::query()->withTrashed()->with([
             'chiTietVe',
             'suatChieu' => function ($query) {
                 $query->select('id', 'phong_chieu_id', 'phim_id', DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
@@ -443,6 +464,8 @@ class DatVeController extends Controller
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
 
+
+
         $partnerCode = 'MOMOBKUN20180529';
         $accessKey = 'klm05TvNBzhg7h7j';
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
@@ -453,6 +476,8 @@ class DatVeController extends Controller
         $redirectUrl = asset("luu-thong-tin-ve");
         $ipnUrl = asset("luu-thong-tin-ve");
         $extraData = (string) $codeId;
+
+
 
 
         $requestId = time() . "";
@@ -479,6 +504,7 @@ class DatVeController extends Controller
         $result = $this->execPostRequest($endpoint, json_encode($data));;
         $jsonResult = json_decode($result, true);  // decode json
 
+
         //Just a example, please check more in there
         return redirect()->to($jsonResult['payUrl']);
     }
@@ -487,12 +513,15 @@ class DatVeController extends Controller
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = asset("luu-thong-tin-ve");
-        $vnp_TmnCode = "MOCKDTJC"; //Mã website tại VNPAY 
+        $vnp_TmnCode = "MOCKDTJC"; //Mã website tại VNPAY
         $vnp_HashSecret = "Y0MT8SQNMSCKZZMNFKJY12S3MMCSADXZ"; //Chuỗi bí mật
 
+
         $vnp_TxnRef = $uuid; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+
 
         $vnp_OrderInfo = json_encode([
             'description' => 'VNPAY',
@@ -556,12 +585,14 @@ class DatVeController extends Controller
             // "vnp_Inv_Type" => $vnp_Inv_Type
         );
 
+
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }
         // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
         //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
         // }
+
 
         //var_dump($inputData);
         ksort($inputData);
@@ -577,6 +608,7 @@ class DatVeController extends Controller
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
+
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
@@ -624,11 +656,13 @@ class DatVeController extends Controller
             . "|" . $order['app_time'] . "|" . $order['embed_data'] . "|" . $order['item'];
         $order['mac'] = hash_hmac("sha256", $data, $config['key1']);
 
+
         $context = stream_context_create([
             "http" => [
                 "header" => "Content-Type: application/x-www-form-urlencoded\r\n",
                 "method" => "POST",
                 "content" => http_build_query($order),
+
 
             ],
         ]);
@@ -647,6 +681,7 @@ class DatVeController extends Controller
             return back()->with('errorOrder', 'Tổng số xu trong tài khoản không đủ để thực hiện thanh toán');
         }
 
+
         $urluutt = asset('luu-thong-tin-ve?' . 'amount=' . $request->tongGia . '&xu_orderid=' . $uuid . '&magiamgia=' . $request->magiamgia . "&thanhtoanxu=XU");
         return redirect()->to($urluutt);
     }
@@ -656,9 +691,11 @@ class DatVeController extends Controller
         $qrCode->setSize(300); // Kích thước QR code
         $qrCode->setMargin(10); // Viền QR code
 
+
         // Chuyển QR code sang định dạng SVG
         $writer = new SvgWriter();
         $result = $writer->write($qrCode);
+
 
         return $result->getString();
         //$this->guiThongtinVeMail(57);
