@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\NhanVien;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\NguoiDung;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ThongTinController extends Controller
 {
-/**
-     * Cập nhật thông tin cá nhân.
-     */
     public function show()
     {
         $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
@@ -27,6 +24,7 @@ class ThongTinController extends Controller
     public function update(Request $request, string $id)
     {
         if ($request->isMethod('PUT')) {
+            //dd($request->all());
             $params = $request->except('_token', '_method');
 
             $thongTin = NguoiDung::findOrFail($id);
@@ -36,8 +34,10 @@ class ThongTinController extends Controller
                 if ($thongTin->anh_dai_dien && Storage::disk('public')->exists($thongTin->anh_dai_dien)) {
                     Storage::disk('public')->delete($thongTin->anh_dai_dien);
                 }
+                //dd($request->input('anh_dai_dien'));
                 // Lưu ảnh mới
-                $filepath = $request->file('anh_dai_dien')->store('uploads/thongtincanhans', 'public');
+                $filepath = $request->file('anh_dai_dien')->store('profile_images', 'public');
+               // $filepath = $request->file('anh_dai_dien')->store('uploads/thongtincanhans', 'public');
             } else {
                 // Giữ lại đường dẫn ảnh cũ nếu không có ảnh mới được tải lên
                 $filepath = $thongTin->anh_dai_dien;

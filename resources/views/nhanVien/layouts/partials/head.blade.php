@@ -36,7 +36,7 @@
     @if (Route::currentRouteName() === 'admin.quanLyGhecuaphong')
         <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/seatSelectPage.css') }}" />
     @endif
-
+    <link rel="stylesheet" href="{{ asset('kaiadmin-lite-1.2.0/assets/css/seatSelectPage.css') }}" />
     <!-- Tải jQuery trước -->
     <script src="{{ asset('kaiadmin-lite-1.2.0/assets/js/core/jquery-3.7.1.min.js') }}"></script>
 

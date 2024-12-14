@@ -80,6 +80,5 @@
 
             <div class="container">
                 @yield('content')
-                @yield('js')
             </div>
         @endsection

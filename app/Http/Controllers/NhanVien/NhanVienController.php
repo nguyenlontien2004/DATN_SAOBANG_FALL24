@@ -9,17 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class NhanVienController extends Controller
 {
-    /**
-     * Hiển thị form đăng nhập cho nhân viên
-     */
     public function formDangNhap()
     {
         return view('nhanVien.auth.auth'); // Giao diện đăng nhập của nhân viên
     }
-
-    /**
-     * Xử lý đăng nhập cho nhân viên
-     */
     public function dangNhap(Request $request)
     {
         // Validate dữ liệu đầu vào
@@ -39,7 +32,7 @@ class NhanVienController extends Controller
     
             // Kiểm tra quyền nhân viên
             if ($user->nhanVien()) {
-                return redirect()->route('nhanvien.index')->with('success', 'Đăng nhập thành công!');
+                return redirect('nhanvien/')->with('success', 'Đăng nhập thành công!');
             }
     
             // Nếu không phải nhân viên, đăng xuất và thông báo lỗi
@@ -54,10 +47,6 @@ class NhanVienController extends Controller
             'error' => 'Email hoặc mật khẩu không chính xác.',
         ])->withInput();
     }
-
-    /**
-     * Xử lý đăng xuất cho nhân viên
-     */
     public function dangXuat(Request $request)
     {
         Auth::logout();
@@ -68,7 +57,5 @@ class NhanVienController extends Controller
         return redirect()->route('nhanvien.form');
     }
 
-    // Các hàm đăng nhập Google/Facebook có thể được triển khai sau
-    public function loginGoogle() {}
-    public function loginFacebook() {}
+
 }

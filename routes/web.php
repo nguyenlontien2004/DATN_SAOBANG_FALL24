@@ -155,7 +155,9 @@ Route::prefix('admin')->group(function () {
   Route::resource('rap', RapController::class);
   Route::resource('suatChieu', SuatChieuController::class);
 });
+
 // Nhân viên 
+Route::get('check-qrCode/{id}', [App\Http\Controllers\NhanVien\KiemTraVeController::class, 'checkQrCode']);
 // Route không cần middleware
 Route::prefix('nhanvien')->group(function () {
   Route::get('login', [NhanVienController::class, 'formDangNhap'])->name('nhanvien.form');
@@ -165,95 +167,54 @@ Route::prefix('nhanvien')->group(function () {
 // Route cần middleware
 Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () {
   Route::post('logout', [NhanVienController::class, 'dangXuat'])->name('nhanvien.dangxuat');
-  Route::get('/', [NhanVienDashboardController::class, 'dashboard'])->name('nhanvien.index');
+  Route::get('/', [App\Http\Controllers\NhanVien\DashboardController::class, 'dashboard'])->name('nhanvien.dashboard.index');
+
+  // quét vé
+  Route::get('/quet-ve', [App\Http\Controllers\NhanVien\KiemTraVeController::class, 'quetve'])->name('nhanvien.quetve');
+  Route::get('/trang-kiem-tra-ve-qua-ma-code', [App\Http\Controllers\NhanVien\KiemTraVeController::class, 'viewcheckmacodeve'])->name('nhanvien.viewcheckmacodeve');
+  Route::post('/check-ma-ve-code', [App\Http\Controllers\NhanVien\KiemTraVeController::class, 'checkmacodeve'])->name('nhanvien.checkmacodeve');
+  // quét đồ ăn
+  Route::get('/quet-do-an', [App\Http\Controllers\NhanVien\KiemTraDoAnControllerzz::class, 'quetdoan'])->name('nhanvien.quetdoan');
+  Route::get('/ma-code-do-an', [App\Http\Controllers\NhanVien\KiemTraDoAnControllerzz::class, 'checkmacodedoan'])->name('nhanvien.checkmacodedoan');
+  Route::post('/check-ma-code-do-an', [App\Http\Controllers\NhanVien\KiemTraDoAnControllerzz::class, 'kiemtradoantheomacode'])->name('nhanvien.kiemtradoanpost');
+
+  // Suất chiếu
+  Route::resource('nhanvienSuatchieu', App\Http\Controllers\NhanVien\SuatChieuController::class);
+  Route::delete('suatChieu/{id}/soft-delete', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'softDelete'])->name('nhanvien.suatchieu.softDelete');
+  Route::get('/suatChieu/listSoftDelete/list', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'listSoftDelete'])->name('nhanvien.suatChieu.listSoftDelete');
+  Route::patch('/suatChieu/restore/{id}', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'restore'])->name('nhanvien.suatchieu.restore');
+  Route::post('admin/huy-suat-chieu/{id}', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'huysuatchieu'])->name('nhanvien.huysuatchieu');
+
+  //Route::get('/danh-sach-suat-chieu', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'index'])->name('nhanvien.suatchieu.index');
+  // Route::get('/xem-suat-chieu/{id}', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'show'])->name('nhanvien.suatchieu.show');
+  // Route::get('/them-moi-suat-chieu', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'create'])->name('nhanvien.suatchieu.create');
+  // Route::post('/them-moi-suat-chieu/store', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'store'])->name('nhanvien.suatchieu.store');
+  // Route::get('/sua-moi-suat-chieu/{id}', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'edit'])->name('nhanvien.suatchieu.edit');
+  // Route::put('/sua-moi-suat-chieu/{id}', [App\Http\Controllers\NhanVien\SuatChieuController::class, 'update'])->name('nhanvien.suatchieu.update');
 
   // Đồ ăn
-  Route::get('/danh-sach-do-an', [NhanVienDoAnController::class, 'index'])->name('do-an.index');
-  Route::get('/do-an/create', [NhanVienDoAnController::class, 'create'])->name('do-an.create');
-  Route::post('/do-an/store', [NhanVienDoAnController::class, 'store'])->name('do-an.store');
-  Route::get('/do-an/show/{id}', [NhanVienDoAnController::class, 'show'])->name('do-an.show');
-  Route::get('/do-an/{id}/edit', [NhanVienDoAnController::class, 'edit'])->name('do-an.edit');
-  Route::put('/do-an/{id}/update', [NhanVienDoAnController::class, 'update'])->name('do-an.update');
-  Route::delete('/do-an/{id}/destroy', [NhanVienDoAnController::class, 'destroy'])->name('do-an.destroy');
+  Route::get('/danh-sach-do-an', [NhanVienDoAnController::class, 'index'])->name('nhanvien.do-an.index');
+  Route::get('/do-an/create', [NhanVienDoAnController::class, 'create'])->name('nhanvien.do-an.create');
+  Route::post('/do-an/store', [NhanVienDoAnController::class, 'store'])->name('nhanvien.do-an.store');
+  Route::get('/do-an/show/{id}', [NhanVienDoAnController::class, 'show'])->name('nhanvien.do-an.show');
+  Route::get('/do-an/{id}/edit', [NhanVienDoAnController::class, 'edit'])->name('nhanviendoan.do-an.edit');
+  Route::put('/do-an/{id}/update', [NhanVienDoAnController::class, 'update'])->name('nhanvien.do-an.update');
+  Route::delete('/do-an/{id}/destroy', [NhanVienDoAnController::class, 'destroy'])->name('nhanvien.do-an.destroy');
 
   // Thông tin nhân viên
   Route::get('/profile', [ThongTinController::class, 'show'])->name('profile.show');
-  Route::get('/do-an/{id}/edit', [ThongTinController::class, 'edit'])->name('profile.edit');
-  Route::put('/do-an/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
+  Route::get('/profile/{id}/edit', [ThongTinController::class, 'edit'])->name('profile.edit');
+  Route::put('/profile/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
 
   // Quản lí vé
+  Route::get('/ve/danh-sach-ve', [NhanVienVeController::class, 'index'])->name('nhanvien.ve.danhsachve'); // Hiển thị form mua vé
   Route::get('/ve/mua', [NhanVienVeController::class, 'hienThiFormMuaVe'])->name('ve.mua'); // Hiển thị form mua vé
   Route::post('/ve/mua', [NhanVienVeController::class, 'luuVe'])->name('ve.luu'); // Lưu vé mới
-  Route::get('/ve/chua-thanh-toan', [NhanVienVeController::class, 'danhSachVe'])->name('ve.danh-sach-ve'); // Danh sách vé chưa thanh toán
+  Route::get('/ve/chua-thanh-toan', [NhanVienVeController::class, 'danhSachVeChuaThanhToan'])->name('ve.chua-thanh-toan'); // Danh sách vé chưa thanh toán
+  Route::post('/ve/thanh-toan/{ve}', [NhanVienVeController::class, 'thanhToanVaInVe'])->name('ve.thanh-toan'); // Thanh toán và in vé
+  Route::get('/ve/qr/{ve}', [NhanVienVeController::class, 'inMaQR'])->name('ve.qr'); // In mã QR cho vé
   Route::put('/ve/cap-nhat-trang-thai/{ve}', [NhanVienVeController::class, 'capNhatTrangThaiVe'])->name('ve.cap-nhat-trang-thai'); // Cập nhật trạng thái vé
-  Route::get('/check-qrCode/{id}', [NhanVienVeController::class, 'checkQrCode']);
-
-
-   // Bài viết tin tức
-   Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
-   Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
-   Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
- 
-   // Danh mục bài viết tin tức
-   Route::resource('danh-muc-bai-viet-tin-tuc', DanhMucBaiVietTinTucController::class);
-   Route::post('admin/danh-muc-bai-viet-tin-tuc/{id}/restore', [DanhMucBaiVietTinTucController::class, 'restore'])->name('danh-muc-bai-viet-tin-tuc.restore');
-   Route::delete('admin/danh-muc-bai-viet-tin-tuc/{id}/force-delete', [DanhMucBaiVietTinTucController::class, 'forceDelete'])->name('danh-muc-bai-viet-tin-tuc.forDelete');
- 
-   // Vị trí banner quảng cáo
-   Route::resource('banner-quang-cao', BannerQuangCaoController::class);
-   Route::post('admin/banner-quang-cao/{id}/restore', [BannerQuangCaoController::class, 'restore'])->name('banner-quang-cao.restore');
-   Route::delete('admin/banner-quang-cao/{id}/force-delete', [BannerQuangCaoController::class, 'forceDelete'])->name('banner-quang-cao.forDelete');
- 
-   // Ảnh banner quảng cáo
-   Route::resource('anh-banner-quang-cao', AnhBannerQuangCaoController::class);
-   Route::post('admin/anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
-   Route::delete('admin/anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
- 
-   // Mã giảm giá
-   Route::resource('ma_giam_gia', MaGiamGiaController::class);
-   Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
-   Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
-
-   //start route phòng chiếu 
-  Route::get('danh-sach-phong-chieu', [PhongChieuController::class, 'index'])->name('admin.phongChieu');
-  Route::get('them-phong-chieu', [PhongChieuController::class, 'create'])->name('admin.themphongChieu');
-  Route::post('them-phong-chieu', [PhongChieuController::class, 'store'])->name('admin.storephongChieu');
-  Route::get('sua-phong-chieu/{id}', [PhongChieuController::class, 'edit'])->name('admin.editphongChieu');
-  Route::post('updata-phong-chieu/{id}', [PhongChieuController::class, 'update'])->name('admin.updataphongChieu');
-  Route::get('softDelete-phong-chieu/{id}', [PhongChieuController::class, 'delete'])->name('admin.softDeletehongChieu');
-  Route::get('danh-sach-phong-chieu-an', [PhongChieuController::class, 'listSoftDelete'])->name('admin.listSoftDeletehongChieu');
-  Route::get('restore-phong-chieu/{id}', [PhongChieuController::class, 'restore'])->name('admin.restorePhongchieu');
-  Route::get('phong-chieu/quan-ly-ghe/{id}', [PhongChieuController::class, 'quanLyGhecuaphong'])->name('admin.quanLyGhecuaphong');
-
-  // route thêm ghế cho phòng chiếu
-  Route::get('get/ghe/phong-chieu/{id}',                 [GheNgoiController::class, 'index'])->name('admin.showSeats');
-  Route::post('post/them-ghe/phong-chieu/{id}',          [GheNgoiController::class, 'store'])->name('admin.storeGhe');
-  Route::post('delete/ghe/phong-chieu/',                 [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
-  Route::get('get/loai-ghe/phong-chieu/{id}/{type}',     [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
-  Route::post('post/sua-ghe/phong-chieu/{id}',           [GheNgoiController::class, 'update'])->name('admin.update');
-
-  // route vé 
-  Route::get('danh-sach-ve/',                            [VeController::class, 'index'])->name('admin.ticket.index');
-  Route::get('chi-tiet-ve/{id}',                         [VeController::class, 'detail'])->name('admin.ticket.detail');
-  Route::get('tao-ve-gia-lap/',                          [VeController::class, 'create'])->name('admin.ticket.create');
-
-  // Route::resources('phims');
-  Route::resource('daoDien', App\Http\Controllers\DaoDienController::class);
-  Route::resource('phim', App\Http\Controllers\PhimController::class);
-  Route::resource('dienVien', App\Http\Controllers\DienVienController::class);
-  Route::post('/admin/dienVien/uploadMoTa', [DienVienController::class, 'upload'])->name('admin.dienVien.upload');
-  Route::post('/admin/phim/uploadMoTa', [PhimController::class, 'upload'])->name('admin.phim.upload');
-  Route::post('/admin/daodien/uploadMoTa', [DaoDienController::class, 'upload'])->name('admin.daodien.upload');
-
-  Route::resource('theLoaiPhim', App\Http\Controllers\TheLoaiPhimController::class);
-  Route::resource('rap', App\Http\Controllers\RapController::class);
-  Route::resource('suatChieu', App\Http\Controllers\SuatChieuController::class);
-
-  /// Phần chi tiết suất chiếu
-  Route::get('chi-tiet-suat-chieu/',    [ChiTietLichChieuController::class, 'index'])->name('admin.chitietsuatchieu');
-  Route::get('phim/phong-chieu/{id}',    [App\Http\Controllers\Admin\ChiTietLichChieuController::class, 'phongchieutheophim'])->name('admin.suatchieutheophim');
-  Route::get('suat-chieu/phim/{idphim}/phong-chieu/{idphongchieu}',    [App\Http\Controllers\Admin\ChiTietLichChieuController::class, 'suatchieutheophongvaphim']);
-  });
+});
 
 
 // Đăng ký

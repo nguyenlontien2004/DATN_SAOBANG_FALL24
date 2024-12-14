@@ -3,36 +3,25 @@
 namespace App\Http\Controllers\NhanVien;
 
 use App\Models\DoAn;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreDoAnRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateDoAnRequest;
 
 class DoAnController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $title = "Danh sách món ăn";
         $listDoAn = DoAn::query()->orderByDesc('id')->paginate(5);
         return view('nhanVien.doans.index', compact('title', 'listDoAn'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $title = "Thêm món ăn";
         return view('nhanVien.doans.create', compact('title'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDoAnRequest $request)
     {
         if ($request->isMethod('POST')) {
@@ -57,18 +46,6 @@ class DoAnController extends Controller
             return redirect()->route('do-an.index')->with('success', 'Thêm dữ liệu thành công');
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(DoAn $doAn)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $title = "Sửa thông tin món ăn";
@@ -76,10 +53,6 @@ class DoAnController extends Controller
         $doAn = DoAn::findOrFail($id);
         return view('nhanVien.doans.edit', compact('title', 'doAn'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDoAnRequest $request, string $id)
     {
         if ($request->isMethod('PUT')) {
@@ -108,10 +81,6 @@ class DoAnController extends Controller
             return redirect()->route('do-an.index')->with('success', 'Cập nhật dữ liệu thành công');
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
 

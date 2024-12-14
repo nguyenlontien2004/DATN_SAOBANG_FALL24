@@ -1,3 +1,4 @@
+
 @extends('nhanVien.index')
 
 @section('title')

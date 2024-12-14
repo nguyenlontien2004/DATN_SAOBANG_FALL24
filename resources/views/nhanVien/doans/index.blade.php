@@ -60,9 +60,9 @@
                                                         {{ $item->trang_thai == true ? 'Hiển thị' : 'Ẩn' }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('do-an.edit', $item->id) }}">Sửa</a>
+                                                        <a href="{{ route('nhanviendoan.do-an.edit',$item->id) }}">Sửa</a>
 
-                                                        <form action="{{ route('do-an.destroy', $item->id) }}"
+                                                        <form action="{{ route('nhanvien.do-an.destroy', $item->id) }}"
                                                             method="post" class="d-inline"
                                                             onsubmit="return confirm('Bạn có chắc chắn không?')">
                                                             @csrf

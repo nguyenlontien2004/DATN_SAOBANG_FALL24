@@ -5,15 +5,46 @@ namespace App\Http\Controllers\NhanVien;
 use App\Models\Ve;
 use App\Models\GheNgoi;
 use App\Models\ChiTietVe;
-use Endroid\QrCode\QrCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
-
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class VeController extends Controller
 {
+    public function index(){
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
+        $litsTicket = Ve::query()
+        ->withTrashed()
+        ->with([
+            'maGiamGia',
+            'suatChieu' => function ($query) {
+                $query->select(
+                    'id',
+                    'phong_chieu_id',
+                    'phim_id',
+                    'ngay',
+                    DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"),
+                    DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc")
+                )
+                    ->with([
+                        'phongChieu:id,rap_id,ten_phong_chieu',
+                        'phim:id,ten_phim,thoi_luong,ngay_khoi_chieu'
+                    ]);
+            },
+            'chiTietVe' => function ($query) {
+                $query->select(['id', 've_id', 'ghe_ngoi_id'])->with([
+                    'seat:id,phong_chieu_id,the_loai,so_hieu_ghe,hang_ghe,isDoubleChair',
+                ]);
+            },
+            'user:id,ho_ten,email'
+        ])->get();
+        //dd($litsTicket->toArray());
+        return view('nhanvien.ve.' . __FUNCTION__, compact(['litsTicket', 'curdate', 'currentTime']));
+    }
     public function hienThiFormMuaVe()
     {
         $gheNgois = GheNgoi::where('trang_thai', 0)->get(); // Lấy ghế chưa được đặt
@@ -44,16 +75,49 @@ class VeController extends Controller
             ]);
         }
 
-        return redirect()->route('ve.danh-sach-ve')->with('success', 'Vé đã được lưu.');
+        return redirect()->route('ve.chua-thanh-toan')->with('success', 'Vé đã được lưu.');
     }
 
-    public function danhSachVe()
+    public function danhSachVeChuaThanhToan()
     {
         $ves = Ve::with('detailTicket')->where('trang_thai', 0)->get(); // Lấy vé chưa thanh toán
-        return view('nhanvien.ve.danh-sach-ve', compact('ves'));
+        return view('nhanvien.ve.danh-sach-chua-thanh-toan', compact('ves'));
     }
 
+    public function thanhToanVaInVe(Ve $ve)
+    {
+        $ve->update([
+            'trang_thai' => 1, // Đã thanh toán
+        ]);
 
+        // Cập nhật trạng thái in cho chi tiết vé
+        foreach ($ve->detailTicket as $chiTietVe) {
+            $chiTietVe->update(['trang_thai' => 1]); // Đã in
+        }
+
+        return redirect()->route('ve.qr', $ve)->with('success', 'Thanh toán và in vé thành công.');
+    }
+
+    public function inMaQR(Ve $ve)
+    {
+        // Tạo URL từ route
+        $url = route('ve.cap-nhat-trang-thai', ['ve' => $ve->id]);
+
+        // Tạo đối tượng QR Code
+        $qrCode = new QrCode($url); // Sử dụng QrCode trực tiếp
+
+        // Tùy chỉnh kích thước và lề (nếu cần)
+        $qrCode->setSize(200);
+        $qrCode->setMargin(10);
+
+        // Lưu ảnh QR vào thư mục public (nếu cần)
+        $path = public_path('qrcodes/' . $ve->id . '.png');
+        $writer = new PngWriter(); // Dùng PngWriter để lưu ảnh
+        // $writer->writeFile($qrCode, $path);
+
+        // Trả về view với đường dẫn của mã QR
+        return view('nhanvien.ve.ma-qr', ['ve' => $ve, 'qrCodePath' => $path]);
+    }
     public function capNhatTrangThaiVe(Request $request, Ve $ve)
     {
         $request->validate([
@@ -64,31 +128,5 @@ class VeController extends Controller
 
         return redirect()->route('ve.chua-thanh-toan')->with('success', 'Trạng thái vé đã được cập nhật.');
     }
-
-    public function checkQrCode($id)
-{
-    try {
-        // Tìm vé theo ID
-        $ve = Ve::with(['showtime', 'showtime.screeningRoom', 'showtime.movie'])->find($id);
-
-        if ($ve) {
-            return response()->json([
-                'id' => $ve->id,
-                'phim' => $ve->showtime?->movie?->ten_phim ?? 'Không xác định',
-                'phong_chieu' => $ve->showtime?->screeningRoom?->ten_phong_chieu ?? 'Không xác định',
-                'suat_chieu_id' => $ve->suat_chieu_id,
-                'ngay_thanh_toan' => $ve->ngay_thanh_toan,
-                'tong_tien' => $ve->tong_tien,
-                'phuong_thuc_thanh_toan' => $ve->phuong_thuc_thanh_toan,
-            ]);
-        } else {
-            Log::warning("Không tìm thấy vé với ID: $id");
-            return response()->json(['message' => 'Không tìm thấy thông tin vé!'], 404);
-        }
-    } catch (\Exception $e) {
-        Log::error("Lỗi khi truy vấn vé: " . $e->getMessage());
-        return response()->json(['message' => 'Lỗi hệ thống. Vui lòng thử lại sau!'], 500);
-    }
-}
 
 }
