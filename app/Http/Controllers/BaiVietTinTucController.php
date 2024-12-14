@@ -19,7 +19,7 @@ class BaiVietTinTucController extends Controller
     {
         $baiviet = BaiVietTinTuc::withTrashed()
             ->with('danhMuc')->latest('id')->paginate(6);
-        return view('admin.contents.baiviettintuc.list', compact('baiviet'));
+        return view('nhanVien.baiviettintuc.list', compact('baiviet'));
     }
 
     /**
@@ -29,7 +29,7 @@ class BaiVietTinTucController extends Controller
     {
         $danhmuc = DanhMucBaiVietTinTuc::all();
 
-        return view('admin.contents.baiviettintuc.add', compact('danhmuc'));
+        return view('nhanVien.baiviettintuc.add', compact('danhmuc'));
     }
 
     /**
@@ -59,7 +59,7 @@ class BaiVietTinTucController extends Controller
     public function show(BaiVietTinTuc $baiVietTinTuc)
     {
         $danhmuc = DanhMucBaiVietTinTuc::all();
-        return view('admin.contents.baiviettintuc.show', compact('baiVietTinTuc', 'danhmuc'));
+        return view('nhanVien.baiviettintuc.show', compact('baiVietTinTuc', 'danhmuc'));
     }
 
     /**
@@ -68,7 +68,7 @@ class BaiVietTinTucController extends Controller
     public function edit(BaiVietTinTuc $baiVietTinTuc)
     {
         $danhmuc = DanhMucBaiVietTinTuc::all();
-        return view('admin.contents.baiviettintuc.edit', compact('baiVietTinTuc', 'danhmuc'));
+        return view('nhanVien.baiviettintuc.edit', compact('baiVietTinTuc', 'danhmuc'));
     }
 
     /**

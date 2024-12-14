@@ -14,7 +14,7 @@ class DanhMucBaiVietTinTucController extends Controller
     public function index()
     {
         $danhmuc = DanhMucBaiVietTinTuc::withTrashed()->get();
-        return view('admin.contents.danhmucbaiviet.list', compact('danhmuc'));
+        return view('nhanVien.danhmucbaiviet.list', compact('danhmuc'));
     }
 
     /**
@@ -22,7 +22,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function create()
     {
-        return view('admin.contents.danhmucbaiviet.add');
+        return view('nhanVien.danhmucbaiviet.add');
     }
 
     /**
@@ -41,7 +41,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function show(DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        return view('admin.contents.danhmucbaiviet.show', compact('danhMucBaiVietTinTuc'));
+        return view('nhanVien.danhmucbaiviet.show', compact('danhMucBaiVietTinTuc'));
     }
 
     /**
@@ -49,7 +49,7 @@ class DanhMucBaiVietTinTucController extends Controller
      */
     public function edit(DanhMucBaiVietTinTuc $danhMucBaiVietTinTuc)
     {
-        return view('admin.contents.danhmucbaiviet.edit', compact('danhMucBaiVietTinTuc'));
+        return view('nhanVien.danhmucbaiviet.edit', compact('danhMucBaiVietTinTuc'));
     }
 
     /**

@@ -14,7 +14,7 @@ class BannerQuangCaoController extends Controller
     public function index()
     {
         $banner = BannerQuangCao::withTrashed()->get();
-        return view('admin.contents.bannerquangcao.list', compact('banner'));
+        return view('nhanVien.bannerquangcao.list', compact('banner'));
     }
 
     /**
@@ -22,7 +22,7 @@ class BannerQuangCaoController extends Controller
      */
     public function create()
     {
-        return view('admin.contents.bannerquangcao.add');
+        return view('nhanVien.bannerquangcao.add');
     }
 
     /**
@@ -41,7 +41,7 @@ class BannerQuangCaoController extends Controller
      */
     public function show(BannerQuangCao $bannerQuangCao)
     {
-        return view('admin.contents.bannerquangcao.show', compact('bannerQuangCao'));
+        return view('nhanVien.bannerquangcao.show', compact('bannerQuangCao'));
     }
 
     /**
@@ -49,7 +49,7 @@ class BannerQuangCaoController extends Controller
      */
     public function edit(BannerQuangCao $bannerQuangCao)
     {
-        return view('admin.contents.bannerquangcao.edit', compact('bannerQuangCao'));
+        return view('nhanVien.bannerquangcao.edit', compact('bannerQuangCao'));
     }
 
     /**

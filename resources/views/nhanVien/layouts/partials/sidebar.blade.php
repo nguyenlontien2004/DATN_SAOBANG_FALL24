@@ -69,6 +69,48 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#charts">
+                        <i class="fas fa-newspaper"></i>
+                        <p>Bài viết tin tức</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="charts">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('danh-muc-bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách danh mục bài viết tin tức</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('bai-viet-tin-tuc.index') }}">
+                                    <span class="sub-item">Danh sách bài viết tin tức</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#banner">
+                        <i class="fas fa-flag"></i>
+                        <p>Banner quảng cáo</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="banner">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('banner-quang-cao.index') }}">
+                                    <span class="sub-item">Danh sách vị trí banner quảng cáo</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('anh-banner.index') }}">
+                                    <span class="sub-item">Danh sách ảnh banner quảng cáo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

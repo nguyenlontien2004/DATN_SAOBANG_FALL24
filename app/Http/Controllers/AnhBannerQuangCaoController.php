@@ -17,7 +17,7 @@ class AnhBannerQuangCaoController extends Controller
     public function index()
     {
         $anhbanner = AnhBannerQuangCao::withTrashed()->with('banner')->latest('id')->paginate(6);
-        return view('admin.contents.anhbanner.list', compact('anhbanner'));
+        return view('nhanVien.banner.list', compact('anhbanner'));
     }
 
     /**
@@ -27,7 +27,7 @@ class AnhBannerQuangCaoController extends Controller
     {
         $banner = BannerQuangCao::all();
 
-        return view('admin.contents.anhbanner.add', compact('banner'));
+        return view('nhanVien.banner.add', compact('banner'));
     }
 
     /**
@@ -57,7 +57,7 @@ class AnhBannerQuangCaoController extends Controller
     public function show(AnhBannerQuangCao $anhBannerQuangCao)
     {
         $vitri = BannerQuangCao::all();
-        return view('admin.contents.anhbanner.show', compact('anhBannerQuangCao', 'vitri'));
+        return view('nhanVien.banner.show', compact('anhBannerQuangCao', 'vitri'));
     }
 
     /**
@@ -66,7 +66,7 @@ class AnhBannerQuangCaoController extends Controller
     public function edit(AnhBannerQuangCao $anhBannerQuangCao)
     {
         $vitri = BannerQuangCao::all();
-        return view('admin.contents.anhbanner.edit', compact('anhBannerQuangCao', 'vitri'));
+        return view('nhanVien.banner.edit', compact('anhBannerQuangCao', 'vitri'));
     }
 
     /**

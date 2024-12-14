@@ -207,7 +207,29 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::put('/profile/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
 
   // Quản lí vé
-  Route::get('/ve/danh-sach-ve', [NhanVienVeController::class, 'index'])->name('nhanvien.ve.danhsachve'); // Hiển thị form mua vé
+  Route::get('/ve/danh-sach-ve', [NhanVienVeController::class, 'index'])->name('nhanvien.ve.danhsachve'); 
+
+  // Danh mục bài viết tin tức
+  Route::resource('danh-muc-bai-viet-tin-tuc', DanhMucBaiVietTinTucController::class);
+  Route::post('admin/danh-muc-bai-viet-tin-tuc/{id}/restore', [DanhMucBaiVietTinTucController::class, 'restore'])->name('danh-muc-bai-viet-tin-tuc.restore');
+  Route::delete('admin/danh-muc-bai-viet-tin-tuc/{id}/force-delete', [DanhMucBaiVietTinTucController::class, 'forceDelete'])->name('danh-muc-bai-viet-tin-tuc.forDelete');
+
+  // Bài viết tin tức
+  Route::resource('bai-viet-tin-tuc', BaiVietTinTucController::class);
+  Route::post('admin/bai-viet-tin-tuc/{baiVietTinTuc}/restore', [BaiVietTinTucController::class, 'restore'])->name('bai-viet-tin-tuc.restore');
+  Route::delete('admin/bai-viet-tin-tuc/{baiVietTinTuc}/force-delete', [BaiVietTinTucController::class, 'forceDelete'])->name('bai-viet-tin-tuc.forDelete');
+
+  // Vị trí banner quảng cáo
+  Route::resource('banner-quang-cao', BannerQuangCaoController::class);
+  Route::post('admin/banner-quang-cao/{id}/restore', [BannerQuangCaoController::class, 'restore'])->name('banner-quang-cao.restore');
+  Route::delete('admin/banner-quang-cao/{id}/force-delete', [BannerQuangCaoController::class, 'forceDelete'])->name('banner-quang-cao.forDelete');
+
+
+   // Ảnh banner quảng cáo
+   Route::resource('anh-banner', AnhBannerQuangCaoController::class);
+   Route::post('anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
+   Route::delete('anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
+ 
 });
 
 
