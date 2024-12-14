@@ -91,6 +91,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('ma_giam_gia.index') }}">
+                        <i class="fas fa-tags"></i>
+                        <p>Mã giảm giá</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#banner">
                         <i class="fas fa-flag"></i>
                         <p>Banner quảng cáo</p>

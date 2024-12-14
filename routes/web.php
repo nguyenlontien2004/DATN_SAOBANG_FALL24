@@ -207,7 +207,13 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::put('/profile/{id}/update', [ThongTinController::class, 'update'])->name('profile.update');
 
   // Quản lí vé
-  Route::get('/ve/danh-sach-ve', [NhanVienVeController::class, 'index'])->name('nhanvien.ve.danhsachve'); 
+  Route::get('/ve/danh-sach-ve', [NhanVienVeController::class, 'index'])->name('nhanvien.ve.danhsachve');
+
+  // Mã giảm giá
+  Route::resource('ma_giam_gia', MaGiamGiaController::class);
+  Route::post('admin/ma_giam_gia/{id}/restore', [MaGiamGiaController::class, 'restore'])->name('ma_giam_gia.restore');
+  Route::delete('admin/ma_giam_gia/{id}/force-delete', [MaGiamGiaController::class, 'forceDelete'])->name('ma_giam_gia.forceDelete');
+
 
   // Danh mục bài viết tin tức
   Route::resource('danh-muc-bai-viet-tin-tuc', DanhMucBaiVietTinTucController::class);
@@ -225,11 +231,10 @@ Route::prefix('nhanvien')->middleware(['checkNhanVienRole'])->group(function () 
   Route::delete('admin/banner-quang-cao/{id}/force-delete', [BannerQuangCaoController::class, 'forceDelete'])->name('banner-quang-cao.forDelete');
 
 
-   // Ảnh banner quảng cáo
-   Route::resource('anh-banner', AnhBannerQuangCaoController::class);
-   Route::post('anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
-   Route::delete('anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
- 
+  // Ảnh banner quảng cáo
+  Route::resource('anh-banner', AnhBannerQuangCaoController::class);
+  Route::post('anh-banner-quang-cao/{id}/restore', [AnhBannerQuangCaoController::class, 'restore'])->name('anh-banner-quang-cao.restore');
+  Route::delete('anh-banner-quang-cao/{id}/force-delete', [AnhBannerQuangCaoController::class, 'forceDelete'])->name('anh-banner-quang-cao.forDelete');
 });
 
 

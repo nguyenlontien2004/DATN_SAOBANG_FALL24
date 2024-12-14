@@ -15,7 +15,7 @@ class MaGiamGiaController extends Controller
     public function index()
     {
         $magiamgia = MaGiamGia::withTrashed()->get();
-        return view('admin.contents.magiamgia.list', compact('magiamgia'));
+        return view('nhanVien.magiamgia.list', compact('magiamgia'));
     }
 
     /**
@@ -27,7 +27,7 @@ class MaGiamGiaController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         // ->paginate(1);
-        return view('admin.contents.magiamgia.add', compact('phim'));
+        return view('nhanVien.magiamgia.add', compact('phim'));
     }
 
     /**
@@ -52,7 +52,7 @@ class MaGiamGiaController extends Controller
     {
         $maGiamGia = MaGiamGia::findOrFail($id);
 
-        return view('admin.contents.magiamgia.show', compact('maGiamGia'));
+        return view('nhanVien.magiamgia.show', compact('maGiamGia'));
     }
 
     /**
@@ -64,7 +64,7 @@ class MaGiamGiaController extends Controller
         $maGiamGia = MaGiamGia::findOrFail($id);
 
         // Truyền mã giảm giá tìm được sang view
-        return view('admin.contents.magiamgia.edit', compact('maGiamGia'));
+        return view('nhanVien.magiamgia.edit', compact('maGiamGia'));
     }
 
     /**
