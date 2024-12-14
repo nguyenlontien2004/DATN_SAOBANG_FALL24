@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class DaoDien extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $fillable = [
         'ten_dao_dien',
         'nam_sinh',
@@ -16,6 +16,7 @@ class DaoDien extends Model
         'anh_dao_dien',
         'tieu_su',
         'trang_thai',
+        'deleted_at'
     ];
     public function phims()
     {

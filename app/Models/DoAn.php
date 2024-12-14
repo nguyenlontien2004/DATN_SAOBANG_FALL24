@@ -16,4 +16,9 @@ class DoAn extends Model
         'luot_mua',
         'trang_thai'
     ];
+    public function ves()
+    {
+        return $this->belongsToMany(Ve::class, 'doan_ve', 'doan_id', 've_id')
+            ->withPivot('so_luong');
+    }
 }

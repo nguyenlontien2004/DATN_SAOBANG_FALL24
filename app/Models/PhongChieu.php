@@ -18,6 +18,12 @@ class PhongChieu extends Model
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
+    // protected $appends = ['grouped_ghe_ngoi'];
+
+    // public function getGroupedGheNgoiAttribute()
+    // {
+    //     return $this->ghe_ngoi->groupBy('hang_ghe');
+    // }
     public function rap()
     {
         return $this->belongsTo(Rap::class);
@@ -29,5 +35,13 @@ class PhongChieu extends Model
     public function cinema()
     {
         return $this->belongsTo(Rap::class, 'rap_id');
+    }
+    public function ves()
+    {
+        return $this->hasManyThrough(Ve::class, SuatChieu::class, 'phong_chieu_id', 'suat_chieu_id');
+    }
+    public function suatChieu()
+    {
+        return $this->hasMany(SuatChieu::class);
     }
 }

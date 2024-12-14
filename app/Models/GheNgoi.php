@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GheNgoi extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     const TYPE_SEAT_OFTEN = 'thuong';
     const TYPE_SEAT_VIP = 'vip';
     const TYPE_SEAT_DOUBLE = 'doi';

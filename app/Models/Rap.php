@@ -17,4 +17,15 @@ class Rap extends Model
     protected $casts = [
         'trang_thai' => 'boolean',
     ];
+    public function suatChieu(){
+        return $this->hasManyThrough(SuatChieu::class,PhongChieu::class);
+    }
+    public function phongChieus()
+    {
+        return $this->hasMany(PhongChieu::class, 'rap_id');
+    }
+    public function ves()
+    {
+        return $this->hasManyThrough(Ve::class, SuatChieu::class, 'phong_chieu_id', 'suat_chieu_id');
+    }
 }

@@ -13,6 +13,7 @@ class BinhLuanPhim extends Model
         'nguoi_dung_id',
         'phim_id',
         'noi_dung',
+        'ngay_binh_luan'
     ];
     public function nguoiDung(){
         return $this->belongsTo(NguoiDung::class, 'nguoi_dung_id');

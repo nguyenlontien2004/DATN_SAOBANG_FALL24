@@ -12,22 +12,28 @@ class NguoiDung extends Authenticatable
     use HasFactory, SoftDeletes, Notifiable;
 
     const TYPE_ADMIN = 'admin';
-    const TYPE_MEMBER = 'member';
-    const TYPE_NHANVIEN = 'nhanvien'; 
 
+    const TYPE_MEMBER = 'member';
+
+    const TYPE_NHANVIEN = 'nhanvien'; 
 
     protected $fillable = [
         'ho_ten',
         'email',
         'so_dien_thoai',
-        'password',
         'anh_dai_dien',
+        'password',
+        'hinh_anh',
         'gioi_tinh',
         'dia_chi',
         'nam_sinh',
+        'ngay_dang_ky',
+        'huy_ve',
+        'gold',
         'trang_thai'
     ];
 
+    protected $hidden = ['password', 'remember_token'];
 
     public function role()
     {
@@ -36,15 +42,7 @@ class NguoiDung extends Authenticatable
 
     public function checkAdmin()
     {
-        if ($this->role->id == 1) {
-            return true;
-        }
-        return false;
-    }
-
-    public function checkNhanVien()
-    {
-        if ($this->role->id == 2) {
+        if ($this->role?->id == 1) {
             return true;
         }
         return false;

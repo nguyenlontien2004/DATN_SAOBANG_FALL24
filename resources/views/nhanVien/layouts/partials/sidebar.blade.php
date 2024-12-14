@@ -31,51 +31,22 @@
             <ul class="nav nav-secondary">
                 <li class="nav-item">
                     <a href="{{ route('nhanvienSuatchieu.index') }}">
-                        <i class="fas fa-utensils"></i>
+                        <i class="fas fa-film"></i>
                         <p>Quản lý suất chiếu</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#food">
+                    <a href="{{ route('nhanvien.do-an.index') }}">
                         <i class="fas fa-utensils"></i>
-                        <p>Quản lý đồ ăn</p>
-                        <span class="caret"></span>
+                        <p>Quản lý đồ ăn</p>   
                     </a>
-                    <div class="collapse" id="food">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('nhanvien.do-an.index') }}">
-                                    <span class="sub-item">Danh sách đồ ăn</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#ve">
+                    <a href="{{ route('nhanvien.ve.danhsachve') }}">
                         <i class="fas fa-ticket-alt"></i>
-                        <p>Quản lý vé</p>
-                        <span class="caret"></span>
+                        <p>Quản lý vé</p> 
                     </a>
-                    <div class="collapse" id="ve">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('nhanvien.ve.danhsachve') }}">
-                                    <span class="sub-item">Danh sách vé</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('ve.chua-thanh-toan') }}">
-                                    <span class="sub-item">Danh sách vé chưa quét</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('ve.mua') }}">
-                                    <span class="sub-item">Tạo vé</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                   
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#checkve">
