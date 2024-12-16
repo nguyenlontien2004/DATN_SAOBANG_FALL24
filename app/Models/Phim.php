@@ -35,17 +35,20 @@ class Phim extends Model
     {
         return $this->hasMany(SuatChieu::class, 'phim_id');
     }
-    public function binhLuans(){
+    public function binhLuans()
+    {
         return $this->hasMany(BinhLuanPhim::class, 'phim_id');
     }
-    public function danhGias(){
-        return $this->hasMany(DanhGia::class);
+    public function danhGias()
+    {
+        return $this->hasMany(DanhGia::class, 'phim_id', 'id');
     }
-    public function User(){
+    public function User()
+    {
         return $this->belongsTo(NguoiDung::class);
     }
-    public function ve(){
+    public function ve()
+    {
         return $this->hasManyThrough(Ve::class, SuatChieu::class, 'suat_chieu_id', 'phim_id');
     }
-  
 }

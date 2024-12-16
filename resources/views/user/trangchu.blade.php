@@ -54,7 +54,7 @@
                                 src="https://img.youtube.com/vi/pnSsgRJmsCc/hqdefault.jpg"
                                 onclick="playVideo('https://www.youtube.com/embed/pnSsgRJmsCc?autoplay=1&enablejsapi=1')"
                                 style="cursor: pointer;" />
-                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge"> 
+                            <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
                                 <h3 class="text-lg font-bold film-title">
                                     {{ $item->ten_phim }}
                                 </h3>
@@ -66,9 +66,15 @@
                                     @endif
                                 @endforeach
                             </p>
-                            <p class="text-yellow-500">
-                                <i class="fas fa-star"></i> 6.3
-                            </p>
+
+                            
+                                <p class="text-yellow-500">
+                                    <i class="fas fa-star"></i>
+                                    @foreach ($danhSachPhim as $movie)
+                                    {{ $movie->danh_gias_avg_diem_danh_gia ? number_format($movie->danh_gias_avg_diem_danh_gia, 1) : 0 }}
+                                    @endforeach
+                                </p>
+
                         </div>
                     </div>
                 @endforeach

@@ -23,7 +23,9 @@ class SanPhamController extends Controller
         $phimDangChieu = Phim::where('ngay_khoi_chieu', '<=', Carbon::now())
             ->where('ngay_ket_thuc', '>=', Carbon::now())
             ->get();
-        $danhSachPhim = Phim::query()->paginate(1);
+        $danhSachPhim = Phim::with('danhGias')
+            ->withAvg('danhGias', 'diem_danh_gia')
+            ->get();
         $rap = Rap::all();
         return view('user.trangchu', compact('title', 'phimDangChieu', 'danhSachPhim', 'rap'));
     }
@@ -84,5 +86,4 @@ class SanPhamController extends Controller
         $phims = Phim::where('the_loai_id', $id)->get();
         return view('user.theloaiphim', compact('title', 'rap', 'theLoai', 'theLoaiPhim', 'phims'));
     }
-    
 }
