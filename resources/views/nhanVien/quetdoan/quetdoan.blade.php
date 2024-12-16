@@ -90,17 +90,29 @@
 
     const fetchTicketInfo = async (ticketId) => {
         try {
-            response = await fetch(`http://127.0.0.1:8000/check-qrCode/${ticketId}?doan=1`);
+          let  response = await fetch(`http://127.0.0.1:8000/check-qrCode/${ticketId}?doan=1`);
             const qrResult = document.getElementById("qrResult");
             if (response.ok) {
                 const data = await response.json();
-               console.log(data)
-                showModal(data);
+                if(data.status == 404){
+                    $.notify({
+                    icon: 'icon-bell',
+                    message: data.msg,
+                }, {
+                    type: 'danger',
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    time: 1000,
+                });      
+                }else{
+                    showModal(data);
+                }
             } else {
                 const errorData = await response.json();
                 qrResult.innerHTML += `<p>${errorData.message || "Không tìm thấy thông tin vé!"}</p>`;
             }
-            console.log(response);
             
         } catch (error) {
             console.error("Lỗi khi gọi API:", error);
@@ -121,7 +133,7 @@
     const showModal = (data) => {
         let modalContent = `
         <div class="modal-header">
-            <h5 class="modal-title">Thông tin vé</h5>
+            <h5 class="modal-title">Thông tin đồ ăn</h5>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body seats-wrapper-row">

@@ -1,0 +1,185 @@
+<?php
+
+namespace App\Http\Controllers\NhanVien;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\BaiVietTinTuc;
+use App\Http\Requests\StoreBaiVietTinTucRequest;
+use App\Http\Requests\UpdateBaiVietTinTucRequest;
+use App\Models\DanhMucBaiVietTinTuc;
+use Illuminate\Support\Facades\Storage;
+
+class NhanVienBaiVietController extends Controller
+{
+      /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $baiviet = BaiVietTinTuc::withTrashed()
+            ->with('danhMuc')->latest('id')->paginate(6);
+        return view('nhanVien.baiviettintuc.list', compact('baiviet'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $danhmuc = DanhMucBaiVietTinTuc::all();
+
+        return view('nhanVien.baiviettintuc.add', compact('danhmuc'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreBaiVietTinTucRequest $request)
+    {
+        $baiviet = $request->all();
+
+        if ($request->hasFile('hinh_anh')) {
+            $hinhanh = $request->file('hinh_anh')->store('uploads/baiviet', 'public');
+        } else {
+            $hinhanh = null;
+        }
+
+        $baiviet['hinh_anh'] = $hinhanh;
+
+        BaiVietTinTuc::create($baiviet);
+
+        return redirect()->route('bai-viet-tin-tuc.index')
+            ->with('success', 'Thêm bài viết thành công');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(BaiVietTinTuc $baiVietTinTucNv)
+    {
+        $baiVietTinTuc = $baiVietTinTucNv;
+        $danhmuc = DanhMucBaiVietTinTuc::all();
+        return view('nhanVien.baiviettintuc.show', compact('baiVietTinTuc', 'danhmuc'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(BaiVietTinTuc $baiVietTinTucNv)
+    {
+        $baiVietTinTuc = $baiVietTinTucNv;
+        $danhmuc = DanhMucBaiVietTinTuc::all();
+        return view('nhanVien.baiviettintuc.edit', compact('baiVietTinTuc', 'danhmuc'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateBaiVietTinTucRequest $request, BaiVietTinTuc $baiVietTinTucNv)
+    {
+        $baiVietTinTuc = $baiVietTinTucNv;
+        $baiviet = $request->all();
+        if ($request->hasFile('hinh_anh')) {
+            if ($baiVietTinTuc->hinh_anh) {
+                Storage::disk('public')->delete($baiVietTinTuc->hinh_anh);
+            }
+
+            $hinhanh = $request->file('hinh_anh')->store('uploads/baiviet', 'public');
+        } else {
+            $hinhanh = $baiVietTinTuc->hinh_anh;
+        }
+
+        $baiviet['hinh_anh'] = $hinhanh;
+
+        $baiVietTinTuc->update($baiviet);
+
+        return redirect()->route('bai-viet-tin-tuc-nv.index')
+            ->with('success', 'Sửa thành công');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(BaiVietTinTuc $baiVietTinTucNv)
+    {
+        $baiVietTinTuc = $baiVietTinTucNv;
+        $baiVietTinTuc->delete();
+        return redirect()->route('bai-viet-tin-tuc-nv.index')
+            ->with('success', 'Ẩn bài viết thành công');
+    }
+
+    public function restore($id)
+    {
+        $baiVietTinTuc = BaiVietTinTuc::onlyTrashed()->findOrFail($id);
+        $baiVietTinTuc->restore();
+        return redirect()->route('bai-viet-tin-tuc-nv.index')
+            ->with('success', 'Khôi phục bài viết thành công');
+    }
+
+    public function forceDelete($id)
+    {
+        $baiVietTinTuc = BaiVietTinTuc::onlyTrashed()->findOrFail($id);
+        if ($baiVietTinTuc->hinh_anh) {
+            Storage::disk('public')->delete($baiVietTinTuc->hinh_anh);
+        }
+
+        $baiVietTinTuc->forceDelete();
+
+        return redirect()->route('bai-viet-tin-tuc-nv.index')
+            ->with('success', 'Xóa bài viết thành công');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/uploads', $filename);
+            $url = Storage::url($path);
+
+            return response()->json([
+                'uploaded' => true,
+                'url' => $url,
+            ]);
+        }
+
+        return response()->json([
+            'uploaded' => false,
+            'error' => [
+                'message' => 'Không thể tải lên hình ảnh!',
+            ],
+        ]);
+    }
+
+    public function hienThi(Request $request)
+    {
+
+        $baiviet = [];
+        $danhmuc = DanhMucBaiVietTinTuc::query()->get();
+        $tendanhmuc = null;
+        $baiviet = BaiVietTinTuc::query()->orderBy('ngay_dang')->limit(10)->get();
+        if ($request->input('danh-muc')) {
+            $tendanhmuc = DanhMucBaiVietTinTuc::query()->find($request->input('danh-muc'));
+            $baiviet = BaiVietTinTuc::query()->where('danh_muc_bai_viet_tin_tuc_id', $request->input('danh-muc'))->get();
+        }
+        
+        return view('user.tintuc.tintuc', compact('baiviet', 'danhmuc','tendanhmuc'));
+    }
+
+    public function showTinTuc($id)
+    {
+
+        $lienquan = BaiVietTinTuc::query()
+            ->select('id', 'hinh_anh', 'tieu_de', 'tom_tat')
+            ->orderBy('ngay_dang', 'desc')
+            ->limit(10)
+            ->get();
+
+        $tt = BaiVietTinTuc::findOrFail($id);
+
+        $tt->increment('luot_xem');
+
+        return view('user.tintuc.chitiettintuc', compact('tt', 'lienquan', 'id'));
+    }
+}

@@ -35,6 +35,7 @@
                 </div>
             </div>
         </form>
+        @if ($phims->count())
         <table class="table">
             <thead>
                 <tr>
@@ -102,7 +103,12 @@
                 @endforelse
             </tbody>
         </table>
-
+        @else
+                <p class="text-center">Không có dữ liệu.</p>
+            @endif
     </div>
+    <div class="d-flex justify-content-end">
+            {{ $phims->links() }}
+        </div>
 </div>
 @endsection

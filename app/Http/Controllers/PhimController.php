@@ -30,7 +30,7 @@ class PhimController extends Controller
                 $query->where('ten_phim', 'LIKE', '%' . $searchQuery . '%');
             })
             ->orderBy('id', 'desc')
-            ->paginate(5);
+            ->paginate(10);
         $theLoaiPhims = TheLoaiPhim::where('trang_thai', 1)->get();
 
         return view('admin.contents.phims.index', compact('phims', 'theLoaiPhims', 'theLoaiId', 'searchQuery'));

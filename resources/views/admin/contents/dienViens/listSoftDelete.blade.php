@@ -4,7 +4,7 @@
 @section('content')
     <div class="card m-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <div class="card-title">Danh sách Đạo diễn đã xóa mềm</div>
+            <div class="card-title">Danh sách diễn viên đã xóa mềm</div>
         </div>
 
         <div class="card-body">
@@ -33,7 +33,11 @@
                                         @method('PATCH')
                                         <button class="btn btn-success btn-sm">Khôi phục</button>
                                     </form>
-
+                                    <form action="{{ route('dienVien.forceDelete', $dienVien->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn mục này không?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm">Xóa vĩnh viễn</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

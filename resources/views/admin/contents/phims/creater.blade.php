@@ -162,8 +162,11 @@
                 <option value="0">Không hoạt động</option>
             </select>
         </div> --}}
+        <div class="ms-3 mb-3" >
         <button type="submit" class="btn btn-primary">Thêm mới Phim</button>
         <a href="{{ route('phim.index') }}" class="btn btn-secondary">Quay lại</a>
+        </div>
+      
         </form>
     </div>
 </div>

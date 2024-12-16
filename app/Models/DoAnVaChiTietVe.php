@@ -22,4 +22,8 @@ class DoAnVaChiTietVe extends Model
     {
         return $this->belongsTo(DoAn::class, 'do_an_id');
     }
+    public function ve()
+    {
+        return $this->belongsTo(Ve::class, 've_id');
+    }
 }

@@ -98,6 +98,13 @@ class PhongChieuController extends Controller
         PhongChieu::query()->find($id)->delete();
         return back();
     }
+    public function forceDelete($id)
+    {
+        $phongchieu = PhongChieu::onlyTrashed()->findOrFail($id);
+        $phongchieu->forceDelete();
+
+        return back()->with('success', 'Xóa vĩnh viễn thành công!');
+    }
     public function destroy(PhongChieu $phongChieu)
     {
         //

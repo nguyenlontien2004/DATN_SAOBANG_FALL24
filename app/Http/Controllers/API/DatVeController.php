@@ -20,7 +20,9 @@ class DatVeController extends Controller
             ->select(['id', 'ten_rap', 'dia_diem'])
             ->with([
                 'suatChieu' => function ($query) use ($formattedDate, $id) {
-                    $query->select('suat_chieus.id', 'suat_chieus.phong_chieu_id', DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"), DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
+                    $query->select('suat_chieus.id', 'suat_chieus.phong_chieu_id','suat_chieus.gia',
+                     DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"), 
+                     DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc"))
                         ->whereDate('ngay',$formattedDate)
                         ->where('phim_id', $id)->orderBy('gio_bat_dau');
                 }
@@ -61,6 +63,7 @@ class DatVeController extends Controller
                     'phong_chieu_id' => $val->phong_chieu_id,
                     'gio_bat_dau' => $val->gio_bat_dau,
                     'gio_ket_thuc' => $val->gio_ket_thuc,
+                    'gia'=>$val->gia / 1000,
                     'suat_chieu_trong_ngay' => $check
                 ];
             }

@@ -9,12 +9,7 @@
                         <i class="icon-home"></i>
                     </a>
                 </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Forms</a>
-                </li>
+             
                 <li class="separator">
                     <i class="icon-arrow-right"></i>
                 </li>
@@ -92,8 +87,7 @@
             </div>
 
             <div class="card-footer">
-                <a href="{{ route('admin.edit') }}" class="btn btn-warning">Sửa</a>
-                <a href="{{ route('admin.index') }}" class="btn btn-danger">Quay lại</a>
+                <a href="{{ route('admin.formEdit') }}" class="btn btn-warning">Sửa</a>
             </div>
 
         </div>

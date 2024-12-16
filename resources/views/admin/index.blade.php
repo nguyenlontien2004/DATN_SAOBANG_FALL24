@@ -36,13 +36,13 @@
                 <div class="container-fluid">
                     <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                         <div class="input-group">
-                            <div class="input-group-prepend">
+                            <!-- <div class="input-group-prepend">
                                 <button type="button" class="btn btn-search pe-1" onclick="search()">
                                     <i class="fa fa-search search-icon"></i>
                                 </button>
                             </div>
                             <input type="text" id="searchInput" placeholder="Tìm kiếm ..." class="form-control"
-                                oninput="search()" />
+                                oninput="search()" /> -->
                         </div>
                     </nav>
                     <div id="searchResults"
@@ -106,7 +106,7 @@
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('thong-tin-nguoi-dung') }}">Hồ sơ của
+                                        <a class="dropdown-item" href="{{ route('tt.admin') }}">Hồ sơ của
                                             tôi</a>
                                         {{-- <a class="dropdown-item" href="#">My Balance</a>
                                         <a class="dropdown-item" href="#">Inbox</a>

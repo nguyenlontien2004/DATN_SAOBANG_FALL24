@@ -111,8 +111,9 @@
                          $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
                          @endphp
 
+                       @if (!Auth::user()->nhanVien())
                        @if ($ve->deleted_at !== null)
-                        <p class="btn btn-danger btn-sm pb-0 mb-0" style="color:white;">Vé đã huỷ</p>
+                        <p class="btn btn-danger btn-sm pb-0 mb-0 ms-1" style="color:white;">Vé đã huỷ</p>
                        @else
                        @if ($ve->ngay_ve_mo == Carbon\Carbon::now('Asia/Ho_Chi_Minh')->toDateString())
                           @if ($ve->trang_thai == 1)
@@ -120,7 +121,7 @@
                           <form action="{{ route('huyve', $ve->id) }}" method="POST"
                                     onclick="return confirm('Bạn có muốn hủy vé này không. Nếu huỷ chúng tôi sẽ quy đổi số tiền vé đó thành xu và có thể dùng để mua các vé khác!')" class="d-inline">
                                     @csrf
-                                    <button class="btn btn-danger btn-sm">Hủy vé</button>
+                                    <button class="btn btn-danger btn-sm ms-1">Hủy vé</button>
                                 </form>
                           
                           @endif
@@ -137,6 +138,7 @@
                                 </form>
                         @endif
                        @endif
+                       @endif
                        
                         </td>
                     </tr>
@@ -147,6 +149,7 @@
                 @endforelse
             </tbody>
         </table>
+        {{ $lichSuDatVe->links() }}
     </div>
 </div>
 @endsection

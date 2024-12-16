@@ -19,6 +19,8 @@ $(document).ready(function () {
       url: `${urlApi}/${idMovie}/${currDate}`,
       method: 'get',
       success: function (data) {
+        console.log(data);
+        
         if (data.status == 200) {
           let listSuatchieuRap = data.data
           let list = listSuatchieuRap.map(function (value) {
@@ -29,7 +31,7 @@ $(document).ready(function () {
                             </div>
                             <div class="d-flex pt-1 flex-wrap" style="cursor: pointer;">`
             value.suatChieu.map(function (va) {
-              return html += `<a id="linkcheckvethoigian" data-id="${va.id}" href="/dat-ve/${va.id}/${currDate + '-' + year}" class="${va.suat_chieu_trong_ngay ? 'disabled' : ''} "><div class="btn-somtime mr-1">${va.gio_bat_dau}~${va.gio_ket_thuc}</div></a>`
+              return html += `<a id="linkcheckvethoigian" data-id="${va.id}" href="/dat-ve/${va.id}/${currDate + '-' + year}" class="${va.suat_chieu_trong_ngay ? 'disabled' : ''} "><div class="btn-somtime mr-1">${va.gio_bat_dau}~${va.gio_ket_thuc} (${va?.gia}k)</div></a>`
             })
             html += `</div></div>`
             return value.suatChieu.length > 0 ? html : ''

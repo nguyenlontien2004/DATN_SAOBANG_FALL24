@@ -43,7 +43,7 @@ class AdminController extends Controller
 
         $nguoiDung->update($nguoidung);
 
-        return redirect()->route('admin.ttadmin')
+        return redirect()->route('tt.admin')
             ->with('success', 'Sửa người dùng thành công');
     }
 }

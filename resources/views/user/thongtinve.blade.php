@@ -81,13 +81,13 @@
         <div class="container-seat">
             <!-- Khối chứa QR code và thông tin vé -->
             <div class="qr-info-container mt-5 mb-5">
-                <div class="ttv flex mt-6">
+                <div id="printableArea" class="ttv flex mt-6">
                     <div class="w-1/3 text-center">
                         <!-- qr-code p-8  -->
                         <div class="flex flex-col items-center justify-center">
                             <p class="text-lg font-bold">QR CODE</p>
                             <div>
-                            {!! $ve->qr_code !!}
+                                {!! $ve->qr_code !!}
                             </div>
                         </div>
                         <p class="mt-4 text-sm">
@@ -105,38 +105,40 @@
                         <div class="ml-4">
                             <div class="dong mb-2">
                                 <p class="text-lg font-bold flex-grow">Phim: {{ $ve->suatChieu->phim->ten_phim }}</p>
-                                <p class="ms-5 flex-none">Ngày vé  {{ $ve->ngay_ve_mo }} -
-                                    {{ $ve->suatChieu->gio_bat_dau."~".$ve->suatChieu->gio_ket_thuc }}</p>
+                                <p class="ms-5 flex-none">Ngày vé {{ $ve->ngay_ve_mo }} -
+                                    {{ $ve->suatChieu->gio_bat_dau . "~" . $ve->suatChieu->gio_ket_thuc }}
+                                </p>
                             </div>
                             <p class="mt-4">Mã vé: <strong>{{ $ve->ma_code_ve }}</strong></p>
                             <p class="mt-2">Rạp: <strong>{{ $ve->suatChieu->phongChieu->rap->ten_rap }}</strong></p>
-                            <p class="mt-1">Phòng chiếu: <strong>{{ $ve->suatChieu->phongChieu->ten_phong_chieu }}</strong></p>
+                            <p class="mt-1">Phòng chiếu:
+                                <strong>{{ $ve->suatChieu->phongChieu->ten_phong_chieu }}</strong></p>
                             <div class="mt-1">
                                 <p class="d-flex">Ghế:
-                                    @foreach ($ghe as $key=>$value)
-                                    <strong>
-                                    @for ($i = 0; $i < count($value); $i++) @if ($key=='doi' )
-                                        {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe . $value[$i + 1]->hang_ghe . $value[$i + 1]->so_hieu_ghe}}{{ isset($value[$i + 2]) ? "," : "" }}
-                                        @php $i++ @endphp @else
-                                        {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe }}{{ isset($value[$i + 1]) ? "," : "" }}
-                                        @endif 
-                                    @endfor
-                                    </strong>
-                                    -
-                                    <span>Loại: <strong>
-                                    @if ($key == 'thuong')
-                                    Thường
-                                    @elseif($key == 'vip')
-                                    Vip
-                                    @else
-                                    Đôi
-                                    @endif
-                                    &nbsp;
-                                    </strong></span>
+                                    @foreach ($ghe as $key => $value)
+                                        <strong>
+                                            @for ($i = 0; $i < count($value); $i++) @if ($key == 'doi')
+                                                {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe . $value[$i + 1]->hang_ghe . $value[$i + 1]->so_hieu_ghe}}{{ isset($value[$i + 2]) ? "," : "" }}
+                                            @php            $i++ @endphp @else
+                                                {{ $value[$i]->hang_ghe . $value[$i]->so_hieu_ghe }}{{ isset($value[$i + 1]) ? "," : "" }}
+                                            @endif
+                                            @endfor
+                                        </strong>
+                                        -
+                                        <span>Loại: <strong>
+                                                @if ($key == 'thuong')
+                                                    Thường
+                                                @elseif($key == 'vip')
+                                                    Vip
+                                                @else
+                                                    Đôi
+                                                @endif
+                                                &nbsp;
+                                            </strong></span>
                                     @endforeach
                                 </p>
-                                <p class="mt-1">Đồ ăn:    @if (count($food) > 0)
-                                    {{ implode(
+                                <p class="mt-1">Đồ ăn: @if (count($food) > 0)
+                                                                    {{ implode(
                                         ', ',
                                         array_map(function ($item) {
                                             return $item['food']['ten_do_an'] . ' x ' . $item['so_luong_do_an'];
@@ -144,21 +146,90 @@
                                     ) }}
                                 @else
                                     Không mua
-                                @endif</p>
-                               <p class="mt-1">Mã giảm giá: <strong>{{ $ve->maGiamGia == null ? 'Không áp dụng' : $ve->maGiamGia->ten_ma_giam_gia.'-'.$ve->maGiamGia->gia_tri_giam.'%' }}</strong></p>
-                               <p class="mt-1" style="font-size:18px;font-weight:500;">Tổng đơn hàng: {{ number_format($ve->tong_tien,0,',','.') }}đ</p>
+                                @endif
+                                </p>
+                                <p class="mt-1">Mã giảm giá:
+                                    <strong>{{ $ve->maGiamGia == null ? 'Không áp dụng' : $ve->maGiamGia->ten_ma_giam_gia . '-' . $ve->maGiamGia->gia_tri_giam . '%' }}</strong>
+                                </p>
+                                <p class="mt-1" style="font-size:18px;font-weight:500;">Tổng đơn hàng:
+                                    {{ number_format($ve->tong_tien, 0, ',', '.') }}đ</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Nút quay lại trang chủ -->
-                <div class="text-end m-3">
+                <div id="no-print" class="text-end m-3">
                     <a href="{{ asset('/') }}" class="btn-custom"> Quay lại trang chủ </a>
+                    @if (Auth::user()->nhanVien())
+                        <!-- <a href="" class="btn-custom ms-2"> In vé </a> -->
+                        <button onclick="printDiv('printableArea')" class="btn-custom">In vé</button>
+                    @endif
+                    <style>
+                        /* Ẩn nội dung khi in */
+                        @media print {
+                            #no-print {
+                                display: none;
+                            }
+                        }
+                    </style>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function printDiv(divId) {
+        var content = document.getElementById(divId).innerHTML;
+
+        // Thay đổi nội dung trước khi in
+        var printWindow = window.open('', '', 'height=auto,width=auto');
+        printWindow.document.write(`
+            <html>
+            <head>
+                <style>
+                    @media print {
+                        @page {
+                            size: A6;
+                            margin: 10mm;
+                        }
+                    body {
+                        font-family: Arial, sans-serif;
+                    h1 {
+                        text-align: center;
+                    }
+                    p {
+                        font-size: 15px;
+                    }
+                    .ttv {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: center;
+                    }
+                    .w-1/3 {
+                        width: 25%;
+                        text-align: center;
+                    }
+                    .divider {
+                        width: 2px;
+                        background-color: #000;
+                        margin: 0 10px;
+                    }
+                    .w-2/3 {
+                        width: 65%;
+                }}
+                </style>
+            </head>
+            <body>
+                <div class="ttv">${content}</div>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+    }
+</script>
 <script>
     // localStorage.removeItem('timeve');
     // localStorage.removeItem('idsuatchieu');

@@ -102,6 +102,13 @@ class DaoDienController extends Controller
 
         return redirect()->route('admin.daoDien.listSoftDelete')->with('success', 'Khôi phục thành công!');
     }
+    public function forceDelete($id)
+    {
+        $daoDien = DaoDien::onlyTrashed()->findOrFail($id);
+        $daoDien->forceDelete();
+
+        return redirect()->route('admin.daoDien.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
     public function destroy(DaoDien $daoDien)
     {
         $daoDien->trang_thai = 0;

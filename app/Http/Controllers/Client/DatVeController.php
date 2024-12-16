@@ -144,7 +144,7 @@ class DatVeController extends Controller
             ->with([
                 'chiTietVe:id,ve_id,ghe_ngoi_id'
             ])
-
+            ->where('ngay_ve_mo',$suatchieu->ngay)
             ->where('suat_chieu_id', $suatchieu->id)->get();
         $datVeIds = collect($ve)->flatMap(function ($ve) {
             return collect($ve['chiTietVe'])->pluck('ghe_ngoi_id');

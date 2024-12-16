@@ -31,7 +31,7 @@
                 <div class="card-body">
                 
                     <div class="table-responsive">
-                        <table id="basic-datatables" class="display table table-striped table-hover">
+                        <table id="basic-   " class="display table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th style="padding: 6px 10px !important;">Phim</th>
@@ -50,7 +50,6 @@
                                                                 <tr>
                                                                     <td style="padding: 6px 10px !important;">
                                                                         <div class="d-flex">
-                                                                            <!-- <img width="40px" src="https://cdn.moveek.com/storage/media/cache/short/665dc87501b36651649752.jpg" alt=""> -->
                                                                             <div class="d-flex flex-column ms-3">
                                                                                 <strong
                                                                                     style="font-size: 14.5px;">{{ $item->suatChieu->phim->ten_phim }}</strong>

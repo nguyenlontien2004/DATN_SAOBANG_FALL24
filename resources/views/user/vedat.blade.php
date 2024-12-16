@@ -263,8 +263,8 @@
                         </div>
                         <div class="content-total-oldel-ticket">
                             <div id="countdown-timer">
-                            <p class="text-total">Thời gian mua vé</p>
-                           <span id="timer"></span>
+                                <!-- <p class="text-total">Thời gian mua vé</p> -->
+                                <span style="display: none;" id="timer"></span>
                             </div>
                         </div>
                     </div>
@@ -300,7 +300,7 @@
     const urlaApiGhe = "{{ asset('/api/ghe/suat-chieu/') }}"
     const kiemtrahansuatchieu = Boolean("{{ $isHan }}")
     console.log(kiemtrahansuatchieu);
-    
+
     //$('asa').
 </script>
 @vite('resources/js/reatimeGhe.js')

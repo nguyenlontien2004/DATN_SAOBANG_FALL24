@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Http\Controllers\NhanVien;
+
+use App\Models\TheLoaiPhim;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use App\Http\Requests\StoreTheLoaiPhimRequest;
+use App\Http\Requests\UpdateTheLoaiPhimRequest;
+use App\Http\Requests\NhanvienTheLoaiphimRequest;
+
+class TheLoaiPhimController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = $request->query('query');
+
+        // Nếu có query, lọc theo id, ngược lại lấy tất cả
+        if ($query) {
+            $theLoaiPhims = TheLoaiPhim::where('id', $query)
+            ->orWhere('ten_the_loai', 'LIKE', '%' . $query . '%')
+            ->get(); 
+        } else {
+            $theLoaiPhims = TheLoaiPhim::orderBy('id', 'desc')->get(); 
+        }
+       
+        return view('nhanVien.theLoaiPhims.index', compact('theLoaiPhims'));
+    }
+    public function create()
+    {
+        return view('nhanVien.theLoaiPhims.creater');
+    }
+    public function store(StoreTheLoaiPhimRequest $request)
+{
+    TheLoaiPhim::create([
+        'ten_the_loai' => $request->ten_the_loai,
+    ]);
+
+    return redirect()->route('nhanvientheLoaiPhim.index')->with('success', 'Thể loại đã được thêm thành công!');
+}
+
+    public function edit(TheLoaiPhim $nhanvientheLoaiPhim)
+    {
+        $theLoaiPhim = $nhanvientheLoaiPhim;
+        return view('nhanVien.theLoaiPhims.edit',compact('theLoaiPhim'));
+    }
+
+    public function update(NhanvienTheLoaiphimRequest $request, TheLoaiPhim $nhanvientheLoaiPhim)
+    {
+        $theLoaiPhim = $nhanvientheLoaiPhim;
+        $theLoaiPhim->update([
+            'ten_the_loai' => $request->ten_the_loai,
+            'trang_thai' => $request->trang_thai,
+        ]);
+        
+    
+        return redirect()->route('nhanvientheLoaiPhim.index')->with('success', 'Thể loại đã được cập nhật thành công!');
+    }
+    public function listSoftDelete()
+    {
+        $theLoaiPhims = TheLoaiPhim::onlyTrashed()->paginate(5);
+        return view('nhanVien.theLoaiPhims.listSoftDelete', compact('theLoaiPhims'));
+    }
+    public function softDelete($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::findOrFail($id);
+        $theLoaiPhim->delete();
+        return redirect()->route('nhanvientheLoaiPhim.index')->with('success', 'Xóa mềm thành công!');
+    }
+
+    // Khôi phục
+    public function restore($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::onlyTrashed()->findOrFail($id);
+        $theLoaiPhim->restore();
+
+        return redirect()->route('nhanVien.theLoaiPhim.listSoftDelete')->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id)
+    {
+        $theLoaiPhim = TheLoaiPhim::onlyTrashed()->findOrFail($id);
+        $theLoaiPhim->forceDelete();
+
+        return redirect()->route('nhanVien.theLoaiPhim.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
+    
+    public function destroy(TheLoaiPhim $theLoaiPhim)
+    {
+        $theLoaiPhim->trang_thai = 0;
+        $theLoaiPhim->save(); 
+        return redirect()->route('nhanvientheLoaiPhim.index')->with('success', 'Thể loại đã được xóa thành công!');
+    }
+}

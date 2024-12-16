@@ -53,7 +53,7 @@ class VeController extends Controller
                     ]);
                 },
                 'user:id,ho_ten,email'
-            ])->get();
+            ])->orderBy('created_at','desc')->get();
         if (isset($idPhim) && isset($idPhongChieu) && isset($idSuatchieu)) {
             $litsTicket = Ve::query()
                 ->withTrashed()
@@ -95,6 +95,7 @@ class VeController extends Controller
                         $qr->where('phims.id', $idPhim);
                     });
                 })
+                ->orderBy('created_at','desc')
                 ->get();
         }
         //dd($litsTicket->toArray());

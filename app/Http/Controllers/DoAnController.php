@@ -15,7 +15,7 @@ class DoAnController extends Controller
     public function index()
     {
         $title = "Danh sách món ăn";
-        $listDoAn = DoAn::query()->orderByDesc('id')->paginate(5);
+        $listDoAn = DoAn::query()->withTrashed()->orderByDesc('id')->paginate(5);
         return view('admin.doans.index', compact('title', 'listDoAn'));
     }
 
@@ -71,7 +71,7 @@ class DoAnController extends Controller
     {
         $title = "Sửa thông tin món ăn";
 
-        $doAn = DoAn::findOrFail($id);
+        $doAn = DoAn::withTrashed()->findOrFail($id);
         return view('admin.doans.edit', compact('title', 'doAn'));
     }
 
@@ -106,7 +106,22 @@ class DoAnController extends Controller
             return redirect()->route('do-an.index')->with('success', 'Cập nhật dữ liệu thành công');
         }
     }
+    public function restore($id)
+    {
+        $doan = DoAn::onlyTrashed()->findOrFail($id);
+        $doan->restore();
 
+        return back()->with('success', 'Khôi phục thành công!');
+    }
+    public function forceDelete($id){
+        $doAn = DoAn::onlyTrashed()->findOrFail($id);
+        if ($doAn->hinh_anh && Storage::disk('public')->exists($doAn->hinh_anh)) {
+            Storage::disk('public')->delete($doAn->hinh_anh);
+        }
+        $doAn->forceDelete();
+
+        return back()->with('success', 'Xóa vĩnh viễn thành công!');
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -119,9 +134,7 @@ class DoAnController extends Controller
         $doAn->delete();
 
         // Kiểm tra và xóa hình ảnh nếu tồn tại
-        if ($doAn->hinh_anh && Storage::disk('public')->exists($doAn->hinh_anh)) {
-            Storage::disk('public')->delete($doAn->hinh_anh);
-        }
+       
 
         return redirect()->route('do-an.index')->with('success', 'Xóa dữ liệu thành công');
     }

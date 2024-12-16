@@ -39,6 +39,10 @@ class NguoiDung extends Authenticatable
     {
         return $this->belongsTo(VaiTro::class, 'id', 'ten_vai_tro');
     }
+    // public function vaiTro()
+    // {
+    //     return $this->belongsToMany(VaiTro::class,'nguoi_dung_vai_tro', 'nguoi_dung_id', 'vai_tro_id');
+    // }
 
     public function checkAdmin()
     {
@@ -71,5 +75,9 @@ class NguoiDung extends Authenticatable
     public function nhanVien()
     {
         return $this->vaiTros()->where('ten_vai_tro', self::TYPE_NHANVIEN)->exists();
+    }
+    public function ves()
+    {
+        return $this->hasMany(Ve::class, 'nguoi_dung_id');
     }
 }

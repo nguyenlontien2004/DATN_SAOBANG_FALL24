@@ -93,6 +93,13 @@ class DienVienController extends Controller
 
         return redirect()->route('dienVien.listSoftDelete')->with('success', 'Khôi phục thành công!');
     }
+    public function forceDelete($id)
+    {
+        $dienVien = DienVien::onlyTrashed()->findOrFail($id);
+        $dienVien->forceDelete();
+
+        return redirect()->route('dienVien.listSoftDelete')->with('success', 'Xóa vĩnh viễn thành công!');
+    }
     public function destroy(DienVien $dienVien)
     {
         $dienVien->trang_thai = 0;

@@ -39,12 +39,12 @@ class SuatChieuController extends Controller
         }
 
         $suatChieus = $query->orderBy('ngay', 'desc')->get();
-         
+
         //dd($suatChieus->toArray());
 
         $phims = Phim::where('trang_thai', 1)->get();
         $phongChieus = PhongChieu::where('trang_thai', 1)->get();
-        return view('nhanvien.suatchieu.index', compact('suatChieus', 'phims', 'phongChieus', 'date', 'currentTime'));
+        return view('nhanVien.suatchieu.index', compact('suatChieus', 'phims', 'phongChieus', 'date', 'currentTime'));
     }
 
     public function huysuatchieu($id)
@@ -74,6 +74,11 @@ class SuatChieuController extends Controller
                         'ves.user'
                     ])->find($id);
 
+            $filteredVes = collect($suatchieu->ves)->filter(function ($ve) use ($suatchieu) {
+                return $ve['ngay_ve_mo'] === $suatchieu->ngay;
+            });
+
+            $suatchieu->setRelation('ves', $filteredVes->values());
             $gioBatDau = \Carbon\Carbon::createFromFormat('H:i', $suatchieu->gio_bat_dau);
             //dd($gioBatDau);
             $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
@@ -155,10 +160,10 @@ class SuatChieuController extends Controller
         $phongChieus = PhongChieu::query()->with(
             ['rap']
         )
-        ->where('trang_thai', 1)->get();
+            ->where('trang_thai', 1)->get();
         $phims = Phim::where('trang_thai', 1)->get();
         //dd($phongChieus->toArray());
-        return view('nhanvien.suatchieu.creater', compact('phongChieus', 'phims'));
+        return view('nhanVien.suatchieu.creater', compact('phongChieus', 'phims'));
     }
     public function store(StoreSuatChieuRequest $request)
     {
@@ -183,18 +188,37 @@ class SuatChieuController extends Controller
     public function edit(SuatChieu $nhanvienSuatchieu)
     {
         $suatChieu = $nhanvienSuatchieu;
+        // $veDaBan = Ve::where('suat_chieu_id', $suatChieu->id)
+        //     ->where('ngay_ve_mo', $suatChieu->ngay)->exists();
+        // dd($veDaBan->toArray());
+        // if ($veDaBan) {
+        //     return redirect()->route('nhanvienSuatchieu.index')->with('error', 'Không thể cập nhật suất chiếu vì đã có vé được bán cho suất chiếu này.');
+        // }
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
+
+        $gioBatDau = Carbon::parse($suatChieu->gio_bat_dau)->format('H:i');
+        $gioketthuc = Carbon::parse($suatChieu->gio_ket_thuc)->format('H:i');
+
         $veDaBan = Ve::where('suat_chieu_id', $suatChieu->id)
-        ->where('ngay_ve_mo', $suatChieu->ngay)->exists();
-       // dd($veDaBan->toArray());
-        if ($veDaBan) {
-            return redirect()->route('nhanvienSuatchieu.index')->with('error', 'Không thể cập nhật suất chiếu vì đã có vé được bán cho suất chiếu này.');
+            ->where('ngay_ve_mo', $suatChieu->ngay)
+            ->get();
+
+        if ($curdate < $suatChieu->ngay) {
+            if (count($veDaBan) > 0) {
+                return redirect()->route('nhanvienSuatchieu.index')->with('error', 'Không thể cập nhật suất chiếu vì đã có vé được bán cho suất chiếu này.');
+            }
+        } elseif ($curdate == $suatChieu->ngay) {
+            if ($currentTime < $gioketthuc && count($veDaBan) > 0) {
+                return redirect()->route('nhanvienSuatchieu.index')->with('error', 'Không thể cập nhật suất chiếu vì đã có vé được bán cho suất chiếu này.');
+            }
         }
         $phongChieus = PhongChieu::query()->with(
             ['rap']
         )->where('trang_thai', 1)->get();
         $phims = Phim::where('trang_thai', 1)->get();
-       
-        return view('nhanvien.suatchieu.edit', compact('suatChieu', 'phongChieus', 'phims'));
+
+        return view('nhanVien.suatchieu.edit', compact('suatChieu', 'phongChieus', 'phims'));
     }
     public function update(NhanvienSuatchieuRequest $request, SuatChieu $nhanvienSuatchieu)
     {
@@ -220,21 +244,63 @@ class SuatChieuController extends Controller
     {
         $suatChieus = SuatChieu::onlyTrashed()->with(['phim', 'phongChieu.rap'])->paginate(5);
 
-        return view('nhanvien.suatchieu.listSoftDelete', compact('suatChieus'));
+        return view('nhanVien.suatchieu.listSoftDelete', compact('suatChieus'));
     }
     public function softDelete($id)
     {
-        $suatChieu = SuatChieu::query()->with([
-            'ves'
-        ])->findOrFail($id);
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
+        $suatChieu = SuatChieu::query()
+            ->select(
+                'id',
+                'phong_chieu_id',
+                'ngay',
+                'gia',
+                'phim_id',
+                DB::raw("TIME_FORMAT(gio_bat_dau,'%H:%i') as gio_bat_dau"),
+                DB::raw("TIME_FORMAT(gio_ket_thuc,'%H:%i') as gio_ket_thuc")
+            )
+            ->with([
+                'ves'
+            ])->findOrFail($id);
 
-        $suatChieu->delete();
+        $filteredVes = collect($suatChieu->ves)->filter(function ($ve) use ($suatChieu) {
+            return $ve['ngay_ve_mo'] === $suatChieu->ngay;
+        });
+
+        $suatChieu->setRelation('ves', $filteredVes->values());
+        //dd($suatChieu->toArray());
+        if ($suatChieu->ngay < $curdate) {
+            $suatChieu->delete();
+        } elseif ($suatChieu->ngay == $curdate) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $suatChieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+            if ($gioBatDauTru15Phut < $currentTime) {
+                $suatChieu->delete();
+                return redirect()->route('nhanvienSuatchieu.index')->with('success', 'Xóa mềm thành công!');
+            } else {
+                if (count($suatChieu->ves) > 0) {
+                    return back()->with('error', 'Không thể xoá suất chiếu này vì đã có người mua!');
+                } else {
+                    $suatChieu->delete();
+                }
+            }
+        } else {
+            if (count($suatChieu->ves) > 0) {
+                return back()->with('error', 'Không thể xoá suất chiếu này vì đã có người mua!');
+            } else {
+                $suatChieu->delete();
+                return redirect()->route('nhanvienSuatchieu.index')->with('success', 'Xóa mềm thành công!');
+            }
+        }
+        // dd($suatChieu->toArray());
+        // $suatChieu->delete();
         return redirect()->route('nhanvienSuatchieu.index')->with('success', 'Xóa mềm thành công!');
     }
     public function restore($id)
     {
         $suatChieu = SuatChieu::onlyTrashed()->findOrFail($id);
         $suatChieu->restore();
-        return redirect()->route('nhanvien.suatChieu.listSoftDelete')->with('success', 'Khôi phục thành công!');
+        return redirect()->route('nhanVien.suatChieu.listSoftDelete')->with('success', 'Khôi phục thành công!');
     }
 }

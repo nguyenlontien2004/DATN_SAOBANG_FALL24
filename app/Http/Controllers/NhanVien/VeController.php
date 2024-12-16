@@ -41,9 +41,11 @@ class VeController extends Controller
                 ]);
             },
             'user:id,ho_ten,email'
-        ])->get();
+        ])
+        ->orderBy('created_at', 'desc')
+        ->get();
         //dd($litsTicket->toArray());
-        return view('nhanvien.ve.' . __FUNCTION__, compact(['litsTicket', 'curdate', 'currentTime']));
+        return view('nhanVien.ve.' . __FUNCTION__, compact(['litsTicket', 'curdate', 'currentTime']));
     }
     public function hienThiFormMuaVe()
     {
@@ -81,7 +83,7 @@ class VeController extends Controller
     public function danhSachVeChuaThanhToan()
     {
         $ves = Ve::with('detailTicket')->where('trang_thai', 0)->get(); // Lấy vé chưa thanh toán
-        return view('nhanvien.ve.danh-sach-chua-thanh-toan', compact('ves'));
+        return view('nhanVien.ve.danh-sach-chua-thanh-toan', compact('ves'));
     }
 
     public function thanhToanVaInVe(Ve $ve)
@@ -116,7 +118,7 @@ class VeController extends Controller
         // $writer->writeFile($qrCode, $path);
 
         // Trả về view với đường dẫn của mã QR
-        return view('nhanvien.ve.ma-qr', ['ve' => $ve, 'qrCodePath' => $path]);
+        return view('nhanVien.ve.ma-qr', ['ve' => $ve, 'qrCodePath' => $path]);
     }
     public function capNhatTrangThaiVe(Request $request, Ve $ve)
     {

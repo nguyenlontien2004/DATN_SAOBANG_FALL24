@@ -4,9 +4,10 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="light"
             style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
-            <a href="index.html" class="logo" style="display: flex; align-items: center;">
-                <img src="https://files.oaiusercontent.com/file-fzKrGiSjtFvjVxuESDMgtKKD?se=2024-10-30T04%3A57%3A16Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D54b5a2cd-b6e4-4fc4-9f8b-ef36090d88d8.webp&sig=IVUSPVuT5il78/tPX228UeRwLXuStxnPHMfeQOItmlo%3D"
-                    alt="Sao Băng Logo" style="max-height: 50px;">
+            <a href="" class="logo" style="display: flex; align-items: center;">
+                <img src="{{ asset('storage/logo/5b4662d9-6a89-4608-a897-b138afa2975a-removebg-preview.png') }}"
+                    alt="Sao Băng Logo" style="max-height: 60px;">
+                <h5 class="mb-0" style="color: white;">Sao Băng</h5>
             </a>
 
             <!-- Toggle Buttons -->
@@ -39,25 +40,28 @@
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('thongke.vesbanra') }}">
-                                    <span class="sub-item">Tổng doanh thu theo phim</span>
+                                    <span class="sub-item">Doanh thu theo phim</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                <a href="{{ route('thongke.rap') }}">
+                                    <span class="sub-item">Doanh thu theo rạp</span>
                                 </a>
                             </li>
-
                             <li>
-                                <a href="../demo1/index.html">
-                                    <span class="sub-item">Số vé bán ra theo phim</span>
+                                <a href="{{ route('thongke.theloai12') }}">
+                                    <span class="sub-item">Doanh thu theo thể loại</span>
                                 </a>
                             </li>
-
                             <li>
-                                <a href="{{ route('doanhthutheorap') }}">
-                                    <span class="sub-item">Số vé bán ra theo rạp</span>
+                                <a href="{{ route('thongke.doan') }}">
+                                    <span class="sub-item">Doanh thu theo đồ ăn</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('thongke.nguoimua') }}">
+                                    <span class="sub-item">Số lần người dùng mua vé</span>
                                 </a>
                             </li>
                         </ul>
@@ -68,7 +72,7 @@
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
-                    <h4 class="text-section">Components</h4>
+                    <h4 class="text-section">Thành phần</h4>
                 </li>
                 {{-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#base">
@@ -161,11 +165,25 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#role">
+                    <a data-bs-toggle="collapse" href="#danhgiabinhluan">
                         <i class="fas fa-user-tag"></i>
-                        <p>Người dùng & vai trò</p>
+                        <p>Đánh giá & bình luận</p>
                         <span class="caret"></span>
                     </a>
+                    <div class="collapse" id="danhgiabinhluan">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ route('admin.danhgia.index') }}">
+                                        <span class="sub-item">Quản lý đánh giá</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.binhluan.index') }}">
+                                        <span class="sub-item">Quản lý bình luận</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                 </li>
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#food">
@@ -180,11 +198,11 @@
                                     <span class="sub-item">Danh sách đồ ăn</span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="">
                                     <span class="sub-item">Món ăn theo vé</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </li>

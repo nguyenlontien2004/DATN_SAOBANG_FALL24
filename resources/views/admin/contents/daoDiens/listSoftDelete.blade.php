@@ -30,7 +30,11 @@
                                         @method('PATCH')
                                         <button class="btn btn-success btn-sm">Khôi phục</button>
                                     </form>
-
+                                    <form action="{{ route('daoDien.forceDelete', $daoDien->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn mục này không?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm">Xóa vĩnh viễn</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

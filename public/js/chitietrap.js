@@ -52,7 +52,7 @@ $(document).ready(function () {
              $.each(item.suat_chieus,function(_,val){
                 let link = linkSuatchieu+'dat-ve/'+val.id+'/'+currDate.split('-').reverse().join('-');
                 html+=`<a href="${!val.suat_chieu_trong_ngay ? link : ''}" class="${val.suat_chieu_trong_ngay ? 'disabled' : ''}">
-                <div class="btn-somtime mr-1">${val.gio_bat_dau}~${val.gio_ket_thuc}</div>
+                <div class="btn-somtime mr-1">${val.gio_bat_dau}~${val.gio_ket_thuc} (${val?.gia}k)</div>
                  </a>`
              })
                 html+=`</div>

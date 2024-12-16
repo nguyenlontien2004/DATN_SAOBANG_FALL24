@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('mo_ta')->nullable();
             $table->integer('luot_mua')->default(0);
             $table->boolean('trang_thai')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

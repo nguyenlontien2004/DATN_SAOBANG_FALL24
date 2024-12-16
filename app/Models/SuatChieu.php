@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class SuatChieu extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'ten_suat_chieu',  // Thay thế bằng các trường thực tế của bảng suat_chieus
         'ngay',
@@ -29,10 +29,12 @@ class SuatChieu extends Model
     {
         return $this->belongsTo(Phim::class, 'phim_id');
     }
-    public function rap(){
-        return $this->hasOneThrough(Rap::class,PhongChieu::class,'id','id','phong_chieu_id');
+    public function rap()
+    {
+        return $this->hasOneThrough(Rap::class, PhongChieu::class, 'id', 'id', 'phong_chieu_id');
     }
-    public function ves(){
+    public function ves()
+    {
         return $this->hasMany(Ve::class);
     }
 }

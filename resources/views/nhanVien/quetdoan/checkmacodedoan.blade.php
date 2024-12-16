@@ -69,19 +69,20 @@
             }
             $.ajax({
                 url:"{{ route('nhanvien.kiemtradoanpost') }}",
-                method:'POST',
+                method:'GET',
                 data:{'macode':macode},
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success:function(data){
-                    console.log(data);
+                    $('.macode').val("")
                     showModal(data);
                 },
-                error:function(error){
+                error:function(error){     
+                    $('.macode').val("")               
                     $.notify({
                     icon: 'icon-bell',
-                    message: error.responseJSON.msg,
+                    message: error.responseJSON.message,
                 }, {
                     type: 'danger',
                     placement: {
@@ -95,39 +96,20 @@
         })
         const showModal = (data) => {
         let modalContent = `
-        <div class="modal-header">
-            <h5 class="modal-title">Thông tin vé</h5>
+   <div class="modal-header">
+            <h5 class="modal-title">Thông tin đồ ăn</h5>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body seats-wrapper-row">
             <p class="mb-0">Người sở hữu:${data.data.nguoi_dung}</p>
             <p class="mb-0">Email:${data.data.email}</p>
-            <div class="d-flex align-items-center">Ghế: 
-            <div class="seats-map" >
-            <div class="row-wrapper list-row-seats d-flex" >`
-        $.each(data.data.ghe,function(loai,value){
-        //   modalContent += ``
-           let i = 0
-            for (i; i < value.length; i++) {
-                if (value[i].isDoubleChair !== null && i + 1 < value.length) {
-                    let nextSeat = value[i + 1]; 
-                    modalContent += `<div class="seat-group-parent  doubSeat seat">
-                                           <li  class="seat-group">${value[i].hang_ghe}${value[i].so_hieu_ghe}</li>
-                                           <li class="seat-group">${value[i].hang_ghe}${nextSeat.so_hieu_ghe}</li>
-                                       </div>`;
-                    i++;
-                }else{
-                    modalContent += `<li class="customghe ${value[i].the_loai == 'thuong' ? 'regularchair' : 'seatVip'}">${value[i].hang_ghe}${value[i].so_hieu_ghe}</li>`;
-                }             
-            }
-          //modalContent += `</p>`
+            <div class="d-flex align-items-center">Đồ ăn: `
+        $.each(data.data.do_ans,function(_,value){
+          modalContent+= `<div><strong>${value.ten_do_an}</strong>X <strong>${value.pivot.so_luong_do_an}</strong></div>`
         })
-        modalContent+=`</div></div></div>
+        modalContent+=`</div>
             <p>Suất chiếu: ${data.data.thoigiansuatchieu}</p>
-            <p>Ngày vé mở xem: ${data.data.ngay_ve_mo}</p>
-            <p>Ngày thanh toán: ${data.data.ngay_thanh_toan}</p>
-            <p>Tổng tiền: ${data.data.tong_tien}đ</p>
-            <p>Phương thức thanh toán: ${data.data.phuong_thuc_thanh_toan}</p>
+
             <p class="${ data.satatus == 200 ? 'text-success':'text-danger' }">${data.message}</p>
         </div>
        

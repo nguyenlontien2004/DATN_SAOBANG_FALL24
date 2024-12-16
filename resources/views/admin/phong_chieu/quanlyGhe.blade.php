@@ -188,6 +188,12 @@
                         <a href="#">Danh sách ghế của phòng chiếu
                             <strong>{{ $phongChieu->ten_phong_chieu }}</strong></a>
                     </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Danh sách ghế ẩn</a>
+                    </li>
                 </ul>
             </div>
             <div class="row">
@@ -198,8 +204,8 @@
                             <div class="seat-selection">
                                 <div class="legend">
                                     <div>
-                                        <span class="selected"></span>
-                                        <p>Ghế bạn chọn</p>
+                                        <span class="taken"></span>
+                                        <p>Ghế đã bán</p>
                                     </div>
                                 </div>
                                 <span class="front">Màn hình</span>

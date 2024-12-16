@@ -50,12 +50,17 @@ class KiemTraVeController extends Controller
             },
             'user'
         ])->where('ma_code_ve',$request->macode)->first(); // Tải thông tin liên quan
+
+
+
         if(!$ve){
             return response()->json([
             'msg'=>'Mã code này không tồn tại!',
             ],404);
         }
         if ($ve) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
             if ($ve->trang_thai == 0) {
                 return $this->responve($ve,'Vé đã được quét rồi',409);
             }
@@ -63,6 +68,9 @@ class KiemTraVeController extends Controller
                 $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
                 if ($currentTime > $gioketthuc) {
                     return $this->responve($ve,'Vé xem phim của bạn đã kết thúc!',409);
+                }
+                if($currentTime < $gioBatDauTru15Phut){
+                    return $this->responve($ve,'Bạn đến quá sớm! Vui lòng quay lại trong khoảng 15 phút trước giờ chiếu phim.!',409);
                 }
                 $ve->trang_thai = 0;
                 $ve->save();
@@ -108,24 +116,31 @@ class KiemTraVeController extends Controller
         ])->find($id); // Tải thông tin liên quan
         //dd($ve->toArray());
 
+        
         if ($ve) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
             // if ($ve->trang_thai == 0) {
             //     return $this->responve($ve,'Vé đã được quét rồi',409);
             // }
-            if(empty($ve->doAns)){
+            if(count($ve->doAns) <= 0){
                 return response()->json([
-                    'msg'=>'Vé của bạn không có mua đồ ăn!'
-                ],404);
+                    'msg'=>'Vé của bạn không có mua đồ ăn!',
+                    'status'=>404
+                ],200);
             }
             if ($curdate == $ve->ngay_ve_mo) {
                 $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
                 if ($currentTime > $gioketthuc) {
                     return $this->respondoan($ve,'Vé xem phim của bạn đã kết thúc!',409);
                 }
+                if($currentTime < $gioBatDauTru15Phut){
+                    return $this->responve($ve,'Bạn đến quá sớm! Vui lòng quay lại trong khoảng 15 phút trước giờ chiếu phim.!',409);
+                }
                 $doanvave = DoAnVaChiTietVe::query()
                    ->where('do_an_id',$ve->doAns[0]->id)
                    ->where('ve_id',$ve->id)->first();
-                //dd($doanvave->toArray());
+
                 if($doanvave->trang_thai == 0){
                     return $this->respondoan($ve,'Vé đồ ăn này đã được lấy.',200);
                 }
@@ -145,7 +160,7 @@ class KiemTraVeController extends Controller
                 return $this->respondoan($ve, 'Vé đồ ăn đã hết hạn', 409);
             }
         } else {
-            return response()->json(['message' => 'Không tìm thấy thông tin vé đồ ăn này!'], 404);
+            return response()->json(['msg' => 'Không tìm thấy thông tin vé đồ ăn này!','status'=>404], 200);
         }
     }
     public function checkQrCode(Request $request,$id)
@@ -181,9 +196,13 @@ class KiemTraVeController extends Controller
             },
             'user'
         ])->find($id); // Tải thông tin liên quan
-        //dd($ve->chiTietVe->pluck('seat')->groupBy('the_loai')->toArray());
+        
+       
+        //dd($ve->toArray());
 
         if ($ve) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
             if ($ve->trang_thai == 0) {
                 return $this->responve($ve,'Vé đã được quét rồi',409);
             }
@@ -192,6 +211,10 @@ class KiemTraVeController extends Controller
                 if ($currentTime > $gioketthuc) {
                     return $this->responve($ve,'Vé xem phim của bạn đã kết thúc!',409);
                 }
+                if($currentTime < $gioBatDauTru15Phut){
+                    return $this->responve($ve,'Bạn đến quá sớm! Vui lòng quay lại trong khoảng 15 phút trước giờ chiếu phim.!',409);
+                }
+               
                 $ve->trang_thai = 0;
                 $ve->save();
                 return $this->responve($ve,'Quét vé thành công',200);
@@ -202,7 +225,7 @@ class KiemTraVeController extends Controller
                 return $this->responve($ve, 'Vé đã hết hạn', 409);
             }
         } else {
-            return response()->json(['message' => 'Không tìm thấy thông tin vé!'], 404);
+            return response()->json(['message' => 'Không tìm thấy thông tin vé!','status'=>404], 200);
         }
     }
     public function responve($ve, $message, $statuscode)

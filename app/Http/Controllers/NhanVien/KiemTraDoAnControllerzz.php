@@ -45,21 +45,26 @@ class KiemTraDoAnControllerzz extends Controller
             },
             'user'
         ])->where('ma_code_ve',$request->macode)->first(); // Tải thông tin liên quan
-        //dd($ve->toArray());
+        
 
         if ($ve) {
+            $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
+            $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
             // if ($ve->trang_thai == 0) {
             //     return $this->responve($ve,'Vé đã được quét rồi',409);
             // }
-            if(empty($ve->doAns)){
+            if(count($ve->doAns) <= 0){
                 return response()->json([
-                    'msg'=>'Vé của bạn không có mua đồ ăn!'
+                    'message'=>'Vé của bạn không có mua đồ ăn!'
                 ],404);
             }
             if ($curdate == $ve->ngay_ve_mo) {
                 $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
                 if ($currentTime > $gioketthuc) {
                     return $this->respondoan($ve,'Vé xem phim của bạn đã kết thúc!',409);
+                }
+                if($currentTime < $gioBatDauTru15Phut){
+                    return $this->respondoan($ve,'Bạn đến quá sớm! Vui lòng quay lại trong khoảng 15 phút trước giờ chiếu phim.!',409);
                 }
                 $doanvave = DoAnVaChiTietVe::query()
                    ->where('do_an_id',$ve->doAns[0]->id)

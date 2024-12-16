@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('nhanVien.index')
 
 @section('content')
     <div class="card container mt-5">
@@ -13,7 +13,7 @@
                 </svg>
                 Quay lại
             </a>
-          
+
         </div>
 
         <div class="card-body">

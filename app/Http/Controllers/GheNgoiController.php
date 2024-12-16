@@ -27,8 +27,11 @@ class GheNgoiController extends Controller
                             'chitietve as isBooked' => function ($query) {
                                 $query->whereHas('ticket', function ($q) {
                                     $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
-                                    $q->whereHas('suatChieu', function ($st) use ($currentTime) {
-                                        $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime);
+                                    $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+                                    $q->whereHas('suatChieu', function ($st) use ($currentTime,$curdate) {
+                                        $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime)
+                                        ->whereDate('ngay','>=',$curdate);
+
                                     });
                                 });
                             }

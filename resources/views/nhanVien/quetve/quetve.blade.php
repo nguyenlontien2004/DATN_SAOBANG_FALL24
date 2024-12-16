@@ -94,8 +94,21 @@
             const qrResult = document.getElementById("qrResult");
             if (response.ok) {
                 const data = await response.json();
-
-                showModal(data);
+                if(data.status == 404){
+                    $.notify({
+                    icon: 'icon-bell',
+                    message: data.message,
+                }, {
+                    type: 'danger',
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    time: 1000,
+                });      
+                }else{  
+                    showModal(data); 
+                }
             } else {
                 const errorData = await response.json();
                 qrResult.innerHTML += `<p>${errorData.message || "Không tìm thấy thông tin vé!"}</p>`;
@@ -125,9 +138,9 @@
             for (i; i < value.length; i++) {
                 if (value[i].isDoubleChair !== null && i + 1 < value.length) {
                     let nextSeat = value[i + 1]; 
-                    modalContent += `<div class="seat-group-parent  doubSeat seat">
-                                           <li  class="seat-group">${value[i].hang_ghe}${value[i].so_hieu_ghe}</li>
-                                           <li class="seat-group">${value[i].hang_ghe}${nextSeat.so_hieu_ghe}</li>
+                    modalContent += `<div class="seat-group-parent  doubSeat seat" style="display: flex;list-style: none;">
+                                           <li  class="seat-group m-2">${value[i].hang_ghe}${value[i].so_hieu_ghe}</li>
+                                           <li class="seat-group m-2">${value[i].hang_ghe}${nextSeat.so_hieu_ghe}</li>
                                        </div>`;
                     i++;
                 }else{

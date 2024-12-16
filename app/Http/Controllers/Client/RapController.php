@@ -51,6 +51,7 @@ class RapController extends Controller
                             'suat_chieus.id',
                             'suat_chieus.phim_id',
                             'suat_chieus.phong_chieu_id',
+                            'suat_chieus.gia',
                             'suat_chieus.ngay',
                             DB::raw("TIME_FORMAT(suat_chieus.gio_bat_dau,'%H:%i') as gio_bat_dau"),
                             DB::raw("TIME_FORMAT(suat_chieus.gio_ket_thuc,'%H:%i') as gio_ket_thuc")
@@ -105,6 +106,7 @@ class RapController extends Controller
                     'phong_chieu_id' => $val->phong_chieu_id,
                     'gio_bat_dau' => $val->gio_bat_dau,
                     'gio_ket_thuc' => $val->gio_ket_thuc,
+                    'gia' => $val->gia / 1000,
                     'suat_chieu_trong_ngay' => $check
                 ];
             }

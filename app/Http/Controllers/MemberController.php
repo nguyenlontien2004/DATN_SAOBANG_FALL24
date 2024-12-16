@@ -82,7 +82,8 @@ class MemberController extends Controller
         // Lấy danh sách vé đặt của user hiện tại
         $currentTime = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
         $userId = Auth::id(); // Lấy ID user hiện tại
-        $lichSuDatVe = Ve::query()->withTrashed()
+        $lichSuDatVe = Ve::query()
+        ->withTrashed()
         ->with([
             'suatChieu'=>function($qr){
                 $qr->select('id', 'phong_chieu_id', 'phim_id','ngay', 
@@ -91,7 +92,7 @@ class MemberController extends Controller
 
             }
         ])
-        ->where('nguoi_dung_id', $userId)->get();
+        ->where('nguoi_dung_id', $userId) ->orderBy('created_at','desc')->paginate(5);
         $vedahuy = Ve::onlyTrashed()->get();
         // $gioBatDau = \Carbon\Carbon::createFromFormat('H:i', $lichSuDatVe[2]->suatChieu->gio_bat_dau);
         // $gioBatDauTru15Phut = $gioBatDau->subMinutes(10)->format('H:i');

@@ -115,9 +115,9 @@
 <!-- banner 2 -->
 @if ($bannerGiua)
     <div class="text-white text-center py-10">
-        <div class="container mx-auto">
-            <img alt="Promotional banner" class="mx-auto" height="100"
-                src="{{ asset('storage/' . $bannerGiua->anhBanners->first()->hinh_anh) }}" width="600" />
+        <div class="mx-auto">
+            <img alt="Promotional banner" class="mx-auto" height="60%"
+                src="{{ asset('storage/' . $bannerGiua->anhBanners->first()->hinh_anh) }}" width="80%" />
         </div>
     </div>
 @endif
@@ -125,10 +125,11 @@
     <div class="flex items-center mb-4">
         <div class="w-1 h-6 bg-blue-600 mr-2"></div>
         <p class="text-2xl  text-start text-gray-800">
-            Phim đang chiếu
+            Phim sắp chiếu
         </p>
     </div>
     <div class="grid grid-cols-4 gap-4">
+        @if(count($phimSapChieu) > 0)
         @foreach ($phimSapChieu as $item)
                 @php
                     $idyoutube = (str_replace("https://www.youtube.com/watch?v=", "", $item->trailer));
@@ -159,6 +160,9 @@
                     </div>
                 </div>
         @endforeach
+        @else
+        <h2 class="text-center" style="font-size: 20px;" >Chưa có phim chiếu</h2>
+        @endif
     </div>
 </main>
 <!-- bình luận nổi bật -->
@@ -205,11 +209,12 @@
     $('.variable-width').slick({
         dots: true,
         infinite: true,
-        speed: 300,
+        speed: 700,
         slidesToShow: 1,
         centerMode: true,
-        variableWidth: true
-
+        variableWidth: true,
+        autoplay: true,
+        autoplaySpeed: 5000
     });
 </script>
 <script src="{{ asset('js/trangchu.js') }}"></script>
