@@ -7,6 +7,7 @@ use App\Http\Requests\StorePhongChieuRequest;
 use App\Http\Requests\UpdatePhongChieuRequest;
 use App\Models\Rap;
 use App\Models\GheNgoi;
+use Carbon\Carbon;
 
 class PhongChieuController extends Controller
 {
@@ -95,7 +96,22 @@ class PhongChieuController extends Controller
     }
     public function delete($id)
     {
-        PhongChieu::query()->find($id)->delete();
+        $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+        $phongchieu = PhongChieu::query()
+        ->with([
+            'suatChieu'=>function($query)use($curdate){
+              $query->whereDate('ngay','>=',$curdate)
+              ->withCount([
+                'ves'
+              ])
+              ->having('ves_count','>',0);
+            }
+        ])
+        ->find($id);
+        if(count($phongchieu->suatChieu) > 0){
+            return back()->with('error','Phòng chiếu này không thể xoá vì vẫn còn suất chiếu đã có khách hành mua vé');
+        }
+       $phongchieu->delete();
         return back();
     }
     public function forceDelete($id)

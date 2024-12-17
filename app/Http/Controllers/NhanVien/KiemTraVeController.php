@@ -25,7 +25,9 @@ class KiemTraVeController extends Controller
         ]);
         $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
-        $ve = Ve::with([
+        $ve = Ve::query()
+        ->withTrashed()
+        ->with([
             'suatChieu' => function ($query) {
                 $query->select(
                     'id',
@@ -61,12 +63,16 @@ class KiemTraVeController extends Controller
         if ($ve) {
             $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
             $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+            $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
             if ($ve->trang_thai == 0) {
                 return $this->responve($ve,'Vé đã được quét rồi',409);
             }
+            if($ve->deleted_at !== null){
+                return $this->responve($ve,'Vé này đã bị huỷ!',409);
+            }
             if ($curdate == $ve->ngay_ve_mo) {
-                $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
-                if ($currentTime > $gioketthuc) {
+                
+                if ($currentTime > $ve->suatChieu->gio_ket_thuc) {
                     return $this->responve($ve,'Vé xem phim của bạn đã kết thúc!',409);
                 }
                 if($currentTime < $gioBatDauTru15Phut){
@@ -88,7 +94,9 @@ class KiemTraVeController extends Controller
     public function laydoan($id){
         $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
-        $ve = Ve::with([
+        $ve = Ve::query()
+        ->withTrashed()
+        ->with([
             'suatChieu' => function ($query) {
                 $query->select(
                     'id',
@@ -123,6 +131,12 @@ class KiemTraVeController extends Controller
             // if ($ve->trang_thai == 0) {
             //     return $this->responve($ve,'Vé đã được quét rồi',409);
             // }
+            if($ve->deleted_at !== null){
+                  return response()->json([
+                    'msg'=>'Vé này của bạn đã huỷ!',
+                    'status'=>404
+                ],200); 
+            }
             if(count($ve->doAns) <= 0){
                 return response()->json([
                     'msg'=>'Vé của bạn không có mua đồ ăn!',
@@ -131,7 +145,7 @@ class KiemTraVeController extends Controller
             }
             if ($curdate == $ve->ngay_ve_mo) {
                 $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
-                if ($currentTime > $gioketthuc) {
+                if ($currentTime > $ve->suatChieu->gio_ket_thuc) {
                     return $this->respondoan($ve,'Vé xem phim của bạn đã kết thúc!',409);
                 }
                 if($currentTime < $gioBatDauTru15Phut){
@@ -170,7 +184,10 @@ class KiemTraVeController extends Controller
         }
         $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
         $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i');
-        $ve = Ve::with([
+       
+        $ve = Ve::query()
+         ->withTrashed()
+        ->with([
             'suatChieu' => function ($query) {
                 $query->select(
                     'id',
@@ -203,12 +220,17 @@ class KiemTraVeController extends Controller
         if ($ve) {
             $gioBatDau = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_bat_dau);
             $gioBatDauTru15Phut = $gioBatDau->subMinutes(15)->format('H:i');
+            $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
+            //dd($currentTime > $gioketthuc,$currentTime,$gioBatDau,$ve->suatChieu->gio_ket_thuc);
             if ($ve->trang_thai == 0) {
                 return $this->responve($ve,'Vé đã được quét rồi',409);
             }
+            if($ve->deleted_at !== null){
+                return $this->responve($ve,'Vé này đã bị huỷ!',409);
+            }
             if ($curdate == $ve->ngay_ve_mo) {
-                $gioketthuc = Carbon::createFromFormat('H:i', $ve->suatChieu->gio_ket_thuc);
-                if ($currentTime > $gioketthuc) {
+               
+                if ($currentTime > $ve->suatChieu->gio_ket_thuc) {
                     return $this->responve($ve,'Vé xem phim của bạn đã kết thúc!',409);
                 }
                 if($currentTime < $gioBatDauTru15Phut){

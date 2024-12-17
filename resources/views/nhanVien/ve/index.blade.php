@@ -109,6 +109,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $litsTicket->links() }}
                     </div>
                 </div>
             </div>

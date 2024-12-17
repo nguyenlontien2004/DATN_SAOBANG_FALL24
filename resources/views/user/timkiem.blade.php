@@ -23,7 +23,7 @@
                                     src="{{ asset('storage/'.$item->anh_phim) }} "
                                     onclick="playVideo('{{ $embedUrl }}')"
                                     style="cursor: pointer;filter: contrast(105%);height:400px;" />
-                                <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
+                                <a href="{{ route('client.chitietvedat', $item->id) }}" class="hover-enlarge">
                                     <h3 class="text-lg font-bold film-title">
                                         {{ $item->ten_phim }}
                                     </h3>
@@ -57,7 +57,7 @@
                                         onclick="playVideo('{{ $embedUrl }}')"
                                         style="cursor: pointer;filter: contrast(105%);height:400px;" />
 
-                                    <a href="{{ route('chitietphim', $item->id) }}" class="hover-enlarge">
+                                    <a href="{{ route('client.chitietvedat', $item->id) }}" class="hover-enlarge">
                                         <h3 class="text-lg font-bold film-title">
                                             {{ $tenPhim->ten_phim }}
                                         </h3>

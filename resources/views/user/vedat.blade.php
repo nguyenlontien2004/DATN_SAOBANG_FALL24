@@ -28,6 +28,34 @@
         cursor: no-drop;
         color: #ababab;
     }
+
+    .goiyghe {
+        border-radius: 2px;
+        box-sizing: border-box;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        height: 25px;
+        margin: 3px;
+        padding: 5px 0;
+        position: relative;
+        text-align: center;
+        vertical-align: middle;
+        width: 25px;
+        user-select: none;
+    }
+
+    .ghethuong {
+        background: #dfdfdf;
+    }
+
+    .ghevip {
+        background-color: #d4b15f;
+    }
+
+    .ghedoi {
+        background-color: #3b5998;
+    }
 </style>
 <div class="main-content" style="margin-top: -25px;">
     <div>
@@ -182,6 +210,25 @@
                                                 </ul>
                                             @endforeach
 
+                                        </div>
+                                        <div class="mt-4 mb-2">
+                                            <ul class="d-flex justify-content-center">
+                                                <div
+                                                    class="d-flex justify-content-center flex-column align-items-center ms-3 mr-3">
+                                                    <li class="goiyghe ghethuong"></li>
+                                                    <p style="font-weight: 500; font-size: 15px;">Thường</p>
+                                                </div>
+                                                <div
+                                                    class="d-flex justify-content-center flex-column align-items-center ms-3 mr-3">
+                                                    <li class="goiyghe ghevip"></li>
+                                                    <p style="font-weight: 500; font-size: 15px;">Vip</p>
+                                                </div>
+                                                <div
+                                                    class="d-flex justify-content-center flex-column align-items-center ms-3 mr-3">
+                                                    <li class="goiyghe ghedoi"></li>
+                                                    <p style="font-weight: 500; font-size: 15px;">Đôi</p>
+                                                </div>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

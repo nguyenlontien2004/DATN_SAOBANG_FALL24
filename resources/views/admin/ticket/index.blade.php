@@ -74,24 +74,24 @@
                         </div>
                     </form>
                     <div class="table-responsive">
-                        <table id="basic-datatables" class="display table table-striped table-hover">
+                        <table id="" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Phim</th>
-                                    <th>Người đặt</th>
-                                    <th>Suất chiếu</th>
-                                    <th>Phòng chiếu</th>
-                                    <th>Mã giảm giá</th>
-                                    <th>Hàng ghế</th>
-                                    <th>Thanh toán</th>
-                                    <th>Tổng vé</th>
-                                    <th>Chí tiết</th>
+                                    <th style="padding: 6px 10px !important;">Phim</th>
+                                    <th style="padding: 6px 10px !important;">Người đặt</th>
+                                    <th style="padding: 6px 10px !important;">Suất chiếu</th>
+                                    <th style="padding: 6px 10px !important;">Phòng chiếu</th>
+                                    <th style="padding: 6px 10px !important;">Mã giảm giá</th>
+                                    <th style="padding: 6px 10px !important;">Hàng ghế</th>
+                                    <th style="padding: 6px 10px !important;">Thanh toán</th>
+                                    <th style="padding: 6px 10px !important;">Tổng vé</th>
+                                    <th style="padding: 6px 10px !important;">Chí tiết</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($litsTicket as $item)
                                                                 <tr>
-                                                                    <td>
+                                                                    <td style="padding: 6px 10px !important;">
                                                                         <div class="d-flex">
                                                                             <!-- <img width="40px" src="https://cdn.moveek.com/storage/media/cache/short/665dc87501b36651649752.jpg" alt=""> -->
                                                                             <div class="d-flex flex-column ms-3">
@@ -100,17 +100,17 @@
                                                                             </div>
                                                                         </div>
                                                                     </td>
-                                                                    <td style="font-size: 13.5px;">{{ $item->user->ho_ten }}</td>
-                                                                    <td>
+                                                                    <td style="font-size: 13.5px;padding: 6px 10px !important;">{{ $item->user->ho_ten }}</td>
+                                                                    <td style="padding: 6px 10px !important;">
                                                                         <p style="font-size: 13.5px;">{{ $item->ngay_ve_mo }} </p>
                                                                         <span
                                                                             style="font-size: 12.4px;">{{ $item->suatChieu->gio_bat_dau . "~" . $item->suatChieu->gio_ket_thuc }}</span>
                                                                     </td>
-                                                                    <td>{{ $item->suatChieu->phongChieu->ten_phong_chieu }}</td>
-                                                                    <td style="font-size: 13.5px;">
+                                                                    <td style="padding: 6px 10px !important;">{{ $item->suatChieu->phongChieu->ten_phong_chieu }}</td>
+                                                                    <td style="font-size: 13.5px;padding: 6px 10px !important;">
                                                                         {{ $item->maGiamGia == null ? 'Không dùng' : $item->maGiamGia->ten_ma_giam_gia }}
                                                                     </td>
-                                                                    <td>
+                                                                    <td style="padding: 6px 10px !important;">
                                                                         <div class="d-flex flex-column" style="font-size: 13.5px;">
                                                                             <span class="d-flex text-left">Ghế: <strong>
                                                                                     @php
@@ -135,9 +135,9 @@
 
                                                                         </div>
                                                                     </td>
-                                                                    <td>{{ $item->phuong_thuc_thanh_toan }}</td>
-                                                                    <td>{{ number_format($item->tong_tien, 0, ',', '.') }}đ</td>
-                                                                    <td><a href="{{ route('admin.ticket.detail', $item->id) }}">Xem</a>
+                                                                    <td style="padding: 6px 10px !important;">{{ $item->phuong_thuc_thanh_toan }}</td>
+                                                                    <td style="padding: 6px 10px !important;">{{ number_format($item->tong_tien, 0, ',', '.') }}đ</td>
+                                                                    <td style="padding: 6px 10px !important;"><a href="{{ route('admin.ticket.detail', $item->id) }}">Xem</a>
                                                                         @php
                                                                             $gioBatDau = \Carbon\Carbon::createFromFormat('H:i', $item->suatChieu->gio_bat_dau);
                                                                             $gioBatDauTru15Phut = $gioBatDau->subMinutes(10)->format('H:i');
@@ -170,6 +170,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $litsTicket->links() }}
                     </div>
                 </div>
             </div>

@@ -158,7 +158,7 @@ class MemberController extends Controller
             $ve->delete();
             $this->congxukhihuyve($ve);
         } elseif ($ve->ngay_ve_mo == $curDate) {
-            if ($timegiobatdau->diffInMinutes($currentTime) > 15) {
+            if ($timegiobatdau->diffInMinutes($currentTime) >= 15) {
                 if($ve->trang_thai == 0){
                   return back()->with('cannotcancelled','Không thể huỷ vé này vì đã quét QR xác nhận vào xem phim!');
                 }

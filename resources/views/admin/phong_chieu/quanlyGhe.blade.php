@@ -192,7 +192,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Danh sách ghế ẩn</a>
+                        <a href="{{ route('admin.ghekhoiphuc',$phongChieu->id) }}">Danh sách ghế ẩn</a>
                     </li>
                 </ul>
             </div>
@@ -203,10 +203,7 @@
                         <div class="col-lg-8 col-12">
                             <div class="seat-selection">
                                 <div class="legend">
-                                    <div>
-                                        <span class="taken"></span>
-                                        <p>Ghế đã bán</p>
-                                    </div>
+                                
                                 </div>
                                 <span class="front">Màn hình</span>
                                 <div class="seats-wrapper-parent">

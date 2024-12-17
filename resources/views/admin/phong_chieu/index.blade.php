@@ -27,6 +27,11 @@
                 <a href="{{ route('admin.listSoftDeletehongChieu') }}">Các mục đã xoá mềm</a>
             </div>
             <div class="card-body">
+            @if (session('error'))
+                    <div class="alert alert-warning">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>

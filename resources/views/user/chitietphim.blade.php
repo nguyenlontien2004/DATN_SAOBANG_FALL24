@@ -46,6 +46,10 @@
                 {{ $chiTietPhim->thoi_luong }}p
             </p>
             <p>
+                <strong>Ngày khởi chiếu:</strong>
+                {{ $chiTietPhim->ngay_khoi_chieu }}
+            </p>
+            <p>
                 <strong>Diễn viên chính:</strong>
                 @foreach ($chiTietPhim->dienViens as $dienVien)
                     <a href="{{ route('thongtin.dienvien',$dienVien->id) }}" style="text-decoration: none;">{{ $dienVien->ten_dien_vien }}</a>

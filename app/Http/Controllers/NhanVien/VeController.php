@@ -43,7 +43,7 @@ class VeController extends Controller
             'user:id,ho_ten,email'
         ])
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(8);
         //dd($litsTicket->toArray());
         return view('nhanVien.ve.' . __FUNCTION__, compact(['litsTicket', 'curdate', 'currentTime']));
     }

@@ -83,7 +83,7 @@
                                         class="lucide lucide-chevron-down">
                                         <path d="m6 9 6 6 6-6" />
                                     </svg></a></li>
-                            <li><a href="{{ route('phimdangchieu') }}">Phim chiếu</a></li>
+                            <li><a href="{{ route('phimdangchieu') }}">Phim đang chiếu</a></li>
                             <li><a href="{{ route('danhsachphim') }}">Danh sách phim</a></li>
                             <li><a href="{{ route('tintuc.hienthi') }}">Tin tức</a></li>
                         </div>

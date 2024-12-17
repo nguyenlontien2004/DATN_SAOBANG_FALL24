@@ -117,9 +117,9 @@
             <form action="{{ route('checkViOnline') }}" class="formthanhtoan" method="post">
                 @csrf
                 <!-- style="display: none;" -->
-                <input type="number" class="tongtien"  name="tongGia" value="{{ $tong }}">
-                <input type="text" class="magiamgia"  name="magiamgia" value="">
-                <input type="text" class="tongtienan"   value="{{ $tongtienan }}">
+                <input type="number" class="tongtien" hidden  name="tongGia" value="{{ $tong }}">
+                <input type="text" class="magiamgia" hidden  name="magiamgia" value="">
+                <input type="text" class="tongtienan"  hidden  value="{{ $tongtienan }}">
                 <div class="mb-3"></div>
                 <div class="row">
                     <div class="col-lg-8 col-12">

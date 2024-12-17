@@ -13,6 +13,7 @@ use Carbon\Carbon;
 
 class GheNgoiController extends Controller
 {
+    const PATH_VIEW = 'admin.phong_chieu.';
     /**
      * Display a listing of the resource.
      */
@@ -28,9 +29,9 @@ class GheNgoiController extends Controller
                                 $query->whereHas('ticket', function ($q) {
                                     $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
                                     $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
-                                    $q->whereHas('suatChieu', function ($st) use ($currentTime,$curdate) {
+                                    $q->whereHas('suatChieu', function ($st) use ($currentTime, $curdate) {
                                         $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime)
-                                        ->whereDate('ngay','>=',$curdate);
+                                            ->whereDate('ngay', '>=', $curdate);
 
                                     });
                                 });
@@ -64,9 +65,18 @@ class GheNgoiController extends Controller
             'ghe_ngoi' => function ($query) use ($type, $currentTime) {
                 $query->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
                     ->whereDoesntHave('chitietve', function ($q) use ($currentTime) {
-                        $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
-                            ->join('suat_chieus', 'ves.suat_chieu_id', '=', 'suat_chieus.id')
-                            ->whereRaw('TIME(suat_chieus.gio_ket_thuc) >= ?', [$currentTime]);
+                        $q->whereHas('ticket', function ($q) {
+                            $currentTime = Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s');
+                            $curdate = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
+                            $q->whereHas('suatChieu', function ($st) use ($currentTime, $curdate) {
+                                $st->whereRaw('TIME(gio_ket_thuc) >= ?', $currentTime)
+                                    ->whereDate('ngay', '>=', $curdate);
+
+                            });
+                        });
+                        // $q->join('ves', 'chi_tiet_ves.ve_id', '=', 'ves.id')
+                        //     ->join('suat_chieus', 'ves.suat_chieu_id', '=', 'suat_chieus.id')
+                        //     ->whereRaw('TIME(suat_chieus.gio_ket_thuc) >= ?', [$currentTime]);
                     })
                     ->where('the_loai', $type)
                     ->orderBy('hang_ghe')
@@ -90,6 +100,55 @@ class GheNgoiController extends Controller
     public function create()
     {
         //
+    }
+    public function khoiphucghe($id)
+    {
+        $phongChieu = PhongChieu::query()->find($id);
+
+        return view(self::PATH_VIEW . 'khoiphucghe', compact(['phongChieu']));
+    }
+    public function listgheanra($id)
+    {
+        $ghePhongChieu = PhongChieu::query()
+            ->select(['id'])
+            ->with([
+                'ghe_ngoi' => function ($query) {
+                    $query->onlyTrashed()
+                        ->select(['ghe_ngois.id', 'ghe_ngois.phong_chieu_id', 'ghe_ngois.hang_ghe', 'ghe_ngois.the_loai', 'ghe_ngois.so_hieu_ghe', 'ghe_ngois.isDoubleChair', 'ghe_ngois.trang_thai'])
+                        ->orderBy('hang_ghe')
+                        ->orderBy('so_hieu_ghe');
+                }
+            ])
+            ->find($id);
+        //dd($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe')->toArray(), Carbon::now('Asia/Ho_Chi_Minh')->format('H:i:s'));
+        return response()->json([
+            'status' => 200,
+            'msg' => 'success',
+            'data' => new SeatsRowResource($ghePhongChieu->ghe_ngoi->groupBy('hang_ghe'))
+        ]);
+    }
+
+    public function restoreghe(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            foreach ($request->datarestore as $key => $value) {
+                $ghengoi = GheNgoi::onlyTrashed()->find($value);
+                $ghengoi->restore();
+            }
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'msg' => 'success',
+            ],200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 409,
+                'msg' => 'error',
+            ]);
+        }
+
     }
 
     /**

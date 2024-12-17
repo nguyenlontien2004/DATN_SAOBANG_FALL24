@@ -117,7 +117,7 @@
     <div class="text-white text-center py-10">
         <div class="mx-auto">
             <img alt="Promotional banner" class="mx-auto" height="60%"
-                src="{{ asset('storage/' . $bannerGiua->anhBanners->first()->hinh_anh) }}" width="80%" />
+                src="{{ asset('storage/' . $bannerGiua->anhBanners?->first()?->hinh_anh) }}" width="80%" />
         </div>
     </div>
 @endif

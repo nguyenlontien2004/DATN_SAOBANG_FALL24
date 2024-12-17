@@ -40,7 +40,7 @@
                                 @elseif($ve->trang_thai == 1)
                                 <p class="text-warning">Chưa quét</p>
                                 @elseif($ve->trang_thai == 0)
-                                <p class="text-danger">Đã quét</p>
+                                <p class="text-success">Đã quét</p>
                                 @endif
                                 <p class="mt-2">Mã vé: <strong>{{ $ve->ma_code_ve }}</strong></p>
                                 <p class="mt-2">Thời lượng: <strong>{{ $ve->suatChieu->phim->thoi_luong . 'p'}}</strong>

@@ -113,7 +113,7 @@ class SanPhamController extends Controller
     public function DanhSachPhim()
     {
         $title = "Danh sách phim";
-        $danhSachPhim = Phim::query()->paginate(10);
+        $danhSachPhim = Phim::query()->paginate(12);
         return view('user.danhsachphim', compact('title', 'danhSachPhim'));
     }
 

@@ -57,7 +57,10 @@
                                     <td>
                                         @if ($nd->hinh_anh)
                                             <img src="{{ asset('storage/' . $nd->hinh_anh) }}" alt="Hình ảnh"
-                                                width="100">
+                                                width="90">
+                                        @elseif($nd->anh_dai_dien)
+                                        <img src="{{ asset('storage/' . $nd->anh_dai_dien) }}" alt="Hình ảnh"
+                                        width="90">
                                         @else
                                             Không có hình ảnh
                                         @endif

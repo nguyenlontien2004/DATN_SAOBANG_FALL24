@@ -132,6 +132,11 @@ Route::prefix('admin')->middleware(['auth.admin', AdminMiddleware::class])->grou
 
   // route thêm ghế cho phòng chiếu
   Route::get('get/ghe/phong-chieu/{id}', [GheNgoiController::class, 'index'])->name('admin.showSeats');
+
+  Route::get('get/restore/phong-chieu/{id}', [GheNgoiController::class, 'khoiphucghe'])->name('admin.ghekhoiphuc');
+  Route::get('get/danh-sach-ghe-an/phong-chieu/{id}', [GheNgoiController::class, 'listgheanra'])->name('admin.danhsachghean');
+  Route::post('post/danh-sach-ghe-restore/phong-chieu', [GheNgoiController::class, 'restoreghe'])->name('admin.restoreghe');
+
   Route::post('post/them-ghe/phong-chieu/{id}', [GheNgoiController::class, 'store'])->name('admin.storeGhe');
   Route::post('delete/ghe/phong-chieu/', [GheNgoiController::class, 'delete'])->name('admin.deleteGhengoi');
   Route::get('get/loai-ghe/phong-chieu/{id}/{type}', [GheNgoiController::class, 'getTypeSeat'])->name('admin.getTypeSeat');
